@@ -1,0 +1,16 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Version",
+  "ran": {
+    "name": "designer",
+    "app": "kanban",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "errors": []
+}

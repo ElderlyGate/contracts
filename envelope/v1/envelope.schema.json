@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/envelope/v1/envelope.schema.json",
+  "title": "envelope",
+  "description": "The outer shape every answer shares.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "ran",
+    "data",
+    "errors"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "<org>/<app>/<level>/<version>",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+    },
+    "kind": {
+      "description": "The kind of the answer.",
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$"
+    },
+    "ran": {
+      "description": "Where the answer came from.",
+      "type": "object",
+      "required": [
+        "name",
+        "app",
+        "version",
+        "contract"
+      ],
+      "properties": {
+        "name": {
+          "description": "The thing the command ran on.",
+          "type": "string",
+          "minLength": 1
+        },
+        "app": {
+          "description": "The product ID of the app.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "version": {
+          "description": "The app's version.",
+          "type": "string",
+          "minLength": 1
+        },
+        "contract": {
+          "description": "The contract version answered.",
+          "type": "string",
+          "pattern": "^v[0-9]+$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "data": {
+      "description": "The answer itself; its shape is the kind's schema."
+    },
+    "errors": {
+      "description": "Empty when the answer is good.",
+      "type": "array",
+      "items": {
+        "$ref": "../../error/v1/error.schema.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+name: rule-dates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  rule-dates:
+    uses: ElderlyGate/.github/.github/workflows/rule-dates.yml@main
+    with:
+      files: constitution/tech-stack.md constitution/mission.md

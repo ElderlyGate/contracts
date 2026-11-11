@@ -1,0 +1,16 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261111-80b7
+  title: Start the contracts repo
+  created_at: 2026-11-11T12:27:41.478Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: in-progress
+  order: 0.5
+  summary: 'Start the contracts repo: envelope, error, e-designer/v1, tests, CI, design'
+  tags: ['feature:contracts', 'epic:same-shape']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/start/same-shape
+  description: "Start the contracts repo, draft PR contracts#1.\n\n- constitution: mission and tech stack, approved by the owner.\n- envelope, error and event schemas, version 1, with samples.\n- designer/v1: four answers (version, design list, block list, block) and three events.\n- apiversion/v1: the table of old and new apiVersion forms.\n- Go tests, CI, the design and the board.\n"

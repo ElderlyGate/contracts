@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/apiversion/v1/forms.schema.json",
+  "title": "apiVersion forms",
+  "description": "Every apiVersion form, old and new, and which is current.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "forms"
+  ],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+    },
+    "kind": {
+      "const": "ApiVersionForms"
+    },
+    "forms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "new",
+          "app",
+          "note",
+          "state"
+        ],
+        "properties": {
+          "old": {
+            "description": "<level>/<name>/<version>, as written today. Only an old row has it.",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+          },
+          "new": {
+            "description": "<org>/<app>/<level>/<version>: where the old name is not an app, level and name join with a dash.",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+          },
+          "app": {
+            "description": "The product ID of the app that owns the shape.",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "current",
+              "old"
+            ]
+          },
+          "upgrade": {
+            "description": "For an old row: hubman migrate <app> <folder>.",
+            "type": "string",
+            "pattern": "^hubman migrate [a-z][a-z0-9-]* <folder>$"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "old"
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "required": [
+                "old",
+                "upgrade"
+              ]
+            },
+            "else": {
+              "allOf": [
+                {
+                  "not": {
+                    "required": [
+                      "old"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "upgrade"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

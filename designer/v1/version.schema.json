@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/version.schema.json",
+  "title": "version",
+  "description": "e-designer says which build answered.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "const": "Version"
+        },
+        "ran": {
+          "properties": {
+            "app": {
+              "const": "designer"
+            },
+            "contract": {
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "app",
+            "version",
+            "contract"
+          ],
+          "properties": {
+            "app": {
+              "const": "designer"
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "contract": {
+              "type": "string",
+              "pattern": "^v[0-9]+$"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

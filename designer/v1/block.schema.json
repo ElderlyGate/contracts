@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/block.schema.json",
+  "title": "block",
+  "description": "One block in full, from describe.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "const": "Block"
+        },
+        "ran": {
+          "properties": {
+            "app": {
+              "const": "designer"
+            },
+            "contract": {
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "kind",
+            "id",
+            "path",
+            "text",
+            "document"
+          ],
+          "properties": {
+            "kind": {
+              "const": "Block"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "description": "The file, relative to the design.",
+              "type": "string"
+            },
+            "text": {
+              "description": "The file as written.",
+              "type": "string"
+            },
+            "document": {
+              "$ref": "#/$defs/document"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "document": {
+      "type": "object",
+      "required": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ],
+      "properties": {
+        "apiVersion": {
+          "const": "core/design/v2"
+        },
+        "kind": {
+          "const": "Block"
+        },
+        "metadata": {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "spec": {
+          "description": "Written by the design's user: stays open.",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "apiVersion": "elderlygate/example/app/v1",
+  "kind": "Greeting",
+  "ran": {
+    "name": "example",
+    "app": "example",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "text": "hello"
+  },
+  "errors": [],
+  "extra": 1
+}

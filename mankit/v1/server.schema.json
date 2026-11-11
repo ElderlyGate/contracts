@@ -47,7 +47,8 @@
       "type": "object",
       "required": [
         "startedAt",
-        "version"
+        "version",
+        "detached"
       ],
       "properties": {
         "name": {
@@ -66,6 +67,10 @@
         "log": {
           "description": "Where the detached server writes its output.",
           "type": "string"
+        },
+        "detached": {
+          "description": "Started with serve --detach; a server in the foreground has a terminal instead.",
+          "type": "boolean"
         }
       },
       "additionalProperties": false

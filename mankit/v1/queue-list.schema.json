@@ -35,6 +35,11 @@
                   "turn": {
                     "description": "Its change runs now.",
                     "type": "boolean"
+                  },
+                  "since": {
+                    "description": "When the change that runs now took the turn; only on the place whose turn it is.",
+                    "type": "string",
+                    "format": "date-time"
                   }
                 },
                 "additionalProperties": false

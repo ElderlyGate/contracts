@@ -6,7 +6,7 @@ metadata:
   created_at: 2026-11-11T13:35:13.917Z
   created_by: Tugbay Atilla <tugbayatilla@gmail.com>
 spec:
-  column: backlog
+  column: done
   order: 0.5
   summary: Go package that embeds schemas and samples; Validate; mankit/v1 server record
   tags: ['feature:contracts', 'epic:same-shape']
@@ -23,3 +23,6 @@ spec:
     - Package `contracts` embeds every schema, sample and table (`//go:embed`).
     - `contracts.Validate(schema, doc)` checks a document against one schema; a schema may refer to another.
     - `mankit/v1`: the record `serve --detach` writes for every app (ADR-S15), with its sample and its row in the apiVersion table.
+  lifecycle:
+    done_at: 2026-11-11T14:17:27.873Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

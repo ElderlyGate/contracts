@@ -45,3 +45,7 @@ forms:
     app: work-records
     note: Current form of the old form org/work-record/v1
     state: current
+  - new: elderlygate/mankit/server/v1
+    app: mankit
+    note: The record a detached serve writes for every app (mankit serve)
+    state: current

@@ -7,7 +7,7 @@ The rules and the layout of the folders are in `constitution/tech-stack.md`; the
 ## What is here
 
 - `envelope/v1/`, `error/v1/`, `event/v1/`: the shapes every answer, error and event shares.
-- `mankit/v1/`: what mankit serve answers for every app: the record a detached `serve` writes, the `servers` answers, the `<product>.stream.gapped` event a client of `GET /api/events` gets when it missed events, and the change queue's ticket and the `<app> queue` answer. Each app lists that event in its own `events.asyncapi.yaml`.
+- `mankit/v1/`: what mankit serve answers for every app: the record a detached `serve` writes, the `servers` answers, the `<product>.stream.gapped` event a client of `GET /api/events` gets when it missed events, and the change queue's ticket, backend marker and the `<app> queue` answer. Each app lists that event in its own `events.asyncapi.yaml`.
 - `<app>/<version>/`: one app's contract, named by its product ID. `designer/v1/` is the first.
 - `apiversion/v1/forms.yaml`: the one table of every apiVersion form, old and new. A reader that meets an old form can say it is old, and the row names the upgrade command (`hubman migrate <app> <folder>`) and the current form.
 
@@ -19,7 +19,8 @@ An event is a CloudEvents 1.0 event. An app lists its events in `events.asyncapi
 
 Every app that changes a served thing shares one queue in `<served folder>/<app folder>/.queue/` (ADR-S14), and two app versions may share it at once. So within `mankit/v1` these rules never change; a change to them is a new version.
 
-- The folder and its `bad/` are mode 0700. It holds `lock`, `turn`, `bad/`, `.gitignore` (holding `*`) and the tickets, `<id>.json` (`ticket.schema.json`). Names starting with a dot are not tickets and are left alone; anything else that is not a readable ticket is moved to `bad/`, never over a file already there, and said.
+- The folder and its `bad/` are mode 0700. It holds `lock`, `turn`, `bad/`, `backend`, `.gitignore` (holding `*`) and the tickets, `<id>.json` (`ticket.schema.json`). Names starting with a dot are not tickets and are left alone; anything else that is not a readable ticket is moved to `bad/`, never over a file already there, and said.
+- `backend`, when present, names the backend every writer of the folder takes turns with (`queue-backend.schema.json`): `files` is the rest of this section; without it the backend is `files`. It never holds an address or a token. A backend that is unknown, cannot be read or cannot be reached is refused with `queue_backend_unsupported`; an app never falls back to files.
 - A lock is exclusive and never waited on with the system's blocking call: `flock(LOCK_EX|LOCK_NB)` on the whole file on Linux and macOS, `LockFileEx` with `LOCKFILE_EXCLUSIVE_LOCK|LOCKFILE_FAIL_IMMEDIATELY` on one byte at offset 2^62 on Windows, so the file's content stays readable.
 - `lock` is held while a ticket is written, the folder is read, or a ticket is removed. A ticket is written whole (through a temporary dot-file renamed into place) and locked before `lock` is given up.
 - A ticket's file is locked by its process from writing to removing. A reader that can take that lock knows the process has ended and removes the ticket.

@@ -53,3 +53,7 @@ forms:
     app: mankit
     note: A change waiting its turn in the change queue of a served thing (mankit queue)
     state: current
+  - new: elderlygate/mankit/queue-backend/v1
+    app: mankit
+    note: The marker .queue/backend naming the backend every writer of a served folder takes turns with (mankit queue)
+    state: current

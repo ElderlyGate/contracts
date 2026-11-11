@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/queue-backend.schema.json",
+  "title": "queue backend",
+  "description": "The marker .queue/backend: the backend every writer of a served folder takes turns with. Without it the backend is files. It never holds an address or a token; those come from the app's settings. apiVersion and kind never change; spec may grow.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "elderlygate/mankit/queue-backend/v1"
+    },
+    "kind": {
+      "const": "QueueBackend"
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "files: the file queue in the folder; lock-service: a separate service takes the turns. An app refuses a type it does not run.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        }
+      },
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "address"
+            ]
+          },
+          {
+            "required": [
+              "url"
+            ]
+          },
+          {
+            "required": [
+              "token"
+            ]
+          }
+        ]
+      },
+      "additionalProperties": true,
+      "description": "Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4); never an address or a token."
+    }
+  },
+  "additionalProperties": false
+}

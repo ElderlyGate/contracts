@@ -22,23 +22,19 @@ const schemaSuffix = ".schema.json"
 
 var (
 	compileOnce sync.Once
-	compiler    *jsonschema.Compiler
+	compiled    map[string]*jsonschema.Schema
 	compileErr  error
 )
 
-// Validate checks doc, a JSON document, against the schema at path in FS, such as envelope/v1/envelope.schema.json.
+// Validate checks doc, a JSON document, against the schema at path in FS, such as envelope/v1/envelope.schema.json; many goroutines may call it at once.
 func Validate(schema string, doc []byte) error {
-	c, err := schemas()
+	all, err := schemas()
 	if err != nil {
 		return err
 	}
-	id, err := schemaID(schema)
-	if err != nil {
-		return err
-	}
-	s, err := c.Compile(id)
-	if err != nil {
-		return fmt.Errorf("%s: %w", schema, err)
+	s, ok := all[schema]
+	if !ok {
+		return fmt.Errorf("no schema %s in contracts", schema)
 	}
 	value, err := jsonschema.UnmarshalJSON(bytes.NewReader(doc))
 	if err != nil {
@@ -47,12 +43,13 @@ func Validate(schema string, doc []byte) error {
 	return s.Validate(value)
 }
 
-// schemas is one compiler that knows every schema by its $id, so one schema can refer to another.
-func schemas() (*jsonschema.Compiler, error) {
+// schemas compiles every schema once, by its path: the compiler is not safe for many goroutines, a compiled schema is.
+func schemas() (map[string]*jsonschema.Schema, error) {
 	compileOnce.Do(func() {
 		c := jsonschema.NewCompiler()
 		c.DefaultDraft(jsonschema.Draft2020)
 		c.AssertFormat()
+		ids := map[string]string{}
 		compileErr = fs.WalkDir(FS, ".", func(p string, d fs.DirEntry, err error) error {
 			if err != nil || d.IsDir() || !strings.HasSuffix(p, schemaSuffix) || path.Base(path.Dir(p)) == "samples" {
 				return err
@@ -61,16 +58,24 @@ func schemas() (*jsonschema.Compiler, error) {
 			if err != nil {
 				return err
 			}
+			ids[p] = id
 			return c.AddResource(id, doc)
 		})
-		compiler = c
+		if compileErr != nil {
+			return
+		}
+		all := map[string]*jsonschema.Schema{}
+		for p, id := range ids {
+			s, err := c.Compile(id)
+			if err != nil {
+				compileErr = fmt.Errorf("%s: %w", p, err)
+				return
+			}
+			all[p] = s
+		}
+		compiled = all
 	})
-	return compiler, compileErr
-}
-
-func schemaID(schema string) (string, error) {
-	id, _, err := read(schema)
-	return id, err
+	return compiled, compileErr
 }
 
 // read is the schema at p and its $id.

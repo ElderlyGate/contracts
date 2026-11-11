@@ -1,6 +1,7 @@
 package contracts_test
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,6 +25,26 @@ func TestValidateTakesASample(t *testing.T) {
 		if err := contracts.Validate(schema, doc); err != nil {
 			t.Errorf("%s: %v", sample, err)
 		}
+	}
+}
+
+func TestValidateIsSafeFromManyGoroutines(t *testing.T) {
+	doc, err := os.ReadFile("envelope/v1/samples/envelope.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := range 8 {
+		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			t.Parallel()
+			for range 50 {
+				if err := contracts.Validate("envelope/v1/envelope.schema.json", doc); err != nil {
+					t.Error(err)
+				}
+				if err := contracts.Validate("designer/v1/version.schema.json", doc); err == nil {
+					t.Error("a greeting was taken as a version")
+				}
+			}
+		})
 	}
 }
 

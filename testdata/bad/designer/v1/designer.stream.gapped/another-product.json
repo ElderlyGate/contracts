@@ -1,0 +1,14 @@
+{
+  "specversion": "1.0",
+  "id": "4f1c2a9e7b3d5c60-41-gap-9a3b1c2d",
+  "source": "/designer/default",
+  "type": "kanban.stream.gapped",
+  "subject": "stream",
+  "time": "2026-11-11T12:00:20Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "lastKnown": "4f1c2a9e7b3d5c60-12",
+    "oldestKept": "4f1c2a9e7b3d5c60-42"
+  },
+  "traceparent": "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-00"
+}

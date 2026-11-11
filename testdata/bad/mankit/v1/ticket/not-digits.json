@@ -1,0 +1,15 @@
+{
+  "apiVersion": "elderlygate/mankit/ticket/v1",
+  "kind": "Ticket",
+  "metadata": {
+    "id": "0179439840000000000a",
+    "app": "designer",
+    "pid": 4242,
+    "host": "build-01"
+  },
+  "spec": {
+    "change": "add block shop",
+    "joinedAt": "2026-11-11T12:00:00Z",
+    "version": "5.0.0"
+  }
+}

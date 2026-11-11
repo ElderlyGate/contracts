@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/stream.gapped.schema.json",
+  "title": "stream gapped",
+  "description": "A client of GET /api/events missed events and reloads its state; every app that serves events sends it as <product>.stream.gapped.",
+  "allOf": [
+    {
+      "$ref": "../../event/v1/event.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "pattern": "^[a-z][a-z0-9-]*\\.stream\\.gapped$"
+        },
+        "subject": {
+          "const": "stream"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "lastKnown"
+          ],
+          "properties": {
+            "lastKnown": {
+              "description": "The last event the server knows the client had; empty when the id is not one of this server's.",
+              "type": "string",
+              "maxLength": 128
+            },
+            "oldestKept": {
+              "description": "The oldest event the server still keeps; left out when it keeps none.",
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

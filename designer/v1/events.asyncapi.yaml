@@ -13,6 +13,8 @@ channels:
         $ref: '#/components/messages/resourceDeleted'
       layoutChanged:
         $ref: '#/components/messages/layoutChanged'
+      streamGapped:
+        $ref: '#/components/messages/streamGapped'
 operations:
   sendEvents:
     action: send
@@ -41,3 +43,10 @@ components:
         schemaFormat: application/schema+json;version=draft-2020-12
         schema:
           $ref: designer.layout.changed.schema.json
+    streamGapped:
+      name: designer.stream.gapped
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.stream.gapped.schema.json

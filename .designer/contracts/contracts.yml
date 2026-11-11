@@ -167,7 +167,7 @@ spec:
     group: GRP-REPO
   caption:
     - "version (with its contracts), design list, block list, block;"
-    - "events.asyncapi.yaml lists three events"
+    - "events.asyncapi.yaml lists four events, stream.gapped too"
   code:
     implements: designer/v1
 --- # block/CMP-TESTS.yml
@@ -395,7 +395,8 @@ spec:
     group: GRP-REPO
   caption:
     - "the server record every app's serve writes,"
-    - "and the servers, stop and link answers"
+    - "the servers, stop and link answers,"
+    - "and the stream.gapped event"
   code:
     implements: mankit/v1
 --- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml

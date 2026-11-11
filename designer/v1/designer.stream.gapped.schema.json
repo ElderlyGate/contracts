@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/designer.stream.gapped.schema.json",
+  "title": "stream gapped",
+  "description": "A board missed events and reloads its state; the shared shape of mankit/v1, sent by designer.",
+  "allOf": [
+    {
+      "$ref": "../../mankit/v1/stream.gapped.schema.json"
+    },
+    {
+      "properties": {
+        "source": {
+          "pattern": "^/designer/[A-Za-z0-9._-]+$"
+        },
+        "type": {
+          "const": "designer.stream.gapped"
+        }
+      }
+    }
+  ]
+}

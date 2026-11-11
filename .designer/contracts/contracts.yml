@@ -166,7 +166,7 @@ spec:
       - structure
     group: GRP-REPO
   caption:
-    - "version, design list, block list, block;"
+    - "version (with its contracts), design list, block list, block;"
     - "events.asyncapi.yaml lists three events"
   code:
     implements: designer/v1
@@ -212,6 +212,8 @@ spec:
   caption:
     - "runs gofmt, go vet,"
     - "go test and the rule-dates check"
+  description: |
+    On a merge to main it also runs the org's shared release workflow, which tags the next version (V-7), so a Go app pins a tag of contracts.
 --- # link/CMP-X-APP-AUTHOR--uses--CMP-CONTRACTS.yml
 apiVersion: core/design/v2
 kind: Link

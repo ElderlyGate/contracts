@@ -85,17 +85,22 @@ func TestAServerRecordTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var rec map[string]map[string]any
+	var rec struct {
+		APIVersion string         `json:"apiVersion"`
+		Kind       string         `json:"kind"`
+		Metadata   map[string]any `json:"metadata"`
+		Spec       map[string]any `json:"spec"`
+	}
 	if err := json.Unmarshal(sample, &rec); err != nil {
 		t.Fatal(err)
 	}
-	rec["spec"]["queue"] = "a field a newer app adds"
+	rec.Spec["queue"] = "a field a newer app adds"
 	newer, _ := json.Marshal(rec)
 	if err := contracts.Validate("mankit/v1/server.schema.json", newer); err != nil {
 		t.Fatalf("a record from a newer app was refused: %v", err)
 	}
-	delete(rec["spec"], "queue")
-	rec["metadata"]["host"] = "a renamed header"
+	delete(rec.Spec, "queue")
+	rec.Metadata["host"] = "a renamed header"
 	changed, _ := json.Marshal(rec)
 	if err := contracts.Validate("mankit/v1/server.schema.json", changed); err == nil {
 		t.Fatal("a record with a new header field was taken")

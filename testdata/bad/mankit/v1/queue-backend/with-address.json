@@ -1,0 +1,8 @@
+{
+  "apiVersion": "elderlygate/mankit/queue-backend/v1",
+  "kind": "QueueBackend",
+  "spec": {
+    "type": "lock-service",
+    "address": "127.0.0.1:7600"
+  }
+}

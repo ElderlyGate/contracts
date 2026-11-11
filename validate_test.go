@@ -122,14 +122,20 @@ func TestATicketTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 		t.Fatal(err)
 	}
 	ticket.Spec["priority"] = "a field a newer app adds"
-	newer, _ := json.Marshal(ticket)
+	newer, err := json.Marshal(ticket)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if err := contracts.Validate("mankit/v1/ticket.schema.json", newer); err != nil {
 		t.Fatalf("a ticket from a newer app was refused: %v", err)
 	}
 	delete(ticket.Spec, "priority")
 	ticket.Metadata["machine"] = ticket.Metadata["host"]
 	delete(ticket.Metadata, "host")
-	renamed, _ := json.Marshal(ticket)
+	renamed, err := json.Marshal(ticket)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if err := contracts.Validate("mankit/v1/ticket.schema.json", renamed); err == nil {
 		t.Fatal("a ticket with a renamed header field was taken")
 	}

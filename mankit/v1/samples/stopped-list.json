@@ -1,0 +1,22 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "StoppedList",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "addr": "127.0.0.1:7480",
+      "pid": 4242,
+      "stopped": true
+    },
+    {
+      "addr": "127.0.0.1:7481",
+      "stale": true
+    }
+  ],
+  "errors": []
+}

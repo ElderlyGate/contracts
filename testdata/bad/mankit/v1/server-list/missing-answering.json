@@ -1,0 +1,31 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ServerList",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "record": {
+        "apiVersion": "elderlygate/mankit/server/v1",
+        "kind": "Server",
+        "metadata": {
+          "app": "designer",
+          "addr": "127.0.0.1:7480",
+          "pid": 4242
+        },
+        "spec": {
+          "name": "shop",
+          "version": "5.0.0",
+          "startedAt": "2026-11-11T13:00:00Z",
+          "log": "/home/user/.local/share/elderlygate/designer/servers/127.0.0.1-7480.log",
+          "detached": true
+        }
+      }
+    }
+  ],
+  "errors": []
+}

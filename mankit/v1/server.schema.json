@@ -73,7 +73,8 @@
           "type": "boolean"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true,
+      "description": "Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4)."
     }
   },
   "additionalProperties": false

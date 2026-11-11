@@ -1,6 +1,7 @@
 package contracts_test
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -76,5 +77,27 @@ func TestValidateNamesAMissingSchema(t *testing.T) {
 func TestValidateRefusesADocumentThatIsNotJSON(t *testing.T) {
 	if err := contracts.Validate("envelope/v1/envelope.schema.json", []byte("not json")); err == nil {
 		t.Fatal("a document that is not JSON was taken")
+	}
+}
+
+func TestAServerRecordTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
+	sample, err := os.ReadFile("mankit/v1/samples/server.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rec map[string]map[string]any
+	if err := json.Unmarshal(sample, &rec); err != nil {
+		t.Fatal(err)
+	}
+	rec["spec"]["queue"] = "a field a newer app adds"
+	newer, _ := json.Marshal(rec)
+	if err := contracts.Validate("mankit/v1/server.schema.json", newer); err != nil {
+		t.Fatalf("a record from a newer app was refused: %v", err)
+	}
+	delete(rec["spec"], "queue")
+	rec["metadata"]["host"] = "a renamed header"
+	changed, _ := json.Marshal(rec)
+	if err := contracts.Validate("mankit/v1/server.schema.json", changed); err == nil {
+		t.Fatal("a record with a new header field was taken")
 	}
 }

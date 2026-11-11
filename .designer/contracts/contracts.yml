@@ -364,3 +364,62 @@ spec:
       at: CMP-TESTS
       phase: return
       label: "Every sample meets its schema; a schema with no sample fails"
+--- # block/CMP-GO-PACKAGE.yml
+apiVersion: core/design/v2
+kind: Block
+metadata:
+  id: CMP-GO-PACKAGE
+  title: "Go package contracts"
+spec:
+  place:
+    views:
+      - structure
+    group: GRP-REPO
+  caption:
+    - "embeds every schema, sample and table;"
+    - "Validate checks a Go app's real answer"
+  code:
+    implements: contracts.go
+--- # block/CMP-MANKIT-V1.yml
+apiVersion: core/design/v2
+kind: Block
+metadata:
+  id: CMP-MANKIT-V1
+  title: "mankit v1"
+spec:
+  place:
+    views:
+      - structure
+    group: GRP-REPO
+  caption:
+    - "the server record a detached"
+    - "serve writes for every app"
+  code:
+    implements: mankit/v1
+--- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml
+apiVersion: core/design/v2
+kind: Link
+metadata:
+  id: CMP-GO-PACKAGE--reads--CMP-ENVELOPE
+spec:
+  from: CMP-GO-PACKAGE
+  to: CMP-ENVELOPE
+  label: reads
+--- # link/CMP-GO-PACKAGE--reads--CMP-MANKIT-V1.yml
+apiVersion: core/design/v2
+kind: Link
+metadata:
+  id: CMP-GO-PACKAGE--reads--CMP-MANKIT-V1
+spec:
+  from: CMP-GO-PACKAGE
+  to: CMP-MANKIT-V1
+  label: reads
+--- # link/CMP-TESTS--reads--CMP-MANKIT-V1.yml
+apiVersion: core/design/v2
+kind: Link
+metadata:
+  id: CMP-TESTS--reads--CMP-MANKIT-V1
+spec:
+  from: CMP-TESTS
+  to: CMP-MANKIT-V1
+  label: reads

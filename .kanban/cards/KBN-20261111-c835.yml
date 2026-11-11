@@ -6,8 +6,8 @@ metadata:
   created_at: 2026-11-11T17:46:53.004Z
   created_by: Tugbay Atilla <tugbayatilla@gmail.com>
 spec:
-  column: in-progress
-  order: 0.75
+  column: done
+  order: 0.875
   tags: ['feature:change-queue', 'epic:mankit-serve']
   description: "#feature:change-queue #epic:mankit-serve\n\n# The change queue ticket\n\nmankit's change queue (ADR-S14, mankit serve step 3) keeps one ticket per waiting change in `<served folder>/<app folder>/.queue/`. Two app versions share the queue at once, so the ticket has a fixed header and a spec that may grow (ADR-S15, CT-RULE-4).\n\n- `mankit/v1/ticket.schema.json`: apiVersion `elderlygate/mankit/ticket/v1`, kind `Ticket`, metadata `{id, app, pid, host}` closed, spec open.\n- `mankit/v1/queue-list.schema.json`: what `<app> queue` answers, the tickets in order and the ones moved to `bad/`.\n- Samples, refused samples, and the apiVersion table row.\n"
   summary: Shared schema and sample for the change queue ticket and the queue list (mankit change queue)
@@ -17,3 +17,5 @@ spec:
   lifecycle:
     active_at: 2026-11-11T17:47:07.850Z
     active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-11T17:48:07.719Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

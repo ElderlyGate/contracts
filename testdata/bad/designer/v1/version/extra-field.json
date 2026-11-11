@@ -11,7 +11,10 @@
     "app": "designer",
     "version": "5.0.0",
     "contract": "v1",
-    "build": "x"
+    "build": "x",
+    "contracts": [
+      "v1"
+    ]
   },
   "errors": []
 }

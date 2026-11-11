@@ -8,7 +8,7 @@ metadata:
 spec:
   column: backlog
   order: 0.5
-  summary: Go package that embeds schemas and samples; Validate; server/v1 record
+  summary: Go package that embeds schemas and samples; Validate; mankit/v1 server record
   tags: ['feature:contracts', 'epic:same-shape']
   work:
     agent: claude-opus-5-5
@@ -22,4 +22,4 @@ spec:
 
     - Package `contracts` embeds every schema, sample and table (`//go:embed`).
     - `contracts.Validate(schema, doc)` checks a document against one schema; a schema may refer to another.
-    - `server/v1`: the record `serve --detach` writes for every app (ADR-S15), with its sample and its row in the apiVersion table.
+    - `mankit/v1`: the record `serve --detach` writes for every app (ADR-S15), with its sample and its row in the apiVersion table.

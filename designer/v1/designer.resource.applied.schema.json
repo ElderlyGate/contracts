@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/designer.resource.applied.schema.json",
+  "title": "resource applied",
+  "description": "A resource was created or updated. A before of null means it was created.",
+  "allOf": [
+    {
+      "$ref": "../../event/v1/event.schema.json"
+    },
+    {
+      "properties": {
+        "source": {
+          "pattern": "^/designer/[A-Za-z0-9._-]+$"
+        },
+        "type": {
+          "const": "designer.resource.applied"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "file",
+            "kind",
+            "id",
+            "before",
+            "after"
+          ],
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "before": {
+              "description": "sha256 of the file before; null when the file is new.",
+              "oneOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "after": {
+              "description": "sha256 of the file after.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

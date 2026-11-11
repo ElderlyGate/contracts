@@ -1,0 +1,31 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "DesignList",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "design": {
+        "apiVersion": "core/design/v2",
+        "kind": "Design",
+        "metadata": {
+          "id": "default",
+          "title": "A parcel locker"
+        },
+        "spec": {
+          "description": "**A worked example, small enough to read in one sitting.**\n\nThree blocks, one flow, one saved request and one suite — a person\ndrops a parcel into a locker and the ledger learns about it.\n\nNothing here is a real system. What is real is the *shape*: every file in\nthis design is byte-for-byte what the emitter renders, which is what makes\nthe directory usable as a fixture as well as an example.\n"
+        }
+      },
+      "purpose": "reference",
+      "purpose_set": false,
+      "components": 10,
+      "resources": 18,
+      "storage": "folder"
+    }
+  ],
+  "errors": []
+}

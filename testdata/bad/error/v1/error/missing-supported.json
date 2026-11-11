@@ -1,0 +1,6 @@
+{
+  "apiVersion": "elderlygate/example/app/v1",
+  "kind": "Error",
+  "code": "unsupported_contract",
+  "message": "this app does not answer contract v3"
+}

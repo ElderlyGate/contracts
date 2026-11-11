@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/designer.resource.deleted.schema.json",
+  "title": "resource deleted",
+  "description": "A resource was removed.",
+  "allOf": [
+    {
+      "$ref": "../../event/v1/event.schema.json"
+    },
+    {
+      "properties": {
+        "source": {
+          "pattern": "^/designer/[A-Za-z0-9._-]+$"
+        },
+        "type": {
+          "const": "designer.resource.deleted"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "file",
+            "kind",
+            "id",
+            "before"
+          ],
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "before": {
+              "description": "sha256 of the file before.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

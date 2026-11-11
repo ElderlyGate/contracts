@@ -1,0 +1,14 @@
+{
+  "specversion": "1.0",
+  "id": "01JC6V8K3Q0Z7M4N5P6R7S8TA1",
+  "source": "/designer/default",
+  "type": "designer.layout.changed",
+  "subject": "default",
+  "time": "2026-11-11T12:00:10Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "design": "default",
+    "view": "structure"
+  },
+  "traceparent": "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01"
+}

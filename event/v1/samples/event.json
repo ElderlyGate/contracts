@@ -1,0 +1,11 @@
+{
+  "specversion": "1.0",
+  "id": "01JC6V8K3Q0Z7M4N5P6R7S8T9V",
+  "source": "/example/thing",
+  "type": "example.thing.created",
+  "subject": "thing-1",
+  "time": "2026-11-11T12:00:00Z",
+  "datacontenttype": "application/json",
+  "data": { "name": "thing-1" },
+  "traceparent": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+}

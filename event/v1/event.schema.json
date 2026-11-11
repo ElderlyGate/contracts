@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/event/v1/event.schema.json",
+  "title": "event",
+  "description": "A product event: CloudEvents 1.0, structured JSON, with the distributed tracing extension.",
+  "type": "object",
+  "required": [
+    "specversion",
+    "id",
+    "source",
+    "type",
+    "subject",
+    "time",
+    "datacontenttype",
+    "data",
+    "traceparent"
+  ],
+  "properties": {
+    "specversion": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "description": "/<product-id>/<thing>",
+      "type": "string",
+      "pattern": "^/[a-z][a-z0-9-]*/[A-Za-z0-9._-]+$"
+    },
+    "type": {
+      "description": "<product-id>.<thing>.<verb>, the verb in the past tense.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$"
+    },
+    "subject": {
+      "description": "The id of the thing.",
+      "type": "string",
+      "minLength": 1
+    },
+    "time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "datacontenttype": {
+      "const": "application/json"
+    },
+    "data": {
+      "description": "What happened; its shape is the event's own schema."
+    },
+    "traceparent": {
+      "description": "W3C trace context: the request that caused the event.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{2}-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$",
+      "allOf": [
+        {
+          "not": {
+            "pattern": "^ff-"
+          }
+        },
+        {
+          "not": {
+            "pattern": "^[0-9a-f]{2}-0{32}-"
+          }
+        },
+        {
+          "not": {
+            "pattern": "^[0-9a-f]{2}-[0-9a-f]{32}-0{16}-"
+          }
+        }
+      ]
+    },
+    "tracestate": {
+      "description": "W3C trace state, vendor data that travels with the trace.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

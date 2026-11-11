@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/error/v1/error.schema.json",
+  "title": "error",
+  "description": "One error in the errors list of an answer.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "code",
+    "message"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "<org>/<app>/<level>/<version>",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+    },
+    "kind": {
+      "const": "Error"
+    },
+    "code": {
+      "description": "A short word for what went wrong, such as unsupported_contract.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "at": {
+      "description": "The place the error points to.",
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "supported": {
+      "description": "For unsupported_contract: the contract versions the app answers.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^v[0-9]+$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "if": {
+    "properties": {
+      "code": {
+        "const": "unsupported_contract"
+      }
+    },
+    "required": [
+      "code"
+    ]
+  },
+  "then": {
+    "required": [
+      "supported"
+    ]
+  },
+  "additionalProperties": false
+}

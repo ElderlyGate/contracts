@@ -1,0 +1,20 @@
+{
+  "apiVersion": "elderlygate/contracts/app/v1",
+  "kind": "ApiVersionForms",
+  "forms": [
+    {
+      "old": "elderlygate/kanban/app/v1",
+      "new": "elderlygate/kanban/app/v1",
+      "app": "kanban",
+      "note": "Cards written as YAML",
+      "state": "old",
+      "upgrade": "hubman migrate kanban <folder>"
+    },
+    {
+      "new": "elderlygate/kanban/app/v1",
+      "app": "kanban",
+      "note": "Current form of the old form app/kanban/v1",
+      "state": "current"
+    }
+  ]
+}

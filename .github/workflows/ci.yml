@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+# A newer push cancels the older run of the same pull request.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: local · linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - run: test -z "$(gofmt -l .)"
+      - run: go vet ./...
+      - run: go test ./...

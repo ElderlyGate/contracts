@@ -1,0 +1,43 @@
+asyncapi: 3.0.0
+info:
+  title: designer events
+  version: v1
+  description: The live changes the board needs first, sent on GET /api/events as CloudEvents (event/v1).
+channels:
+  events:
+    address: /api/events
+    messages:
+      resourceApplied:
+        $ref: '#/components/messages/resourceApplied'
+      resourceDeleted:
+        $ref: '#/components/messages/resourceDeleted'
+      layoutChanged:
+        $ref: '#/components/messages/layoutChanged'
+operations:
+  sendEvents:
+    action: send
+    channel:
+      $ref: '#/channels/events'
+components:
+  messages:
+    resourceApplied:
+      name: designer.resource.applied
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.resource.applied.schema.json
+    resourceDeleted:
+      name: designer.resource.deleted
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.resource.deleted.schema.json
+    layoutChanged:
+      name: designer.layout.changed
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.layout.changed.schema.json

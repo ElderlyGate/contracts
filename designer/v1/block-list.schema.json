@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/block-list.schema.json",
+  "title": "block list",
+  "description": "The blocks of one design, from get blocks.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "const": "BlockList"
+        },
+        "ran": {
+          "properties": {
+            "app": {
+              "const": "designer"
+            },
+            "contract": {
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "block.schema.json#/$defs/document"
+          }
+        }
+      }
+    }
+  ]
+}

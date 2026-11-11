@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/design-list.schema.json",
+  "title": "design list",
+  "description": "The designs in the root, from get design.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "const": "DesignList"
+        },
+        "ran": {
+          "properties": {
+            "app": {
+              "const": "designer"
+            },
+            "contract": {
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "design",
+              "purpose",
+              "purpose_set",
+              "components",
+              "resources",
+              "storage"
+            ],
+            "properties": {
+              "design": {
+                "$ref": "#/$defs/design"
+              },
+              "purpose": {
+                "type": "string"
+              },
+              "purpose_set": {
+                "type": "boolean"
+              },
+              "components": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "resources": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "storage": {
+                "enum": [
+                  "distributed",
+                  "single"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "design": {
+      "type": "object",
+      "required": [
+        "apiVersion",
+        "kind",
+        "metadata",
+        "spec"
+      ],
+      "properties": {
+        "apiVersion": {
+          "const": "core/design/v2"
+        },
+        "kind": {
+          "const": "Design"
+        },
+        "metadata": {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "spec": {
+          "description": "Written by the design's user: stays open.",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

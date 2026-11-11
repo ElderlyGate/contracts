@@ -1,0 +1,10 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Version",
+  "data": {
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "errors": []
+}

@@ -1,0 +1,39 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Block",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "kind": "Block",
+    "id": "CMP-LOCKS",
+    "path": "block/CMP-LOCKS.yml",
+    "text": "apiVersion: core/design/v2\nkind: Block\nmetadata:\n  id: CMP-LOCKS\n  title: The lock controller\nspec:\n  place:\n    group: GRP-CORE\n    role: handler\n  state:\n    status: open\n  code:\n    service: locker.locks\n    implements: internal/locks/controller.go#Controller\n  description: |\n    Opens one door at a time and refuses to open a second while the first is\n    still ajar.\n\n    The refusal is the interesting half. A door that will not open is a\n    complaint somebody makes; a bank of doors all open at once is a story in\n    the local paper.\n",
+    "document": {
+      "apiVersion": "core/design/v2",
+      "kind": "Block",
+      "metadata": {
+        "id": "CMP-LOCKS",
+        "title": "The lock controller"
+      },
+      "spec": {
+        "place": {
+          "group": "GRP-CORE",
+          "role": "handler"
+        },
+        "state": {
+          "status": "open"
+        },
+        "code": {
+          "service": "locker.locks",
+          "implements": "internal/locks/controller.go#Controller"
+        },
+        "description": "Opens one door at a time and refuses to open a second while the first is\nstill ajar.\n\nThe refusal is the interesting half. A door that will not open is a\ncomplaint somebody makes; a bank of doors all open at once is a story in\nthe local paper.\n"
+      }
+    }
+  },
+  "errors": []
+}

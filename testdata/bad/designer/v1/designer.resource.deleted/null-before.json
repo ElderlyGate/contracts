@@ -1,0 +1,16 @@
+{
+  "specversion": "1.0",
+  "id": "01JC6V8K3Q0Z7M4N5P6R7S8TA0",
+  "source": "/designer/default",
+  "type": "designer.resource.deleted",
+  "subject": "CMP-LOCKS",
+  "time": "2026-11-11T12:00:05Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "file": "block/CMP-LOCKS.yml",
+    "kind": "Block",
+    "id": "CMP-LOCKS",
+    "before": null
+  },
+  "traceparent": "00-4bf92f3577b34da6a3ce929d0e0e4736-b7ad6b7169203331-01"
+}

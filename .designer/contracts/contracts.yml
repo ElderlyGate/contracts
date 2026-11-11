@@ -394,8 +394,8 @@ spec:
       - structure
     group: GRP-REPO
   caption:
-    - "the server record a detached"
-    - "serve writes for every app"
+    - "the server record every app's serve writes,"
+    - "and the servers, stop and link answers"
   code:
     implements: mankit/v1
 --- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml

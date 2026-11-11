@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/queue-list.schema.json",
+  "title": "queue list",
+  "description": "What <app> queue answers with -o json: the tickets of one served thing in the order they go, and the files moved to .queue/bad/.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "const": "QueueList"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "tickets",
+            "bad"
+          ],
+          "properties": {
+            "tickets": {
+              "description": "First the one whose turn it is.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "ticket",
+                  "turn"
+                ],
+                "properties": {
+                  "ticket": {
+                    "$ref": "ticket.schema.json"
+                  },
+                  "turn": {
+                    "description": "Its change runs now.",
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "bad": {
+              "description": "Stale or unreadable tickets, skipped; a person looks at them and removes them.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "description": "The file's name in .queue/bad/.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

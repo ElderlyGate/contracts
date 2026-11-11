@@ -1,0 +1,29 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261111-2f4a
+  title: The stream.gapped event
+  created_at: 2026-11-11T15:19:33.016Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: in-progress
+  order: 0.75
+  summary: Shared schema and sample for <product>.stream.gapped (mankit live events)
+  tags: ['feature:contracts', 'epic:same-shape']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/stream-gap/same-shape
+  description: |
+    #feature:contracts #epic:same-shape
+
+    # The stream.gapped event
+
+    mankit's live events (ElderlyGate/mankit#25) send `<product>.stream.gapped` to a client that missed events, so it reloads its state. Its shape is shared by every app, so it lives in `mankit/v1/`.
+
+    - `mankit/v1/stream.gapped.schema.json`: a CloudEvent (event/v1), type `<product>.stream.gapped`, subject `stream`, data `{lastKnown, oldestKept}`.
+    - A sample and a refused sample.
+
+    Each app lists the event in its own AsyncAPI file (designer's when e-designer moves to mankit serve).
+  lifecycle:
+    active_at: 2026-11-11T15:19:36.879Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>

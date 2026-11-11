@@ -49,3 +49,7 @@ forms:
     app: mankit
     note: The record a detached serve writes for every app (mankit serve)
     state: current
+  - new: elderlygate/mankit/ticket/v1
+    app: mankit
+    note: A change waiting its turn in the change queue of a served thing (mankit queue)
+    state: current

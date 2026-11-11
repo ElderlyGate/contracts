@@ -24,7 +24,8 @@ Every app that changes a served thing shares one queue in `<served folder>/<app 
 - A lock is exclusive and never waited on with the system's blocking call: `flock(LOCK_EX|LOCK_NB)` on the whole file on Linux and macOS, `LockFileEx` with `LOCKFILE_EXCLUSIVE_LOCK|LOCKFILE_FAIL_IMMEDIATELY` on one byte at offset 2^62 on Windows, so the file's content stays readable.
 - `lock` is held while a ticket is written, the folder is read, or a ticket is removed. A ticket is written whole (through a temporary dot-file renamed into place) and locked before `lock` is given up.
 - A ticket's file is locked by its process from writing to removing. A reader that can take that lock knows the process has ended and removes the ticket.
-- A process takes `turn` only while it holds `lock` and its ticket is first, holds it until its change is written and read back, and writes its ticket's id in `turn` while it holds it.
+- A process takes `turn` only while it holds `lock` and its ticket is first, holds it until its change is written and read back, and while it holds it writes in `turn` its ticket's id and the time it took the turn (RFC 3339), one per line.
+- A change may hold the turn for 2 minutes. At that limit its write is told to stop, the change fails with `change_too_long`, and the turn is given up once the write has returned.
 - A ticket is touched every 5 seconds while it waits and runs. A ticket whose lock is held but which was not touched for 30 seconds is stale and moved to `bad/`.
 - A ticket's id is 20 digits, after every id in the line; the lowest goes first.
 

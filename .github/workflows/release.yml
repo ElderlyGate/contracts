@@ -10,7 +10,7 @@ on:
         type: boolean
         default: false
       runner:
-        description: Where this release runs; variable follows RELEASE_RUNNER (github when unset)
+        description: Where this release runs; a public repo releases on github unless overridden here
         type: choice
         options: [variable, local, github]
         default: variable
@@ -26,4 +26,4 @@ jobs:
     with:
       build: none
       rc: ${{ inputs.rc == true }}
-      runner: ${{ inputs.runner != 'variable' && inputs.runner || '' }}
+      runner: ${{ inputs.runner != 'variable' && inputs.runner || 'github' }}

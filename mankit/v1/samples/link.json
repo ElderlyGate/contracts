@@ -1,0 +1,14 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Link",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "url": "http://127.0.0.1:7480/?token=0f1e2d3c"
+  },
+  "errors": []
+}

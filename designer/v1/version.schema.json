@@ -30,7 +30,8 @@
           "required": [
             "app",
             "version",
-            "contract"
+            "contract",
+            "contracts"
           ],
           "properties": {
             "app": {
@@ -43,6 +44,16 @@
             "contract": {
               "type": "string",
               "pattern": "^v[0-9]+$"
+            },
+            "contracts": {
+              "description": "Every contract version the app answers.",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^v[0-9]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
             }
           },
           "additionalProperties": false

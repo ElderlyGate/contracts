@@ -1,0 +1,15 @@
+{
+  "apiVersion": "elderlygate/mankit/server/v1",
+  "kind": "Server",
+  "metadata": {
+    "app": "designer",
+    "addr": "127.0.0.1:7480",
+    "pid": 4242,
+    "token": "secret"
+  },
+  "spec": {
+    "version": "5.0.0",
+    "startedAt": "2026-11-11T13:00:00Z",
+    "detached": true
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/stopped-list.schema.json",
+  "title": "stopped list",
+  "description": "What servers stop answers with -o json: what stopping each server did.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "const": "StoppedList"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "addr"
+            ],
+            "properties": {
+              "addr": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pid": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "stale": {
+                "description": "The server was already gone; only its record went.",
+                "type": "boolean"
+              },
+              "stopped": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ]
+}

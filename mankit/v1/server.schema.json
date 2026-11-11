@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/server.schema.json",
+  "title": "server",
+  "description": "The record a detached serve writes for every app, so servers, servers stop and servers link find it. Two app versions read it at once: apiVersion, kind and metadata never change; spec may grow.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "elderlygate/mankit/server/v1"
+    },
+    "kind": {
+      "const": "Server"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "app",
+        "addr",
+        "pid"
+      ],
+      "properties": {
+        "app": {
+          "description": "The product ID of the app that serves.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "addr": {
+          "description": "The address the server bound.",
+          "type": "string",
+          "minLength": 1
+        },
+        "pid": {
+          "description": "The server's process.",
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "startedAt",
+        "version",
+        "detached"
+      ],
+      "properties": {
+        "name": {
+          "description": "The thing it serves, when it serves one.",
+          "type": "string"
+        },
+        "version": {
+          "description": "The app's version.",
+          "type": "string",
+          "minLength": 1
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "log": {
+          "description": "Where the detached server writes its output.",
+          "type": "string"
+        },
+        "detached": {
+          "description": "Started with serve --detach; a server in the foreground has a terminal instead.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4)."
+    }
+  },
+  "additionalProperties": false
+}

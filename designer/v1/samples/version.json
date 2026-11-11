@@ -10,7 +10,10 @@
   "data": {
     "app": "designer",
     "version": "5.0.0",
-    "contract": "v1"
+    "contract": "v1",
+    "contracts": [
+      "v1"
+    ]
   },
   "errors": []
 }

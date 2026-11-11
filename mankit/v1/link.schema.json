@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/link.schema.json",
+  "title": "link",
+  "description": "What servers link answers with -o json: the link that opens a server's page.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "const": "Link"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https?://[^/]+/\\?token=."
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

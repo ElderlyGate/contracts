@@ -7,7 +7,7 @@ The rules and the layout of the folders are in `constitution/tech-stack.md`; the
 ## What is here
 
 - `envelope/v1/`, `error/v1/`, `event/v1/`: the shapes every answer, error and event shares.
-- `mankit/v1/`: what mankit serve answers for every app: the record a detached `serve` writes, the `servers` answers, and the `<product>.stream.gapped` event a client of `GET /api/events` gets when it missed events. Each app lists that event in its own `events.asyncapi.yaml`.
+- `mankit/v1/`: what mankit serve answers for every app: the record a detached `serve` writes, the `servers` answers, the `<product>.stream.gapped` event a client of `GET /api/events` gets when it missed events, and the change queue's ticket and the `<app> queue` answer. Each app lists that event in its own `events.asyncapi.yaml`.
 - `<app>/<version>/`: one app's contract, named by its product ID. `designer/v1/` is the first.
 - `apiversion/v1/forms.yaml`: the one table of every apiVersion form, old and new. A reader that meets an old form can say it is old, and the row names the upgrade command (`hubman migrate <app> <folder>`) and the current form.
 

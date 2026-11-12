@@ -30,7 +30,7 @@
                 ],
                 "properties": {
                   "ticket": {
-                    "$ref": "ticket.schema.json"
+                    "$ref": "queue-ticket.schema.json"
                   },
                   "turn": {
                     "description": "Its change runs now.",

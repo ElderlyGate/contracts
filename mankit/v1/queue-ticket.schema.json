@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/ticket.schema.json",
-  "title": "ticket",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/queue-ticket.schema.json",
+  "title": "queue ticket",
   "description": "One change waiting its turn in the queue of a served thing, a file in <served folder>/<app folder>/.queue/ (ADR-S14). A ticket, never a command: each process runs its own change. Two app versions share the queue at once: apiVersion, kind and metadata never change; spec may grow. How every app shares the folder is fixed for v1 in the README, section The change queue on disk.",
   "type": "object",
   "required": [
@@ -12,10 +12,10 @@
   ],
   "properties": {
     "apiVersion": {
-      "const": "elderlygate/mankit/ticket/v1"
+      "const": "elderlygate/mankit/queue-ticket/v1"
     },
     "kind": {
-      "const": "Ticket"
+      "const": "QueueTicket"
     },
     "metadata": {
       "type": "object",

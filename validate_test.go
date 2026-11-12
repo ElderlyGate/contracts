@@ -108,7 +108,7 @@ func TestAServerRecordTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 }
 
 func TestATicketTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
-	sample, err := os.ReadFile("mankit/v1/samples/ticket.json")
+	sample, err := os.ReadFile("mankit/v1/samples/queue-ticket.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -126,7 +126,7 @@ func TestATicketTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := contracts.Validate("mankit/v1/ticket.schema.json", newer); err != nil {
+	if err := contracts.Validate("mankit/v1/queue-ticket.schema.json", newer); err != nil {
 		t.Fatalf("a ticket from a newer app was refused: %v", err)
 	}
 	delete(ticket.Spec, "priority")
@@ -136,7 +136,7 @@ func TestATicketTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := contracts.Validate("mankit/v1/ticket.schema.json", renamed); err == nil {
+	if err := contracts.Validate("mankit/v1/queue-ticket.schema.json", renamed); err == nil {
 		t.Fatal("a ticket with a renamed header field was taken")
 	}
 }

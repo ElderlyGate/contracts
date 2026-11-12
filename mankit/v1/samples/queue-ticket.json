@@ -1,8 +1,8 @@
 {
-  "apiVersion": "elderlygate/mankit/ticket/v1",
-  "kind": "Ticket",
+  "apiVersion": "elderlygate/mankit/queue-ticket/v1",
+  "kind": "QueueTicket",
   "metadata": {
-    "id": "42",
+    "id": "01794398400000000000",
     "app": "designer",
     "pid": 4242,
     "host": "build-01"

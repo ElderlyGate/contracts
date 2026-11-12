@@ -1,10 +1,12 @@
 {
-  "apiVersion": "elderlygate/mankit/ticket/v1",
-  "kind": "Ticket",
+  "apiVersion": "elderlygate/mankit/queue-ticket/v1",
+  "kind": "QueueTicket",
   "metadata": {
     "id": "01794398400000000000",
     "app": "designer",
-    "host": "build-01"
+    "pid": 4242,
+    "host": "build-01",
+    "started": "2026-11-11T12:00:00Z"
   },
   "spec": {
     "change": "add block shop",

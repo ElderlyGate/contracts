@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/stopped-list.schema.json",
   "title": "stopped list",
-  "description": "What servers stop answers with -o json: what stopping each server did.",
+  "description": "What servers stop answers with -o json: what stopping each server did, so a script learns per server whether it stopped or was already gone.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -10,29 +10,35 @@
     {
       "properties": {
         "kind": {
+          "description": "Always StoppedList, the kind of this answer, so a reader knows which schema its data meets.",
           "const": "StoppedList"
         },
         "data": {
+          "description": "One row per server that servers stop tried to stop.",
           "type": "array",
           "items": {
+            "description": "What stopping one server did.",
             "type": "object",
             "required": [
               "addr"
             ],
             "properties": {
               "addr": {
+                "description": "The server's address from its record, which names the server the row is about.",
                 "type": "string",
                 "minLength": 1
               },
               "pid": {
+                "description": "The server's process from its record, the one servers stop signals.",
                 "type": "integer",
                 "minimum": 1
               },
               "stale": {
-                "description": "The server was already gone; only its record went.",
+                "description": "The server was already gone; only its record went, and nothing was signalled.",
                 "type": "boolean"
               },
               "stopped": {
+                "description": "The server was signalled and stopped listening, and its record went. When neither this nor stale is set, the server was not stopped.",
                 "type": "boolean"
               }
             },

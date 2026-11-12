@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/queue-backend.schema.json",
   "title": "queue backend",
-  "description": "The marker .queue/backend: the backend every writer of a served folder takes turns with. Without it the backend is files. It never holds an address or a token; those come from the app's settings. apiVersion and kind never change; spec may grow.",
+  "description": "The marker .queue/backend: the backend every writer of a served folder takes turns with, so all of them stand in one line even when a lock service takes the turns (ADR-S14). Without it the backend is files. It never holds an address or a token; those come from each writer's own settings. apiVersion and kind never change, since two app versions read the marker at once; spec may grow (ADR-S15).",
   "type": "object",
   "required": [
     "apiVersion",
@@ -11,9 +11,11 @@
   ],
   "properties": {
     "apiVersion": {
+      "description": "The form the marker is in, the same as the queue's tickets. It never changes, so two app versions sharing the folder both read it (ADR-S15).",
       "const": "elderlygate/mankit/queue/v1"
     },
     "kind": {
+      "description": "Always QueueBackend. It tells the marker apart from a ticket, which carries the same apiVersion.",
       "const": "QueueBackend"
     },
     "spec": {
@@ -23,7 +25,7 @@
       ],
       "properties": {
         "type": {
-          "description": "files: the file queue in the folder; lock-service: a separate service takes the turns. An app refuses a type it does not run.",
+          "description": "files: the file queue in the folder; lock-service: a separate service takes the turns, for writers that share no disk (ADR-S14). An app refuses a type it does not run and never falls back to files, so no two writers of one folder take turns in different lines.",
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$"
         }
@@ -48,7 +50,7 @@
         ]
       },
       "additionalProperties": true,
-      "description": "Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4); never an address or a token."
+      "description": "What the marker says about the backend. Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4); never an address or a token."
     }
   },
   "additionalProperties": false

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/queue-ticket.schema.json",
   "title": "queue ticket",
-  "description": "One change waiting its turn in the queue of a served thing, a file in <served folder>/<app folder>/.queue/ (ADR-S14). A ticket, never a command: each process runs its own change. Two app versions share the queue at once: apiVersion, kind and metadata never change; spec may grow. How every app shares the folder is fixed for v1 in the README, section The change queue on disk.",
+  "description": "One change waiting its turn in the queue of a served thing, a file in <served folder>/<app folder>/.queue/, so every writer of it (CLI runs, servers, UI clicks) stands in one line and changes go one at a time (ADR-S14). A ticket, never a command: each process runs its own change, and nothing in a served folder is ever executed. Two app versions share the queue at once: apiVersion, kind and metadata never change; spec may grow (ADR-S15). How every app shares the folder is fixed for v1 in the README, section The change queue on disk.",
   "type": "object",
   "required": [
     "apiVersion",
@@ -12,12 +12,15 @@
   ],
   "properties": {
     "apiVersion": {
+      "description": "The form the ticket is in, the same as the backend marker. It never changes, so two app versions sharing the queue both read every ticket (ADR-S15).",
       "const": "elderlygate/mankit/queue/v1"
     },
     "kind": {
+      "description": "Always QueueTicket. It tells a ticket apart from the backend marker, which carries the same apiVersion.",
       "const": "QueueTicket"
     },
     "metadata": {
+      "description": "Who waits and where in the line. It never changes in v1, since every app reads every other's tickets by it (ADR-S15).",
       "type": "object",
       "required": [
         "id",
@@ -32,17 +35,17 @@
           "pattern": "^[0-9]{20}$"
         },
         "app": {
-          "description": "The product ID of the app that waits.",
+          "description": "The product ID of the app that waits, so a person reading the queue sees which app holds each place.",
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$"
         },
         "pid": {
-          "description": "The process that waits, on host.",
+          "description": "The process that waits, on host, so a person can find the process behind a ticket.",
           "type": "integer",
           "minimum": 1
         },
         "host": {
-          "description": "The machine the process runs on, as it names itself.",
+          "description": "The machine the process runs on, as it names itself. A pid means something only on its own machine, so host says which one.",
           "type": "string",
           "minLength": 1
         }
@@ -62,17 +65,18 @@
           "minLength": 1
         },
         "joinedAt": {
+          "description": "When the ticket joined the line, as an RFC 3339 time, so a person reading the queue sees how long a change has waited.",
           "type": "string",
           "format": "date-time"
         },
         "version": {
-          "description": "The app's version.",
+          "description": "The version of the app that waits. Two app versions may share one queue, so a person sees which one holds each place.",
           "type": "string",
           "minLength": 1
         }
       },
       "additionalProperties": true,
-      "description": "Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4)."
+      "description": "What the ticket says about its change. Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4)."
     }
   },
   "additionalProperties": false

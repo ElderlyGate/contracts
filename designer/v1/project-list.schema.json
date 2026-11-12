@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/project-list.schema.json",
+  "title": "project list",
+  "description": "The projects added on this machine, from project list; project add and project remove answer it too, as it stands after the change. One server serves every project in it (ED-MISSION-2), so a reader such as the board's picker gets every project, and why one is unavailable, in one answer.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always ProjectList, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "ProjectList"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "One row per project, in the order they were added; empty when none is added.",
+          "type": "array",
+          "items": {
+            "description": "One project: a folder holding a .designer/ design root. A project that cannot be read is still a row, saying why, so a reader lists every project and the rest carry on.",
+            "type": "object",
+            "required": [
+              "name",
+              "path"
+            ],
+            "properties": {
+              "name": {
+                "description": "The project's name on this machine, unique in the list: the name --project takes and a picker shows. It is the folder's name unless another was given when it was added, so two folders with the same name can both be added.",
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "description": "The project's folder on this machine, absolute: the folder holding .designer/. The list is kept on the machine, never in a repository, so the path is only meaningful here.",
+                "type": "string",
+                "minLength": 1
+              },
+              "designs": {
+                "description": "The ids of the designs in the project's .designer/, sorted, so a reader can offer them without asking again. Present exactly when the project reads.",
+                "type": "array",
+                "items": {
+                  "description": "A design's id, its folder's name.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "unreadable": {
+                "description": "Why the project cannot be read, such as its folder being gone or holding no .designer/; present only then. Such a row names no designs, since an empty list would claim the project holds none, so a reader still lists the project and shows why it is unavailable.",
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false,
+            "if": {
+              "required": [
+                "unreadable"
+              ]
+            },
+            "then": {
+              "not": {
+                "required": [
+                  "designs"
+                ]
+              }
+            },
+            "else": {
+              "required": [
+                "designs"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

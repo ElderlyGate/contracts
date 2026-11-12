@@ -3,17 +3,20 @@
   "kind": "ApiVersionForms",
   "forms": [
     {
-      "old": "app/kanban/v1",
-      "new": "elderlygate/kanban/app/v1",
+      "new": "elderlygate/kanban/board/v1",
+      "old": [
+        "app/kanban/v1"
+      ],
       "app": "kanban",
-      "note": "Cards written as YAML",
-      "state": "old"
-    },
-    {
-      "new": "elderlygate/kanban/app/v1",
-      "app": "kanban",
-      "note": "Current form of the old form app/kanban/v1",
-      "state": "current"
+      "kinds": [
+        "Card",
+        "Epic",
+        "Feature",
+        "Story",
+        "Task",
+        "Bug"
+      ],
+      "note": "The cards of a board"
     }
   ]
 }

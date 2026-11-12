@@ -12,10 +12,10 @@
   ],
   "properties": {
     "apiVersion": {
-      "const": "elderlygate/mankit/server/v1"
+      "const": "elderlygate/mankit/servers/v1"
     },
     "kind": {
-      "const": "Server"
+      "const": "ServerRecord"
     },
     "metadata": {
       "type": "object",

@@ -3,18 +3,21 @@
   "kind": "ApiVersionForms",
   "forms": [
     {
-      "old": "elderlygate/kanban/app/v1",
-      "new": "elderlygate/kanban/app/v1",
+      "new": "elderlygate/kanban/board/v1",
+      "old": [
+        "elderlygate/kanban/app/v1"
+      ],
       "app": "kanban",
-      "note": "Cards written as YAML",
-      "state": "old",
+      "kinds": [
+        "Card",
+        "Epic",
+        "Feature",
+        "Story",
+        "Task",
+        "Bug"
+      ],
+      "note": "The cards of a board",
       "upgrade": "hubman migrate kanban <folder>"
-    },
-    {
-      "new": "elderlygate/kanban/app/v1",
-      "app": "kanban",
-      "note": "Current form of the old form app/kanban/v1",
-      "state": "current"
     }
   ]
 }

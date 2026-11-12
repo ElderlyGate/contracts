@@ -9,7 +9,7 @@ The rules and the layout of the folders are in `constitution/tech-stack.md`; the
 - `envelope/v1/`, `error/v1/`, `event/v1/`: the shapes every answer, error and event shares.
 - `mankit/v1/`: what mankit serve answers for every app: the record a detached `serve` writes, the `servers` answers, and the `<product>.stream.gapped` event a client of `GET /api/events` gets when it missed events. Each app lists that event in its own `events.asyncapi.yaml`.
 - `<app>/<version>/`: one app's contract, named by its product ID. `designer/v1/` is the first.
-- `apiversion/v1/forms.yaml`: the one table of every apiVersion form, old and new. A reader that meets an old form can say it is old, and the row names the upgrade command (`hubman migrate <app> <folder>`) and the current form.
+- `apiversion/v1/forms.yaml`: the one table of every apiVersion form. A row names a current form, the old forms it replaces and its kinds. A reader that meets an old form finds the row whose `old` list holds it, and gets the current form and the upgrade command (`hubman migrate <app> <folder>`).
 
 An answer has five fields: `apiVersion`, `kind`, `ran`, `data` and `errors`. `ran` says where it came from: the name, the app, its version and the contract version. A reader asks for a version with `--contract v1` or the `Accept-Contract: v1` header. An app that cannot answer it gives the error `unsupported_contract` and lists the versions it supports.
 
@@ -37,4 +37,4 @@ The tests check that:
 - every sample meets its schema, and every schema has a sample;
 - every event in an `events.asyncapi.yaml` is a valid event, with its schema and sample;
 - every file in `testdata/bad/` is refused by its schema;
-- the apiVersion table lists each form once; an old row has its upgrade command and points to a current form.
+- the apiVersion table lists each form once, and each old form in one row only; a row with old forms has its upgrade command.

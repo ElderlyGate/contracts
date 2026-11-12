@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/apiversion/v1/forms.schema.json",
   "title": "apiVersion forms",
-  "description": "Every apiVersion form, old and new, and which is current.",
+  "description": "Every apiVersion form: one row per current form, with the old forms it replaces and its kinds.",
   "type": "object",
   "required": [
     "apiVersion",
@@ -25,37 +25,50 @@
         "required": [
           "new",
           "app",
-          "note",
-          "state"
+          "kinds",
+          "note"
         ],
         "properties": {
-          "old": {
-            "description": "<level>/<name>/<version>, as written today. Only an old row has it.",
-            "type": "string",
-            "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
-          },
           "new": {
-            "description": "<org>/<app>/<level>/<version>: where the old name is not an app, level and name join with a dash.",
+            "description": "<org>/<app>/<family>/v<n>: the family names what holds the files, usually the folder or collection they live in (design, board, queue, log, servers); the kind names one item in it. An app's answers keep the family app.",
             "type": "string",
             "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+          },
+          "old": {
+            "description": "The old forms this one replaces, <level>/<name>/<version> as written before. A reader that meets an old form finds the row whose old list holds it.",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+            }
           },
           "app": {
             "description": "The product ID of the app that owns the shape.",
             "type": "string",
             "pattern": "^[a-z][a-z0-9-]*$"
           },
+          "kinds": {
+            "description": "The kinds written with this form.",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Za-z0-9]*$"
+            }
+          },
+          "openKinds": {
+            "description": "true: the kinds are open; besides the ones listed, every kind the design's Definitions declare is written with this form.",
+            "type": "boolean"
+          },
           "note": {
             "type": "string",
             "minLength": 1
           },
-          "state": {
-            "enum": [
-              "current",
-              "old"
-            ]
-          },
           "upgrade": {
-            "description": "For an old row: hubman migrate <app> <folder>.",
+            "description": "For a row with old forms: hubman migrate <app> <folder>.",
             "type": "string",
             "pattern": "^hubman migrate [a-z][a-z0-9-]* <folder>$"
           }
@@ -63,38 +76,21 @@
         "allOf": [
           {
             "if": {
-              "properties": {
-                "state": {
-                  "const": "old"
-                }
-              },
               "required": [
-                "state"
+                "old"
               ]
             },
             "then": {
               "required": [
-                "old",
                 "upgrade"
               ]
             },
             "else": {
-              "allOf": [
-                {
-                  "not": {
-                    "required": [
-                      "old"
-                    ]
-                  }
-                },
-                {
-                  "not": {
-                    "required": [
-                      "upgrade"
-                    ]
-                  }
-                }
-              ]
+              "not": {
+                "required": [
+                  "upgrade"
+                ]
+              }
             }
           }
         ],

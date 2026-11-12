@@ -1,0 +1,24 @@
+{
+  "apiVersion": "elderlygate/contracts/app/v1",
+  "kind": "ApiVersionForms",
+  "forms": [
+    {
+      "new": "elderlygate/kanban/board/v1",
+      "old": [
+        "app/kanban/v1"
+      ],
+      "app": "kanban",
+      "kinds": [
+        "Card",
+        "Epic",
+        "Feature",
+        "Story",
+        "Task",
+        "Bug"
+      ],
+      "note": "The cards of a board",
+      "upgrade": "hubman migrate kanban <folder>",
+      "openKinds": "yes"
+    }
+  ]
+}

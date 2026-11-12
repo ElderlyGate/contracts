@@ -1,51 +1,30 @@
 apiVersion: elderlygate/contracts/app/v1
 kind: ApiVersionForms
 forms:
-  - old: core/design/v2
-    new: elderlygate/designer/core-design/v2
+  - new: elderlygate/designer/design/v2
+    old: [core/design/v2, core/system/v1]
     app: designer
-    note: Every design resource e-designer writes (Design, Block, Group, Flow, Link, Adr, Question, Risk, Suite, Request, Open, Contradiction, Suggestion); every product's design uses it
-    state: old
+    kinds: [Design, Definitions]
+    openKinds: true
+    note: The files of a design. Kinds are open, the built-in ones (Block, Group, Flow, Link, Adr, Question, Risk, Suite, Request, Open, Contradiction, Suggestion) and the ones a project declares share this apiVersion; every product's design uses it
     upgrade: hubman migrate designer <folder>
-  - old: core/system/v1
-    new: elderlygate/designer/core-system/v1
-    app: designer
-    note: The Definitions resource of a design
-    state: old
-    upgrade: hubman migrate designer <folder>
-  - old: app/kanban/v1
-    new: elderlygate/kanban/app/v1
-    app: kanban
-    note: Cards written as YAML (Card, Epic, Feature, Story, Task, Bug), read by control-room
-    state: old
-    upgrade: hubman migrate kanban <folder>
-  - old: org/work-record/v1
-    new: elderlygate/work-records/org-work-record/v1
-    app: work-records
-    note: Work records the org skill writes and control-room reads
-    state: old
-    upgrade: hubman migrate work-records <folder>
   - new: elderlygate/designer/app/v1
     app: designer
+    kinds: [Version, DesignList, BlockList, Block]
     note: Answers and events of designer, contract v1
-    state: current
-  - new: elderlygate/designer/core-design/v2
-    app: designer
-    note: Current form of the old form core/design/v2
-    state: current
-  - new: elderlygate/designer/core-system/v1
-    app: designer
-    note: Current form of the old form core/system/v1
-    state: current
-  - new: elderlygate/kanban/app/v1
+  - new: elderlygate/kanban/board/v1
+    old: [app/kanban/v1]
     app: kanban
-    note: Current form of the old form app/kanban/v1
-    state: current
-  - new: elderlygate/work-records/org-work-record/v1
+    kinds: [Card, Epic, Feature, Story, Task, Bug]
+    note: The cards of a board, read by control-room
+    upgrade: hubman migrate kanban <folder>
+  - new: elderlygate/work-records/log/v1
+    old: [org/work-record/v1]
     app: work-records
-    note: Current form of the old form org/work-record/v1
-    state: current
-  - new: elderlygate/mankit/server/v1
+    kinds: [WorkRecord]
+    note: Work records the org skill writes and control-room reads
+    upgrade: hubman migrate work-records <folder>
+  - new: elderlygate/mankit/servers/v1
     app: mankit
+    kinds: [ServerRecord]
     note: The record a detached serve writes for every app (mankit serve)
-    state: current

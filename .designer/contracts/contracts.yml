@@ -150,8 +150,8 @@ spec:
       - structure
     group: GRP-REPO
   caption:
-    - "every apiVersion form, old and new,"
-    - "which is current, and how to upgrade"
+    - "one row per apiVersion form: its old forms,"
+    - "its kinds, and how to upgrade"
   code:
     implements: apiversion/v1/forms.yaml
 --- # block/CMP-DESIGNER-V1.yml

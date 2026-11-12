@@ -107,6 +107,7 @@
               "description": "Labels the design's user puts on the block.",
               "type": "array",
               "items": {
+                "description": "One label on the block.",
                 "type": "string"
               }
             }

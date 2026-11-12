@@ -44,6 +44,7 @@
             "minItems": 1,
             "uniqueItems": true,
             "items": {
+              "description": "One old form, three parts as written before, like core/design/v2.",
               "type": "string",
               "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
             }
@@ -59,6 +60,7 @@
             "minItems": 1,
             "uniqueItems": true,
             "items": {
+              "description": "One kind written with this form, or \"*\" for every kind the design declares.",
               "type": "string",
               "pattern": "^([A-Z][A-Za-z0-9]*|\\*)$"
             }

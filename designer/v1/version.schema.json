@@ -58,6 +58,7 @@
               "description": "Every contract version the app answers, so a reader picks one it also speaks (ADR-S03, ADR-S06).",
               "type": "array",
               "items": {
+                "description": "One contract version the app answers, such as v1.",
                 "type": "string",
                 "pattern": "^v[0-9]+$"
               },

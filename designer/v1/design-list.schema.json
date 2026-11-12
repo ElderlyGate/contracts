@@ -54,7 +54,7 @@
                 "type": "string"
               },
               "purpose_set": {
-                "description": "design.yml states the purpose; false when purpose is only the default, so a reader can show it as not set, as get design does with reference (not set).",
+                "description": "True when design.yml states the purpose; false when it is only the default. A reader can show it as not set, as get design does with reference (not set).",
                 "type": "boolean"
               },
               "components": {

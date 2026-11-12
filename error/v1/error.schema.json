@@ -57,6 +57,7 @@
       "description": "For unsupported_contract: the contract versions the app answers. A reader that asked for a version the app cannot give picks one from this list that it also speaks and asks again (ADR-S03, ADR-S06).",
       "type": "array",
       "items": {
+        "description": "One contract version the app answers, such as v1.",
         "type": "string",
         "pattern": "^v[0-9]+$"
       },

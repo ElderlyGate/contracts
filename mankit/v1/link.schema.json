@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/link.schema.json",
   "title": "link",
-  "description": "What servers link answers with -o json: the link that opens a server's page.",
+  "description": "What servers link answers with -o json: the link that opens a server's page. A person or script gets the link again after the terminal that ran serve is gone (ADR-S04).",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -10,15 +10,18 @@
     {
       "properties": {
         "kind": {
+          "description": "Always Link, the kind of this answer, so a reader knows which schema its data meets.",
           "const": "Link"
         },
         "data": {
+          "description": "The link that opens the page.",
           "type": "object",
           "required": [
             "url"
           ],
           "properties": {
             "url": {
+              "description": "The address of the server's page with its token as ?token=. Opening it leaves the token in a cookie, so the page's calls pass the server's token guard (ADR-S04).",
               "type": "string",
               "pattern": "^https?://[^/]+/\\?token=."
             }

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/stream.gapped.schema.json",
   "title": "stream gapped",
-  "description": "A client of GET /api/events missed events and reloads its state; every app that serves events sends it as <product>.stream.gapped.",
+  "description": "A client of GET /api/events missed events and reloads its state; every app that serves events sends it as <product>.stream.gapped. A client never shows a state with changes missing: it reloads instead (ADR-E3).",
   "allOf": [
     {
       "$ref": "../../event/v1/event.schema.json"
@@ -10,24 +10,27 @@
     {
       "properties": {
         "type": {
+          "description": "<product>.stream.gapped: one name for every app, only the product differs, so a client handles a gap the same way for every app (ADR-E2).",
           "pattern": "^[a-z][a-z0-9-]*\\.stream\\.gapped$"
         },
         "subject": {
+          "description": "Always stream: the gap is in the stream itself, not in one thing.",
           "const": "stream"
         },
         "data": {
+          "description": "Where the gap is: the last event the client had and the oldest one the server still keeps.",
           "type": "object",
           "required": [
             "lastKnown"
           ],
           "properties": {
             "lastKnown": {
-              "description": "The last event the server knows the client had; empty when the id is not one of this server's.",
+              "description": "The last event the server knows the client had; empty when the id is not one of this server's. With oldestKept it shows which events the client missed.",
               "type": "string",
               "maxLength": 128
             },
             "oldestKept": {
-              "description": "The oldest event the server still keeps; left out when it keeps none.",
+              "description": "The oldest event the server still keeps; left out when it keeps none. A server keeps only so many events for Last-Event-ID, so a client further behind gets this event (ADR-E3).",
               "type": "string",
               "minLength": 1
             }

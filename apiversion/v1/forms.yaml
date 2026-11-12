@@ -4,8 +4,7 @@ forms:
   - new: elderlygate/designer/design/v2
     old: [core/design/v2, core/system/v1]
     app: designer
-    kinds: [Design, Definitions]
-    openKinds: true
+    kinds: [Design, Definitions, "*"]
     note: The files of a design. Kinds are open, the built-in ones (Block, Group, Flow, Link, Adr, Question, Risk, Suite, Request, Open, Contradiction, Suggestion) and the ones a project declares share this apiVersion; every product's design uses it
     upgrade: hubman migrate designer <folder>
   - new: elderlygate/designer/app/v1

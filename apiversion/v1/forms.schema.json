@@ -50,18 +50,14 @@
             "pattern": "^[a-z][a-z0-9-]*$"
           },
           "kinds": {
-            "description": "The kinds written with this form.",
+            "description": "The kinds written with this form. \"*\" stands for every kind the design's Definitions declare, so a design's kinds are open.",
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
             "items": {
               "type": "string",
-              "pattern": "^[A-Z][A-Za-z0-9]*$"
+              "pattern": "^([A-Z][A-Za-z0-9]*|\\*)$"
             }
-          },
-          "openKinds": {
-            "description": "true: the kinds are open; besides the ones listed, every kind the design's Definitions declare is written with this form.",
-            "type": "boolean"
           },
           "note": {
             "type": "string",

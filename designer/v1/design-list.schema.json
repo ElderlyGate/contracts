@@ -65,7 +65,7 @@
                 "minimum": 0
               },
               "storage": {
-                "description": "How the design is kept: distributed, a folder with one file per resource, or single, one file holding every file but layout.yml (see design storage). Every reader and writer goes through e-designer, so only a person needs to know which.",
+                "description": "How the design is kept: distributed, a folder with one file per resource, or single, one file holding every file but layout.yml (see design storage). Every reader and writer goes through e-designer, so only a person needs to know which. Present on every row of a design that reads; a row that cannot be read leaves it out when nobody could tell.",
                 "enum": [
                   "distributed",
                   "single"

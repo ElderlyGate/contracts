@@ -23,10 +23,10 @@ forms:
     kinds: [WorkRecord]
     note: Work records the org skill writes and control-room reads
     upgrade: hubman migrate work-records <folder>
-  - new: elderlygate/mankit/servers/v1
+  - new: elderlygate/mankit/server/v1
     app: mankit
-    kinds: [ServerRecord]
-    note: The record a detached serve writes for every app (mankit serve)
+    kinds: [Server]
+    note: The record a detached serve writes for every app (mankit serve); named before the family rule, kept as released (CT-RULE-1)
   - new: elderlygate/mankit/queue/v1
     app: mankit
     kinds: [QueueTicket, QueueBackend]

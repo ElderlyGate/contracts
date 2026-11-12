@@ -10,8 +10,8 @@
   "data": [
     {
       "record": {
-        "apiVersion": "elderlygate/mankit/servers/v1",
-        "kind": "ServerRecord",
+        "apiVersion": "elderlygate/mankit/server/v1",
+        "kind": "Server",
         "metadata": {
           "app": "designer",
           "addr": "127.0.0.1:7480",

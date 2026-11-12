@@ -9,8 +9,8 @@ spec:
   column: done
   order: 0.875
   tags: [feature, 'epic:same-shape', 'feature:contracts']
-  description: "#feature:contracts #epic:same-shape\n\n# forms: one row per form, family names\n\nThe owner-approved tidy of `apiversion/v1/forms.yaml`:\n\n- One row per form: `new` is the current form, `old` lists the old forms it replaces, `kinds` lists its kinds. The `state` field goes.\n- A design's kinds are open: the kind `\"*\"` in its `kinds` list stands for every kind the design's Definitions declare.\n- `designer/core-design/v2` + `designer/core-system/v1` become `designer/design/v2`; `kanban/app/v1` becomes `kanban/board/v1`; `work-records/org-work-record/v1` becomes `work-records/log/v1`; `mankit/server/v1` becomes `mankit/servers/v1` with kind `ServerRecord`.\n- The naming rule replaces the level-word join: `<org>/<app>/<family>/v<n>`, the family names what holds the files, the kind names one item in it.\n\nmankit follows in its own PR (servers/v1, ServerRecord)."
-  summary: 'apiVersion forms: one row per form with old list and kinds; family names; servers/v1 + ServerRecord'
+  description: "#feature:contracts #epic:same-shape\n\n# forms: one row per form, family names\n\nThe owner-approved tidy of `apiversion/v1/forms.yaml`:\n\n- One row per form: `new` is the current form, `old` lists the old forms it replaces, `kinds` lists its kinds. The `state` field goes.\n- A design's kinds are open: the kind `\"*\"` in its `kinds` list stands for every kind the design's Definitions declare.\n- `designer/core-design/v2` + `designer/core-system/v1` become `designer/design/v2`; `kanban/app/v1` becomes `kanban/board/v1`; `work-records/org-work-record/v1` becomes `work-records/log/v1`. `mankit/server/v1` (kind `Server`) stays as released (CT-RULE-1).\n- The naming rule replaces the level-word join: `<org>/<app>/<family>/v<n>`, the family names what holds the files, the kind names one item in it."
+  summary: 'apiVersion forms: one row per form with old list and kinds; family names'
   work:
     agent: claude-opus-5-5
     branch: feat/forms-tidy/contracts

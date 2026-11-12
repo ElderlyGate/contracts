@@ -1,6 +1,6 @@
 {
   "apiVersion": "elderlygate/designer/app/v1",
-  "kind": "ServerRecord",
+  "kind": "Server",
   "ran": {
     "name": "designer",
     "app": "designer",

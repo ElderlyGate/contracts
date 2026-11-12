@@ -6,8 +6,8 @@ metadata:
   created_at: 2026-11-12T10:23:09.830Z
   created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
 spec:
-  column: in-progress
-  order: 0.75
+  column: done
+  order: 0.9375
   summary: designer/v1 documents carry elderlygate/designer/design/v2; unreadable design rows
   tags: [feature, 'epic:same-shape', 'feature:contracts']
   work:
@@ -28,3 +28,5 @@ spec:
   lifecycle:
     active_at: 2026-11-12T10:23:16.860Z
     active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+    done_at: 2026-11-12T10:24:20.632Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

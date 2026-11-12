@@ -80,8 +80,8 @@
       ],
       "properties": {
         "apiVersion": {
-          "description": "Always core/design/v2, the form a design's files are written in at this contract (apiversion/v1/forms.yaml). A reader that meets another form knows the file is not one this contract reads (ADR-S16).",
-          "const": "core/design/v2"
+          "description": "Always elderlygate/designer/design/v2, the form a design's files are written in at this contract, whatever their kind (apiversion/v1/forms.yaml). A reader that meets another form knows the file is not one this contract reads (ADR-S16).",
+          "const": "elderlygate/designer/design/v2"
         },
         "kind": {
           "description": "Always Block, the kind of resource.",

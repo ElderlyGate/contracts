@@ -1,0 +1,29 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "DesignList",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "design": {
+        "apiVersion": "elderlygate/designer/design/v2",
+        "kind": "Design",
+        "metadata": {
+          "id": "half-typed"
+        },
+        "spec": {}
+      },
+      "components": 0,
+      "resources": 0,
+      "storage": "distributed",
+      "unreadable": "half-typed/design.yml: yaml: line 3: did not find expected key",
+      "purpose": "reference",
+      "purpose_set": false
+    }
+  ],
+  "errors": []
+}

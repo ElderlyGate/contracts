@@ -34,15 +34,12 @@
           "description": "One row per design in the root.",
           "type": "array",
           "items": {
-            "description": "One design: its design.yml, and what e-designer counts and reads about it.",
+            "description": "One design: its design.yml, and what e-designer counts and reads about it; a design that cannot be read is still a row, saying why, so a reader lists every design.",
             "type": "object",
             "required": [
               "design",
-              "purpose",
-              "purpose_set",
               "components",
-              "resources",
-              "storage"
+              "resources"
             ],
             "properties": {
               "design": {
@@ -50,11 +47,11 @@
                 "$ref": "#/$defs/design"
               },
               "purpose": {
-                "description": "What the design counts as, a word of the purpose list: the one design.yml states, or the default (reference) when it states none, so a reader can treat every design by its purpose.",
+                "description": "What the design counts as, a word of the purpose list: the one design.yml states, or the default (reference) when it states none, so a reader can treat every design by its purpose. Present exactly when the design reads, since only then is the purpose known.",
                 "type": "string"
               },
               "purpose_set": {
-                "description": "True when design.yml states the purpose; false when it is only the default. A reader can show it as not set, as get design does with reference (not set).",
+                "description": "True when design.yml states the purpose; false when it is only the default. A reader can show it as not set, as get design does with reference (not set). Present exactly when the design reads.",
                 "type": "boolean"
               },
               "components": {
@@ -68,14 +65,47 @@
                 "minimum": 0
               },
               "storage": {
-                "description": "How the design is kept: distributed, a folder with one file per resource, or single, one file holding every file but layout.yml (see design storage). Every reader and writer goes through e-designer, so only a person needs to know which.",
+                "description": "How the design is kept: distributed, a folder with one file per resource, or single, one file holding every file but layout.yml (see design storage). Every reader and writer goes through e-designer, so only a person needs to know which. Present on every row of a design that reads; a row that cannot be read leaves it out when nobody could tell.",
                 "enum": [
                   "distributed",
                   "single"
                 ]
+              },
+              "unreadable": {
+                "description": "Why the design's design.yml cannot be read, or why the design cannot be read at all; present only then. Such a row names no purpose, since a default would claim what nobody knows, so a reader still lists the design and shows why it is unavailable.",
+                "type": "string",
+                "minLength": 1
               }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "if": {
+              "required": [
+                "unreadable"
+              ]
+            },
+            "then": {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "purpose"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "purpose_set"
+                    ]
+                  }
+                ]
+              }
+            },
+            "else": {
+              "required": [
+                "purpose",
+                "purpose_set",
+                "storage"
+              ]
+            }
           }
         }
       }
@@ -93,8 +123,8 @@
       ],
       "properties": {
         "apiVersion": {
-          "description": "Always core/design/v2, the form a design's files are written in at this contract (apiversion/v1/forms.yaml). A reader that meets another form knows the file is not one this contract reads (ADR-S16).",
-          "const": "core/design/v2"
+          "description": "Always elderlygate/designer/design/v2, the form a design's files are written in at this contract, whatever their kind (apiversion/v1/forms.yaml). A reader that meets another form knows the file is not one this contract reads (ADR-S16).",
+          "const": "elderlygate/designer/design/v2"
         },
         "kind": {
           "description": "Always Design: the design itself, not a resource in it.",

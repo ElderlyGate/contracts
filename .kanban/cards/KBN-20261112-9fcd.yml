@@ -1,0 +1,32 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261112-9fcd
+  title: 'designer/v1: documents in the design form'
+  created_at: 2026-11-12T10:23:09.830Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: done
+  order: 0.9375
+  summary: designer/v1 documents carry elderlygate/designer/design/v2; unreadable design rows
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/doc-form/contracts
+  description: |
+    #feature #epic:same-shape #feature:contracts
+
+    # designer/v1: documents in the design form; unreadable design rows
+
+    e-designer step E1 (e-designer card KBN-20261112-c060) writes every design file as `elderlygate/designer/design/v2`. designer/v1 still fixes the document apiVersion to `core/design/v2`, so e-designer's real answers fail it.
+
+    ## Changes
+    - block.schema.json `$defs/document` and design-list.schema.json `$defs/design`: apiVersion is `elderlygate/designer/design/v2`; samples and refused samples follow.
+    - design-list: a design whose design.yml cannot be read is still a row, with `unreadable` saying why; `purpose` and `purpose_set` are required only on a readable row, since a default purpose would claim what nobody knows.
+
+    No app has released an answer in designer/v1 yet, so CT-RULE-1 does not hold it.
+  lifecycle:
+    active_at: 2026-11-12T10:23:16.860Z
+    active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+    done_at: 2026-11-12T10:24:20.632Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

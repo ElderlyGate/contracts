@@ -170,6 +170,7 @@ spec:
     - "events.asyncapi.yaml lists four events, stream.gapped too"
   code:
     implements: designer/v1
+  description: "The documents a design answer holds carry the design form, elderlygate/designer/design/v2. A design whose design.yml cannot be read is still a row of the design list, saying why in `unreadable` and naming no purpose."
 --- # block/CMP-TESTS.yml
 apiVersion: core/design/v2
 kind: Block

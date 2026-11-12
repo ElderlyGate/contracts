@@ -10,7 +10,7 @@
   "data": [
     {
       "design": {
-        "apiVersion": "core/design/v2",
+        "apiVersion": "elderlygate/designer/design/v2",
         "kind": "Design",
         "metadata": {
           "id": "default",
@@ -25,6 +25,20 @@
       "components": 10,
       "resources": 18,
       "storage": "distributed"
+    },
+    {
+      "design": {
+        "apiVersion": "elderlygate/designer/design/v2",
+        "kind": "Design",
+        "metadata": {
+          "id": "half-typed"
+        },
+        "spec": {}
+      },
+      "components": 0,
+      "resources": 0,
+      "storage": "distributed",
+      "unreadable": "half-typed/design.yml: yaml: line 3: did not find expected key"
     }
   ],
   "errors": []

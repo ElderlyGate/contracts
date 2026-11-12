@@ -10,7 +10,7 @@ forms:
   - new: elderlygate/designer/app/v1
     app: designer
     kinds: [Version, DesignList, BlockList, Block]
-    note: Answers and events of designer, contract v1
+    note: Answers and events of designer, contract v1. Answer kinds not listed here are in the envelope only for now, with no schema of their own yet
   - new: elderlygate/kanban/board/v1
     old: [app/kanban/v1]
     app: kanban

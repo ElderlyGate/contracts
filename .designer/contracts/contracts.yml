@@ -166,8 +166,9 @@ spec:
       - structure
     group: GRP-REPO
   caption:
-    - "version (with its contracts), design list, block list, block;"
-    - "events.asyncapi.yaml lists four events, stream.gapped too"
+    - "version (with its contracts), design list, block list, block,"
+    - "project list; events.asyncapi.yaml lists four events,"
+    - "stream.gapped too"
   code:
     implements: designer/v1
   description: "The documents a design answer holds carry the design form, elderlygate/designer/design/v2. A design whose design.yml cannot be read is still a row of the design list, saying why in `unreadable` and naming no purpose."

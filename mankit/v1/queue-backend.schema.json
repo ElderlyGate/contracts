@@ -14,7 +14,7 @@
       "const": "elderlygate/mankit/queue/v1"
     },
     "kind": {
-      "const": "Backend"
+      "const": "QueueBackend"
     },
     "spec": {
       "type": "object",

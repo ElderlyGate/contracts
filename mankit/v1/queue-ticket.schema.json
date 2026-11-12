@@ -15,7 +15,7 @@
       "const": "elderlygate/mankit/queue/v1"
     },
     "kind": {
-      "const": "Ticket"
+      "const": "QueueTicket"
     },
     "metadata": {
       "type": "object",

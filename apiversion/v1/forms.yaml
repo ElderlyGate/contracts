@@ -51,5 +51,5 @@ forms:
     state: current
   - new: elderlygate/mankit/queue/v1
     app: mankit
-    note: "The change queue's files in a served folder's .queue/ (mankit queue), by kind: Ticket, a change waiting its turn; Backend, the marker naming how every writer takes turns"
+    note: "The change queue's files in a served folder's .queue/ (mankit queue), by kind: QueueTicket, a change waiting its turn; QueueBackend, the marker naming how every writer takes turns"
     state: current

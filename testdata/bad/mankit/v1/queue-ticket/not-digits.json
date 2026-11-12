@@ -1,6 +1,6 @@
 {
   "apiVersion": "elderlygate/mankit/queue/v1",
-  "kind": "Ticket",
+  "kind": "QueueTicket",
   "metadata": {
     "id": "0179439840000000000a",
     "app": "designer",

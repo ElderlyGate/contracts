@@ -12,7 +12,7 @@
       {
         "ticket": {
           "apiVersion": "elderlygate/mankit/queue/v1",
-          "kind": "Ticket",
+          "kind": "QueueTicket",
           "metadata": {
             "id": "01794398400000000000",
             "app": "designer",
@@ -30,7 +30,7 @@
       {
         "ticket": {
           "apiVersion": "elderlygate/mankit/queue/v1",
-          "kind": "Ticket",
+          "kind": "QueueTicket",
           "metadata": {
             "id": "01794398400500000000",
             "app": "designer",

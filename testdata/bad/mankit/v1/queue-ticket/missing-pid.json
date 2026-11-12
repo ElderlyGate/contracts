@@ -1,0 +1,14 @@
+{
+  "apiVersion": "elderlygate/mankit/queue/v1",
+  "kind": "QueueTicket",
+  "metadata": {
+    "id": "01794398400000000000",
+    "app": "designer",
+    "host": "build-01"
+  },
+  "spec": {
+    "change": "add block shop",
+    "joinedAt": "2026-11-11T12:00:00Z",
+    "version": "5.0.0"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "QueueList",
+  "ran": {
+    "name": "shop",
+    "app": "designer",
+    "version": "5.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "tickets": [
+      {
+        "ticket": {
+          "apiVersion": "elderlygate/mankit/queue/v1",
+          "kind": "QueueTicket",
+          "metadata": {
+            "id": "01794398400000000000",
+            "app": "designer",
+            "pid": 4242,
+            "host": "build-01"
+          },
+          "spec": {
+            "change": "add block shop",
+            "joinedAt": "2026-11-11T12:00:00Z",
+            "version": "5.0.0"
+          }
+        },
+        "turn": true
+      },
+      {
+        "ticket": {
+          "apiVersion": "elderlygate/mankit/queue/v1",
+          "kind": "QueueTicket",
+          "metadata": {
+            "id": "01794398400500000000",
+            "app": "designer",
+            "pid": 4317,
+            "host": "build-01"
+          },
+          "spec": {
+            "change": "tidy layout",
+            "joinedAt": "2026-11-11T12:00:00.5Z"
+          }
+        },
+        "turn": false
+      }
+    ]
+  },
+  "errors": []
+}

@@ -28,3 +28,7 @@ forms:
     app: mankit
     kinds: [ServerRecord]
     note: The record a detached serve writes for every app (mankit serve)
+  - new: elderlygate/mankit/queue/v1
+    app: mankit
+    kinds: [QueueTicket, QueueBackend]
+    note: "The change queue's files in a served folder's .queue/ (mankit queue): QueueTicket, a change waiting its turn; QueueBackend, the marker naming how every writer takes turns"

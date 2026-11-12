@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/queue-ticket.schema.json",
+  "title": "queue ticket",
+  "description": "One change waiting its turn in the queue of a served thing, a file in <served folder>/<app folder>/.queue/ (ADR-S14). A ticket, never a command: each process runs its own change. Two app versions share the queue at once: apiVersion, kind and metadata never change; spec may grow. How every app shares the folder is fixed for v1 in the README, section The change queue on disk.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "elderlygate/mankit/queue/v1"
+    },
+    "kind": {
+      "const": "QueueTicket"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "id",
+        "app",
+        "pid",
+        "host"
+      ],
+      "properties": {
+        "id": {
+          "description": "The ticket's place in the line and its file name without .json: 20 digits, so their order as strings is their order as numbers, and a lower id goes first.",
+          "type": "string",
+          "pattern": "^[0-9]{20}$"
+        },
+        "app": {
+          "description": "The product ID of the app that waits.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "pid": {
+          "description": "The process that waits, on host.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "host": {
+          "description": "The machine the process runs on, as it names itself.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "change",
+        "joinedAt"
+      ],
+      "properties": {
+        "change": {
+          "description": "What the change does, for people reading the queue.",
+          "type": "string",
+          "minLength": 1
+        },
+        "joinedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "description": "The app's version.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true,
+      "description": "Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4)."
+    }
+  },
+  "additionalProperties": false
+}

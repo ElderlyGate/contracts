@@ -106,3 +106,37 @@ func TestAServerRecordTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 		t.Fatal("a record with a new header field was taken")
 	}
 }
+
+func TestATicketTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
+	sample, err := os.ReadFile("mankit/v1/samples/queue-ticket.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var ticket struct {
+		APIVersion string         `json:"apiVersion"`
+		Kind       string         `json:"kind"`
+		Metadata   map[string]any `json:"metadata"`
+		Spec       map[string]any `json:"spec"`
+	}
+	if err := json.Unmarshal(sample, &ticket); err != nil {
+		t.Fatal(err)
+	}
+	ticket.Spec["priority"] = "a field a newer app adds"
+	newer, err := json.Marshal(ticket)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := contracts.Validate("mankit/v1/queue-ticket.schema.json", newer); err != nil {
+		t.Fatalf("a ticket from a newer app was refused: %v", err)
+	}
+	delete(ticket.Spec, "priority")
+	ticket.Metadata["machine"] = ticket.Metadata["host"]
+	delete(ticket.Metadata, "host")
+	renamed, err := json.Marshal(ticket)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := contracts.Validate("mankit/v1/queue-ticket.schema.json", renamed); err == nil {
+		t.Fatal("a ticket with a renamed header field was taken")
+	}
+}

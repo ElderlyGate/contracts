@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/error/v1/error.schema.json",
   "title": "error",
-  "description": "One error in the errors list of an answer.",
+  "description": "One error in the errors list of an answer. Every app uses this one format, so a reader handles any app's errors the same way (ADR-S03).",
   "type": "object",
   "required": [
     "apiVersion",
@@ -12,43 +12,49 @@
   ],
   "properties": {
     "apiVersion": {
-      "description": "<org>/<app>/<family>/v<n>",
+      "description": "The form the error is in, as <org>/<app>/<family>/v<n>. An error carries its own version like everything an app answers, so it can be read even on its own (ADR-S15).",
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
     },
     "kind": {
+      "description": "Always Error, so an error is told apart from every other kind, even outside an answer (ADR-S15).",
       "const": "Error"
     },
     "code": {
-      "description": "A short word for what went wrong, such as unsupported_contract.",
+      "description": "A short word for what went wrong, such as unsupported_contract. A program decides by the code, never by the message, so the message can be reworded without breaking a reader.",
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$"
     },
     "message": {
+      "description": "What went wrong, in plain words for a person. A program reads code instead, so this text may be reworded.",
       "type": "string",
       "minLength": 1
     },
     "at": {
-      "description": "The place the error points to.",
+      "description": "The place the error points to, so a person or a tool goes straight to what needs fixing. Left out when the error is about no one place.",
       "type": "object",
       "properties": {
         "file": {
+          "description": "The file the error is in, so a person can open it.",
           "type": "string"
         },
         "kind": {
+          "description": "The kind of the resource the error is about. An id is unique only within a kind, so kind and id together name one resource.",
           "type": "string"
         },
         "id": {
+          "description": "The id of the resource the error is about; read together with kind.",
           "type": "string"
         },
         "field": {
+          "description": "The field inside the resource that is wrong, as a path such as spec.board.display.layout, so a person finds the exact line to fix.",
           "type": "string"
         }
       },
       "additionalProperties": false
     },
     "supported": {
-      "description": "For unsupported_contract: the contract versions the app answers.",
+      "description": "For unsupported_contract: the contract versions the app answers. A reader that asked for a version the app cannot give picks one from this list that it also speaks and asks again (ADR-S03, ADR-S06).",
       "type": "array",
       "items": {
         "type": "string",

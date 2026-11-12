@@ -11,7 +11,7 @@
 envelope/v1/        the envelope every answer shares
 error/v1/           the one error format
 event/v1/           the event envelope every event shares (CloudEvents)
-apiversion/v1/      every apiVersion form, old and new, and which is current (one table for every app)
+apiversion/v1/      every apiVersion form, the old forms it replaces and its kinds (one table for every app)
 <app>/<version>/    one app's contract: <kind>.schema.json, samples/<kind>.json and events.asyncapi.yaml
 ```
 

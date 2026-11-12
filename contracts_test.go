@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 	"testing"
 
@@ -306,11 +307,11 @@ func TestApiVersionFormsListEveryFormOnce(t *testing.T) {
 	}
 	var table struct {
 		Forms []struct {
-			Old     string `yaml:"old"`
-			New     string `yaml:"new"`
-			App     string `yaml:"app"`
-			State   string `yaml:"state"`
-			Upgrade string `yaml:"upgrade"`
+			New     string   `yaml:"new"`
+			Old     []string `yaml:"old"`
+			App     string   `yaml:"app"`
+			Kinds   []string `yaml:"kinds"`
+			Upgrade string   `yaml:"upgrade"`
 		} `yaml:"forms"`
 	}
 	raw, err := os.ReadFile("apiversion/v1/forms.yaml")
@@ -331,31 +332,29 @@ func TestApiVersionFormsListEveryFormOnce(t *testing.T) {
 	pattern := envelope["properties"].(map[string]any)["apiVersion"].(map[string]any)["pattern"].(string)
 	newForm := regexp.MustCompile(pattern)
 	current := map[string]bool{}
-	for _, row := range table.Forms {
-		if row.State == "current" {
-			if current[row.New] {
-				t.Errorf("current form %s is listed twice", row.New)
-			}
-			current[row.New] = true
-		}
-	}
-	maps := map[string]string{}
+	oldIn := map[string]string{}
 	for _, row := range table.Forms {
 		if !newForm.MatchString(row.New) {
-			t.Errorf("%q: new form %q is not an envelope apiVersion", row.Old, row.New)
+			t.Errorf("new form %q is not an envelope apiVersion", row.New)
 		}
-		if row.State != "old" {
+		if current[row.New] {
+			t.Errorf("form %s is listed twice", row.New)
+		}
+		current[row.New] = true
+		if slices.Contains(row.Kinds, "*") && row.New != "elderlygate/designer/design/v2" {
+			t.Errorf("%s: only a design's kinds are open, \"*\" belongs to elderlygate/designer/design/v2", row.New)
+		}
+		if len(row.Old) == 0 {
 			continue
 		}
 		if want := "hubman migrate " + row.App + " <folder>"; row.Upgrade != want {
-			t.Errorf("%s: upgrade is %q, want %q", row.Old, row.Upgrade, want)
+			t.Errorf("%s: upgrade is %q, want %q", row.New, row.Upgrade, want)
 		}
-		if !current[row.New] {
-			t.Errorf("%s: new form %s is not listed as current", row.Old, row.New)
+		for _, old := range row.Old {
+			if other, seen := oldIn[old]; seen {
+				t.Errorf("%s is an old form of both %s and %s", old, other, row.New)
+			}
+			oldIn[old] = row.New
 		}
-		if other, seen := maps[row.Old]; seen {
-			t.Errorf("%s maps to both %s and %s", row.Old, other, row.New)
-		}
-		maps[row.Old] = row.New
 	}
 }

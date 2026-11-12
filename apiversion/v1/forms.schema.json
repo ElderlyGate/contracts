@@ -30,7 +30,7 @@
         ],
         "properties": {
           "new": {
-            "description": "<org>/<app>/<family>/v<n>: the family names what holds the files, usually the folder or collection they live in (design, board, queue, log, servers); the kind names one item in it. An app's answers keep the family app.",
+            "description": "<org>/<app>/<family>/v<n>: the family names what holds the files, usually the folder or collection they live in (design, board, queue, log); the kind names one item in it. An app's answers keep the family app.",
             "type": "string",
             "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
           },

@@ -1,0 +1,7 @@
+{
+  "apiVersion": "elderlygate/mankit/queue/v1",
+  "kind": "Ticket",
+  "spec": {
+    "type": "files"
+  }
+}

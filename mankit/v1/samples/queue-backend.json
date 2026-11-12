@@ -1,6 +1,6 @@
 {
-  "apiVersion": "elderlygate/mankit/queue-backend/v1",
-  "kind": "QueueBackend",
+  "apiVersion": "elderlygate/mankit/queue/v1",
+  "kind": "Backend",
   "spec": {
     "type": "files"
   }

@@ -12,10 +12,10 @@
   ],
   "properties": {
     "apiVersion": {
-      "const": "elderlygate/mankit/queue-ticket/v1"
+      "const": "elderlygate/mankit/queue/v1"
     },
     "kind": {
-      "const": "QueueTicket"
+      "const": "Ticket"
     },
     "metadata": {
       "type": "object",

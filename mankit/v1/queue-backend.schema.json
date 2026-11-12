@@ -11,10 +11,10 @@
   ],
   "properties": {
     "apiVersion": {
-      "const": "elderlygate/mankit/queue-backend/v1"
+      "const": "elderlygate/mankit/queue/v1"
     },
     "kind": {
-      "const": "QueueBackend"
+      "const": "Backend"
     },
     "spec": {
       "type": "object",

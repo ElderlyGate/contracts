@@ -70,7 +70,8 @@
       ],
       "properties": {
         "apiVersion": {
-          "const": "core/design/v2"
+          "description": "The form every file of a design is written in (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/designer/design/v2"
         },
         "kind": {
           "const": "Block"

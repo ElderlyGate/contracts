@@ -9,7 +9,7 @@
   },
   "data": [
     {
-      "apiVersion": "core/design/v2",
+      "apiVersion": "elderlygate/designer/design/v2",
       "kind": "Block",
       "metadata": {
         "id": "CMP-INTERIOR-COMMENT",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "apiVersion": "core/design/v2",
+      "apiVersion": "elderlygate/designer/design/v2",
       "kind": "Block",
       "metadata": {
         "id": "CMP-LOCKS",

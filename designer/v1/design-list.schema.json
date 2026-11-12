@@ -31,11 +31,8 @@
             "type": "object",
             "required": [
               "design",
-              "purpose",
-              "purpose_set",
               "components",
-              "resources",
-              "storage"
+              "resources"
             ],
             "properties": {
               "design": {
@@ -60,9 +57,42 @@
                   "distributed",
                   "single"
                 ]
+              },
+              "unreadable": {
+                "description": "Why the design's design.yml cannot be read; present only then. Such a row says no purpose, since a default would claim what nobody knows.",
+                "type": "string",
+                "minLength": 1
               }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "if": {
+              "required": [
+                "unreadable"
+              ]
+            },
+            "then": {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "purpose"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "purpose_set"
+                    ]
+                  }
+                ]
+              }
+            },
+            "else": {
+              "required": [
+                "purpose",
+                "purpose_set",
+                "storage"
+              ]
+            }
           }
         }
       }
@@ -79,7 +109,8 @@
       ],
       "properties": {
         "apiVersion": {
-          "const": "core/design/v2"
+          "description": "The form every file of a design is written in (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/designer/design/v2"
         },
         "kind": {
           "const": "Design"

@@ -1,0 +1,31 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261112-c8f5
+  title: 'designer/v1: the project list'
+  created_at: 2026-11-12T12:17:07.096Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: in-progress
+  order: 0.75
+  summary: ProjectList answer schema and sample for e-designer project add / list / remove
+  tags: [feature, 'epic:same-shape', 'feature:cli-first']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/project-list/cli-first
+  description: |
+    #feature #epic:same-shape #feature:cli-first
+
+    # designer/v1: the project list
+
+    e-designer step E2 (e-designer card KBN-20261112-79f3) adds `e-designer project add / list / remove`: one list of projects on the machine. Its answer goes into designer/v1 with a schema and a sample (plan decision Q7: designer/v1 grows step by step).
+
+    ## Changes
+    - `designer/v1/project-list.schema.json`: kind ProjectList, one row per project: its name and folder, its designs, or why it cannot be read.
+    - A sample, and refused samples for the rules a row keeps.
+    - `apiversion/v1/forms.yaml`: ProjectList joins the kinds of `elderlygate/designer/app/v1`.
+
+    Only adds; no released schema changes what it accepts (CT-RULE-1).
+  lifecycle:
+    active_at: 2026-11-12T12:17:11.571Z
+    active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

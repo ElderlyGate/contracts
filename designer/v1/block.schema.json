@@ -70,7 +70,7 @@
       ],
       "properties": {
         "apiVersion": {
-          "description": "The form every file of a design is written in (apiversion/v1/forms.yaml).",
+          "description": "The form the file is written in, the same for every kind of a design (apiversion/v1/forms.yaml), so a reader knows the file is one this contract describes.",
           "const": "elderlygate/designer/design/v2"
         },
         "kind": {

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/designer.layout.changed.schema.json",
   "title": "layout changed",
-  "description": "Card positions of a view were saved.",
+  "description": "Card positions of a view were saved. A layout is not a design change, so it has an event of its own, and a board open on the same design moves its cards without reloading.",
   "allOf": [
     {
       "$ref": "../../event/v1/event.schema.json"
@@ -10,12 +10,15 @@
     {
       "properties": {
         "source": {
+          "description": "/designer/<design>: the event comes from e-designer and names the design it serves, so a reader listening to many products knows which design changed (ADR-E2).",
           "pattern": "^/designer/[A-Za-z0-9._-]+$"
         },
         "type": {
+          "description": "Always designer.layout.changed (ADR-E2).",
           "const": "designer.layout.changed"
         },
         "data": {
+          "description": "Which view of which design was saved.",
           "type": "object",
           "required": [
             "design",
@@ -23,9 +26,11 @@
           ],
           "properties": {
             "design": {
+              "description": "The id of the design whose layout changed, so a board acts only when it shows that design.",
               "type": "string"
             },
             "view": {
+              "description": "The view whose card positions were saved, so a board redraws it when that view is shown.",
               "type": "string"
             }
           },

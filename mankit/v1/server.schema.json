@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/server.schema.json",
   "title": "server",
-  "description": "The record a detached serve writes for every app, so servers, servers stop and servers link find it. Two app versions read it at once: apiVersion, kind and metadata never change; spec may grow.",
+  "description": "The record a detached serve writes for every app, so servers, servers stop and servers link find it (ADR-S04); each server on a thing leaves one (ADR-S12). Two app versions read it at once: apiVersion, kind and metadata never change; spec may grow (ADR-S15).",
   "type": "object",
   "required": [
     "apiVersion",
@@ -12,12 +12,15 @@
   ],
   "properties": {
     "apiVersion": {
+      "description": "The form the record is in. It never changes, so two app versions on one machine both read every record (ADR-S15).",
       "const": "elderlygate/mankit/server/v1"
     },
     "kind": {
+      "description": "Always Server, the kind of this record.",
       "const": "Server"
     },
     "metadata": {
+      "description": "Which server this is: its app, address and process. It never changes in v1 (ADR-S15).",
       "type": "object",
       "required": [
         "app",
@@ -26,17 +29,17 @@
       ],
       "properties": {
         "app": {
-          "description": "The product ID of the app that serves.",
+          "description": "The product ID of the app that serves. servers stop signals a process only while its address answers as this app.",
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$"
         },
         "addr": {
-          "description": "The address the server bound.",
+          "description": "The address the server bound. servers asks it whether the server still answers, and a record is found and removed by it.",
           "type": "string",
           "minLength": 1
         },
         "pid": {
-          "description": "The server's process.",
+          "description": "The server's process, which servers stop signals; only while addr still answers as the app, since a pid can be reused.",
           "type": "integer",
           "minimum": 1
         }
@@ -52,29 +55,30 @@
       ],
       "properties": {
         "name": {
-          "description": "The thing it serves, when it serves one.",
+          "description": "The thing it serves, when it serves one, so a person sees which board or design each server shows (ADR-S08).",
           "type": "string"
         },
         "version": {
-          "description": "The app's version.",
+          "description": "The app's version, so a person sees servers of different versions side by side and the UI can warn when servers on one thing differ (ADR-S06, ADR-S12).",
           "type": "string",
           "minLength": 1
         },
         "startedAt": {
+          "description": "When the server started, as an RFC 3339 time, so a person sees how long it has run.",
           "type": "string",
           "format": "date-time"
         },
         "log": {
-          "description": "Where the detached server writes its output.",
+          "description": "Where the detached server writes its output, so a person can read why it failed or stopped.",
           "type": "string"
         },
         "detached": {
-          "description": "Started with serve --detach; a server in the foreground has a terminal instead.",
+          "description": "Started with serve --detach; a server in the foreground has a terminal instead, where a person stops it.",
           "type": "boolean"
         }
       },
       "additionalProperties": true,
-      "description": "Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4)."
+      "description": "What the server says about itself. Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4)."
     }
   },
   "additionalProperties": false

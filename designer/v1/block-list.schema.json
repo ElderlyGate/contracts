@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/block-list.schema.json",
   "title": "block list",
-  "description": "The blocks of one design, from get blocks.",
+  "description": "The blocks of one design, from get blocks. A reader gets every block of the design in one answer, each as its file holds it.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -10,22 +10,28 @@
     {
       "properties": {
         "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
           "const": "elderlygate/designer/app/v1"
         },
         "kind": {
+          "description": "Always BlockList, the kind of this answer, so a reader knows which schema its data meets.",
           "const": "BlockList"
         },
         "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
           "properties": {
             "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
               "const": "designer"
             },
             "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
               "const": "v1"
             }
           }
         },
         "data": {
+          "description": "Every block of the design, each as its file holds it (block.schema.json, $defs/document).",
           "type": "array",
           "items": {
             "$ref": "block.schema.json#/$defs/document"

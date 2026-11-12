@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/designer.stream.gapped.schema.json",
   "title": "stream gapped",
-  "description": "A board missed events and reloads its state; the shared shape of mankit/v1, sent by designer.",
+  "description": "A board missed events and reloads its state; the shared shape of mankit/v1, sent by designer, so a board handles a gap the same way as every other app's client.",
   "allOf": [
     {
       "$ref": "../../mankit/v1/stream.gapped.schema.json"
@@ -10,9 +10,11 @@
     {
       "properties": {
         "source": {
+          "description": "/designer/<design>: the event comes from e-designer and names the design it serves, so a reader listening to many products knows which design changed (ADR-E2).",
           "pattern": "^/designer/[A-Za-z0-9._-]+$"
         },
         "type": {
+          "description": "Always designer.stream.gapped (ADR-E2).",
           "const": "designer.stream.gapped"
         }
       }

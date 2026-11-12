@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/design-list.schema.json",
   "title": "design list",
-  "description": "The designs in the root, from get design.",
+  "description": "The designs in the root, from get design. A reader lists every design with what it is for, how big it is and how it is kept.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -10,24 +10,31 @@
     {
       "properties": {
         "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
           "const": "elderlygate/designer/app/v1"
         },
         "kind": {
+          "description": "Always DesignList, the kind of this answer, so a reader knows which schema its data meets.",
           "const": "DesignList"
         },
         "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
           "properties": {
             "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
               "const": "designer"
             },
             "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
               "const": "v1"
             }
           }
         },
         "data": {
+          "description": "One row per design in the root.",
           "type": "array",
           "items": {
+            "description": "One design: its design.yml, and what e-designer counts and reads about it.",
             "type": "object",
             "required": [
               "design",
@@ -39,23 +46,29 @@
             ],
             "properties": {
               "design": {
+                "description": "The design's design.yml as written. The counts sit beside it, never in it, so they are never written into design.yml.",
                 "$ref": "#/$defs/design"
               },
               "purpose": {
+                "description": "What the design counts as, a word of the purpose list: the one design.yml states, or the default (reference) when it states none, so a reader can treat every design by its purpose.",
                 "type": "string"
               },
               "purpose_set": {
+                "description": "True when design.yml states the purpose; false when it is only the default. A reader can show it as not set, as get design does with reference (not set).",
                 "type": "boolean"
               },
               "components": {
+                "description": "How many resources the design holds that somebody writes, such as Blocks, Risks and Questions; a design's own definitions can add kinds. It says how big the design is in what people work on.",
                 "type": "integer",
                 "minimum": 0
               },
               "resources": {
+                "description": "How many resources the design holds in all, derived ones included. Beside components, it explains a design folder larger than its components suggest.",
                 "type": "integer",
                 "minimum": 0
               },
               "storage": {
+                "description": "How the design is kept: distributed, a folder with one file per resource, or single, one file holding every file but layout.yml (see design storage). Every reader and writer goes through e-designer, so only a person needs to know which.",
                 "enum": [
                   "distributed",
                   "single"
@@ -70,6 +83,7 @@
   ],
   "$defs": {
     "design": {
+      "description": "A design's design.yml: the design itself, as written.",
       "type": "object",
       "required": [
         "apiVersion",
@@ -79,29 +93,34 @@
       ],
       "properties": {
         "apiVersion": {
+          "description": "Always core/design/v2, the form a design's files are written in at this contract (apiversion/v1/forms.yaml). A reader that meets another form knows the file is not one this contract reads (ADR-S16).",
           "const": "core/design/v2"
         },
         "kind": {
+          "description": "Always Design: the design itself, not a resource in it.",
           "const": "Design"
         },
         "metadata": {
+          "description": "What names the design.",
           "type": "object",
           "required": [
             "id"
           ],
           "properties": {
             "id": {
+              "description": "The design's id, always its folder's name, so a design cannot claim a name nobody can select on the command line.",
               "type": "string",
               "minLength": 1
             },
             "title": {
+              "description": "The design's name for people; left out when design.yml states none.",
               "type": "string"
             }
           },
           "additionalProperties": false
         },
         "spec": {
-          "description": "Written by the design's user: stays open.",
+          "description": "What design.yml says, such as its purpose and description, as written. Written by the design's user, so it stays open (CT-RULE-4).",
           "type": "object"
         }
       },

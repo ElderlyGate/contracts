@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/server-list.schema.json",
   "title": "server list",
-  "description": "What servers answers with -o json: every server on this machine and whether it answered just now.",
+  "description": "What servers answers with -o json: every server on this machine and whether it answered just now. A person or script finds the servers that run and where; a record a server left behind shows as not answering (ADR-S04, ADR-S12).",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -10,11 +10,14 @@
     {
       "properties": {
         "kind": {
+          "description": "Always ServerList, the kind of this answer, so a reader knows which schema its data meets.",
           "const": "ServerList"
         },
         "data": {
+          "description": "One row per server record found on this machine.",
           "type": "array",
           "items": {
+            "description": "One server: its record and whether it answers.",
             "type": "object",
             "required": [
               "record",
@@ -22,9 +25,11 @@
             ],
             "properties": {
               "record": {
+                "description": "The record the server wrote when it started (server.schema.json). It says what the server claimed; only answering says whether it runs now.",
                 "$ref": "server.schema.json"
               },
               "answering": {
+                "description": "The record's address answered as this app just now. A record can outlive its server, so this is the field to believe.",
                 "type": "boolean"
               }
             },

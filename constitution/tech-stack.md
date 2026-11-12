@@ -21,3 +21,4 @@ apiversion/v1/      every apiVersion form, the old forms it replaces and its kin
 - **CT-RULE-2** 2026-11-11 · Every schema has at least one sample. The app's own tests check that its real answer matches each sample, so a sample can be written before the app gives that answer.
 - **CT-RULE-3** 2026-11-11 · A new version comes with its upgrade step from the one before, tested with samples of both versions.
 - **CT-RULE-4** 2026-11-11 · An app's own shapes allow no fields beyond those listed. Two shapes stay open: a design's `spec`, written by its user, and the `spec` of a record that two app versions share at once (ADR-S15), so an older reader accepts fields a newer app adds.
+- **CT-RULE-5** 2026-11-12 · Every field in a schema has a description that says what it is and why it exists. The schema is where a field's meaning is written down; code, READMEs and designs point to it instead of repeating it.

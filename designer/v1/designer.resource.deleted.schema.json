@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/designer.resource.deleted.schema.json",
   "title": "resource deleted",
-  "description": "A resource was removed.",
+  "description": "A resource was removed. A board open on the design drops it without reloading the whole design.",
   "allOf": [
     {
       "$ref": "../../event/v1/event.schema.json"
@@ -10,12 +10,15 @@
     {
       "properties": {
         "source": {
+          "description": "/designer/<design>: the event comes from e-designer and names the design it serves, so a reader listening to many products knows which design changed (ADR-E2).",
           "pattern": "^/designer/[A-Za-z0-9._-]+$"
         },
         "type": {
+          "description": "Always designer.resource.deleted (ADR-E2).",
           "const": "designer.resource.deleted"
         },
         "data": {
+          "description": "Which resource went, from which file, and the file's hash before.",
           "type": "object",
           "required": [
             "file",
@@ -25,12 +28,15 @@
           ],
           "properties": {
             "file": {
+              "description": "The file that held the resource, relative to the design.",
               "type": "string"
             },
             "kind": {
+              "description": "The resource's kind, such as Block. An id is unique only within a kind, so kind and id together name the resource.",
               "type": "string"
             },
             "id": {
+              "description": "The resource's id; read together with kind.",
               "type": "string"
             },
             "before": {

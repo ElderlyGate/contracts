@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 	"testing"
 
@@ -309,6 +310,7 @@ func TestApiVersionFormsListEveryFormOnce(t *testing.T) {
 			New     string   `yaml:"new"`
 			Old     []string `yaml:"old"`
 			App     string   `yaml:"app"`
+			Kinds   []string `yaml:"kinds"`
 			Upgrade string   `yaml:"upgrade"`
 		} `yaml:"forms"`
 	}
@@ -339,6 +341,9 @@ func TestApiVersionFormsListEveryFormOnce(t *testing.T) {
 			t.Errorf("form %s is listed twice", row.New)
 		}
 		current[row.New] = true
+		if slices.Contains(row.Kinds, "*") && row.New != "elderlygate/designer/design/v2" {
+			t.Errorf("%s: only a design's kinds are open, \"*\" belongs to elderlygate/designer/design/v2", row.New)
+		}
 		if len(row.Old) == 0 {
 			continue
 		}

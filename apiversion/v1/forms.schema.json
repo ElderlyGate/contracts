@@ -35,7 +35,7 @@
             "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
           },
           "old": {
-            "description": "The old forms this one replaces, <level>/<name>/<version> as written before. A reader that meets an old form finds the row whose old list holds it.",
+            "description": "The old forms this one replaces, three parts as written before, like core/design/v2. A reader that meets an old form finds the row whose old list holds it.",
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
@@ -50,7 +50,7 @@
             "pattern": "^[a-z][a-z0-9-]*$"
           },
           "kinds": {
-            "description": "The kinds written with this form. \"*\" stands for every kind the design's Definitions declare, so a design's kinds are open.",
+            "description": "The kinds written with this form. \"*\" stands for every kind the design's Definitions declare, so a design's kinds are open. An app's answer row lists that app's own answer kinds; mankit's shared answers (Link, ServerList, StoppedList, QueueList, Server) come with every app's answer apiVersion and are not repeated per app.",
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,

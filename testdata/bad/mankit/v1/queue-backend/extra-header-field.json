@@ -1,0 +1,10 @@
+{
+  "apiVersion": "elderlygate/mankit/queue/v1",
+  "kind": "QueueBackend",
+  "metadata": {
+    "name": "shop"
+  },
+  "spec": {
+    "type": "files"
+  }
+}

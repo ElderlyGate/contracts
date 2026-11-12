@@ -396,7 +396,8 @@ spec:
   caption:
     - "the server record every app's serve writes,"
     - "the servers, stop and link answers,"
-    - "and the stream.gapped event"
+    - "the stream.gapped event,"
+    - "and the change queue's ticket, marker and list"
   code:
     implements: mankit/v1
 --- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml

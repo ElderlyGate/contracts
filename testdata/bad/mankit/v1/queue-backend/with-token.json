@@ -1,0 +1,8 @@
+{
+  "apiVersion": "elderlygate/mankit/queue/v1",
+  "kind": "QueueBackend",
+  "spec": {
+    "type": "lock-service",
+    "token": "s3cret"
+  }
+}

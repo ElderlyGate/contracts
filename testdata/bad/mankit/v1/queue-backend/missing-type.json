@@ -1,0 +1,5 @@
+{
+  "apiVersion": "elderlygate/mankit/queue/v1",
+  "kind": "QueueBackend",
+  "spec": {}
+}

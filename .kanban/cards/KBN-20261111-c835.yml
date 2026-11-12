@@ -1,0 +1,21 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261111-c835
+  title: The change queue ticket
+  created_at: 2026-11-11T17:46:53.004Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.875
+  tags: ['feature:change-queue', 'epic:mankit-serve']
+  description: "#feature:change-queue #epic:mankit-serve\n\n# The change queue ticket\n\nmankit's change queue (ADR-S14, mankit serve step 3) keeps one ticket per waiting change in `<served folder>/<app folder>/.queue/`. Two app versions share the queue at once, so the ticket has a fixed header and a spec that may grow (ADR-S15, CT-RULE-4).\n\n- `mankit/v1/queue-ticket.schema.json`: apiVersion `elderlygate/mankit/queue/v1`, kind `QueueTicket`, metadata `{id, app, pid, host}` closed, spec open.\n- `mankit/v1/queue-list.schema.json`: what `<app> queue` answers, the tickets in order and the ones moved to `bad/`.\n- `mankit/v1/queue-backend.schema.json`: apiVersion `elderlygate/mankit/queue/v1`, kind `QueueBackend`, the marker `.queue/backend` naming the backend every writer of the folder uses (`files`, later `lock-service`); never an address or a token.\n- README, The change queue on disk: the rules every app sharing a queue follows.\n- Samples, refused samples, and the apiVersion table rows.\n"
+  summary: Shared schema and sample for the change queue ticket and the queue list (mankit change queue)
+  work:
+    agent: claude-opus-5-5
+    branch: feat/queue/change-queue
+  lifecycle:
+    active_at: 2026-11-11T17:47:07.850Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-11T17:48:07.719Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

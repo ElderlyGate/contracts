@@ -1,0 +1,21 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ProjectList",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "6.1.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "name": "parcel-locker",
+      "path": "src/parcel-locker",
+      "designs": [
+        "default",
+        "next"
+      ]
+    }
+  ],
+  "errors": []
+}

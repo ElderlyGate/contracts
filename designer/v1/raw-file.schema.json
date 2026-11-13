@@ -35,16 +35,16 @@
           "type": "object",
           "properties": {
             "text": {
-              "description": "The file's bytes as text, comments and all, so an editor shows what is on disk and not a reading of it.",
+              "description": "The file's bytes as text, comments and all, so an editor shows what is on disk and not a reading of it. For a design kept as one file, it is that path's section of <id>.yml, the file as the design holds it.",
               "type": "string"
             },
             "path": {
-              "description": "The file's path in the design, with / between folders, such as design.yml or block/CMP-STORE.yml, never absolute and never with . or .. as a step, so a reader names the same file back and no folder of the machine it ran on is given away.",
+              "description": "The file's path in the design, with / between folders, such as design.yml or block/CMP-STORE.yml: never absolute, no drive letter, no backslash or colon, and never . or .. as a step, so a reader names the same file back and no folder of the machine it ran on is given away.",
               "type": "string",
-              "pattern": "^(?:[^/\\\\.][^/\\\\]*|\\.[^/\\\\.][^/\\\\]*|\\.\\.[^/\\\\]+)(?:/(?:[^/\\\\.][^/\\\\]*|\\.[^/\\\\.][^/\\\\]*|\\.\\.[^/\\\\]+))*$"
+              "pattern": "^(?:[^/\\\\:.][^/\\\\:]*|\\.[^/\\\\:.][^/\\\\:]*|\\.\\.[^/\\\\:]+)(?:/(?:[^/\\\\:.][^/\\\\:]*|\\.[^/\\\\:.][^/\\\\:]*|\\.\\.[^/\\\\:]+))*$"
             },
             "sha256": {
-              "description": "The sha256 of the file's bytes as read, in hex; a write over the file names it with --replaces, so a file that changed meanwhile is not written over.",
+              "description": "The sha256 of the file's bytes, in hex; a write over the file names it with --replaces, so a file that changed meanwhile is not written over. For a design kept as one file, it is the sum of that path's section of <id>.yml, which --replaces takes the same way.",
               "type": "string",
               "pattern": "^[0-9a-f]{64}$"
             }

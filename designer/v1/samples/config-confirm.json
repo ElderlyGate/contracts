@@ -1,0 +1,79 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ConfigConfirm",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "types": [
+      "create",
+      "edit",
+      "move",
+      "focus",
+      "delete",
+      "settings",
+      "connect",
+      "run"
+    ],
+    "app": {},
+    "defaults": {
+      "connect": "yes-no",
+      "create": "yes-no",
+      "delete": "yes-no",
+      "edit": "yes-no",
+      "focus": "yes-no",
+      "move": "yes-no",
+      "run": "yes-no",
+      "settings": "yes-no"
+    },
+    "system": {
+      "delete": "name"
+    },
+    "rows": [
+      {
+        "type": "create",
+        "style": "yes-no",
+        "source": "default"
+      },
+      {
+        "type": "edit",
+        "style": "yes-no",
+        "source": "default"
+      },
+      {
+        "type": "move",
+        "style": "yes-no",
+        "source": "default"
+      },
+      {
+        "type": "focus",
+        "style": "yes-no",
+        "source": "default"
+      },
+      {
+        "type": "delete",
+        "style": "yes-no",
+        "source": "default"
+      },
+      {
+        "type": "settings",
+        "style": "yes-no",
+        "source": "default"
+      },
+      {
+        "type": "connect",
+        "style": "yes-no",
+        "source": "default"
+      },
+      {
+        "type": "run",
+        "style": "yes-no",
+        "source": "default"
+      }
+    ]
+  },
+  "errors": []
+}

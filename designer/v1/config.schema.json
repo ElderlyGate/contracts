@@ -1,0 +1,320 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/config.schema.json",
+  "title": "config",
+  "description": "What every field of the design is called and how it is drawn, from config: the definitions in use after every layer, where each entry came from, and what the design cannot offer, so a reader draws the design without knowing the layers.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Config, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Config"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The definitions the design reads, and their sources.",
+          "type": "object",
+          "properties": {
+            "sections": {
+              "description": "One row per definitions section asked for, saying where each entry came from, so a reader can tell the design's own entries from the built-in ones.",
+              "type": "array",
+              "items": {
+                "description": "One section of the definitions.",
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "description": "Which section this is.",
+                    "enum": [
+                      "classes",
+                      "properties",
+                      "sections",
+                      "presentations",
+                      "schemas",
+                      "features",
+                      "vocabulary"
+                    ]
+                  },
+                  "design": {
+                    "description": "The design's definitions file, by its path in the design, where an entry marked design comes from, so a reader can open it; relative, so an answer over HTTP gives no folder of the serving machine away. Absent when no design was read.",
+                    "type": "string"
+                  },
+                  "entries": {
+                    "description": "Every entry of the section by name, and where the one in use came from.",
+                    "type": "object",
+                    "additionalProperties": {
+                      "description": "Where the value in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                      "enum": [
+                        "built-in",
+                        "design"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "section",
+                  "entries"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "settings": {
+              "description": "The design's settings in use and where each came from; absent when one section was asked for.",
+              "type": "object",
+              "properties": {
+                "design": {
+                  "description": "The design's definitions file, by its path in the design, where a setting marked design comes from, so a reader can open it; relative, so an answer over HTTP gives no folder of the serving machine away. Absent when no design was read.",
+                  "type": "string"
+                },
+                "entries": {
+                  "description": "Every setting by name, and where the one in use came from.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "description": "Where the value in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                    "enum": [
+                      "built-in",
+                      "design"
+                    ]
+                  }
+                },
+                "exportTo": {
+                  "description": "Where the register export writes; absent means no export.",
+                  "type": "string"
+                },
+                "register": {
+                  "description": "The headings, markers and columns of the exported register, one table per kind; absent means the built-in ones.",
+                  "type": "array",
+                  "items": {
+                    "description": "One kind's table in the register.",
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "description": "The kind the table lists.",
+                        "type": "string"
+                      },
+                      "heading": {
+                        "description": "The heading the table is written under, so the export finds where it goes.",
+                        "type": "string"
+                      },
+                      "marker": {
+                        "description": "The marker that finds the table in the document, so the export replaces only its own table.",
+                        "type": "string"
+                      },
+                      "columns": {
+                        "description": "The table's columns, in order.",
+                        "type": "array",
+                        "items": {
+                          "description": "One column.",
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "description": "The column's heading, as people read it in the register.",
+                              "type": "string"
+                            },
+                            "from": {
+                              "description": "The field the column is read from, so the export knows what to write in it.",
+                              "type": "string"
+                            },
+                            "strip": {
+                              "description": "Text taken off the value before it is written; absent takes nothing off.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "from"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "heading",
+                      "marker",
+                      "columns"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "whereDocument": {
+                  "description": "Which document a component's where[] points into; absent means the export target's own file name.",
+                  "type": "string"
+                },
+                "diagrams": {
+                  "description": "The headings component diagrams are read under; absent means the built-in ones.",
+                  "type": "array",
+                  "items": {
+                    "description": "One heading, under which a diagram is read.",
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "entries"
+              ],
+              "additionalProperties": false
+            },
+            "definitions": {
+              "description": "The definitions in use after every layer: classes, properties, sections, presentations, schemas, features and vocabulary. Their entries are the design's own words, written by its user, so they stay open (CT-RULE-4); config's sections say where each came from.",
+              "type": "object"
+            },
+            "problems": {
+              "description": "Every definition e-designer could not take, so a reader shows why something is not drawn as written. The board section's problems are not here: DesignContents.board.problems holds them, one place for each fact.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/problem"
+              }
+            },
+            "moved": {
+              "description": "Entries a newer e-designer moved to another place, one sentence each, so a reader can tell the user to move them in the file.",
+              "type": "array",
+              "items": {
+                "description": "One moved entry, in words for people.",
+                "type": "string"
+              }
+            },
+            "releaseLanes": {
+              "description": "The ways a view may lay its blocks out by release, so a reader offers e-designer's list rather than keeping its own.",
+              "type": "array",
+              "items": {
+                "description": "One way, such as rows or columns.",
+                "type": "string"
+              }
+            },
+            "purposes": {
+              "description": "The purposes a design may count as, read even when the design's own list is broken, so a reader offers the right words.",
+              "type": "object",
+              "properties": {
+                "entries": {
+                  "description": "Every purpose, in order.",
+                  "type": "array",
+                  "items": {
+                    "description": "One purpose.",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "description": "The word, as design.yml writes it.",
+                        "type": "string"
+                      },
+                      "note": {
+                        "description": "What the purpose means, for people; absent when the list says nothing.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "default": {
+                  "description": "The purpose of a design whose design.yml states none.",
+                  "type": "string"
+                },
+                "notSet": {
+                  "description": "How a design that states no purpose is named, such as reference (not set), so a reader uses e-designer's words.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "entries",
+                "default",
+                "notSet"
+              ],
+              "additionalProperties": false
+            },
+            "apiVersion": {
+              "description": "The form a new design file is written in, so a reader that writes one takes e-designer's and keeps no copy.",
+              "type": "string"
+            },
+            "origins": {
+              "description": "Every kind and where it comes from, so a reader can tell a kind the project adds from a built-in kind it amends.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "built-in: e-designer's own; project: the design declares it; extended: a built-in kind the design's definitions.yml amends.",
+                "enum": [
+                  "built-in",
+                  "project",
+                  "extended"
+                ]
+              }
+            },
+            "unavailable": {
+              "description": "Every feature the design cannot offer, because it does not declare a kind the feature requires, and how to show it; a feature not listed is on offer. e-designer judges it, so a reader only draws the answer.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "How the feature is shown while the design cannot offer it.",
+                "oneOf": [
+                  {
+                    "description": "Not shown at all, as the feature asks with whenUndefined: invisible.",
+                    "type": "object",
+                    "properties": {
+                      "state": {
+                        "description": "Always invisible.",
+                        "const": "invisible"
+                      }
+                    },
+                    "required": [
+                      "state"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "description": "Shown greyed out with why, the default.",
+                    "type": "object",
+                    "properties": {
+                      "state": {
+                        "description": "Always disabled.",
+                        "const": "disabled"
+                      },
+                      "reason": {
+                        "description": "Why the feature is not on offer, the feature's own words or the kinds it needs, for people.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "state",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "sections",
+            "definitions",
+            "problems",
+            "moved",
+            "releaseLanes",
+            "purposes",
+            "apiVersion",
+            "origins",
+            "unavailable"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

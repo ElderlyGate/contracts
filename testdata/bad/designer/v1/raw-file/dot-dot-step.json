@@ -1,0 +1,16 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "RawFile",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "text": "apiVersion: elderlygate/designer/design/v2\nkind: Block\nmetadata:\n  id: CMP-KIOSK\n  title: The kiosk\n  tags:\n    - edge\n    - touched-by-a-person\nspec:\n  place:\n    group: GRP-EDGE\n    role: adapter\n  state:\n    status: decided\n  code:\n    service: locker.kiosk\n    implements: kiosk/main.go\n  source:\n    where:\n      - test/fixtures/design/README.md#the-edge\n  description: |\n    The only block a person touches. It knows a door number and a parcel\n    barcode, and nothing else \u2014 no addresses, no names, no ledger.\n\n    \ud83d\udfe2 That narrowness is the point: the kiosk is the block most likely to\n    be replaced, and the one with least to carry over when it is.\n",
+    "path": "block/../../x.yml",
+    "sha256": "56e553033f5b82612973e3eec5889cdfc86a28560d6804a52a8b7d34a10c2c5f"
+  },
+  "errors": []
+}

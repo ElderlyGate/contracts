@@ -1,0 +1,14 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ConfigPaths",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": [
+    "/home/user/project/.designer/default/definitions.yml"
+  ],
+  "errors": []
+}

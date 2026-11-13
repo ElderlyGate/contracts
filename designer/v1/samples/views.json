@@ -1,0 +1,45 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Views",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "declared": true,
+    "views": [
+      {
+        "name": "structure",
+        "title": "Parts",
+        "question": "What calls what?",
+        "draws": [
+          "Block",
+          "Group"
+        ]
+      },
+      {
+        "name": "runtime",
+        "title": "Flows",
+        "draws": [
+          "Flow"
+        ]
+      },
+      {
+        "name": "sketch",
+        "title": "Sketch",
+        "drawsUnreadable": true
+      },
+      {
+        "name": "broken",
+        "unreadable": true,
+        "title": ""
+      }
+    ],
+    "namePattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+    "nameRule": "letters, digits, - and _, starting with a letter or digit",
+    "sha256": "9bb6429e9a52b9dbc3a4b7003e673bd9d450077ba3717421856560f68d3c6121"
+  },
+  "errors": []
+}

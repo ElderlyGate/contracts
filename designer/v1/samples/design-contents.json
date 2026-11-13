@@ -1,0 +1,246 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "DesignContents",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "kinds": {
+      "Block": [
+        {
+          "kind": "Block",
+          "id": "CMP-INTERIOR-COMMENT",
+          "path": "block/CMP-INTERIOR-COMMENT.yml",
+          "changedAt": 1794556277962,
+          "document": {
+            "apiVersion": "elderlygate/designer/design/v2",
+            "kind": "Block",
+            "metadata": {
+              "id": "CMP-INTERIOR-COMMENT",
+              "title": "A comment in the middle of the document"
+            },
+            "spec": {
+              "place": {
+                "group": "GRP-CORE",
+                "role": "handler"
+              },
+              "state": {
+                "status": "open"
+              }
+            }
+          }
+        },
+        {
+          "kind": "Block",
+          "id": "CMP-KIOSK",
+          "path": "block/CMP-KIOSK.yml",
+          "changedAt": 1794556277962,
+          "document": {
+            "apiVersion": "elderlygate/designer/design/v2",
+            "kind": "Block",
+            "metadata": {
+              "id": "CMP-KIOSK",
+              "title": "The kiosk",
+              "tags": [
+                "edge",
+                "touched-by-a-person"
+              ]
+            },
+            "spec": {
+              "place": {
+                "group": "GRP-EDGE",
+                "role": "adapter"
+              },
+              "state": {
+                "status": "decided"
+              },
+              "code": {
+                "service": "locker.kiosk",
+                "implements": "kiosk/main.go"
+              },
+              "source": {
+                "where": [
+                  "test/fixtures/design/README.md#the-edge"
+                ]
+              },
+              "description": "The only block a person touches. It knows a door number and a parcel\nbarcode, and nothing else — no addresses, no names, no ledger.\n\n🟢 That narrowness is the point: the kiosk is the block most likely to\nbe replaced, and the one with least to carry over when it is.\n"
+            }
+          }
+        }
+      ],
+      "Design": [
+        {
+          "kind": "Design",
+          "id": "default",
+          "path": "design.yml",
+          "changedAt": 1794556277984,
+          "document": {
+            "apiVersion": "elderlygate/designer/design/v2",
+            "kind": "Design",
+            "metadata": {
+              "id": "default",
+              "title": "A parcel locker"
+            },
+            "spec": {
+              "description": "**A worked example, small enough to read in one sitting.**\n\nThree blocks, one flow, one saved request and one suite — a person\ndrops a parcel into a locker and the ledger learns about it.\n\nNothing here is a real system. What is real is the *shape*: every file in\nthis design is byte-for-byte what the emitter renders, which is what makes\nthe directory usable as a fixture as well as an example.\n",
+              "board": {
+                "views": {
+                  "structure": {
+                    "title": "Parts",
+                    "question": "What calls what?",
+                    "draws": [
+                      "Block",
+                      "Group"
+                    ]
+                  },
+                  "runtime": {
+                    "title": "Flows",
+                    "draws": "Flow"
+                  },
+                  "sketch": {
+                    "title": "Sketch",
+                    "draws": {
+                      "kinds": "Block"
+                    }
+                  },
+                  "broken": "just words"
+                },
+                "links": {
+                  "calls": {
+                    "color": "#7d8794",
+                    "dashed": false
+                  },
+                  "related": {
+                    "color": "#a1668a",
+                    "dashed": true
+                  }
+                }
+              },
+              "implementation": {
+                "root": "."
+              }
+            }
+          }
+        }
+      ],
+      "Layout": [
+        {
+          "kind": "Layout",
+          "id": "",
+          "path": "layout.yml",
+          "changedAt": 1794556277957,
+          "document": {
+            "version": 3,
+            "views": {
+              "structure": {
+                "boxes": {
+                  "ADR-001": {
+                    "x": -31,
+                    "y": 408
+                  },
+                  "CMP-INTERIOR-COMMENT": {
+                    "x": 840,
+                    "y": -33
+                  },
+                  "CMP-KIOSK": {
+                    "x": 0,
+                    "y": -120
+                  },
+                  "CMP-LEDGER": {
+                    "x": 1260,
+                    "y": -120
+                  },
+                  "CMP-LOCKS": {
+                    "x": 840,
+                    "y": -120
+                  },
+                  "CTR-001": {
+                    "x": 291,
+                    "y": 408
+                  },
+                  "GRP-CORE": {
+                    "x": 420,
+                    "y": -238
+                  },
+                  "GRP-EDGE": {
+                    "x": -31,
+                    "y": -238
+                  },
+                  "OPN-001": {
+                    "x": 613,
+                    "y": 408
+                  },
+                  "QST-001": {
+                    "x": 935,
+                    "y": 408
+                  },
+                  "RSK-001": {
+                    "x": 1257,
+                    "y": 408
+                  },
+                  "SUG-001": {
+                    "x": 1579,
+                    "y": 408
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "broken": [],
+    "board": {
+      "section": {
+        "links": {
+          "calls": {
+            "color": "#7d8794",
+            "dashed": false
+          },
+          "related": {
+            "color": "#a1668a",
+            "dashed": true
+          }
+        },
+        "views": {
+          "structure": {
+            "title": "Parts",
+            "question": "What calls what?",
+            "draws": [
+              "Block",
+              "Group"
+            ]
+          },
+          "runtime": {
+            "title": "Flows",
+            "draws": "Flow"
+          }
+        }
+      },
+      "problems": [
+        {
+          "at": "spec.board.views.sketch.draws",
+          "says": "must be a kind or a list of kinds, so this view is dropped"
+        },
+        {
+          "at": "spec.board.views.broken",
+          "says": "must be a map with title, question and draws"
+        }
+      ]
+    },
+    "focus": {
+      "items": [],
+      "problems": []
+    },
+    "purpose": {
+      "purpose": "reference",
+      "set": false,
+      "label": "reference (not set)"
+    },
+    "storage": "distributed"
+  },
+  "errors": []
+}

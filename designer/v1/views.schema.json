@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/views.schema.json",
+  "title": "views",
+  "description": "The views design.yml declares, from describe views, as a form edits them, so a reader can change a view and write back only what it changed.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Views, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Views"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The views, and what a form needs to write them back.",
+          "type": "object",
+          "properties": {
+            "declared": {
+              "description": "True when design.yml declares views as a map; false when it says nothing or cannot be read, so the board draws its own and a reader must not write those down without the user's decision.",
+              "type": "boolean"
+            },
+            "viewsUnreadable": {
+              "description": "True when design.yml's spec.board.views is there but is not a map, so a reader shows it and never writes over it; absent otherwise.",
+              "const": true
+            },
+            "views": {
+              "description": "The views in the file's order, each as written, unreadable ones too, so a view that cannot be read is shown to be fixed.",
+              "type": "array",
+              "items": {
+                "description": "One view, by its key in design.yml, with what the file says of it.",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Its key in design.yml, which layout.yml files the view's positions under.",
+                    "type": "string"
+                  },
+                  "unreadable": {
+                    "description": "True when the view's entry is not a map, so its title, question and draws are not read and a reader never writes over it; absent otherwise.",
+                    "const": true
+                  },
+                  "title": {
+                    "description": "Its title, empty when it has none, so a view with a blank title is still shown to be fixed.",
+                    "type": "string"
+                  },
+                  "question": {
+                    "description": "The question the view answers; absent when the file says none, kept apart from empty so writing back changes nothing.",
+                    "type": "string"
+                  },
+                  "draws": {
+                    "description": "The kinds the view draws: one kind or a list as written, blank names left out; absent when the file says none, so the view draws every kind; empty draws nothing.",
+                    "type": "array",
+                    "items": {
+                      "description": "One kind the view draws, by its name.",
+                      "type": "string"
+                    }
+                  },
+                  "drawsUnreadable": {
+                    "description": "True when the view's draws is neither a kind nor a list, so a reader shows it and never writes over it.",
+                    "const": true
+                  }
+                },
+                "required": [
+                  "name",
+                  "title"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "namePattern": {
+              "description": "What a view's name may be, as a regular expression, so a form can say so while it is typed.",
+              "type": "string"
+            },
+            "nameRule": {
+              "description": "namePattern in words, for people.",
+              "type": "string"
+            },
+            "sha256": {
+              "description": "The sha256 of design.yml's bytes as read, in hex, the views' file; a write of the views names it with --replaces, so a design.yml that changed meanwhile is not written over.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "declared",
+            "views",
+            "namePattern",
+            "nameRule",
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

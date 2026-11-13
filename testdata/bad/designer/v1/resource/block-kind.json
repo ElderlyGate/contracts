@@ -1,0 +1,82 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Resource",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "kind": "Block",
+    "id": "drop-a-parcel",
+    "path": "flow/drop-a-parcel.yml",
+    "text": "# One flow: what happens between a person and a ledger row.\n#\n# `before` is the state each block is in when the flow starts, and the\n# `components` map on a step is what that step changed. A step that changes\n# nothing says nothing.\n\napiVersion: elderlygate/designer/design/v2\nkind: Flow\nmetadata:\n  id: drop-a-parcel\n  title: Drop a parcel\nspec:\n  entry:\n    method: POST\n    path: /v1/parcels\n  before:\n    CMP-LOCKS:\n      doors.open: 0\n    CMP-LEDGER:\n      rows: 0\n  steps:\n    - id: person\n      at: CMP-KIOSK\n      phase: caller\n      label: Somebody scans a barcode\n      note: The only actor. Everything after this is the locker answering one question \u2014 which door.\n    - id: pick\n      at: CMP-LOCKS\n      phase: execute\n      label: Choose a free door\n      budgetMs: 50\n      components:\n        CMP-LOCKS:\n          doors.open: 1\n      findings:\n        RSK-001: The step that picks one door is the step a fail-open would turn into all of them.\n    - id: write\n      at: CMP-LEDGER\n      phase: execute\n      label: Append the row\n      budgetMs: 10\n      components:\n        CMP-LEDGER:\n          rows: 1\n      note: \"Written before the door opens: a row with no parcel behind it is recoverable, a parcel with no row is not.\"\n    - id: open\n      at: CMP-LOCKS\n      phase: return\n      label: The door opens\n",
+    "document": {
+      "apiVersion": "elderlygate/designer/design/v2",
+      "kind": "Flow",
+      "metadata": {
+        "id": "drop-a-parcel",
+        "title": "Drop a parcel"
+      },
+      "spec": {
+        "entry": {
+          "method": "POST",
+          "path": "/v1/parcels"
+        },
+        "before": {
+          "CMP-LOCKS": {
+            "doors.open": 0
+          },
+          "CMP-LEDGER": {
+            "rows": 0
+          }
+        },
+        "steps": [
+          {
+            "id": "person",
+            "at": "CMP-KIOSK",
+            "phase": "caller",
+            "label": "Somebody scans a barcode",
+            "note": "The only actor. Everything after this is the locker answering one question \u2014 which door."
+          },
+          {
+            "id": "pick",
+            "at": "CMP-LOCKS",
+            "phase": "execute",
+            "label": "Choose a free door",
+            "budgetMs": 50,
+            "components": {
+              "CMP-LOCKS": {
+                "doors.open": 1
+              }
+            },
+            "findings": {
+              "RSK-001": "The step that picks one door is the step a fail-open would turn into all of them."
+            }
+          },
+          {
+            "id": "write",
+            "at": "CMP-LEDGER",
+            "phase": "execute",
+            "label": "Append the row",
+            "budgetMs": 10,
+            "components": {
+              "CMP-LEDGER": {
+                "rows": 1
+              }
+            },
+            "note": "Written before the door opens: a row with no parcel behind it is recoverable, a parcel with no row is not."
+          },
+          {
+            "id": "open",
+            "at": "CMP-LOCKS",
+            "phase": "return",
+            "label": "The door opens"
+          }
+        ]
+      }
+    }
+  },
+  "errors": []
+}

@@ -39,7 +39,7 @@
               "$ref": "design-contents.schema.json#/allOf/1/properties/data"
             },
             "layoutSha256": {
-              "description": "The sha256 of layout.yml's bytes as read, in lower-case hex, so a layout write names the file it changes and one changed since is refused; absent when there is no layout.yml or the board does not take it (see refused).",
+              "description": "The sha256 of layout.yml's bytes on disk, in lower-case hex, or of no bytes when the design has no layout.yml, the sum --replaces takes, so a layout write names the file it changes and one changed since is refused. Absent only when layout.yml is in contents.broken, version 1 or unreadable, and then no layout write is allowed.",
               "type": "string",
               "pattern": "^[0-9a-f]{64}$"
             },
@@ -72,95 +72,24 @@
               }
             },
             "findings": {
-              "description": "What is attached to each block, by block id: the components a link whose label annotates ties to it, findings mostly, and which of them are still open, judged by the statuses the definitions mark settled, the same judgement focus makes. A block with nothing attached is left out.",
+              "description": "What is attached to each block, by block id, judged in Go by the same settled statuses focus uses; a block with nothing attached is left out.",
               "type": "object",
               "additionalProperties": {
-                "description": "What one block has attached.",
-                "type": "object",
-                "properties": {
-                  "attached": {
-                    "description": "Every component attached to the block, settled ones too, by id in the order the block's links list them, so a decided ADR still counts.",
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
-                      "description": "One component's id.",
-                      "type": "string"
-                    }
-                  },
-                  "open": {
-                    "description": "The attached components not settled, by id in the same order; one with no status is open, since unstated is not settled.",
-                    "type": "array",
-                    "items": {
-                      "description": "One component's id.",
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "attached",
-                  "open"
-                ],
-                "additionalProperties": false
+                "$ref": "defs.schema.json#/$defs/blockFindings"
               }
             },
             "refused": {
-              "description": "Every file e-designer read but the board does not take, and why: a flow, request or suite it refuses, or a layout.yml in a form it no longer reads, with the command that brings it up. Files that could not be read at all are in contents.broken, so no file is said twice (G-CODE-6).",
+              "description": "Every file e-designer read but the board does not take, and why: a flow, request or suite it refuses. Files that could not be read at all, and a version 1 layout.yml, are in contents.broken, so no file is said twice (G-CODE-6).",
               "type": "array",
               "items": {
-                "description": "One file the board does not take.",
-                "type": "object",
-                "properties": {
-                  "code": {
-                    "description": "Why, as a stable word a program decides by, never the message (G-STACK-15); an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other. Known codes: not_a_slug: the flow, request or suite's id, its file name, is not a slug, so nothing can name it; flow_refused: the file does not form a flow; says names the field; request_refused: the file does not form a request; says names the field; suite_refused: the file does not form a suite; says names the field; layout_version_1: layout.yml is version 1, which only e-designer migrate layout reads.",
-                    "type": "string",
-                    "pattern": "^[a-z][a-z0-9_]*$"
-                  },
-                  "file": {
-                    "description": "The file, relative to the design.",
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "message": {
-                    "description": "Why, in words for people; a program never decides by it.",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "code",
-                  "file",
-                  "message"
-                ],
-                "additionalProperties": false
+                "$ref": "defs.schema.json#/$defs/refusal"
               }
             },
             "problems": {
-              "description": "Every entry the board does not draw as written, and why: an old line word, a size left on a Group file, a look the design does not declare. Each says where by its at, a file and a path in it, so a reader finds the entry without reading the words.",
+              "description": "Every entry the board does not draw as written, and why: an old line word, a size left on a Group file, a look the design does not declare, a part of a flow, request or suite it cannot read. Each says where by its at and what by its code.",
               "type": "array",
               "items": {
-                "description": "One entry not drawn as written.",
-                "type": "object",
-                "properties": {
-                  "code": {
-                    "description": "What is wrong, as a stable word a program decides by, never the words (G-STACK-15); an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other. Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now; e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner knows, so the step is checked without it.",
-                    "type": "string",
-                    "pattern": "^[a-z][a-z0-9_]*$"
-                  },
-                  "at": {
-                    "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.look.",
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "says": {
-                    "description": "What is wrong, in words for people; a program never decides by it.",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "code",
-                  "at",
-                  "says"
-                ],
-                "additionalProperties": false
+                "$ref": "defs.schema.json#/$defs/boardProblem"
               }
             }
           },

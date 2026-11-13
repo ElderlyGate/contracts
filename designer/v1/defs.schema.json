@@ -28,6 +28,24 @@
     },
     "binding": {
       "$ref": "#/$defs/binding"
+    },
+    "scalar": {
+      "$ref": "#/$defs/scalar"
+    },
+    "when": {
+      "$ref": "#/$defs/when"
+    },
+    "example": {
+      "$ref": "#/$defs/example"
+    },
+    "boardProblem": {
+      "$ref": "#/$defs/boardProblem"
+    },
+    "refusal": {
+      "$ref": "#/$defs/refusal"
+    },
+    "blockFindings": {
+      "$ref": "#/$defs/blockFindings"
     }
   },
   "additionalProperties": false,
@@ -165,12 +183,7 @@
           "description": "The request as it arrives, by field; empty when the flow says nothing of it.",
           "type": "object",
           "additionalProperties": {
-            "description": "One field's value.",
-            "type": [
-              "string",
-              "number",
-              "boolean"
-            ]
+            "$ref": "#/$defs/scalar"
           }
         },
         "before": {
@@ -180,54 +193,12 @@
             "description": "The block's fields and values.",
             "type": "object",
             "additionalProperties": {
-              "description": "One field's value.",
-              "type": [
-                "string",
-                "number",
-                "boolean"
-              ]
+              "$ref": "#/$defs/scalar"
             }
           }
         },
         "example": {
-          "description": "Which values beside it are invented, not the design's own word: a list of request fields, or request fields and each block's fields, so a reader marks them as examples.",
-          "oneOf": [
-            {
-              "description": "The request fields whose values are invented.",
-              "type": "array",
-              "items": {
-                "description": "One request field.",
-                "type": "string"
-              }
-            },
-            {
-              "description": "Which request fields and which block fields are invented.",
-              "type": "object",
-              "properties": {
-                "request": {
-                  "description": "The request fields whose values are invented.",
-                  "type": "array",
-                  "items": {
-                    "description": "One request field.",
-                    "type": "string"
-                  }
-                },
-                "components": {
-                  "description": "Per block id, the fields whose values are invented.",
-                  "type": "object",
-                  "additionalProperties": {
-                    "description": "The block's invented fields.",
-                    "type": "array",
-                    "items": {
-                      "description": "One field of the block.",
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "additionalProperties": false
-            }
-          ]
+          "$ref": "#/$defs/example"
         },
         "throughout": {
           "description": "Blocks that run with the steps rather than as one of them, by block id.",
@@ -236,24 +207,14 @@
             "description": "When the block runs: a bare when for every step, or a when for some steps only.",
             "oneOf": [
               {
-                "description": "Where a block runs relative to a step: before, after or around it.",
-                "enum": [
-                  "before",
-                  "after",
-                  "around"
-                ]
+                "$ref": "#/$defs/when"
               },
               {
                 "description": "A when for the steps named only.",
                 "type": "object",
                 "properties": {
                   "when": {
-                    "description": "Where a block runs relative to a step: before, after or around it.",
-                    "enum": [
-                      "before",
-                      "after",
-                      "around"
-                    ]
+                    "$ref": "#/$defs/when"
                   },
                   "only": {
                     "description": "The steps it runs with, by step id, each a step of this flow.",
@@ -302,12 +263,7 @@
                 "description": "What the step writes onto the request, by field.",
                 "type": "object",
                 "additionalProperties": {
-                  "description": "One field's value.",
-                  "type": [
-                    "string",
-                    "number",
-                    "boolean"
-                  ]
+                  "$ref": "#/$defs/scalar"
                 }
               },
               "components": {
@@ -317,55 +273,13 @@
                   "description": "The block's fields and values.",
                   "type": "object",
                   "additionalProperties": {
-                    "description": "One field's value.",
-                    "type": [
-                      "string",
-                      "number",
-                      "boolean"
-                    ]
+                    "$ref": "#/$defs/scalar"
                   },
                   "minProperties": 1
                 }
               },
               "example": {
-                "description": "Which values beside it are invented, not the design's own word: a list of request fields, or request fields and each block's fields, so a reader marks them as examples.",
-                "oneOf": [
-                  {
-                    "description": "The request fields whose values are invented.",
-                    "type": "array",
-                    "items": {
-                      "description": "One request field.",
-                      "type": "string"
-                    }
-                  },
-                  {
-                    "description": "Which request fields and which block fields are invented.",
-                    "type": "object",
-                    "properties": {
-                      "request": {
-                        "description": "The request fields whose values are invented.",
-                        "type": "array",
-                        "items": {
-                          "description": "One request field.",
-                          "type": "string"
-                        }
-                      },
-                      "components": {
-                        "description": "Per block id, the fields whose values are invented.",
-                        "type": "object",
-                        "additionalProperties": {
-                          "description": "The block's invented fields.",
-                          "type": "array",
-                          "items": {
-                            "description": "One field of the block.",
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    "additionalProperties": false
-                  }
-                ]
+                "$ref": "#/$defs/example"
               },
               "budgetMs": {
                 "description": "The step's latency target in milliseconds; absent means not costed.",
@@ -373,7 +287,7 @@
                 "minimum": 0
               },
               "emits": {
-                "description": "Work forked here that does not hold the request.",
+                "description": "Work forked here that does not hold the request. A part of an emission the board cannot read is left out and reported as the problem emission_unread, never dropped in silence; the flow itself is kept.",
                 "type": "array",
                 "items": {
                   "description": "An event forked off a step, settling on its own without holding the request.",
@@ -397,12 +311,7 @@
                       "description": "What the object carries, by field name.",
                       "type": "object",
                       "additionalProperties": {
-                        "description": "One field's value.",
-                        "type": [
-                          "string",
-                          "number",
-                          "boolean"
-                        ]
+                        "$ref": "#/$defs/scalar"
                       }
                     },
                     "example": {
@@ -434,12 +343,7 @@
                             "description": "Fields the object gains or changes on arrival.",
                             "type": "object",
                             "additionalProperties": {
-                              "description": "One field's value.",
-                              "type": [
-                                "string",
-                                "number",
-                                "boolean"
-                              ]
+                              "$ref": "#/$defs/scalar"
                             }
                           },
                           "example": {
@@ -566,16 +470,11 @@
           "description": "The request's starting values, by field.",
           "type": "object",
           "additionalProperties": {
-            "description": "One field's value.",
-            "type": [
-              "string",
-              "number",
-              "boolean"
-            ]
+            "$ref": "#/$defs/scalar"
           }
         },
         "origins": {
-          "description": "Where each initial value came from, by field, for the fields initial holds.",
+          "description": "Where each initial value came from, by field. An origin for a field initial does not hold, or one that is not design, example or observed, is left out and reported as the problem request_field_unread.",
           "type": "object",
           "additionalProperties": {
             "description": "design, example or observed.",
@@ -604,7 +503,7 @@
               "pattern": "^/"
             },
             "headers": {
-              "description": "The headers to send, by name.",
+              "description": "The headers to send, by name. A header whose value is not a string is left out and reported as the problem request_field_unread.",
               "type": "object",
               "additionalProperties": {
                 "description": "The header's value.",
@@ -672,21 +571,21 @@
                 }
               },
               "expect": {
-                "description": "What must be true of the response.",
+                "description": "What must be true of the response. An expectation the board cannot read, a decimal status among them, is left out and reported as the problem expectation_unread; the step is kept.",
                 "type": "array",
                 "items": {
                   "description": "One thing that must be true of a suite step, in the design's terms.",
                   "oneOf": [
                     {
-                      "description": "The response has this status.",
+                      "description": "The response must come back with this HTTP status, the simplest check that a request did what it should.",
                       "type": "object",
                       "properties": {
                         "kind": {
-                          "description": "status.",
+                          "description": "status: the check is on the response's HTTP status.",
                           "const": "status"
                         },
                         "status": {
-                          "description": "The HTTP status.",
+                          "description": "The HTTP status the response must have, a whole number.",
                           "type": "integer"
                         }
                       },
@@ -697,25 +596,21 @@
                       "additionalProperties": false
                     },
                     {
-                      "description": "The response body holds a value at a path.",
+                      "description": "The response body must hold a value at a path, and equal it when equals is given, so a suite checks what came back, not only that something did.",
                       "type": "object",
                       "properties": {
                         "kind": {
-                          "description": "body.",
+                          "description": "body: the check is on a value in the response body.",
                           "const": "body"
                         },
                         "path": {
-                          "description": "A dot path into the body.",
+                          "description": "A dot path into the body, such as items.0.id; body. in front is allowed and means the same.",
                           "type": "string",
                           "minLength": 1
                         },
                         "equals": {
-                          "description": "The value it must equal; absent means present at all.",
-                          "type": [
-                            "string",
-                            "number",
-                            "boolean"
-                          ]
+                          "description": "The value found there must equal; absent means the path must be present at all.",
+                          "$ref": "#/$defs/scalar"
                         }
                       },
                       "required": [
@@ -725,11 +620,11 @@
                       "additionalProperties": false
                     },
                     {
-                      "description": "A block appears among the request's spans, has failed there, or does not appear.",
+                      "description": "A block must appear among the spans the request produced (span), must have failed there (spanFailed), or must not appear (spanAbsent), so a suite checks the path a request took through the design, not only its answer.",
                       "type": "object",
                       "properties": {
                         "kind": {
-                          "description": "span, spanFailed or spanAbsent.",
+                          "description": "span: the block must appear; spanFailed: its span must have errored, since the interesting checks are about requests that did not work; spanAbsent: it must not appear, unanswerable when no spans came back.",
                           "enum": [
                             "span",
                             "spanFailed",
@@ -749,11 +644,11 @@
                       "additionalProperties": false
                     },
                     {
-                      "description": "A ceiling on the whole request.",
+                      "description": "The whole request must finish within a ceiling, a latency check stated in the design's terms.",
                       "type": "object",
                       "properties": {
                         "kind": {
-                          "description": "duration.",
+                          "description": "duration: the check is on the whole request's time.",
                           "const": "duration"
                         },
                         "maxMs": {
@@ -790,15 +685,15 @@
       "description": "Which flow a request enters, matched by method and path: bound to one flow, matched by none, matched by several, or not sendable, so a reader shows a request no flow covers.",
       "oneOf": [
         {
-          "description": "Exactly one flow matches.",
+          "description": "Exactly one flow matches the request's method and path, so the tracer knows which journey to walk.",
           "type": "object",
           "properties": {
             "kind": {
-              "description": "bound.",
+              "description": "bound: the request enters one flow.",
               "const": "bound"
             },
             "flow": {
-              "description": "The flow's id.",
+              "description": "The id of the flow it enters.",
               "type": "string"
             }
           },
@@ -809,11 +704,11 @@
           "additionalProperties": false
         },
         {
-          "description": "The request names no method and path, so nothing can match it.",
+          "description": "The request names no method and path, in send or in initial, so no flow can match it and it can only be walked by hand.",
           "type": "object",
           "properties": {
             "kind": {
-              "description": "unsendable.",
+              "description": "unsendable: there is nothing to match on.",
               "const": "unsendable"
             }
           },
@@ -823,19 +718,19 @@
           "additionalProperties": false
         },
         {
-          "description": "No flow matches the request's method and path.",
+          "description": "No flow's entry matches the request's method and path, so the design has no journey for it, which a reader shows as a gap.",
           "type": "object",
           "properties": {
             "kind": {
-              "description": "no-flow.",
+              "description": "no-flow: the design does not cover this request.",
               "const": "no-flow"
             },
             "method": {
-              "description": "The request's method.",
+              "description": "The request's method, so a reader can say which entry is missing.",
               "type": "string"
             },
             "path": {
-              "description": "The request's path.",
+              "description": "The request's path, so a reader can say which entry is missing.",
               "type": "string"
             }
           },
@@ -847,15 +742,15 @@
           "additionalProperties": false
         },
         {
-          "description": "Several flows match, which the design should settle.",
+          "description": "Several flows' entries match the request, so the design claims two journeys for one route, which a reader shows for the design to settle.",
           "type": "object",
           "properties": {
             "kind": {
-              "description": "many.",
+              "description": "many: more than one flow claims the request.",
               "const": "many"
             },
             "flows": {
-              "description": "The matching flows' ids.",
+              "description": "The ids of every flow that matches.",
               "type": "array",
               "items": {
                 "description": "One flow id.",
@@ -863,11 +758,11 @@
               }
             },
             "method": {
-              "description": "The request's method.",
+              "description": "The request's method, which every listed flow matches.",
               "type": "string"
             },
             "path": {
-              "description": "The request's path.",
+              "description": "The request's path, which every listed flow matches.",
               "type": "string"
             }
           },
@@ -880,6 +775,142 @@
           "additionalProperties": false
         }
       ]
+    },
+    "scalar": {
+      "description": "One value a flow or request writes: a string, a number or a boolean, never a list or a mapping, so a reader can show and compare it.",
+      "type": [
+        "string",
+        "number",
+        "boolean"
+      ]
+    },
+    "when": {
+      "description": "Where a block runs relative to a step: before it, after it, or around it, which is a different question from the step's phase.",
+      "enum": [
+        "before",
+        "after",
+        "around"
+      ]
+    },
+    "example": {
+      "description": "Which values beside it are invented, not the design's own word: a list of request fields, or request fields and each block's fields, so a reader marks them as examples.",
+      "oneOf": [
+        {
+          "description": "The request fields whose values are invented.",
+          "type": "array",
+          "items": {
+            "description": "One request field.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Which request fields and which block fields are invented.",
+          "type": "object",
+          "properties": {
+            "request": {
+              "description": "The request fields whose values are invented.",
+              "type": "array",
+              "items": {
+                "description": "One request field.",
+                "type": "string"
+              }
+            },
+            "components": {
+              "description": "Per block id, the fields whose values are invented.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "The block's invented fields.",
+                "type": "array",
+                "items": {
+                  "description": "One field of the block.",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "boardProblem": {
+      "description": "One entry the board does not draw as written, with a stable code a program decides by and where it is, so nobody has to hunt for it.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now, and e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "at": {
+          "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.look.",
+          "type": "string",
+          "minLength": 1
+        },
+        "says": {
+          "description": "What is wrong, in words for people; a program never decides by it.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "at",
+        "says"
+      ],
+      "additionalProperties": false
+    },
+    "refusal": {
+      "description": "One file e-designer read but the board does not take, with a stable code a program decides by.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Why the file is not taken, as a stable word a program decides by, never message; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: not_a_slug: the flow, request or suite's id, its file name, is not a slug, so nothing can name it; flow_refused: the file does not form a flow, and message names the field; request_refused: the file does not form a request, and message names the field; suite_refused: the file does not form a suite, and message names the field.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "file": {
+          "description": "The file, relative to the design.",
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "description": "Why, in words for people; a program never decides by it.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "file",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "blockFindings": {
+      "description": "What one block has attached: every component a link whose label annotates ties to it, findings mostly, as the board has always counted them, and which are still open by the statuses the definitions mark settled.",
+      "type": "object",
+      "properties": {
+        "attached": {
+          "description": "Every component attached to the block, settled ones too, by id in the order the block's links list them, so a decided ADR still counts.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "description": "One component's id.",
+            "type": "string"
+          }
+        },
+        "open": {
+          "description": "The attached components whose status is not settled, by id in the same order; one with no status is open, since unstated is not settled.",
+          "type": "array",
+          "items": {
+            "description": "One component's id.",
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "attached",
+        "open"
+      ],
+      "additionalProperties": false
     }
   }
 }

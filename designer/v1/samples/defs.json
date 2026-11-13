@@ -201,5 +201,36 @@
   "binding": {
     "kind": "bound",
     "flow": "drop-a-parcel"
+  },
+  "scalar": 50,
+  "when": "around",
+  "example": {
+    "request": [
+      "header.authorization"
+    ],
+    "components": {
+      "CMP-LOCKS": [
+        "doors.open"
+      ]
+    }
+  },
+  "boardProblem": {
+    "code": "undeclared_look",
+    "at": "block/CMP-KIOSK.yml: spec.ui-design.look",
+    "says": "ui-design.look: glass is not a look this design declares"
+  },
+  "refusal": {
+    "code": "flow_refused",
+    "file": "flow/collect-a-parcel.yml",
+    "message": "entry.path must start with /"
+  },
+  "blockFindings": {
+    "attached": [
+      "RSK-001",
+      "ADR-001"
+    ],
+    "open": [
+      "RSK-001"
+    ]
   }
 }

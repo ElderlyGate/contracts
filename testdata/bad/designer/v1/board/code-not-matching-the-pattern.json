@@ -873,7 +873,7 @@
     },
     "refused": [
       {
-        "code": "broken",
+        "code": "Flow-Refused",
         "file": "flow/x.yml",
         "message": "entry is required"
       }

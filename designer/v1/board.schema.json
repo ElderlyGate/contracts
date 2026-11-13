@@ -111,14 +111,9 @@
                 "type": "object",
                 "properties": {
                   "code": {
-                    "description": "Why, as a stable word a program decides by, never the message (G-STACK-15): not_a_slug: the flow, request or suite's id, its file name, is not a slug, so nothing can name it; flow_refused: the file does not form a flow; says names the field; request_refused: the file does not form a request; says names the field; suite_refused: the file does not form a suite; says names the field; layout_version_1: layout.yml is version 1, which only e-designer migrate layout reads.",
-                    "enum": [
-                      "not_a_slug",
-                      "flow_refused",
-                      "request_refused",
-                      "suite_refused",
-                      "layout_version_1"
-                    ]
+                    "description": "Why, as a stable word a program decides by, never the message (G-STACK-15); an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other. Known codes: not_a_slug: the flow, request or suite's id, its file name, is not a slug, so nothing can name it; flow_refused: the file does not form a flow; says names the field; request_refused: the file does not form a request; says names the field; suite_refused: the file does not form a suite; says names the field; layout_version_1: layout.yml is version 1, which only e-designer migrate layout reads.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
                   },
                   "file": {
                     "description": "The file, relative to the design.",
@@ -146,14 +141,9 @@
                 "type": "object",
                 "properties": {
                   "code": {
-                    "description": "What is wrong, as a stable word a program decides by, never the words (G-STACK-15): old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now; e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner knows, so the step is checked without it.",
-                    "enum": [
-                      "old_link_word",
-                      "group_size_left",
-                      "undeclared_look",
-                      "suite_step_unread",
-                      "expectation_unread"
-                    ]
+                    "description": "What is wrong, as a stable word a program decides by, never the words (G-STACK-15); an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other. Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now; e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner knows, so the step is checked without it.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
                   },
                   "at": {
                     "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.look.",

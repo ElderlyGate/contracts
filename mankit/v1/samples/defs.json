@@ -1,0 +1,26 @@
+{
+  "featureState": {
+    "id": "target",
+    "title": "Send requests",
+    "covers": "sending a design's requests to the system it describes",
+    "needs": [
+      {
+        "name": "ED_TARGET_URL",
+        "purpose": "where the requests are sent"
+      }
+    ],
+    "startsOff": true,
+    "on": false,
+    "by": "default",
+    "missing": [
+      {
+        "name": "ED_TARGET_URL",
+        "purpose": "where the requests are sent"
+      }
+    ]
+  },
+  "featureValue": {
+    "name": "ED_TARGET_URL",
+    "purpose": "where the requests are sent"
+  }
+}

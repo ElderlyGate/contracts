@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/revision.schema.json",
+  "title": "revision",
+  "description": "Where each part of a design the board shows stands now, from describe revision: one cheap fingerprint per part, so a reader asks often and fetches only the parts whose fingerprint moved.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Revision, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Revision"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "One fingerprint per part, each 16 lower-case hex characters that change when that part changes. A reader compares each fingerprint only with its own last value from the same server, never across servers or versions, and reads nothing into its bytes: equal or not is all it says.",
+          "type": "object",
+          "properties": {
+            "board": {
+              "description": "The design as Go takes it: every file of the design but layout.yml, and the build that reads them; when it moves, a reader fetches describe board and config again.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            },
+            "layout": {
+              "description": "layout.yml alone, so a moved box refetches only the positions, not the board. While there is no layout.yml it is still a fingerprint, the same one until the file appears.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            },
+            "features": {
+              "description": "The machine's feature switches, as get features answers them.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            },
+            "meta": {
+              "description": "The build's version and the design checkout's git state (its HEAD, the ref it points to, the packed refs, its index); a reader fetches the board's version and git facts again when it moves, or when board does, since those name the last change.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            },
+            "runs": {
+              "description": "The runs kept for the design: how many there are and the newest; a reader fetches the run list again when it moves. While none is kept it is still a fingerprint, the same one until the first run arrives.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "board",
+            "layout",
+            "features",
+            "meta",
+            "runs"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

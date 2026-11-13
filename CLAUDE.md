@@ -8,4 +8,4 @@ Then read this project's constitution/. A rule there holds unless the project ov
 
 WORK FROM THE CARDS ON THE BOARD. ARCHIVED CARDS ARE IGNORED.
 
-This repo is `contracts`: the schemas and samples of every app's answers. Run `go test ./...` before every commit. A released version's schemas never change (CT-RULE-1).
+This repo is `contracts`: the schemas and samples of every app's answers. Run `go test ./...` before every commit. What may change in a released version is CT-RULE-1's to say.

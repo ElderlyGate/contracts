@@ -16,6 +16,18 @@
     },
     "style": {
       "$ref": "#/$defs/style"
+    },
+    "flow": {
+      "$ref": "#/$defs/flow"
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "suite": {
+      "$ref": "#/$defs/suite"
+    },
+    "binding": {
+      "$ref": "#/$defs/binding"
     }
   },
   "additionalProperties": false,
@@ -109,6 +121,764 @@
         "name",
         "yes-no",
         "never"
+      ]
+    },
+    "flow": {
+      "description": "One flow as the board takes it: a request's walk through the blocks, one step at a time, entered by one method and path.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The flow's id, its file name, so the board and a run name the same flow.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "name": {
+          "description": "The flow's name for people; its id when the file gives none.",
+          "type": "string"
+        },
+        "source": {
+          "description": "Where the flow is described; empty when it names none.",
+          "type": "string"
+        },
+        "entry": {
+          "description": "How a request enters this flow, matched against a request's method and path, never declared by the request.",
+          "type": "object",
+          "properties": {
+            "method": {
+              "description": "The HTTP method.",
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "description": "The path, which may hold {name} parts that match one segment.",
+              "type": "string",
+              "pattern": "^/"
+            }
+          },
+          "required": [
+            "method",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        "request": {
+          "description": "The request as it arrives, by field; empty when the flow says nothing of it.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "One field's value.",
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          }
+        },
+        "before": {
+          "description": "What each block holds before the request arrives, by block id.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "The block's fields and values.",
+            "type": "object",
+            "additionalProperties": {
+              "description": "One field's value.",
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          }
+        },
+        "example": {
+          "description": "Which values beside it are invented, not the design's own word: a list of request fields, or request fields and each block's fields, so a reader marks them as examples.",
+          "oneOf": [
+            {
+              "description": "The request fields whose values are invented.",
+              "type": "array",
+              "items": {
+                "description": "One request field.",
+                "type": "string"
+              }
+            },
+            {
+              "description": "Which request fields and which block fields are invented.",
+              "type": "object",
+              "properties": {
+                "request": {
+                  "description": "The request fields whose values are invented.",
+                  "type": "array",
+                  "items": {
+                    "description": "One request field.",
+                    "type": "string"
+                  }
+                },
+                "components": {
+                  "description": "Per block id, the fields whose values are invented.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "description": "The block's invented fields.",
+                    "type": "array",
+                    "items": {
+                      "description": "One field of the block.",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "throughout": {
+          "description": "Blocks that run with the steps rather than as one of them, by block id.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "When the block runs: a bare when for every step, or a when for some steps only.",
+            "oneOf": [
+              {
+                "description": "Where a block runs relative to a step: before, after or around it.",
+                "enum": [
+                  "before",
+                  "after",
+                  "around"
+                ]
+              },
+              {
+                "description": "A when for the steps named only.",
+                "type": "object",
+                "properties": {
+                  "when": {
+                    "description": "Where a block runs relative to a step: before, after or around it.",
+                    "enum": [
+                      "before",
+                      "after",
+                      "around"
+                    ]
+                  },
+                  "only": {
+                    "description": "The steps it runs with, by step id, each a step of this flow.",
+                    "type": "array",
+                    "items": {
+                      "description": "One step id.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "when",
+                  "only"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "steps": {
+          "description": "The steps, in order.",
+          "type": "array",
+          "items": {
+            "description": "One step of a flow: where the request is, and what it writes there.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The step's id, unique in its flow, so a run's spans and a throughout entry can name it.",
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "at": {
+                "description": "The block the step happens at.",
+                "type": "string",
+                "minLength": 1
+              },
+              "phase": {
+                "description": "Where the step sits in a request's life, one of the phases the design declares.",
+                "type": "string"
+              },
+              "label": {
+                "description": "What happens, in the user's words.",
+                "type": "string"
+              },
+              "request": {
+                "description": "What the step writes onto the request, by field.",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "One field's value.",
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean"
+                  ]
+                }
+              },
+              "components": {
+                "description": "What the step writes into each block's own state, by block id; a block listed here is touched by the step.",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "The block's fields and values.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "description": "One field's value.",
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean"
+                    ]
+                  },
+                  "minProperties": 1
+                }
+              },
+              "example": {
+                "description": "Which values beside it are invented, not the design's own word: a list of request fields, or request fields and each block's fields, so a reader marks them as examples.",
+                "oneOf": [
+                  {
+                    "description": "The request fields whose values are invented.",
+                    "type": "array",
+                    "items": {
+                      "description": "One request field.",
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "description": "Which request fields and which block fields are invented.",
+                    "type": "object",
+                    "properties": {
+                      "request": {
+                        "description": "The request fields whose values are invented.",
+                        "type": "array",
+                        "items": {
+                          "description": "One request field.",
+                          "type": "string"
+                        }
+                      },
+                      "components": {
+                        "description": "Per block id, the fields whose values are invented.",
+                        "type": "object",
+                        "additionalProperties": {
+                          "description": "The block's invented fields.",
+                          "type": "array",
+                          "items": {
+                            "description": "One field of the block.",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "budgetMs": {
+                "description": "The step's latency target in milliseconds; absent means not costed.",
+                "type": "number",
+                "minimum": 0
+              },
+              "emits": {
+                "description": "Work forked here that does not hold the request.",
+                "type": "array",
+                "items": {
+                  "description": "An event forked off a step, settling on its own without holding the request.",
+                  "type": "object",
+                  "properties": {
+                    "event": {
+                      "description": "The event's name, as the flow writes it.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "description": "What kind of object it is, when it is an object rather than a signal.",
+                      "enum": [
+                        "span",
+                        "log",
+                        "metric",
+                        "stream"
+                      ]
+                    },
+                    "carries": {
+                      "description": "What the object carries, by field name.",
+                      "type": "object",
+                      "additionalProperties": {
+                        "description": "One field's value.",
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ]
+                      }
+                    },
+                    "example": {
+                      "description": "Which of carries are invented.",
+                      "type": "array",
+                      "items": {
+                        "description": "One field of carries.",
+                        "type": "string"
+                      }
+                    },
+                    "to": {
+                      "description": "Where it travels, in order; the first leg is where it lands.",
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "description": "One leg of an emitted object's journey; the tracer moves it one leg per step.",
+                        "type": "object",
+                        "properties": {
+                          "at": {
+                            "description": "The block the object arrives at on this leg.",
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "state": {
+                            "description": "The object's own state once it arrives; absent when the flow does not say.",
+                            "type": "string"
+                          },
+                          "sets": {
+                            "description": "Fields the object gains or changes on arrival.",
+                            "type": "object",
+                            "additionalProperties": {
+                              "description": "One field's value.",
+                              "type": [
+                                "string",
+                                "number",
+                                "boolean"
+                              ]
+                            }
+                          },
+                          "example": {
+                            "description": "Which of sets are invented.",
+                            "type": "array",
+                            "items": {
+                              "description": "One field of sets.",
+                              "type": "string"
+                            }
+                          },
+                          "source": {
+                            "description": "Where this leg is described, as the flow names it.",
+                            "type": "string"
+                          },
+                          "note": {
+                            "description": "The user's words on this leg.",
+                            "type": "string"
+                          },
+                          "deadEnd": {
+                            "description": "Set when the path stops because the design does not say what happens next, so a reader tells a gap from an arrival.",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "at"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "source": {
+                      "description": "Where this event is described, as the flow names it.",
+                      "type": "string"
+                    },
+                    "note": {
+                      "description": "The user's words on this event.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "event",
+                    "to"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "findings": {
+                "description": "The findings that sit on this step, by finding id, each with what this flow adds, or null when it adds nothing.",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "What this flow adds to the finding, or null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "onFail": {
+                "description": "What happens when the step does not continue.",
+                "type": "string"
+              },
+              "source": {
+                "description": "Where in the design's documents the step comes from; empty when the flow names none.",
+                "type": "string"
+              },
+              "note": {
+                "description": "The user's words on this step.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "at",
+              "phase",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "source",
+        "entry",
+        "request",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "request": {
+      "description": "One saved request as the board takes it: a scenario to send or to walk, never a measurement.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The request's id, its file name, so a suite and the tracer name the same request.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "description": "Its name for people; its id when the file gives none.",
+          "type": "string"
+        },
+        "note": {
+          "description": "Why the scenario is the way it is, in the user's words.",
+          "type": "string"
+        },
+        "group": {
+          "description": "Which part of the request list it belongs to, a flat name.",
+          "type": "string"
+        },
+        "default": {
+          "description": "Present and true on the one request the tracer starts with; the first of several that say so wins.",
+          "const": true
+        },
+        "type": {
+          "description": "One value per axis the design declares, by axis, so the board can place it.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "The axis's value.",
+            "type": "string"
+          }
+        },
+        "initial": {
+          "description": "The request's starting values, by field.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "One field's value.",
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          }
+        },
+        "origins": {
+          "description": "Where each initial value came from, by field, for the fields initial holds.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "design, example or observed.",
+            "enum": [
+              "design",
+              "example",
+              "observed"
+            ]
+          }
+        },
+        "capturedFrom": {
+          "description": "What the scenario was captured from, as the file says.",
+          "type": "string"
+        },
+        "send": {
+          "description": "The HTTP request to send, written out by the user so the board never invents traffic; absent means it is only walked.",
+          "type": "object",
+          "properties": {
+            "method": {
+              "description": "The HTTP method, in upper case.",
+              "type": "string"
+            },
+            "path": {
+              "description": "The path to send to.",
+              "type": "string",
+              "pattern": "^/"
+            },
+            "headers": {
+              "description": "The headers to send, by name.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "The header's value.",
+                "type": "string"
+              }
+            },
+            "body": {
+              "description": "The body to send, as the file holds it."
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "type",
+        "initial"
+      ],
+      "additionalProperties": false
+    },
+    "suite": {
+      "description": "One suite as the board takes it: requests run in order, with what carries between them and what must be true.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The suite's id, its file name.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "description": "Its name for people; its id when the file gives none.",
+          "type": "string"
+        },
+        "note": {
+          "description": "What the suite checks, in the user's words.",
+          "type": "string"
+        },
+        "steps": {
+          "description": "The steps, in order; a suite with none is refused.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "description": "One step: a request, what it lifts out, and what must hold.",
+            "type": "object",
+            "properties": {
+              "request": {
+                "description": "The id of the request it sends.",
+                "type": "string",
+                "minLength": 1
+              },
+              "capture": {
+                "description": "Values lifted out of the response for later steps, name to path.",
+                "type": "object",
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_]+$"
+                },
+                "additionalProperties": {
+                  "description": "A dot path into the response.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "expect": {
+                "description": "What must be true of the response.",
+                "type": "array",
+                "items": {
+                  "description": "One thing that must be true of a suite step, in the design's terms.",
+                  "oneOf": [
+                    {
+                      "description": "The response has this status.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "status.",
+                          "const": "status"
+                        },
+                        "status": {
+                          "description": "The HTTP status.",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "status"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "The response body holds a value at a path.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "body.",
+                          "const": "body"
+                        },
+                        "path": {
+                          "description": "A dot path into the body.",
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "equals": {
+                          "description": "The value it must equal; absent means present at all.",
+                          "type": [
+                            "string",
+                            "number",
+                            "boolean"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "A block appears among the request's spans, has failed there, or does not appear.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "span, spanFailed or spanAbsent.",
+                          "enum": [
+                            "span",
+                            "spanFailed",
+                            "spanAbsent"
+                          ]
+                        },
+                        "component": {
+                          "description": "The block's service name, as the spans name it.",
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "component"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "A ceiling on the whole request.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "duration.",
+                          "const": "duration"
+                        },
+                        "maxMs": {
+                          "description": "The ceiling in milliseconds.",
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "maxMs"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "request"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "binding": {
+      "description": "Which flow a request enters, matched by method and path: bound to one flow, matched by none, matched by several, or not sendable, so a reader shows a request no flow covers.",
+      "oneOf": [
+        {
+          "description": "Exactly one flow matches.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "bound.",
+              "const": "bound"
+            },
+            "flow": {
+              "description": "The flow's id.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "flow"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "description": "The request names no method and path, so nothing can match it.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "unsendable.",
+              "const": "unsendable"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "description": "No flow matches the request's method and path.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "no-flow.",
+              "const": "no-flow"
+            },
+            "method": {
+              "description": "The request's method.",
+              "type": "string"
+            },
+            "path": {
+              "description": "The request's path.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "method",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "description": "Several flows match, which the design should settle.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "many.",
+              "const": "many"
+            },
+            "flows": {
+              "description": "The matching flows' ids.",
+              "type": "array",
+              "items": {
+                "description": "One flow id.",
+                "type": "string"
+              }
+            },
+            "method": {
+              "description": "The request's method.",
+              "type": "string"
+            },
+            "path": {
+              "description": "The request's path.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "flows",
+            "method",
+            "path"
+          ],
+          "additionalProperties": false
+        }
       ]
     }
   }

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/config-paths.schema.json",
+  "title": "config paths",
+  "description": "Where the design's definitions file is, from config --paths, so a person or a script can open it; the CLI's own answer on the machine it runs on, which the board does not ask over HTTP.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always ConfigPaths, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "ConfigPaths"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The design's definitions file, as a path on the machine the CLI ran on; empty when no design was read.",
+          "type": "array",
+          "items": {
+            "description": "One path, absolute, so a terminal can open it from anywhere.",
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}

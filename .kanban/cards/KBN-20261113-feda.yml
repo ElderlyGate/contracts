@@ -8,7 +8,7 @@ metadata:
 spec:
   column: in-progress
   order: 0.75
-  summary: Config, ConfigConfirm, Describe, DesignContents, Views and Resource answers for E3c
+  summary: Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views and Resource answers for E3c
   tags: [feature, 'epic:same-shape', 'feature:contracts']
   work:
     agent: claude-opus-5-5
@@ -22,12 +22,14 @@ spec:
 
     ## Changes
     Additions to designer/v1, each with a sample; no released schema changes (CT-RULE-1):
-    - Config (`config`), with `unavailable`, the features the design cannot offer.
-    - ConfigConfirm (`config confirm`).
-    - Describe (`describe --raw <file>`): the text with its path and sha256.
+    - Config (`config`), with `unavailable`, the features the design cannot offer. The ninth always-read, `features`, is folded into it: the board reads Config.unavailable.
+    - ConfigConfirm (`config confirm`), the machine's.
+    - ConfigPaths (`config --paths`).
+    - RawFile (`describe --raw <path>`): any file of the design by its path in the design, with the sum of its bytes on disk.
     - DesignContents (`describe design`).
     - Views (`describe views`).
-    - Resource: `describe <id>` for a resource of any kind but Block, which keeps block.schema.json.
+    - Resource: `describe <id>` for a resource of any kind but Block; the answer's kind is Resource, data.kind the resource's.
+    - defs.schema.json: problem, document, the action types and styles, written once.
     - forms.yaml lists the new answer kinds.
 
     ## Done when

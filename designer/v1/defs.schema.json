@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/defs.schema.json",
+  "title": "shared shapes",
+  "description": "The shapes several designer answers share, written once and referenced with $ref, so each is described in one place. The document itself takes one of each, so its sample shows them.",
+  "type": "object",
+  "properties": {
+    "problem": {
+      "$ref": "#/$defs/problem"
+    },
+    "document": {
+      "$ref": "#/$defs/document"
+    },
+    "actionType": {
+      "$ref": "#/$defs/actionType"
+    },
+    "style": {
+      "$ref": "#/$defs/style"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "problem": {
+      "description": "One thing e-designer could not take, with where it is, so nobody has to hunt for it.",
+      "type": "object",
+      "properties": {
+        "at": {
+          "description": "Where the problem is: a file and a path in it, such as spec.board.display.layout.",
+          "type": "string"
+        },
+        "says": {
+          "description": "What is wrong, in words for people; a program never decides by it (G-STACK-15).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "says"
+      ],
+      "additionalProperties": false
+    },
+    "document": {
+      "description": "One resource as its file holds it, in the form this contract reads.",
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/design/v2, the form a design's files are written in at this contract (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/designer/design/v2"
+        },
+        "kind": {
+          "description": "The resource's kind, a built-in kind or one the design declares.",
+          "type": "string"
+        },
+        "metadata": {
+          "description": "What names the resource, apart from what it says.",
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "The resource's id, unique within its kind; other resources point to it by it.",
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "description": "The resource's name for people, shown on its card on the board.",
+              "type": "string"
+            },
+            "tags": {
+              "description": "Labels the design's user puts on the resource.",
+              "type": "array",
+              "items": {
+                "description": "One label, as the user wrote it, so a reader can filter by it.",
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "spec": {
+          "description": "What the resource says. Written by the design's user, so it stays open: a design's fields are its own (CT-RULE-4).",
+          "type": "object"
+        }
+      },
+      "required": [
+        "apiVersion",
+        "kind",
+        "metadata"
+      ],
+      "additionalProperties": false
+    },
+    "actionType": {
+      "description": "One type of change, the words every product of the org shares (G-STACK-13), so a reader names a change as every product does.",
+      "enum": [
+        "create",
+        "edit",
+        "move",
+        "focus",
+        "delete",
+        "settings",
+        "connect",
+        "run"
+      ]
+    },
+    "style": {
+      "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
+      "enum": [
+        "name",
+        "yes-no",
+        "never"
+      ]
+    }
+  }
+}

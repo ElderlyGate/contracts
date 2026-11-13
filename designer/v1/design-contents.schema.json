@@ -45,11 +45,11 @@
                   "type": "object",
                   "properties": {
                     "kind": {
-                      "description": "The document's kind.",
+                      "description": "The document's kind, so a reader can group and draw it without opening the document.",
                       "type": "string"
                     },
                     "id": {
-                      "description": "The document's id.",
+                      "description": "The document's id, empty for layout.yml, which has none, so a reader can find the document by kind and id.",
                       "type": "string"
                     },
                     "path": {
@@ -65,7 +65,7 @@
                       "description": "The document as its file holds it: a resource, or for the kind Layout, layout.yml.",
                       "oneOf": [
                         {
-                          "$ref": "#/$defs/document"
+                          "$ref": "defs.schema.json#/$defs/document"
                         },
                         {
                           "description": "layout.yml as read: where the boxes and lines of each view sit. Its version says its form; a version 1 file is refused by the board, which says to run e-designer migrate layout.",
@@ -133,10 +133,10 @@
                   "type": "object"
                 },
                 "problems": {
-                  "description": "Every entry left out, and why.",
+                  "description": "Every entry left out, and why, so a reader shows why the board does not draw it as written.",
                   "type": "array",
                   "items": {
-                    "$ref": "#/$defs/problem"
+                    "$ref": "defs.schema.json#/$defs/problem"
                   }
                 }
               },
@@ -163,15 +163,15 @@
                         "minimum": 1
                       },
                       "id": {
-                        "description": "Its id.",
+                        "description": "Its id, so a reader marks the right box.",
                         "type": "string"
                       },
                       "kind": {
-                        "description": "Its kind.",
+                        "description": "Its kind, Block or Group, since an id is unique only within a kind.",
                         "type": "string"
                       },
                       "title": {
-                        "description": "Its title, empty when it has none.",
+                        "description": "Its title, empty when it has none, so a reader can list the focus without the documents.",
                         "type": "string"
                       }
                     },
@@ -193,10 +193,10 @@
                   "type": "string"
                 },
                 "problems": {
-                  "description": "Every focus entry that names nothing the design holds.",
+                  "description": "Every focus entry that names nothing the design holds, so a reader shows the stale entry instead of dropping it.",
                   "type": "array",
                   "items": {
-                    "$ref": "#/$defs/problem"
+                    "$ref": "defs.schema.json#/$defs/problem"
                   }
                 }
               },
@@ -259,77 +259,5 @@
         }
       }
     }
-  ],
-  "$defs": {
-    "problem": {
-      "description": "One thing e-designer could not take, with where it is, so nobody has to hunt for it.",
-      "type": "object",
-      "properties": {
-        "at": {
-          "description": "Where the problem is: a file and a path in it, such as spec.board.display.layout.",
-          "type": "string"
-        },
-        "says": {
-          "description": "What is wrong, in words for people; a program never decides by it (G-STACK-15).",
-          "type": "string"
-        }
-      },
-      "required": [
-        "at",
-        "says"
-      ],
-      "additionalProperties": false
-    },
-    "document": {
-      "description": "One resource as its file holds it, in the form this contract reads.",
-      "type": "object",
-      "properties": {
-        "apiVersion": {
-          "description": "Always elderlygate/designer/design/v2, the form a design's files are written in at this contract (apiversion/v1/forms.yaml).",
-          "const": "elderlygate/designer/design/v2"
-        },
-        "kind": {
-          "description": "The resource's kind, a built-in kind or one the design declares.",
-          "type": "string"
-        },
-        "metadata": {
-          "description": "What names the resource, apart from what it says.",
-          "type": "object",
-          "properties": {
-            "id": {
-              "description": "The resource's id, unique within its kind; other resources point to it by it.",
-              "type": "string",
-              "minLength": 1
-            },
-            "title": {
-              "description": "The resource's name for people, shown on its card on the board.",
-              "type": "string"
-            },
-            "tags": {
-              "description": "Labels the design's user puts on the resource.",
-              "type": "array",
-              "items": {
-                "description": "One label.",
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
-        },
-        "spec": {
-          "description": "What the resource says. Written by the design's user, so it stays open: a design's fields are its own (CT-RULE-4).",
-          "type": "object"
-        }
-      },
-      "required": [
-        "apiVersion",
-        "kind",
-        "metadata"
-      ],
-      "additionalProperties": false
-    }
-  }
+  ]
 }

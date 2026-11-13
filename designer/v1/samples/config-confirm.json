@@ -2,7 +2,7 @@
   "apiVersion": "elderlygate/designer/app/v1",
   "kind": "ConfigConfirm",
   "ran": {
-    "name": "default",
+    "name": "designer",
     "app": "designer",
     "version": "6.3.0",
     "contract": "v1"

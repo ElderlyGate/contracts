@@ -14,7 +14,7 @@
           "kind": "Block",
           "id": "CMP-INTERIOR-COMMENT",
           "path": "block/CMP-INTERIOR-COMMENT.yml",
-          "changedAt": 1794555503088,
+          "changedAt": 1794556277962,
           "document": {
             "apiVersion": "elderlygate/designer/design/v2",
             "kind": "Block",
@@ -37,7 +37,7 @@
           "kind": "Block",
           "id": "CMP-KIOSK",
           "path": "block/CMP-KIOSK.yml",
-          "changedAt": 1794555503088,
+          "changedAt": 1794556277962,
           "document": {
             "apiVersion": "elderlygate/designer/design/v2",
             "kind": "Block",
@@ -76,7 +76,7 @@
           "kind": "Design",
           "id": "default",
           "path": "design.yml",
-          "changedAt": 1794555503119,
+          "changedAt": 1794556277984,
           "document": {
             "apiVersion": "elderlygate/designer/design/v2",
             "kind": "Design",
@@ -105,7 +105,8 @@
                     "draws": {
                       "kinds": "Block"
                     }
-                  }
+                  },
+                  "broken": "just words"
                 },
                 "links": {
                   "calls": {
@@ -130,7 +131,7 @@
           "kind": "Layout",
           "id": "",
           "path": "layout.yml",
-          "changedAt": 1794555503084,
+          "changedAt": 1794556277957,
           "document": {
             "version": 3,
             "views": {
@@ -223,6 +224,10 @@
         {
           "at": "spec.board.views.sketch.draws",
           "says": "must be a kind or a list of kinds, so this view is dropped"
+        },
+        {
+          "at": "spec.board.views.broken",
+          "says": "must be a map with title, question and draws"
         }
       ]
     },

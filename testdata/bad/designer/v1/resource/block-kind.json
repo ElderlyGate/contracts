@@ -1,6 +1,6 @@
 {
   "apiVersion": "elderlygate/designer/app/v1",
-  "kind": "Block",
+  "kind": "Resource",
   "ran": {
     "name": "default",
     "app": "designer",

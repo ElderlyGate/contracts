@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/resource.schema.json",
   "title": "resource",
-  "description": "One resource in full, from describe, for any kind but Block, which has its own schema: where it is, the file as written and the resource as read, so a reader can show the resource or the file it comes from.",
+  "description": "One resource in full, from describe, for any kind but Block, which has its own schema: where it is, the file as written and the resource as read, so a reader can show the resource or the file it comes from. The answer's kind is always Resource and data.kind says which kind the resource is, so a design kind named like an answer never points a reader to the wrong schema.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -14,12 +14,8 @@
           "const": "elderlygate/designer/app/v1"
         },
         "kind": {
-          "description": "The resource's kind, a built-in kind or one the design declares, since describe answers in the kind it describes; never Block, which block.schema.json holds.",
-          "type": "string",
-          "pattern": "^[A-Z][A-Za-z0-9]*$",
-          "not": {
-            "const": "Block"
-          }
+          "description": "Always Resource, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Resource"
         },
         "ran": {
           "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
@@ -39,8 +35,12 @@
           "type": "object",
           "properties": {
             "kind": {
-              "description": "The resource's kind, the same as the answer's kind.",
-              "type": "string"
+              "description": "The resource's kind, a built-in kind or one the design declares; never Block, which block.schema.json answers.",
+              "type": "string",
+              "pattern": "^[A-Z][A-Za-z0-9]*$",
+              "not": {
+                "const": "Block"
+              }
             },
             "id": {
               "description": "The resource's id. An id is unique only within a kind, so kind and id together name it.",
@@ -52,11 +52,12 @@
               "type": "string"
             },
             "text": {
-              "description": "The whole file as written, comments and all, every document in it, since writing back one document of a file would drop the rest.",
+              "description": "The whole file in the form this contract reads, every document in it, since writing back one document of a file would drop the rest. A file in an older form is answered upgraded, so its bytes on disk come from describe --raw.",
               "type": "string"
             },
             "document": {
-              "$ref": "#/$defs/document"
+              "$ref": "defs.schema.json#/$defs/document",
+              "description": "The resource as read from its file, the same shape describe design gives for each document, so a reader draws it without parsing text."
             }
           },
           "required": [
@@ -70,58 +71,5 @@
         }
       }
     }
-  ],
-  "$defs": {
-    "document": {
-      "description": "One resource as its file holds it, in the form this contract reads.",
-      "type": "object",
-      "properties": {
-        "apiVersion": {
-          "description": "Always elderlygate/designer/design/v2, the form a design's files are written in at this contract (apiversion/v1/forms.yaml).",
-          "const": "elderlygate/designer/design/v2"
-        },
-        "kind": {
-          "description": "The resource's kind, a built-in kind or one the design declares.",
-          "type": "string"
-        },
-        "metadata": {
-          "description": "What names the resource, apart from what it says.",
-          "type": "object",
-          "properties": {
-            "id": {
-              "description": "The resource's id, unique within its kind; other resources point to it by it.",
-              "type": "string",
-              "minLength": 1
-            },
-            "title": {
-              "description": "The resource's name for people, shown on its card on the board.",
-              "type": "string"
-            },
-            "tags": {
-              "description": "Labels the design's user puts on the resource.",
-              "type": "array",
-              "items": {
-                "description": "One label.",
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
-        },
-        "spec": {
-          "description": "What the resource says. Written by the design's user, so it stays open: a design's fields are its own (CT-RULE-4).",
-          "type": "object"
-        }
-      },
-      "required": [
-        "apiVersion",
-        "kind",
-        "metadata"
-      ],
-      "additionalProperties": false
-    }
-  }
+  ]
 }

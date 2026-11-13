@@ -11,7 +11,7 @@
     "sections": [
       {
         "section": "classes",
-        "design": "/home/user/project/.designer/default/definitions.yml",
+        "design": "definitions.yml",
         "entries": {
           "action": "built-in",
           "document": "built-in",
@@ -20,7 +20,7 @@
       },
       {
         "section": "properties",
-        "design": "/home/user/project/.designer/default/definitions.yml",
+        "design": "definitions.yml",
         "entries": {
           "answered": "design",
           "badge-description": "built-in",
@@ -30,7 +30,7 @@
       }
     ],
     "settings": {
-      "design": "/home/user/project/.designer/default/definitions.yml",
+      "design": "definitions.yml",
       "entries": {
         "diagrams": "built-in",
         "exportTo": "built-in",

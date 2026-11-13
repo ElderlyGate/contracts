@@ -35,19 +35,27 @@
           "type": "object",
           "properties": {
             "declared": {
-              "description": "True when design.yml declares views at all; false when it says nothing, so the board draws its own and a reader must not write those down without the user's decision.",
+              "description": "True when design.yml declares views as a map; false when it says nothing or cannot be read, so the board draws its own and a reader must not write those down without the user's decision.",
               "type": "boolean"
             },
+            "viewsUnreadable": {
+              "description": "True when design.yml's spec.board.views is there but is not a map, so a reader shows it and never writes over it; absent otherwise.",
+              "const": true
+            },
             "views": {
-              "description": "The views in the file's order, each as written.",
+              "description": "The views in the file's order, each as written, unreadable ones too, so a view that cannot be read is shown to be fixed.",
               "type": "array",
               "items": {
-                "description": "One view.",
+                "description": "One view, by its key in design.yml, with what the file says of it.",
                 "type": "object",
                 "properties": {
                   "name": {
                     "description": "Its key in design.yml, which layout.yml files the view's positions under.",
                     "type": "string"
+                  },
+                  "unreadable": {
+                    "description": "True when the view's entry is not a map, so its title, question and draws are not read and a reader never writes over it; absent otherwise.",
+                    "const": true
                   },
                   "title": {
                     "description": "Its title, empty when it has none, so a view with a blank title is still shown to be fixed.",
@@ -61,7 +69,7 @@
                     "description": "The kinds the view draws: one kind or a list as written, blank names left out; absent when the file says none, so the view draws every kind; empty draws nothing.",
                     "type": "array",
                     "items": {
-                      "description": "One kind.",
+                      "description": "One kind the view draws, by its name.",
                       "type": "string"
                     }
                   },
@@ -86,7 +94,7 @@
               "type": "string"
             },
             "sha256": {
-              "description": "The sha256 of the file's bytes as read, in hex; a write over the file names it with --replaces, so a file that changed meanwhile is not written over.",
+              "description": "The sha256 of design.yml's bytes as read, in hex, the views' file; a write of the views names it with --replaces, so a design.yml that changed meanwhile is not written over.",
               "type": "string",
               "pattern": "^[0-9a-f]{64}$"
             }

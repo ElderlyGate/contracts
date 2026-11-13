@@ -30,11 +30,16 @@
         "name": "sketch",
         "title": "Sketch",
         "drawsUnreadable": true
+      },
+      {
+        "name": "broken",
+        "unreadable": true,
+        "title": ""
       }
     ],
     "namePattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
     "nameRule": "letters, digits, - and _, starting with a letter or digit",
-    "sha256": "4f9218191be7e77a0d015be1f5a128fe410e61a2d455b2860e6b201f4c842acc"
+    "sha256": "9bb6429e9a52b9dbc3a4b7003e673bd9d450077ba3717421856560f68d3c6121"
   },
   "errors": []
 }

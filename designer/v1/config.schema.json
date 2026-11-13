@@ -54,7 +54,7 @@
                     ]
                   },
                   "design": {
-                    "description": "The design's definitions.yml, where an entry marked design comes from; absent when no design was read.",
+                    "description": "The design's definitions file, by its path in the design, where an entry marked design comes from, so a reader can open it; relative, so an answer over HTTP gives no folder of the serving machine away. Absent when no design was read.",
                     "type": "string"
                   },
                   "entries": {
@@ -81,7 +81,7 @@
               "type": "object",
               "properties": {
                 "design": {
-                  "description": "The design's definitions.yml, where a setting marked design comes from; absent when no design was read.",
+                  "description": "The design's definitions file, by its path in the design, where a setting marked design comes from, so a reader can open it; relative, so an answer over HTTP gives no folder of the serving machine away. Absent when no design was read.",
                   "type": "string"
                 },
                 "entries": {
@@ -111,11 +111,11 @@
                         "type": "string"
                       },
                       "heading": {
-                        "description": "The heading the table is written under.",
+                        "description": "The heading the table is written under, so the export finds where it goes.",
                         "type": "string"
                       },
                       "marker": {
-                        "description": "The marker that finds the table in the document.",
+                        "description": "The marker that finds the table in the document, so the export replaces only its own table.",
                         "type": "string"
                       },
                       "columns": {
@@ -126,11 +126,11 @@
                           "type": "object",
                           "properties": {
                             "label": {
-                              "description": "The column's heading.",
+                              "description": "The column's heading, as people read it in the register.",
                               "type": "string"
                             },
                             "from": {
-                              "description": "The field the column is read from.",
+                              "description": "The field the column is read from, so the export knows what to write in it.",
                               "type": "string"
                             },
                             "strip": {
@@ -163,7 +163,7 @@
                   "description": "The headings component diagrams are read under; absent means the built-in ones.",
                   "type": "array",
                   "items": {
-                    "description": "One heading.",
+                    "description": "One heading, under which a diagram is read.",
                     "type": "string"
                   }
                 }
@@ -178,10 +178,10 @@
               "type": "object"
             },
             "problems": {
-              "description": "Every definition e-designer could not take, so a reader shows why something is not drawn as written.",
+              "description": "Every definition e-designer could not take, so a reader shows why something is not drawn as written. The board section's problems are not here: DesignContents.board.problems holds them, one place for each fact.",
               "type": "array",
               "items": {
-                "$ref": "#/$defs/problem"
+                "$ref": "defs.schema.json#/$defs/problem"
               }
             },
             "moved": {
@@ -316,26 +316,5 @@
         }
       }
     }
-  ],
-  "$defs": {
-    "problem": {
-      "description": "One thing e-designer could not take, with where it is, so nobody has to hunt for it.",
-      "type": "object",
-      "properties": {
-        "at": {
-          "description": "Where the problem is: a file and a path in it, such as spec.board.display.layout.",
-          "type": "string"
-        },
-        "says": {
-          "description": "What is wrong, in words for people; a program never decides by it (G-STACK-15).",
-          "type": "string"
-        }
-      },
-      "required": [
-        "at",
-        "says"
-      ],
-      "additionalProperties": false
-    }
-  }
+  ]
 }

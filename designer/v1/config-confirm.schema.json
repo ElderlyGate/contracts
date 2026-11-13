@@ -38,92 +38,37 @@
               "description": "Every type of change e-designer makes, in order, so a reader lists them all.",
               "type": "array",
               "items": {
-                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
-                "enum": [
-                  "create",
-                  "edit",
-                  "move",
-                  "focus",
-                  "delete",
-                  "settings",
-                  "connect",
-                  "run"
-                ]
+                "$ref": "defs.schema.json#/$defs/actionType"
               }
             },
             "app": {
               "description": "The style picked for a type in e-designer's config; a type not listed takes the default.",
               "type": "object",
               "additionalProperties": {
-                "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
-                "enum": [
-                  "name",
-                  "yes-no",
-                  "never"
-                ]
+                "$ref": "defs.schema.json#/$defs/style"
               },
               "propertyNames": {
-                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
-                "enum": [
-                  "create",
-                  "edit",
-                  "move",
-                  "focus",
-                  "delete",
-                  "settings",
-                  "connect",
-                  "run"
-                ]
+                "$ref": "defs.schema.json#/$defs/actionType"
               }
             },
             "defaults": {
               "description": "The style of each type nobody picked.",
               "type": "object",
               "additionalProperties": {
-                "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
-                "enum": [
-                  "name",
-                  "yes-no",
-                  "never"
-                ]
+                "$ref": "defs.schema.json#/$defs/style"
               },
               "propertyNames": {
-                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
-                "enum": [
-                  "create",
-                  "edit",
-                  "move",
-                  "focus",
-                  "delete",
-                  "settings",
-                  "connect",
-                  "run"
-                ]
+                "$ref": "defs.schema.json#/$defs/actionType"
               }
             },
             "system": {
               "description": "The style a change to the system itself asks in, for each type that has one, such as deleting a design; it is never remembered (G-STACK-6).",
               "type": "object",
               "additionalProperties": {
-                "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
-                "enum": [
-                  "name",
-                  "yes-no",
-                  "never"
-                ]
+                "$ref": "defs.schema.json#/$defs/style"
               },
               "propertyNames": {
-                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
-                "enum": [
-                  "create",
-                  "edit",
-                  "move",
-                  "focus",
-                  "delete",
-                  "settings",
-                  "connect",
-                  "run"
-                ]
+                "$ref": "defs.schema.json#/$defs/actionType"
               }
             },
             "rows": {
@@ -134,25 +79,10 @@
                 "type": "object",
                 "properties": {
                   "type": {
-                    "description": "One type of change, the words every product of the org shares (G-STACK-13).",
-                    "enum": [
-                      "create",
-                      "edit",
-                      "move",
-                      "focus",
-                      "delete",
-                      "settings",
-                      "connect",
-                      "run"
-                    ]
+                    "$ref": "defs.schema.json#/$defs/actionType"
                   },
                   "style": {
-                    "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
-                    "enum": [
-                      "name",
-                      "yes-no",
-                      "never"
-                    ]
+                    "$ref": "defs.schema.json#/$defs/style"
                   },
                   "source": {
                     "description": "product: e-designer's config picks it; default: nobody did.",

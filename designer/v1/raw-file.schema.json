@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/describe.schema.json",
-  "title": "describe raw",
-  "description": "A file at the design root exactly as written, from describe --raw, with the sum a write over it names, so a reader can show or edit the bytes on disk.",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/raw-file.schema.json",
+  "title": "raw file",
+  "description": "A file of the design exactly as it is on disk, from describe --raw, with the sum a write over it names, so a reader can show or edit the bytes on disk and write them back over that version only. A layout.yml still at version 1 is refused with old_form, saying to run e-designer migrate layout.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -14,8 +14,8 @@
           "const": "elderlygate/designer/app/v1"
         },
         "kind": {
-          "description": "Always Describe, the kind of this answer, so a reader knows which schema its data meets.",
-          "const": "Describe"
+          "description": "Always RawFile, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "RawFile"
         },
         "ran": {
           "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
@@ -35,16 +35,13 @@
           "type": "object",
           "properties": {
             "text": {
-              "description": "The file's bytes as text, comments and all.",
+              "description": "The file's bytes as text, comments and all, so an editor shows what is on disk and not a reading of it.",
               "type": "string"
             },
             "path": {
-              "description": "Which file at the design root this is: design.yml, definitions.yml or layout.yml, the three files --raw reads.",
-              "enum": [
-                "design.yml",
-                "definitions.yml",
-                "layout.yml"
-              ]
+              "description": "The file's path in the design, with / between folders, such as design.yml or block/CMP-STORE.yml, never absolute and never with . or .. as a step, so a reader names the same file back and no folder of the machine it ran on is given away.",
+              "type": "string",
+              "pattern": "^(?:[^/\\\\.][^/\\\\]*|\\.[^/\\\\.][^/\\\\]*|\\.\\.[^/\\\\]+)(?:/(?:[^/\\\\.][^/\\\\]*|\\.[^/\\\\.][^/\\\\]*|\\.\\.[^/\\\\]+))*$"
             },
             "sha256": {
               "description": "The sha256 of the file's bytes as read, in hex; a write over the file names it with --replaces, so a file that changed meanwhile is not written over.",

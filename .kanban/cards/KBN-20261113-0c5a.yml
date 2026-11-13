@@ -1,0 +1,33 @@
+apiVersion: app/kanban/v1
+kind: Task
+metadata:
+  id: KBN-20261113-0c5a
+  title: 'designer/v1: Revision and FeatureList'
+  created_at: 2026-11-13T15:20:00.281Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: in-progress
+  order: 0.75
+  summary: The revision answer and the feature list, for E3b
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/revision/contracts
+  description: |
+    #feature #epic:same-shape #feature:contracts
+
+    # designer/v1: Revision and FeatureList
+
+    For e-designer step E3b (e-designer card KBN-20261112-5f31): the page asks one cheap revision answer and fetches only the parts that changed, and /ws goes.
+
+    ## Changes
+    Additions to designer/v1, each with a sample; no released schema changes (CT-RULE-1):
+    - Revision (`describe revision`): one fingerprint per part the board shows: board, layout, features, meta, runs.
+    - FeatureList (`get features`, also what `enable feature` and `disable feature` answer): the switchable features and whether each is on, which the page reads when the features fingerprint moves, since the switches came only over /ws until now.
+    - forms.yaml lists both; broken samples for the main rules.
+
+    ## Done when
+    - `go test ./...` is green; a release e-designer can pin.
+  lifecycle:
+    active_at: 2026-11-13T15:20:00.413Z
+    active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

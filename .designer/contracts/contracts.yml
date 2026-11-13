@@ -385,7 +385,6 @@ spec:
   code:
     implements: contracts.go
 --- # block/CMP-MANKIT-V1.yml
----
 apiVersion: elderlygate/designer/design/v2
 kind: Block
 metadata:

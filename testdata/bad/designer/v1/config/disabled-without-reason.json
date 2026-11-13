@@ -1,0 +1,334 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Config",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "sections": [
+      {
+        "section": "classes",
+        "design": "/home/user/project/.designer/default/definitions.yml",
+        "entries": {
+          "action": "built-in",
+          "document": "built-in",
+          "structure": "built-in"
+        }
+      },
+      {
+        "section": "properties",
+        "design": "/home/user/project/.designer/default/definitions.yml",
+        "entries": {
+          "answered": "design",
+          "badge-description": "built-in",
+          "badge-text": "built-in",
+          "caption": "built-in"
+        }
+      }
+    ],
+    "settings": {
+      "design": "/home/user/project/.designer/default/definitions.yml",
+      "entries": {
+        "diagrams": "built-in",
+        "exportTo": "built-in",
+        "register": "built-in",
+        "whereDocument": "built-in"
+      }
+    },
+    "definitions": {
+      "classes": {
+        "action": {
+          "hint": "the request can be here \u2014 a trace steps through it, coverage counts it",
+          "label": "Block"
+        },
+        "document": {
+          "hint": "attached to something, never a step",
+          "label": "Finding"
+        }
+      },
+      "features": {
+        "code": {
+          "label": "code",
+          "panel": {
+            "key": "7",
+            "width": "400px"
+          },
+          "reason": "no block type is defined, so nothing can be bound to code",
+          "requires": [
+            "Block"
+          ],
+          "selectors": {
+            "applies_to": {
+              "by": "class",
+              "values": [
+                "action"
+              ]
+            }
+          },
+          "type": "panel"
+        },
+        "components": {
+          "label": "components",
+          "reason": "requires nothing, so it is never off \u2014 a design that selects no class here simply reads no components",
+          "requires": [],
+          "selectors": {
+            "applies_to": {
+              "by": "class",
+              "values": [
+                "action",
+                "document"
+              ]
+            }
+          },
+          "type": "concept"
+        }
+      },
+      "presentations": {
+        "badge-description-markdown": {
+          "property": "badge-description",
+          "widget": "markdown"
+        },
+        "badge-text-text": {
+          "property": "badge-text",
+          "widget": "text"
+        }
+      },
+      "properties": {
+        "answered": {
+          "label": "Answered",
+          "type": "date"
+        },
+        "badge-description": {
+          "hint": "what the badge stands for: what travels on the line, and what proves who is talking",
+          "key": "badge.description",
+          "label": "Badge description",
+          "section": "badge",
+          "type": "markdown"
+        }
+      },
+      "schemas": {
+        "Block": {
+          "class": "action",
+          "glyph": "\u2b1b",
+          "idPrefix": "CMP-",
+          "label": "Building block",
+          "meaning": "a part of the system itself",
+          "order": 6,
+          "output": {
+            "columns": [
+              "id",
+              "title",
+              "place.group",
+              "place.role",
+              "status"
+            ],
+            "wide": [
+              "code.service",
+              "code.implements"
+            ]
+          },
+          "palette": {
+            "border": "muted",
+            "fill": "bg",
+            "text": "ink"
+          },
+          "properties": [
+            {
+              "presentation": "caption-multi"
+            },
+            {
+              "presentation": "description-markdown"
+            },
+            {
+              "presentation": "group-group"
+            },
+            {
+              "presentation": "role-combo"
+            },
+            {
+              "presentation": "release-combo"
+            },
+            {
+              "presentation": "start-flag"
+            },
+            {
+              "presentation": "views-multi"
+            },
+            {
+              "presentation": "look-look"
+            },
+            {
+              "presentation": "component-background-color"
+            },
+            {
+              "presentation": "component-border-color"
+            },
+            {
+              "presentation": "component-border-style-combo"
+            },
+            {
+              "presentation": "status-combo"
+            },
+            {
+              "presentation": "severity-combo"
+            },
+            {
+              "presentation": "operations-multi"
+            },
+            {
+              "presentation": "reads-multi"
+            },
+            {
+              "presentation": "writes-multi"
+            },
+            {
+              "presentation": "service-text"
+            },
+            {
+              "presentation": "implements-text"
+            },
+            {
+              "presentation": "probe-text"
+            },
+            {
+              "presentation": "where-multi"
+            }
+          ],
+          "sections": [
+            "values",
+            "contract",
+            "tags",
+            "flows",
+            "code",
+            "links",
+            "source"
+          ]
+        },
+        "Contradiction": {
+          "class": "document",
+          "glyph": "\ud83d\udd34",
+          "idPrefix": "CTR-",
+          "label": "Contradiction",
+          "meaning": "two parts of the design say different things",
+          "order": 0,
+          "output": {
+            "columns": [
+              "id",
+              "title",
+              "status",
+              "severity"
+            ],
+            "wide": [
+              "labels",
+              "source.where"
+            ]
+          },
+          "palette": {
+            "border": "bad",
+            "fill": "bad-soft",
+            "text": "ink"
+          },
+          "properties": [
+            {
+              "presentation": "description-markdown"
+            },
+            {
+              "presentation": "status-combo"
+            },
+            {
+              "presentation": "severity-combo"
+            },
+            {
+              "presentation": "where-multi"
+            },
+            {
+              "presentation": "component-background-color"
+            },
+            {
+              "presentation": "component-border-color"
+            },
+            {
+              "presentation": "component-border-style-combo"
+            }
+          ],
+          "sections": [
+            "values",
+            "tags",
+            "links",
+            "source"
+          ]
+        }
+      },
+      "sections": {
+        "badge": {
+          "label": "Badge"
+        },
+        "code": {
+          "label": "Code"
+        }
+      },
+      "vocabulary": {
+        "border-style": [
+          "solid",
+          "dashed",
+          "dotted",
+          "double",
+          "none"
+        ],
+        "door-state": [
+          "free",
+          "held",
+          "ajar",
+          "faulty"
+        ]
+      }
+    },
+    "problems": [],
+    "moved": [],
+    "releaseLanes": [
+      "rows",
+      "columns"
+    ],
+    "purposes": {
+      "entries": [
+        {
+          "value": "plan",
+          "note": "the work for a road item; has a goal, and ends when it is done"
+        },
+        {
+          "value": "architecture",
+          "note": "how things are and must stay; its decisions are ADRs"
+        },
+        {
+          "value": "product",
+          "note": "a product's own design; its roadmap is its releases"
+        },
+        {
+          "value": "reference",
+          "note": "anything else, such as a map of the organisation"
+        }
+      ],
+      "default": "reference",
+      "notSet": "reference (not set)"
+    },
+    "apiVersion": "elderlygate/designer/design/v2",
+    "origins": {
+      "Adr": "built-in",
+      "Block": "built-in",
+      "Contradiction": "built-in",
+      "Design": "built-in"
+    },
+    "unavailable": {
+      "code": {
+        "state": "disabled"
+      },
+      "components": {
+        "state": "invisible"
+      }
+    }
+  },
+  "errors": []
+}

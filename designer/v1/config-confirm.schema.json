@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/config-confirm.schema.json",
+  "title": "config confirm",
+  "description": "How each type of change asks on this machine, from config confirm, so a reader asks the user the same way the CLI does (G-STACK-13).",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always ConfigConfirm, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "ConfigConfirm"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Each type of change, this app's own picks, the defaults, and the style in use.",
+          "type": "object",
+          "properties": {
+            "types": {
+              "description": "Every type of change e-designer makes, in order, so a reader lists them all.",
+              "type": "array",
+              "items": {
+                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
+                "enum": [
+                  "create",
+                  "edit",
+                  "move",
+                  "focus",
+                  "delete",
+                  "settings",
+                  "connect",
+                  "run"
+                ]
+              }
+            },
+            "app": {
+              "description": "The style picked for a type in e-designer's config; a type not listed takes the default.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
+                "enum": [
+                  "name",
+                  "yes-no",
+                  "never"
+                ]
+              },
+              "propertyNames": {
+                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
+                "enum": [
+                  "create",
+                  "edit",
+                  "move",
+                  "focus",
+                  "delete",
+                  "settings",
+                  "connect",
+                  "run"
+                ]
+              }
+            },
+            "defaults": {
+              "description": "The style of each type nobody picked.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
+                "enum": [
+                  "name",
+                  "yes-no",
+                  "never"
+                ]
+              },
+              "propertyNames": {
+                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
+                "enum": [
+                  "create",
+                  "edit",
+                  "move",
+                  "focus",
+                  "delete",
+                  "settings",
+                  "connect",
+                  "run"
+                ]
+              }
+            },
+            "system": {
+              "description": "The style a change to the system itself asks in, for each type that has one, such as deleting a design; it is never remembered (G-STACK-6).",
+              "type": "object",
+              "additionalProperties": {
+                "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
+                "enum": [
+                  "name",
+                  "yes-no",
+                  "never"
+                ]
+              },
+              "propertyNames": {
+                "description": "One type of change, the words every product of the org shares (G-STACK-13).",
+                "enum": [
+                  "create",
+                  "edit",
+                  "move",
+                  "focus",
+                  "delete",
+                  "settings",
+                  "connect",
+                  "run"
+                ]
+              }
+            },
+            "rows": {
+              "description": "The style in use for each type, and where it comes from.",
+              "type": "array",
+              "items": {
+                "description": "One type.",
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "description": "One type of change, the words every product of the org shares (G-STACK-13).",
+                    "enum": [
+                      "create",
+                      "edit",
+                      "move",
+                      "focus",
+                      "delete",
+                      "settings",
+                      "connect",
+                      "run"
+                    ]
+                  },
+                  "style": {
+                    "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
+                    "enum": [
+                      "name",
+                      "yes-no",
+                      "never"
+                    ]
+                  },
+                  "source": {
+                    "description": "product: e-designer's config picks it; default: nobody did.",
+                    "enum": [
+                      "product",
+                      "default"
+                    ]
+                  }
+                },
+                "required": [
+                  "type",
+                  "style",
+                  "source"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "types",
+            "app",
+            "defaults",
+            "system",
+            "rows"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

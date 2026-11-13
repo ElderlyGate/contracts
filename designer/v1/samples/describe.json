@@ -1,0 +1,16 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Describe",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "text": "# This design's own definitions.\n#\n# Merged over the built-ins per entry, so what is here adds to them rather than\n# replacing the file. See `server/definitionStore.ts`.\n\napiVersion: elderlygate/designer/design/v2\nkind: Definitions\nmetadata:\n  id: definitions\nspec:\n  vocabulary:\n    door-state: [free, held, ajar, faulty]\n  properties:\n    holdDays:\n      label: Hold\n      type: number\n      hint: days a door is held before the parcel moves to the depot\n    reviewed:\n      label: Reviewed\n      type: flag\n    slaLabel:\n      label: SLA\n      type: text\n      hint: hours, as the contract writes it\n    answered:\n      label: Answered\n      type: date\n    decided:\n      label: Decided\n      type: date\n",
+    "path": "definitions.yml",
+    "sha256": "ff992e2a7499d483302a33c260baa9ecd8393be905c91cf5455d7ef846ec7600"
+  },
+  "errors": []
+}

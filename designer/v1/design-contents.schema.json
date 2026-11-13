@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/design-contents.schema.json",
+  "title": "design contents",
+  "description": "The whole design as read, from describe design: every document grouped by kind, the files that could not be read, the board section as taken, the focus, the purpose and how the design is kept, so a reader can draw the design from one answer.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always DesignContents, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "DesignContents"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The design's documents and what e-designer read from them.",
+          "type": "object",
+          "properties": {
+            "kinds": {
+              "description": "Every kind the design holds, with its documents, design.yml, definitions.yml and layout.yml included.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "The kind's documents, in id order.",
+                "type": "array",
+                "items": {
+                  "description": "One document.",
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "description": "The document's kind.",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "The document's id.",
+                      "type": "string"
+                    },
+                    "path": {
+                      "description": "The file it is in, relative to the design.",
+                      "type": "string"
+                    },
+                    "changedAt": {
+                      "description": "The file's last change, in Unix milliseconds, 0 when it could not be read, so a reader can tell what changed since it last looked.",
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "document": {
+                      "description": "The document as its file holds it: a resource, or for the kind Layout, layout.yml.",
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/document"
+                        },
+                        {
+                          "description": "layout.yml as read: where the boxes and lines of each view sit. Its version says its form; a version 1 file is refused by the board, which says to run e-designer migrate layout.",
+                          "type": "object",
+                          "properties": {
+                            "version": {
+                              "description": "The form of layout.yml, so a reader knows how to read views.",
+                              "type": "integer",
+                              "minimum": 2
+                            },
+                            "views": {
+                              "description": "Each view's boxes, lines and hexagon, keyed by view name, as apply --help describes them; the board writes them, so their inner shape is the layout program's.",
+                              "type": "object"
+                            }
+                          },
+                          "required": [
+                            "version",
+                            "views"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "id",
+                    "path",
+                    "changedAt",
+                    "document"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "broken": {
+              "description": "Every file e-designer could not read, and why, so a reader shows it instead of drawing a design with a hole in it (G-CODE-6).",
+              "type": "array",
+              "items": {
+                "description": "One file.",
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "description": "The file, relative to the design.",
+                    "type": "string"
+                  },
+                  "message": {
+                    "description": "Why it could not be read, for people.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file",
+                  "message"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "board": {
+              "description": "design.yml's spec.board as the board takes it.",
+              "type": "object",
+              "properties": {
+                "section": {
+                  "description": "The section with every entry e-designer refuses left out. Written by the design's user, so it stays open.",
+                  "type": "object"
+                },
+                "problems": {
+                  "description": "Every entry left out, and why.",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/problem"
+                  }
+                }
+              },
+              "required": [
+                "section",
+                "problems"
+              ],
+              "additionalProperties": false
+            },
+            "focus": {
+              "description": "What the design is focused on now, the blocks and groups marked with a star.",
+              "type": "object",
+              "properties": {
+                "items": {
+                  "description": "The focused items, in order.",
+                  "type": "array",
+                  "items": {
+                    "description": "One focused block or group.",
+                    "type": "object",
+                    "properties": {
+                      "order": {
+                        "description": "Its place in the focus, counted from 1, as the board numbers the stars.",
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "id": {
+                        "description": "Its id.",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "description": "Its kind.",
+                        "type": "string"
+                      },
+                      "title": {
+                        "description": "Its title, empty when it has none.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "order",
+                      "id",
+                      "kind",
+                      "title"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "note": {
+                  "description": "Why the design is focused so, in the user's words; absent when nothing is said.",
+                  "type": "string"
+                },
+                "since": {
+                  "description": "Since when, as the user wrote it; absent when nothing is said.",
+                  "type": "string"
+                },
+                "problems": {
+                  "description": "Every focus entry that names nothing the design holds.",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/problem"
+                  }
+                }
+              },
+              "required": [
+                "items",
+                "problems"
+              ],
+              "additionalProperties": false
+            },
+            "purpose": {
+              "description": "What the design counts as, read as get design reads it; null when design.yml cannot be read.",
+              "oneOf": [
+                {
+                  "type": "null",
+                  "description": "design.yml cannot be read, so the purpose is not known."
+                },
+                {
+                  "description": "The purpose.",
+                  "type": "object",
+                  "properties": {
+                    "purpose": {
+                      "description": "The word of the purpose list.",
+                      "type": "string"
+                    },
+                    "set": {
+                      "description": "True when design.yml states it; false when it is the default.",
+                      "type": "boolean"
+                    },
+                    "label": {
+                      "description": "How get design names it, such as reference (not set).",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "purpose",
+                    "set",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "storage": {
+              "description": "How the design is kept: distributed, one file per resource, or single, one file (design storage).",
+              "enum": [
+                "distributed",
+                "single"
+              ]
+            }
+          },
+          "required": [
+            "kinds",
+            "broken",
+            "board",
+            "focus",
+            "purpose",
+            "storage"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "problem": {
+      "description": "One thing e-designer could not take, with where it is, so nobody has to hunt for it.",
+      "type": "object",
+      "properties": {
+        "at": {
+          "description": "Where the problem is: a file and a path in it, such as spec.board.display.layout.",
+          "type": "string"
+        },
+        "says": {
+          "description": "What is wrong, in words for people; a program never decides by it (G-STACK-15).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "says"
+      ],
+      "additionalProperties": false
+    },
+    "document": {
+      "description": "One resource as its file holds it, in the form this contract reads.",
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/design/v2, the form a design's files are written in at this contract (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/designer/design/v2"
+        },
+        "kind": {
+          "description": "The resource's kind, a built-in kind or one the design declares.",
+          "type": "string"
+        },
+        "metadata": {
+          "description": "What names the resource, apart from what it says.",
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "The resource's id, unique within its kind; other resources point to it by it.",
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "description": "The resource's name for people, shown on its card on the board.",
+              "type": "string"
+            },
+            "tags": {
+              "description": "Labels the design's user puts on the resource.",
+              "type": "array",
+              "items": {
+                "description": "One label.",
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "spec": {
+          "description": "What the resource says. Written by the design's user, so it stays open: a design's fields are its own (CT-RULE-4).",
+          "type": "object"
+        }
+      },
+      "required": [
+        "apiVersion",
+        "kind",
+        "metadata"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

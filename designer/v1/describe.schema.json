@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/describe.schema.json",
+  "title": "describe raw",
+  "description": "A file at the design root exactly as written, from describe --raw, with the sum a write over it names, so a reader can show or edit the bytes on disk.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Describe, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Describe"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The file and its sum.",
+          "type": "object",
+          "properties": {
+            "text": {
+              "description": "The file's bytes as text, comments and all.",
+              "type": "string"
+            },
+            "path": {
+              "description": "Which file at the design root this is: design.yml, definitions.yml or layout.yml, the three files --raw reads.",
+              "enum": [
+                "design.yml",
+                "definitions.yml",
+                "layout.yml"
+              ]
+            },
+            "sha256": {
+              "description": "The sha256 of the file's bytes as read, in hex; a write over the file names it with --replaces, so a file that changed meanwhile is not written over.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "text",
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

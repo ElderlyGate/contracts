@@ -1,0 +1,17 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Revision",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.8.0",
+    "contract": "v1"
+  },
+  "data": {
+    "board": "4f1c2a9b7e3d5c80",
+    "layout": "9a0b1c2d3e4f5061",
+    "features": "e3b0c44298fc1c14",
+    "meta": "7d2e5f9a1b3c4d6e"
+  },
+  "errors": []
+}

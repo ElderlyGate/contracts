@@ -1,0 +1,66 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "FeatureList",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "6.8.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "id": "edit",
+      "title": "Change a design",
+      "covers": "apply, edit, connect, delete, focus, the design's files and its word lists",
+      "on": true,
+      "missing": [
+        {
+          "purpose": "the target"
+        }
+      ]
+    },
+    {
+      "id": "layout",
+      "title": "Arrange boxes",
+      "covers": "moving, tidying and arranging boxes",
+      "on": true
+    },
+    {
+      "id": "designs",
+      "title": "Manage designs",
+      "covers": "adding, renaming, moving, deleting a design, and how it is kept",
+      "on": true
+    },
+    {
+      "id": "tracing",
+      "title": "Trace requests",
+      "covers": "requests, runs, suites, the target and the stub",
+      "on": true
+    },
+    {
+      "id": "checks",
+      "title": "Run checks",
+      "covers": "the contract, coverage and conformance panels",
+      "on": true
+    },
+    {
+      "id": "export",
+      "title": "Export and import",
+      "covers": "export, import and PDF",
+      "on": true
+    },
+    {
+      "id": "history",
+      "title": "See what changed",
+      "covers": "what changed since a git ref",
+      "on": true
+    },
+    {
+      "id": "settings",
+      "title": "Machine settings",
+      "covers": "how changes ask, and where things are kept",
+      "on": true
+    }
+  ],
+  "errors": []
+}

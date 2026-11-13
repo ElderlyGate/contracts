@@ -863,10 +863,19 @@
         "flow": "drop-a-parcel"
       }
     },
+    "findings": {
+      "CMP-KIOSK": {
+        "attached": [
+          "CMP-LEDGER"
+        ],
+        "open": []
+      }
+    },
     "refused": [],
     "problems": [
       {
-        "says": "not a look this design declares"
+        "says": "not a look this design declares",
+        "code": "undeclared_look"
       }
     ]
   },

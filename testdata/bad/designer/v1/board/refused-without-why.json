@@ -863,8 +863,17 @@
         "flow": "drop-a-parcel"
       }
     },
+    "findings": {
+      "CMP-KIOSK": {
+        "attached": [
+          "CMP-LEDGER"
+        ],
+        "open": []
+      }
+    },
     "refused": [
       {
+        "code": "flow_refused",
         "file": "flow/x.yml"
       }
     ],

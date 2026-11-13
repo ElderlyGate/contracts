@@ -862,6 +862,14 @@
         "kind": "bound"
       }
     },
+    "findings": {
+      "CMP-KIOSK": {
+        "attached": [
+          "CMP-LEDGER"
+        ],
+        "open": []
+      }
+    },
     "refused": [],
     "problems": []
   },

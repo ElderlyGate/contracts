@@ -831,6 +831,14 @@
         "flow": "drop-a-parcel"
       }
     },
+    "findings": {
+      "CMP-KIOSK": {
+        "attached": [
+          "CMP-LEDGER"
+        ],
+        "open": []
+      }
+    },
     "refused": [],
     "problems": []
   },

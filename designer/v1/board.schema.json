@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/board.schema.json",
   "title": "board",
-  "description": "The design as the board draws it, from describe board: the design's contents, and what e-designer decided from them (which flows, requests and suites it takes, which flow each request enters, what it refuses and why), so the page only shapes the answer for drawing and decides nothing (G-STACK-7).",
+  "description": "The design as the board draws it, from describe board: the design's contents, and what e-designer decided from them (which flows, requests and suites it takes, which flow each request enters, which findings are open, what it refuses and why), so the page only shapes the answer for drawing and decides nothing (G-STACK-7).",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -71,18 +71,106 @@
                 "$ref": "defs.schema.json#/$defs/binding"
               }
             },
+            "findings": {
+              "description": "What is attached to each block, by block id: the components a link whose label annotates ties to it, findings mostly, and which of them are still open, judged by the statuses the definitions mark settled, the same judgement focus makes. A block with nothing attached is left out.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "What one block has attached.",
+                "type": "object",
+                "properties": {
+                  "attached": {
+                    "description": "Every component attached to the block, settled ones too, by id in the order the block's links list them, so a decided ADR still counts.",
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "description": "One component's id.",
+                      "type": "string"
+                    }
+                  },
+                  "open": {
+                    "description": "The attached components not settled, by id in the same order; one with no status is open, since unstated is not settled.",
+                    "type": "array",
+                    "items": {
+                      "description": "One component's id.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "attached",
+                  "open"
+                ],
+                "additionalProperties": false
+              }
+            },
             "refused": {
               "description": "Every file e-designer read but the board does not take, and why: a flow, request or suite it refuses, or a layout.yml in a form it no longer reads, with the command that brings it up. Files that could not be read at all are in contents.broken, so no file is said twice (G-CODE-6).",
               "type": "array",
               "items": {
-                "$ref": "design-contents.schema.json#/allOf/1/properties/data/properties/broken/items"
+                "description": "One file the board does not take.",
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "description": "Why, as a stable word a program decides by, never the message (G-STACK-15): not_a_slug: the flow, request or suite's id, its file name, is not a slug, so nothing can name it; flow_refused: the file does not form a flow; says names the field; request_refused: the file does not form a request; says names the field; suite_refused: the file does not form a suite; says names the field; layout_version_1: layout.yml is version 1, which only e-designer migrate layout reads.",
+                    "enum": [
+                      "not_a_slug",
+                      "flow_refused",
+                      "request_refused",
+                      "suite_refused",
+                      "layout_version_1"
+                    ]
+                  },
+                  "file": {
+                    "description": "The file, relative to the design.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "message": {
+                    "description": "Why, in words for people; a program never decides by it.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "file",
+                  "message"
+                ],
+                "additionalProperties": false
               }
             },
             "problems": {
               "description": "Every entry the board does not draw as written, and why: an old line word, a size left on a Group file, a look the design does not declare. Each says where by its at, a file and a path in it, so a reader finds the entry without reading the words.",
               "type": "array",
               "items": {
-                "$ref": "defs.schema.json#/$defs/problem"
+                "description": "One entry not drawn as written.",
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "description": "What is wrong, as a stable word a program decides by, never the words (G-STACK-15): old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now; e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner knows, so the step is checked without it.",
+                    "enum": [
+                      "old_link_word",
+                      "group_size_left",
+                      "undeclared_look",
+                      "suite_step_unread",
+                      "expectation_unread"
+                    ]
+                  },
+                  "at": {
+                    "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.look.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "says": {
+                    "description": "What is wrong, in words for people; a program never decides by it.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "at",
+                  "says"
+                ],
+                "additionalProperties": false
               }
             }
           },
@@ -92,6 +180,7 @@
             "requests",
             "suites",
             "bindings",
+            "findings",
             "refused",
             "problems"
           ],

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/feature-list.schema.json",
+  "title": "feature list",
+  "description": "e-designer's switchable features and whether each is on on this machine, from get features; enable feature and disable feature answer it too. The board reads it to close what is switched off, so the page and the server name the same features.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always FeatureList, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "FeatureList"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Every feature, in the order the app lists them.",
+          "type": "array",
+          "items": {
+            "description": "One feature e-designer can switch, and whether it is on on this machine.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The feature's id, which enable feature and disable feature take.",
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "description": "The feature's name for people.",
+                "type": "string"
+              },
+              "covers": {
+                "description": "What the feature covers, in words for people, so a reader says what switching it off closes.",
+                "type": "string"
+              },
+              "needs": {
+                "description": "The values the feature needs to run, so switching it on can name each one missing; absent when it needs none.",
+                "type": "array",
+                "items": {
+                  "description": "One value a feature needs, such as an environment variable or a settings row.",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The value's name, as it is set.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "purpose": {
+                      "description": "What the feature needs it for, in words for people.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "purpose"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "startsOff": {
+                "description": "True for a feature that is off until switched on (ADR-E9), so a reader says why it is off on a new machine; absent when it starts on.",
+                "const": true
+              },
+              "on": {
+                "description": "True when nothing closes the feature, so its routes and controls are open.",
+                "type": "boolean"
+              },
+              "by": {
+                "description": "What closed it: switch, the owner's disable feature; absent while it is on. An open word, so a later closer (public mode, a license) needs no new contract.",
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "missing": {
+                "description": "The values the feature needs that are not set, so a feature that is on but cannot run says why; absent when none is missing.",
+                "type": "array",
+                "items": {
+                  "description": "One value a feature needs, such as an environment variable or a settings row.",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The value's name, as it is set.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "purpose": {
+                      "description": "What the feature needs it for, in words for people.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "purpose"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "covers",
+              "on"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ]
+}

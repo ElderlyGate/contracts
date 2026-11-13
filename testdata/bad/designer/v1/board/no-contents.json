@@ -1,0 +1,164 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Board",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.5.0",
+    "contract": "v1"
+  },
+  "data": {
+    "layoutSha256": "63b06e46a6ff444ea921888236ab2026f6fb880f8610bf55ae0855bf26f0bb25",
+    "flows": [
+      {
+        "id": "drop-a-parcel",
+        "name": "Drop a parcel",
+        "source": "",
+        "entry": {
+          "method": "POST",
+          "path": "/v1/parcels"
+        },
+        "request": {},
+        "steps": [
+          {
+            "id": "person",
+            "at": "CMP-KIOSK",
+            "phase": "caller",
+            "source": "",
+            "label": "Somebody scans a barcode",
+            "note": "The only actor. Everything after this is the locker answering one question — which door."
+          },
+          {
+            "id": "pick",
+            "at": "CMP-LOCKS",
+            "phase": "execute",
+            "source": "",
+            "budgetMs": 50,
+            "label": "Choose a free door",
+            "components": {
+              "CMP-LOCKS": {
+                "doors.open": 1
+              }
+            },
+            "findings": {
+              "RSK-001": "The step that picks one door is the step a fail-open would turn into all of them."
+            }
+          },
+          {
+            "id": "write",
+            "at": "CMP-LEDGER",
+            "phase": "execute",
+            "source": "",
+            "budgetMs": 10,
+            "label": "Append the row",
+            "note": "Written before the door opens: a row with no parcel behind it is recoverable, a parcel with no row is not.",
+            "components": {
+              "CMP-LEDGER": {
+                "rows": 1
+              }
+            }
+          },
+          {
+            "id": "open",
+            "at": "CMP-LOCKS",
+            "phase": "return",
+            "source": "",
+            "label": "The door opens"
+          }
+        ],
+        "before": {
+          "CMP-LOCKS": {
+            "doors.open": 0
+          },
+          "CMP-LEDGER": {
+            "rows": 0
+          }
+        }
+      }
+    ],
+    "requests": [
+      {
+        "id": "drop",
+        "label": "Drop a parcel",
+        "type": {
+          "capability": "parcels",
+          "delivery": "unary",
+          "version": "v1"
+        },
+        "initial": {
+          "method": "POST",
+          "path": "/v1/parcels",
+          "header.authorization": "Bearer lk_kiosk_…",
+          "state": "received"
+        },
+        "group": "parcels",
+        "send": {
+          "path": "/v1/parcels",
+          "method": "POST",
+          "body": {
+            "barcode": "0007734",
+            "bank": "north-street",
+            "note": "left of the bike rack "
+          }
+        }
+      }
+    ],
+    "suites": [
+      {
+        "id": "a-full-bank-refuses",
+        "label": "A full bank refuses rather than picking a door twice",
+        "note": "Three drops against a bank of two. The third is the test; the first two only get it there.",
+        "steps": [
+          {
+            "request": "drop",
+            "expect": [
+              {
+                "kind": "status",
+                "status": 201
+              }
+            ]
+          },
+          {
+            "request": "drop",
+            "expect": [
+              {
+                "kind": "status",
+                "status": 201
+              }
+            ]
+          },
+          {
+            "request": "drop",
+            "expect": [
+              {
+                "kind": "status",
+                "status": 409
+              },
+              {
+                "kind": "spanAbsent",
+                "component": "locker.ledger"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "bindings": {
+      "drop": {
+        "kind": "bound",
+        "flow": "drop-a-parcel"
+      }
+    },
+    "findings": {
+      "CMP-KIOSK": {
+        "attached": [
+          "CMP-LEDGER"
+        ],
+        "open": []
+      }
+    },
+    "refused": [],
+    "problems": []
+  },
+  "errors": []
+}

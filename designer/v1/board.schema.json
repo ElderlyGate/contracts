@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/board.schema.json",
+  "title": "board",
+  "description": "The design as the board draws it, from describe board: the design's contents, and what e-designer decided from them (which flows, requests and suites it takes, which flow each request enters, which findings are open, what it refuses and why), so the page only shapes the answer for drawing and decides nothing (G-STACK-7).",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Board, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Board"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The design's contents and what the board takes from them.",
+          "type": "object",
+          "properties": {
+            "contents": {
+              "description": "The design as read, the same data describe design answers, so the board answer holds the documents once.",
+              "$ref": "design-contents.schema.json#/allOf/1/properties/data"
+            },
+            "layoutSha256": {
+              "description": "The sha256 of layout.yml's bytes on disk, in lower-case hex, or of no bytes when the design has no layout.yml, the sum --replaces takes, so a layout write names the file it changes and one changed since is refused. Absent only when layout.yml is in contents.broken, version 1 or unreadable, and then no layout write is allowed.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "flows": {
+              "description": "The flows the board takes, in id order; a flow it refuses is in refused instead.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/flow"
+              }
+            },
+            "requests": {
+              "description": "The saved requests the board takes, in id order; a request it refuses is in refused instead.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/request"
+              }
+            },
+            "suites": {
+              "description": "The suites the board takes, in id order; a suite it refuses is in refused instead.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/suite"
+              }
+            },
+            "bindings": {
+              "description": "Which flow each request enters, by request id, one entry per request in requests, so a reader shows a request no flow or several flows cover.",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "defs.schema.json#/$defs/binding"
+              }
+            },
+            "findings": {
+              "description": "What is attached to each block, by block id, judged in Go by the same settled statuses focus uses; a block with nothing attached is left out.",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "defs.schema.json#/$defs/blockFindings"
+              }
+            },
+            "refused": {
+              "description": "Every file e-designer read but the board does not take, and why: a flow, request or suite it refuses. Files that could not be read at all, and a version 1 layout.yml, are in contents.broken, so no file is said twice (G-CODE-6).",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/refusal"
+              }
+            },
+            "problems": {
+              "description": "Every entry the board does not draw as written, and why: an old line word, a size left on a Group file, a look the design does not declare, a part of a flow, request or suite it cannot read. Each says where by its at and what by its code.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/boardProblem"
+              }
+            }
+          },
+          "required": [
+            "contents",
+            "flows",
+            "requests",
+            "suites",
+            "bindings",
+            "findings",
+            "refused",
+            "problems"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

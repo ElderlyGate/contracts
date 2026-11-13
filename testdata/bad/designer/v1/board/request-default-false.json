@@ -1,0 +1,879 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Board",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.5.0",
+    "contract": "v1"
+  },
+  "data": {
+    "contents": {
+      "kinds": {
+        "Adr": [
+          {
+            "kind": "Adr",
+            "id": "ADR-001",
+            "path": "adr/ADR-001.yml",
+            "changedAt": 1794566861440,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Adr",
+              "metadata": {
+                "id": "ADR-001",
+                "title": "The ledger is a file, not a database"
+              },
+              "spec": {
+                "state": {
+                  "status": "decided"
+                },
+                "decided": "2026-03-02",
+                "source": {
+                  "where": [
+                    "test/fixtures/design/README.md#the-ledger"
+                  ]
+                },
+                "description": "One locker bank writes a few hundred rows a day. A file that can be read\nwith `less` beats a database nobody has credentials for at 3am, and the\nappend-only rule is enforced by the filesystem rather than by a trigger\nsomebody can drop.\n"
+              }
+            }
+          }
+        ],
+        "Block": [
+          {
+            "kind": "Block",
+            "id": "CMP-INTERIOR-COMMENT",
+            "path": "block/CMP-INTERIOR-COMMENT.yml",
+            "changedAt": 1794566861446,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Block",
+              "metadata": {
+                "id": "CMP-INTERIOR-COMMENT",
+                "title": "A comment in the middle of the document"
+              },
+              "spec": {
+                "place": {
+                  "group": "GRP-CORE",
+                  "role": "handler"
+                },
+                "state": {
+                  "status": "open"
+                }
+              }
+            }
+          },
+          {
+            "kind": "Block",
+            "id": "CMP-KIOSK",
+            "path": "block/CMP-KIOSK.yml",
+            "changedAt": 1794566861446,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Block",
+              "metadata": {
+                "id": "CMP-KIOSK",
+                "title": "The kiosk",
+                "tags": [
+                  "edge",
+                  "touched-by-a-person"
+                ]
+              },
+              "spec": {
+                "place": {
+                  "group": "GRP-EDGE",
+                  "role": "adapter"
+                },
+                "state": {
+                  "status": "decided"
+                },
+                "code": {
+                  "service": "locker.kiosk",
+                  "implements": "kiosk/main.go"
+                },
+                "source": {
+                  "where": [
+                    "test/fixtures/design/README.md#the-edge"
+                  ]
+                },
+                "description": "The only block a person touches. It knows a door number and a parcel\nbarcode, and nothing else — no addresses, no names, no ledger.\n\n🟢 That narrowness is the point: the kiosk is the block most likely to\nbe replaced, and the one with least to carry over when it is.\n"
+              }
+            }
+          },
+          {
+            "kind": "Block",
+            "id": "CMP-LEDGER",
+            "path": "block/CMP-LEDGER.yml",
+            "changedAt": 1794566861445,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Block",
+              "metadata": {
+                "id": "CMP-LEDGER",
+                "title": "The ledger",
+                "tags": [
+                  "append-only"
+                ]
+              },
+              "spec": {
+                "place": {
+                  "group": "GRP-CORE",
+                  "role": "handler"
+                },
+                "state": {
+                  "status": "decided"
+                },
+                "code": {
+                  "service": "locker.ledger",
+                  "implements": "internal/ledger/log.go#Log"
+                },
+                "description": "Append-only. A parcel that went in and never came out is a row that has no\npartner, and finding those is the whole reason the ledger exists rather\nthan a `parcels` table with a `collected` column.\n"
+              }
+            }
+          },
+          {
+            "kind": "Block",
+            "id": "CMP-LOCKS",
+            "path": "block/CMP-LOCKS.yml",
+            "changedAt": 1794566861445,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Block",
+              "metadata": {
+                "id": "CMP-LOCKS",
+                "title": "The lock controller"
+              },
+              "spec": {
+                "place": {
+                  "group": "GRP-CORE",
+                  "role": "handler"
+                },
+                "state": {
+                  "status": "open"
+                },
+                "code": {
+                  "service": "locker.locks",
+                  "implements": "internal/locks/controller.go#Controller"
+                },
+                "description": "Opens one door at a time and refuses to open a second while the first is\nstill ajar.\n\nThe refusal is the interesting half. A door that will not open is a\ncomplaint somebody makes; a bank of doors all open at once is a story in\nthe local paper.\n"
+              }
+            }
+          }
+        ],
+        "Contradiction": [
+          {
+            "kind": "Contradiction",
+            "id": "CTR-001",
+            "path": "contradiction/CTR-001.yml",
+            "changedAt": 1794566861443,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Contradiction",
+              "metadata": {
+                "id": "CTR-001",
+                "title": "*Doors are dumb* (the controller decides) vs *doors are smart* (each door holds its own timer)"
+              },
+              "spec": {
+                "state": {
+                  "status": "open",
+                  "severity": "blocker"
+                },
+                "description": "Two designs for the same hardware. Which one is true decides whether\n`CMP-LOCKS` is a service or a router.\n"
+              }
+            }
+          }
+        ],
+        "Definitions": [
+          {
+            "kind": "Definitions",
+            "id": "definitions",
+            "path": "definitions.yml",
+            "changedAt": 1794566861440,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Definitions",
+              "metadata": {
+                "id": "definitions"
+              },
+              "spec": {
+                "vocabulary": {
+                  "door-state": [
+                    "free",
+                    "held",
+                    "ajar",
+                    "faulty"
+                  ]
+                },
+                "properties": {
+                  "holdDays": {
+                    "label": "Hold",
+                    "type": "number",
+                    "hint": "days a door is held before the parcel moves to the depot"
+                  },
+                  "reviewed": {
+                    "label": "Reviewed",
+                    "type": "flag"
+                  },
+                  "slaLabel": {
+                    "label": "SLA",
+                    "type": "text",
+                    "hint": "hours, as the contract writes it"
+                  },
+                  "answered": {
+                    "label": "Answered",
+                    "type": "date"
+                  },
+                  "decided": {
+                    "label": "Decided",
+                    "type": "date"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "Design": [
+          {
+            "kind": "Design",
+            "id": "default",
+            "path": "design.yml",
+            "changedAt": 1794566861444,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Design",
+              "metadata": {
+                "id": "default",
+                "title": "A parcel locker"
+              },
+              "spec": {
+                "description": "**A worked example, small enough to read in one sitting.**\n\nThree blocks, one flow, one saved request and one suite — a person\ndrops a parcel into a locker and the ledger learns about it.\n\nNothing here is a real system. What is real is the *shape*: every file in\nthis design is byte-for-byte what the emitter renders, which is what makes\nthe directory usable as a fixture as well as an example.\n",
+                "board": {
+                  "links": {
+                    "calls": {
+                      "color": "#7d8794",
+                      "dashed": false
+                    },
+                    "related": {
+                      "color": "#a1668a",
+                      "dashed": true
+                    }
+                  }
+                },
+                "implementation": {
+                  "root": "."
+                }
+              }
+            }
+          }
+        ],
+        "Flow": [
+          {
+            "kind": "Flow",
+            "id": "drop-a-parcel",
+            "path": "flow/drop-a-parcel.yml",
+            "changedAt": 1794566861446,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Flow",
+              "metadata": {
+                "id": "drop-a-parcel",
+                "title": "Drop a parcel"
+              },
+              "spec": {
+                "entry": {
+                  "method": "POST",
+                  "path": "/v1/parcels"
+                },
+                "before": {
+                  "CMP-LOCKS": {
+                    "doors.open": 0
+                  },
+                  "CMP-LEDGER": {
+                    "rows": 0
+                  }
+                },
+                "steps": [
+                  {
+                    "id": "person",
+                    "at": "CMP-KIOSK",
+                    "phase": "caller",
+                    "label": "Somebody scans a barcode",
+                    "note": "The only actor. Everything after this is the locker answering one question — which door."
+                  },
+                  {
+                    "id": "pick",
+                    "at": "CMP-LOCKS",
+                    "phase": "execute",
+                    "label": "Choose a free door",
+                    "budgetMs": 50,
+                    "components": {
+                      "CMP-LOCKS": {
+                        "doors.open": 1
+                      }
+                    },
+                    "findings": {
+                      "RSK-001": "The step that picks one door is the step a fail-open would turn into all of them."
+                    }
+                  },
+                  {
+                    "id": "write",
+                    "at": "CMP-LEDGER",
+                    "phase": "execute",
+                    "label": "Append the row",
+                    "budgetMs": 10,
+                    "components": {
+                      "CMP-LEDGER": {
+                        "rows": 1
+                      }
+                    },
+                    "note": "Written before the door opens: a row with no parcel behind it is recoverable, a parcel with no row is not."
+                  },
+                  {
+                    "id": "open",
+                    "at": "CMP-LOCKS",
+                    "phase": "return",
+                    "label": "The door opens"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "Group": [
+          {
+            "kind": "Group",
+            "id": "GRP-CORE",
+            "path": "group/GRP-CORE.yml",
+            "changedAt": 1794566861442,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Group",
+              "metadata": {
+                "id": "GRP-CORE",
+                "title": "The core"
+              },
+              "spec": {
+                "order": 2
+              }
+            }
+          },
+          {
+            "kind": "Group",
+            "id": "GRP-EDGE",
+            "path": "group/GRP-EDGE.yml",
+            "changedAt": 1794566861441,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Group",
+              "metadata": {
+                "id": "GRP-EDGE",
+                "title": "The edge"
+              },
+              "spec": {
+                "order": 1
+              }
+            }
+          }
+        ],
+        "Layout": [
+          {
+            "kind": "Layout",
+            "id": "",
+            "path": "layout.yml",
+            "changedAt": 1794566861442,
+            "document": {
+              "version": 3,
+              "views": {
+                "structure": {
+                  "boxes": {
+                    "ADR-001": {
+                      "x": -31,
+                      "y": 408
+                    },
+                    "CMP-INTERIOR-COMMENT": {
+                      "x": 840,
+                      "y": -33
+                    },
+                    "CMP-KIOSK": {
+                      "x": 0,
+                      "y": -120
+                    },
+                    "CMP-LEDGER": {
+                      "x": 1260,
+                      "y": -120
+                    },
+                    "CMP-LOCKS": {
+                      "x": 840,
+                      "y": -120
+                    },
+                    "CTR-001": {
+                      "x": 291,
+                      "y": 408
+                    },
+                    "GRP-CORE": {
+                      "x": 420,
+                      "y": -238
+                    },
+                    "GRP-EDGE": {
+                      "x": -31,
+                      "y": -238
+                    },
+                    "OPN-001": {
+                      "x": 613,
+                      "y": 408
+                    },
+                    "QST-001": {
+                      "x": 935,
+                      "y": 408
+                    },
+                    "RSK-001": {
+                      "x": 1257,
+                      "y": 408
+                    },
+                    "SUG-001": {
+                      "x": 1579,
+                      "y": 408
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "Link": [
+          {
+            "kind": "Link",
+            "id": "CMP-KIOSK--calls--CMP-LOCKS",
+            "path": "link/CMP-KIOSK--calls--CMP-LOCKS.yml",
+            "changedAt": 1794566861443,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Link",
+              "metadata": {
+                "id": "CMP-KIOSK--calls--CMP-LOCKS"
+              },
+              "spec": {
+                "from": "CMP-KIOSK",
+                "to": "CMP-LOCKS",
+                "label": "calls"
+              }
+            }
+          },
+          {
+            "kind": "Link",
+            "id": "CMP-KIOSK--related--CMP-LEDGER",
+            "path": "link/CMP-KIOSK--related--CMP-LEDGER.yml",
+            "changedAt": 1794566861442,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Link",
+              "metadata": {
+                "id": "CMP-KIOSK--related--CMP-LEDGER"
+              },
+              "spec": {
+                "from": "CMP-KIOSK",
+                "to": "CMP-LEDGER",
+                "label": "related"
+              }
+            }
+          },
+          {
+            "kind": "Link",
+            "id": "CMP-LOCKS--calls--CMP-LEDGER",
+            "path": "link/CMP-LOCKS--calls--CMP-LEDGER.yml",
+            "changedAt": 1794566861443,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Link",
+              "metadata": {
+                "id": "CMP-LOCKS--calls--CMP-LEDGER"
+              },
+              "spec": {
+                "from": "CMP-LOCKS",
+                "to": "CMP-LEDGER",
+                "label": "calls"
+              }
+            }
+          }
+        ],
+        "Open": [
+          {
+            "kind": "Open",
+            "id": "OPN-001",
+            "path": "open/OPN-001.yml",
+            "changedAt": 1794566861445,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Open",
+              "metadata": {
+                "id": "OPN-001",
+                "title": "Who owns a parcel nobody collects: the sender or the locker?",
+                "tags": [
+                  "custody"
+                ]
+              },
+              "spec": {
+                "state": {
+                  "status": "open"
+                },
+                "source": {
+                  "where": [
+                    "test/fixtures/design/README.md#custody"
+                  ]
+                },
+                "description": "Blocks 🔵 `QST-001`, because the answer decides who the ledger is written\nfor.\n"
+              }
+            }
+          }
+        ],
+        "Question": [
+          {
+            "kind": "Question",
+            "id": "QST-001",
+            "path": "question/QST-001.yml",
+            "changedAt": 1794566861442,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Question",
+              "metadata": {
+                "id": "QST-001",
+                "title": "How long is a door held before the parcel is called abandoned?",
+                "tags": [
+                  "custody",
+                  "policy"
+                ]
+              },
+              "spec": {
+                "state": {
+                  "status": "open"
+                },
+                "answered": "2026-04-12",
+                "holdDays": 7,
+                "slaLabel": "72",
+                "description": "**Recommendation:** seven days, then the parcel moves to the depot and the\ndoor frees. Not a technical number — a contractual one — so it belongs in\n`design.yml`, not in `internal/locks`.\n"
+              }
+            }
+          }
+        ],
+        "Request": [
+          {
+            "kind": "Request",
+            "id": "drop",
+            "path": "request/drop.yml",
+            "changedAt": 1794566861444,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Request",
+              "metadata": {
+                "id": "drop",
+                "title": "Drop a parcel"
+              },
+              "spec": {
+                "type": {
+                  "capability": "parcels",
+                  "delivery": "unary",
+                  "version": "v1"
+                },
+                "initial": {
+                  "method": "POST",
+                  "path": "/v1/parcels",
+                  "header.authorization": "Bearer lk_kiosk_…",
+                  "state": "received"
+                },
+                "group": "parcels",
+                "send": {
+                  "path": "/v1/parcels",
+                  "method": "POST",
+                  "body": {
+                    "barcode": "0007734",
+                    "bank": "north-street",
+                    "note": "left of the bike rack "
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "Risk": [
+          {
+            "kind": "Risk",
+            "id": "RSK-001",
+            "path": "risk/RSK-001.yml",
+            "changedAt": 1794566861445,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Risk",
+              "metadata": {
+                "id": "RSK-001",
+                "title": "**Open-on-failure** applied to the lock bank = \"every door open at 3am\"",
+                "tags": [
+                  "safety"
+                ]
+              },
+              "spec": {
+                "state": {
+                  "status": "open",
+                  "severity": "critical"
+                },
+                "reviewed": false,
+                "description": "Fail-open is right for the display and wrong for the doors, and the two\nlive in one binary today.\n"
+              }
+            }
+          }
+        ],
+        "Suggestion": [
+          {
+            "kind": "Suggestion",
+            "id": "SUG-001",
+            "path": "suggestion/SUG-001.yml",
+            "changedAt": 1794566861441,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Suggestion",
+              "metadata": {
+                "id": "SUG-001",
+                "title": "Write the ledger before the kiosk, not after",
+                "tags": [
+                  "sequencing"
+                ]
+              },
+              "spec": {
+                "state": {
+                  "status": "open",
+                  "severity": "major"
+                },
+                "description": "Everything else can be re-run from an append-only log. Nothing can be\nre-run from a kiosk.\n"
+              }
+            }
+          }
+        ],
+        "Suite": [
+          {
+            "kind": "Suite",
+            "id": "a-full-bank-refuses",
+            "path": "suite/a-full-bank-refuses.yml",
+            "changedAt": 1794566861444,
+            "document": {
+              "apiVersion": "elderlygate/designer/design/v2",
+              "kind": "Suite",
+              "metadata": {
+                "id": "a-full-bank-refuses",
+                "title": "A full bank refuses rather than picking a door twice"
+              },
+              "spec": {
+                "note": "Three drops against a bank of two. The third is the test; the first two only get it there.",
+                "steps": [
+                  {
+                    "request": "drop",
+                    "expect": [
+                      {
+                        "status": 201
+                      }
+                    ]
+                  },
+                  {
+                    "request": "drop",
+                    "expect": [
+                      {
+                        "status": 201
+                      }
+                    ]
+                  },
+                  {
+                    "request": "drop",
+                    "expect": [
+                      {
+                        "status": 409
+                      },
+                      {
+                        "spans.absent": "locker.ledger"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "broken": [],
+      "board": {
+        "section": {
+          "links": {
+            "calls": {
+              "color": "#7d8794",
+              "dashed": false
+            },
+            "related": {
+              "color": "#a1668a",
+              "dashed": true
+            }
+          }
+        },
+        "problems": []
+      },
+      "focus": {
+        "items": [],
+        "problems": []
+      },
+      "purpose": {
+        "purpose": "reference",
+        "set": false,
+        "label": "reference (not set)"
+      },
+      "storage": "distributed"
+    },
+    "layoutSha256": "63b06e46a6ff444ea921888236ab2026f6fb880f8610bf55ae0855bf26f0bb25",
+    "flows": [
+      {
+        "id": "drop-a-parcel",
+        "name": "Drop a parcel",
+        "source": "",
+        "entry": {
+          "method": "POST",
+          "path": "/v1/parcels"
+        },
+        "request": {},
+        "steps": [
+          {
+            "id": "person",
+            "at": "CMP-KIOSK",
+            "phase": "caller",
+            "source": "",
+            "label": "Somebody scans a barcode",
+            "note": "The only actor. Everything after this is the locker answering one question — which door."
+          },
+          {
+            "id": "pick",
+            "at": "CMP-LOCKS",
+            "phase": "execute",
+            "source": "",
+            "budgetMs": 50,
+            "label": "Choose a free door",
+            "components": {
+              "CMP-LOCKS": {
+                "doors.open": 1
+              }
+            },
+            "findings": {
+              "RSK-001": "The step that picks one door is the step a fail-open would turn into all of them."
+            }
+          },
+          {
+            "id": "write",
+            "at": "CMP-LEDGER",
+            "phase": "execute",
+            "source": "",
+            "budgetMs": 10,
+            "label": "Append the row",
+            "note": "Written before the door opens: a row with no parcel behind it is recoverable, a parcel with no row is not.",
+            "components": {
+              "CMP-LEDGER": {
+                "rows": 1
+              }
+            }
+          },
+          {
+            "id": "open",
+            "at": "CMP-LOCKS",
+            "phase": "return",
+            "source": "",
+            "label": "The door opens"
+          }
+        ],
+        "before": {
+          "CMP-LOCKS": {
+            "doors.open": 0
+          },
+          "CMP-LEDGER": {
+            "rows": 0
+          }
+        }
+      }
+    ],
+    "requests": [
+      {
+        "id": "drop",
+        "label": "Drop a parcel",
+        "type": {
+          "capability": "parcels",
+          "delivery": "unary",
+          "version": "v1"
+        },
+        "initial": {
+          "method": "POST",
+          "path": "/v1/parcels",
+          "header.authorization": "Bearer lk_kiosk_…",
+          "state": "received"
+        },
+        "group": "parcels",
+        "send": {
+          "path": "/v1/parcels",
+          "method": "POST",
+          "body": {
+            "barcode": "0007734",
+            "bank": "north-street",
+            "note": "left of the bike rack "
+          }
+        },
+        "default": false
+      }
+    ],
+    "suites": [
+      {
+        "id": "a-full-bank-refuses",
+        "label": "A full bank refuses rather than picking a door twice",
+        "note": "Three drops against a bank of two. The third is the test; the first two only get it there.",
+        "steps": [
+          {
+            "request": "drop",
+            "expect": [
+              {
+                "kind": "status",
+                "status": 201
+              }
+            ]
+          },
+          {
+            "request": "drop",
+            "expect": [
+              {
+                "kind": "status",
+                "status": 201
+              }
+            ]
+          },
+          {
+            "request": "drop",
+            "expect": [
+              {
+                "kind": "status",
+                "status": 409
+              },
+              {
+                "kind": "spanAbsent",
+                "component": "locker.ledger"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "bindings": {
+      "drop": {
+        "kind": "bound",
+        "flow": "drop-a-parcel"
+      }
+    },
+    "findings": {
+      "CMP-KIOSK": {
+        "attached": [
+          "CMP-LEDGER"
+        ],
+        "open": []
+      }
+    },
+    "refused": [],
+    "problems": []
+  },
+  "errors": []
+}

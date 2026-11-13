@@ -50,7 +50,7 @@
               "pattern": "^[0-9a-f]{16}$"
             },
             "meta": {
-              "description": "The build's version and the design checkout's git state (its HEAD, the ref it points to, the packed refs, its index); a reader fetches the board's version and git facts again when it moves, or when board does, since those name the last change.",
+              "description": "The build's version and the design checkout's git state (its HEAD, the ref it points to, the packed refs, its index), and, where a server answers it, that server's start, so a restart moves it; a reader fetches the board's version and git facts again when it moves, or when board does, since those name the last change.",
               "type": "string",
               "pattern": "^[0-9a-f]{16}$"
             },

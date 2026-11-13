@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/revision.schema.json",
   "title": "revision",
-  "description": "Where each part of a design the board shows stands now, from describe revision: one cheap fingerprint per part, so a reader asks often and fetches only the parts whose fingerprint moved. Fingerprints are compared, never read: their bytes mean nothing beyond equal or not.",
+  "description": "Where each part of a design the board shows stands now, from describe revision: one cheap fingerprint per part, so a reader asks often and fetches only the parts whose fingerprint moved.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -31,7 +31,7 @@
           }
         },
         "data": {
-          "description": "One fingerprint per part, each 16 lower-case hex characters that change when that part changes.",
+          "description": "One fingerprint per part, each 16 lower-case hex characters that change when that part changes. A reader compares each fingerprint only with its own last value from the same server, never across servers or versions, and reads nothing into its bytes: equal or not is all it says.",
           "type": "object",
           "properties": {
             "board": {
@@ -40,7 +40,7 @@
               "pattern": "^[0-9a-f]{16}$"
             },
             "layout": {
-              "description": "layout.yml alone, so a moved box refetches only the positions, not the board.",
+              "description": "layout.yml alone, so a moved box refetches only the positions, not the board. While there is no layout.yml it is still a fingerprint, the same one until the file appears.",
               "type": "string",
               "pattern": "^[0-9a-f]{16}$"
             },
@@ -50,12 +50,12 @@
               "pattern": "^[0-9a-f]{16}$"
             },
             "meta": {
-              "description": "The build's version and the design checkout's git state (its HEAD, the ref it points to, its index); a reader fetches the board's version and git facts again when it moves, or when board does, since those name the last change.",
+              "description": "The build's version and the design checkout's git state (its HEAD, the ref it points to, the packed refs, its index); a reader fetches the board's version and git facts again when it moves, or when board does, since those name the last change.",
               "type": "string",
               "pattern": "^[0-9a-f]{16}$"
             },
             "runs": {
-              "description": "The runs kept for the design: how many there are and the newest; a reader fetches the run list again when it moves.",
+              "description": "The runs kept for the design: how many there are and the newest; a reader fetches the run list again when it moves. While none is kept it is still a fingerprint, the same one until the first run arrives.",
               "type": "string",
               "pattern": "^[0-9a-f]{16}$"
             }

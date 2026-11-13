@@ -385,6 +385,7 @@ spec:
   code:
     implements: contracts.go
 --- # block/CMP-MANKIT-V1.yml
+---
 apiVersion: elderlygate/designer/design/v2
 kind: Block
 metadata:
@@ -399,7 +400,8 @@ spec:
     - "the server record every app's serve writes,"
     - "the servers, stop and link answers,"
     - "the stream.gapped event,"
-    - "and the change queue's ticket, marker and list"
+    - "the change queue's ticket, marker and list,"
+    - "and the feature-switch shapes every app shares"
   code:
     implements: mankit/v1
 --- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml

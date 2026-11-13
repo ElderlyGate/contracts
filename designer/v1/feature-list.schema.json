@@ -31,94 +31,10 @@
           }
         },
         "data": {
-          "description": "Every feature, in the order the app lists them.",
+          "description": "Every feature, in the order the app lists them; each row is mankit's feature state (mankit/v1 defs).",
           "type": "array",
           "items": {
-            "description": "One feature e-designer can switch, and whether it is on on this machine.",
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "The feature's id, which enable feature and disable feature take.",
-                "type": "string",
-                "minLength": 1
-              },
-              "title": {
-                "description": "The feature's name for people.",
-                "type": "string"
-              },
-              "covers": {
-                "description": "What the feature covers, in words for people, so a reader says what switching it off closes.",
-                "type": "string"
-              },
-              "needs": {
-                "description": "The values the feature needs to run, so switching it on can name each one missing; absent when it needs none.",
-                "type": "array",
-                "items": {
-                  "description": "One value a feature needs, such as an environment variable or a settings row.",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "The value's name, as it is set.",
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "purpose": {
-                      "description": "What the feature needs it for, in words for people.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "purpose"
-                  ],
-                  "additionalProperties": false
-                }
-              },
-              "startsOff": {
-                "description": "True for a feature that is off until switched on (ADR-E9), so a reader says why it is off on a new machine; absent when it starts on.",
-                "const": true
-              },
-              "on": {
-                "description": "True when nothing closes the feature, so its routes and controls are open.",
-                "type": "boolean"
-              },
-              "by": {
-                "description": "What closed it: switch, the owner's disable feature; absent while it is on. An open word, so a later closer (public mode, a license) needs no new contract.",
-                "type": "string",
-                "pattern": "^[a-z][a-z0-9_]*$"
-              },
-              "missing": {
-                "description": "The values the feature needs that are not set, so a feature that is on but cannot run says why; absent when none is missing.",
-                "type": "array",
-                "items": {
-                  "description": "One value a feature needs, such as an environment variable or a settings row.",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "The value's name, as it is set.",
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "purpose": {
-                      "description": "What the feature needs it for, in words for people.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "purpose"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            },
-            "required": [
-              "id",
-              "title",
-              "covers",
-              "on"
-            ],
-            "additionalProperties": false
+            "$ref": "../../mankit/v1/defs.schema.json#/$defs/featureState"
           }
         }
       }

@@ -31,3 +31,7 @@ forms:
     app: mankit
     kinds: [QueueTicket, QueueBackend]
     note: "The change queue's files in a served folder's .queue/ (mankit queue): QueueTicket, a change waiting its turn; QueueBackend, the marker naming how every writer takes turns"
+  - new: elderlygate/contracts/problem/v1
+    app: contracts
+    kinds: [Problem]
+    note: The one Problem shape for every app's errors and problems (ADR-S21); error/v1 stays until each app moves

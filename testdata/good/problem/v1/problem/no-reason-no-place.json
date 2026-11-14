@@ -1,0 +1,6 @@
+{
+  "apiVersion": "elderlygate/contracts/problem/v1",
+  "kind": "Problem",
+  "type": "refused",
+  "detail": "the design folder is gone"
+}

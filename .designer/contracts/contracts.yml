@@ -403,6 +403,22 @@ spec:
     - "and the feature-switch shapes every app shares"
   code:
     implements: mankit/v1
+--- # block/CMP-PROBLEM.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Block
+metadata:
+  id: CMP-PROBLEM
+  title: "Problem v1"
+spec:
+  place:
+    views:
+      - structure
+    group: GRP-REPO
+  caption:
+    - "the one Problem shape,"
+    - "for errors and problems (ADR-S21)"
+  code:
+    implements: problem/v1/problem.schema.json
 --- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml
 apiVersion: elderlygate/designer/design/v2
 kind: Link
@@ -429,4 +445,13 @@ metadata:
 spec:
   from: CMP-TESTS
   to: CMP-MANKIT-V1
+  label: reads
+--- # link/CMP-TESTS--reads--CMP-PROBLEM.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Link
+metadata:
+  id: CMP-TESTS--reads--CMP-PROBLEM
+spec:
+  from: CMP-TESTS
+  to: CMP-PROBLEM
   label: reads

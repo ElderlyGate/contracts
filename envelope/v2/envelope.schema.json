@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/envelope/v2/envelope.schema.json",
+  "title": "envelope",
+  "description": "The outer shape every answer of every app shares: what it is, where it came from, the data and the errors. One shape lets any reader (a person, a script, an AI agent, control-room) read every app's answers the same way, from the CLI or over HTTP (ADR-S02, ADR-S03). Version 2 names where an answer comes from source instead of ran, and gives each error as a Problem (problem/v1, ADR-S21). version/v1, the version answer, stays on envelope/v1 for good.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "source",
+    "data",
+    "errors"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "The form the answer is in, as <org>/<app>/<family>/v<n>. Everything an app answers carries a version, so a reader knows which schema to read it by before reading anything else (ADR-S15).",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/[a-z][a-z0-9-]*/v[0-9]+$"
+    },
+    "kind": {
+      "description": "The kind of answer, such as BlockList or Version. With apiVersion it names the schema the data meets, so a reader never guesses the data's shape (ADR-S15).",
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$"
+    },
+    "source": {
+      "description": "Where the answer comes from (ADR-S08), so a reader that gathers answers from many things, apps and versions can tell each answer's source apart.",
+      "type": "object",
+      "required": [
+        "name",
+        "app",
+        "version",
+        "contract"
+      ],
+      "properties": {
+        "name": {
+          "description": "The thing the answer is about (a board, a design, a project). One server serving many things names each answer with its own thing, so a reader that gathers answers from many things (a read over a pattern or a connection, control-room) can tell them apart.",
+          "type": "string",
+          "minLength": 1
+        },
+        "app": {
+          "description": "The product ID of the app that answered; a reader such as servers uses it to tell its own app on a port.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "version": {
+          "description": "The version of the app that answered; a reader such as servers uses it to tell its own app on a port.",
+          "type": "string",
+          "minLength": 1
+        },
+        "contract": {
+          "description": "The contract version the answer is in.",
+          "type": "string",
+          "pattern": "^v[0-9]+$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "data": {
+      "description": "The answer itself; its shape is the kind's schema. The envelope leaves it open, so every kind shares one envelope and adds only its own data."
+    },
+    "errors": {
+      "description": "What went wrong, one Problem per error (problem/v1, ADR-S21); empty when the answer is good. It is always there, so a reader checks one list on every answer and decides by each Problem's type and reason (ADR-S03).",
+      "type": "array",
+      "items": {
+        "$ref": "../../problem/v1/problem.schema.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/example/app/v1",
+  "kind": "Error",
+  "source": {
+    "name": "example",
+    "app": "example",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": null,
+  "errors": [
+    {
+      "apiVersion": "elderlygate/contracts/problem/v1",
+      "kind": "Problem",
+      "type": "unsupported_contract",
+      "detail": "example does not answer contract v3; it answers v1, v2"
+    }
+  ]
+}

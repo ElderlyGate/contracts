@@ -435,6 +435,22 @@ spec:
     - "served in every contract version (ADR-S03)"
   code:
     implements: version/v1/version.schema.json
+--- # block/CMP-ENVELOPE-V2.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Block
+metadata:
+  id: CMP-ENVELOPE-V2
+  title: "Envelope v2"
+spec:
+  place:
+    views:
+      - structure
+    group: GRP-REPO
+  caption:
+    - "source instead of ran,"
+    - "each error a Problem"
+  code:
+    implements: envelope/v2/envelope.schema.json
 --- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml
 apiVersion: elderlygate/designer/design/v2
 kind: Link
@@ -489,3 +505,21 @@ spec:
   from: CMP-VERSION
   to: CMP-ENVELOPE
   label: uses
+--- # link/CMP-ENVELOPE-V2--uses--CMP-PROBLEM.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Link
+metadata:
+  id: CMP-ENVELOPE-V2--uses--CMP-PROBLEM
+spec:
+  from: CMP-ENVELOPE-V2
+  to: CMP-PROBLEM
+  label: uses
+--- # link/CMP-TESTS--reads--CMP-ENVELOPE-V2.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Link
+metadata:
+  id: CMP-TESTS--reads--CMP-ENVELOPE-V2
+spec:
+  from: CMP-TESTS
+  to: CMP-ENVELOPE-V2
+  label: reads

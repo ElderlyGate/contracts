@@ -1,0 +1,21 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Apply",
+  "ran": {
+    "name": "releases",
+    "app": "designer",
+    "version": "6.10.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "event": "created",
+      "file": "/home/ana/shop/.designer/releases/block/CMP-NEW.yml",
+      "kind": "Block",
+      "id": "CMP-NEW",
+      "before": null,
+      "after": "8888888888888888888888888888888888888888888888888888888888888888"
+    }
+  ],
+  "errors": []
+}

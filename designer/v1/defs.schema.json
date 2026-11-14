@@ -46,6 +46,30 @@
     },
     "blockFindings": {
       "$ref": "#/$defs/blockFindings"
+    },
+    "written": {
+      "$ref": "#/$defs/written"
+    },
+    "layoutSpot": {
+      "$ref": "#/$defs/layoutSpot"
+    },
+    "layoutMove": {
+      "$ref": "#/$defs/layoutMove"
+    },
+    "sideChange": {
+      "$ref": "#/$defs/sideChange"
+    },
+    "tidiedView": {
+      "$ref": "#/$defs/tidiedView"
+    },
+    "rect": {
+      "$ref": "#/$defs/rect"
+    },
+    "migratedView": {
+      "$ref": "#/$defs/migratedView"
+    },
+    "step": {
+      "$ref": "#/$defs/step"
     }
   },
   "additionalProperties": false,
@@ -910,6 +934,356 @@
         "attached",
         "open"
       ],
+      "additionalProperties": false
+    },
+    "written": {
+      "description": "One file a write touched: what happened to it and its sha256 before and after, so a reader knows what changed and can check the file is still what it wrote.",
+      "type": "object",
+      "required": [
+        "event",
+        "file",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "event": {
+          "description": "What happened to the file: created (it was not there), updated (its content changed), deleted (it is gone) or unchanged (written with the same content, or neither there before nor after).",
+          "enum": [
+            "created",
+            "updated",
+            "deleted",
+            "unchanged"
+          ]
+        },
+        "file": {
+          "description": "The file's path on the machine the write ran on, absolute, as the command found it; it means something only on that machine.",
+          "type": "string",
+          "pattern": "^/"
+        },
+        "kind": {
+          "description": "The kind of resource the file holds, such as Block, Link, Design, Definitions or Layout, by where it lies in the design; absent when its place says nothing.",
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "description": "The id of the resource the file holds, or the design's id for design.yml, definitions.yml and layout.yml; absent with kind.",
+          "type": "string",
+          "minLength": 1
+        },
+        "before": {
+          "description": "The sha256 of the file before, 64 lower-case hex characters; null when it was not there.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "after": {
+          "description": "The sha256 of the file after, 64 lower-case hex characters; null when it is gone.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "dependentRequired": {
+        "id": [
+          "kind"
+        ],
+        "kind": [
+          "id"
+        ]
+      },
+      "additionalProperties": false
+    },
+    "layoutSpot": {
+      "description": "Where a box, line or badge stood or stands on the view, in the board's pixels; a box that grew also says its size.",
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "description": "Left edge, or the point's x, in the board's pixels.",
+          "type": "number"
+        },
+        "y": {
+          "description": "Top edge, or the point's y, in the board's pixels.",
+          "type": "number"
+        },
+        "width": {
+          "description": "The box's width; present only when its size changed (what is size).",
+          "type": "number"
+        },
+        "height": {
+          "description": "The box's height; present only when its size changed (what is size).",
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "layoutMove": {
+      "description": "One thing tidying changed in the view, from where to where, so a reader can say what moved without comparing two layouts.",
+      "type": "object",
+      "required": [
+        "id",
+        "what",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "id": {
+          "description": "The box, group or line that moved: a resource id, or a line's link id.",
+          "type": "string",
+          "minLength": 1
+        },
+        "what": {
+          "description": "What changed: place (a box or group moved), size (it grew), bends (a line was routed anew) or badge (a line's label slid).",
+          "enum": [
+            "place",
+            "size",
+            "bends",
+            "badge"
+          ]
+        },
+        "from": {
+          "$ref": "defs.schema.json#/$defs/layoutSpot",
+          "description": "Where it stood before."
+        },
+        "to": {
+          "$ref": "defs.schema.json#/$defs/layoutSpot",
+          "description": "Where it stands now."
+        }
+      },
+      "additionalProperties": false
+    },
+    "sideChange": {
+      "description": "One line given other sides of its boxes, kept in layout.yml, so a reader can say which lines meet their boxes elsewhere now.",
+      "type": "object",
+      "required": [
+        "id",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "id": {
+          "description": "The line, by its link id.",
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "description": "The side of the box it leaves: l, r, t or b.",
+          "enum": [
+            "l",
+            "r",
+            "t",
+            "b"
+          ]
+        },
+        "to": {
+          "description": "The side of the box it reaches: l, r, t or b.",
+          "enum": [
+            "l",
+            "r",
+            "t",
+            "b"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "tidiedView": {
+      "description": "What tidying one view's lines did, as tidy lines answers it: how many lines the view draws, the lines given other sides, and every move; no sides and no moves when there was nothing to tidy.",
+      "type": "object",
+      "required": [
+        "view",
+        "lines",
+        "sides",
+        "moves"
+      ],
+      "properties": {
+        "view": {
+          "description": "The view tidied, by its name in design.yml.",
+          "type": "string",
+          "minLength": 1
+        },
+        "lines": {
+          "description": "How many lines between two boxes the view draws; 0 when it draws none, or draws curves, which have no bends or badges to place.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "sides": {
+          "description": "The lines given other sides, in the order they were changed.",
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/sideChange"
+          }
+        },
+        "moves": {
+          "description": "Every bend or badge moved, in the order they were moved.",
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/layoutMove"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rect": {
+      "description": "A box as drawn, rounded to the pixel.",
+      "type": "object",
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "x": {
+          "description": "Left edge in the board's pixels.",
+          "type": "number"
+        },
+        "y": {
+          "description": "Top edge in the board's pixels.",
+          "type": "number"
+        },
+        "width": {
+          "description": "Width in the board's pixels.",
+          "type": "number"
+        },
+        "height": {
+          "description": "Height in the board's pixels.",
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "migratedView": {
+      "description": "How one view comes out of migrating a version 1 layout.yml, so a person sees that nothing was drawn elsewhere before the write is kept.",
+      "type": "object",
+      "required": [
+        "view",
+        "boxes",
+        "moved",
+        "framesMoved",
+        "shrunk",
+        "badgesKept",
+        "badgesMiddle",
+        "badgesUndrawn",
+        "rects"
+      ],
+      "properties": {
+        "view": {
+          "description": "The view, by its name in design.yml.",
+          "type": "string",
+          "minLength": 1
+        },
+        "boxes": {
+          "description": "How many boxes the view draws.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "moved": {
+          "description": "Components drawn elsewhere than before by more than a pixel, or not at all; a migration must leave this empty.",
+          "type": "array",
+          "items": {
+            "description": "A resource id.",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "framesMoved": {
+          "description": "Groups whose frame is drawn elsewhere, or smaller, as it now fits what it holds.",
+          "type": "array",
+          "items": {
+            "description": "A resource id.",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "shrunk": {
+          "description": "Groups whose frame is drawn smaller than before.",
+          "type": "array",
+          "items": {
+            "description": "A resource id.",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "badgesKept": {
+          "description": "Badges a person put, kept where they were drawn on their line.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "badgesMiddle": {
+          "description": "Badges nobody put, drawn at their line's middle, as before.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "badgesUndrawn": {
+          "description": "Badges a person put on a line this view does not draw, which have nowhere to be kept.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "rects": {
+          "description": "Each box's drawn rect before and after, by its id, so a reader can show what changed.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "One box's rect before and after migrating.",
+            "type": "object",
+            "required": [
+              "before",
+              "after"
+            ],
+            "properties": {
+              "before": {
+                "$ref": "defs.schema.json#/$defs/rect",
+                "description": "As drawn before."
+              },
+              "after": {
+                "$ref": "defs.schema.json#/$defs/rect",
+                "description": "As drawn after."
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "step": {
+      "description": "One command a write ran as a step, with its own answer's kind, data and errors, as a bundle reports its steps; so a reader sees each step and where one failed.",
+      "type": "object",
+      "required": [
+        "command",
+        "kind",
+        "data",
+        "errors"
+      ],
+      "properties": {
+        "command": {
+          "description": "The command the step ran, by its words after e-designer, such as apply or migrate check-layout.",
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "description": "The kind of the step's own answer; its data meets that kind's schema where designer/v1 has one.",
+          "type": "string",
+          "minLength": 1
+        },
+        "data": {
+          "description": "The step's own answer's data, as that command answers it."
+        },
+        "errors": {
+          "description": "Why the step refused, empty when it did what was asked, as the step's own envelope says it.",
+          "type": "array",
+          "items": {
+            "$ref": "../../error/v1/error.schema.json"
+          }
+        }
+      },
       "additionalProperties": false
     }
   }

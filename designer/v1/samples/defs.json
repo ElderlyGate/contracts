@@ -232,5 +232,108 @@
     "open": [
       "RSK-001"
     ]
+  },
+  "written": {
+    "event": "updated",
+    "file": "/home/ana/shop/.designer/releases/layout.yml",
+    "kind": "Layout",
+    "id": "releases",
+    "before": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "after": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "layoutSpot": {
+    "x": 0,
+    "y": 0
+  },
+  "layoutMove": {
+    "id": "CMP-API",
+    "what": "place",
+    "from": {
+      "x": 300,
+      "y": 140
+    },
+    "to": {
+      "x": 320,
+      "y": 140
+    }
+  },
+  "sideChange": {
+    "id": "CMP-API--calls--CMP-DB",
+    "from": "r",
+    "to": "l"
+  },
+  "tidiedView": {
+    "view": "structure",
+    "lines": 3,
+    "sides": [
+      {
+        "id": "CMP-API--calls--CMP-DB",
+        "from": "r",
+        "to": "l"
+      }
+    ],
+    "moves": [
+      {
+        "id": "CMP-API--calls--CMP-DB",
+        "what": "badge",
+        "from": {
+          "x": 410,
+          "y": 160
+        },
+        "to": {
+          "x": 430,
+          "y": 160
+        }
+      }
+    ]
+  },
+  "rect": {
+    "x": 300,
+    "y": 140,
+    "width": 180,
+    "height": 72
+  },
+  "migratedView": {
+    "view": "structure",
+    "boxes": 2,
+    "moved": [],
+    "framesMoved": [
+      "GRP-CORE"
+    ],
+    "shrunk": [],
+    "badgesKept": 1,
+    "badgesMiddle": 2,
+    "badgesUndrawn": 0,
+    "rects": {
+      "CMP-API": {
+        "before": {
+          "x": 300,
+          "y": 140,
+          "width": 180,
+          "height": 72
+        },
+        "after": {
+          "x": 300,
+          "y": 140,
+          "width": 180,
+          "height": 72
+        }
+      }
+    }
+  },
+  "step": {
+    "command": "apply",
+    "kind": "Apply",
+    "data": [
+      {
+        "event": "updated",
+        "file": "/home/ana/shop/.designer/releases/layout.yml",
+        "kind": "Layout",
+        "id": "releases",
+        "before": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "after": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      }
+    ],
+    "errors": []
   }
 }

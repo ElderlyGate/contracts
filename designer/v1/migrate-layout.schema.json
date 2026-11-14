@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/migrate-layout.schema.json",
+  "title": "migrate-layout",
+  "description": "What migrate layout answers: that there was nothing to migrate, or how each view comes out, how many Group files lose their size, and on a real run each step it ran and what tidying each view's lines did.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always MigrateLayout, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "MigrateLayout"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Nothing to do, or what migrating did or would do.",
+          "type": "object",
+          "required": [
+            "groups"
+          ],
+          "properties": {
+            "nothing": {
+              "description": "Why there was nothing to migrate, in words for people; present only then, and then nothing else but groups.",
+              "type": "string",
+              "minLength": 1
+            },
+            "report": {
+              "description": "How each view comes out of migrating a version 1 layout.yml; empty when the layout was version 2.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/migratedView"
+              }
+            },
+            "groups": {
+              "description": "How many Group files lose the size they carried, which the layout now keeps.",
+              "type": "integer",
+              "minimum": 0
+            },
+            "steps": {
+              "description": "Each command the migration ran, in order; present only on a real run, never on --dry-run.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/step"
+              }
+            },
+            "tidied": {
+              "description": "What tidying each view's lines did, one entry per view, when the lines were tidied.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/tidiedView"
+              }
+            }
+          },
+          "if": {
+            "required": [
+              "nothing"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "report"
+                  ]
+                },
+                {
+                  "required": [
+                    "steps"
+                  ]
+                },
+                {
+                  "required": [
+                    "tidied"
+                  ]
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

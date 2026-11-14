@@ -20,7 +20,7 @@
       "const": "Problem"
     },
     "type": {
-      "description": "What happened, as an open word a program decides by; a plain word is a relative URI reference, as RFC 9457 allows. A reader matches the words it knows and shows the detail for any other, so an app can report a new word without a new contract (CT-RULE-1). Known words: unread: a part was left out and the rest kept; refused: the whole thing was not taken; undeclared: it names something that is not declared; old: it is in an old form, which a migrate fixes; unsupported_contract: the asked contract version is not served; the app's version answer lists the versions it serves (ADR-S03); not_found: the thing asked for is not there; failed: the app itself broke, not the request, so trying again later may work.",
+      "description": "What happened, as an open word a program decides by; a plain word is a relative URI reference, as RFC 9457 allows. A reader matches the words it knows and shows the detail for any other, so an app can report a new word without a new contract (CT-RULE-1). Known words: unread: a part was left out and the rest kept; refused: the whole thing was not taken; undeclared: it names something that is not declared; old: it is in an old form, which a migrate fixes; unsupported_contract: the asked contract version is not served; the app's version answer lists the versions it serves (ADR-S03); not_found: the thing asked for is not there; failed: the app itself broke, not the request; the reason says whether something must be fixed before trying again.",
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$"
     },

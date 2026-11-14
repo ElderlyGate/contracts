@@ -12,6 +12,7 @@ The rules and the layout of the folders are in `constitution/tech-stack.md`; the
 - `version/v1/`: the one version answer every app serves in every contract version (ADR-S03): the contract versions it serves, in `supportedContracts`. designer/v1's Version stays until each app moves.
 - `mankit/v1/`: what mankit serve answers for every app: the record a detached `serve` writes, the `servers` answers, the `<product>.stream.gapped` event a client of `GET /api/events` gets when it missed events, the change queue's ticket, backend marker and the `<app> queue` answer, and in `defs.schema.json` the shapes mankit gives every app's answers, such as a feature switch's state, which each app's own feature list references. Each app lists that event in its own `events.asyncapi.yaml`.
 - `<app>/<version>/`: one app's contract, named by its product ID. `designer/v1/` is the first.
+- `upgrade.go`: the steps that upgrade an answer from one version to the next (CT-RULE-3), one Go function `Upgrade<Kind>` per step, such as `UpgradeEnvelope` from envelope/v1 to envelope/v2. Each is tested by pairs in `testdata/upgrade/<dir>/<from>-<to>/`. Go only for now, as the readers that mix versions are Go.
 - `apiversion/v1/forms.yaml`: the one table of every apiVersion form. A row names a current form, the old forms it replaces and its kinds. A reader that meets an old form finds the row whose `old` list holds it, and gets the current form and the upgrade command (`hubman migrate <app> <folder>`).
 
 An answer has five fields: `apiVersion`, `kind`, `ran`, `data` and `errors`. `ran` says where it came from: the name, the app, its version and the contract version. A reader asks for a version with `--contract v1` or the `Accept-Contract: v1` header. An app that cannot answer it gives the error `unsupported_contract` and lists the versions it supports. In envelope/v2, `ran` is `source`, and that error is a Problem of type `unsupported_contract`; the app's version answer lists the versions it serves.
@@ -56,4 +57,5 @@ The tests check that:
 - every event in an `events.asyncapi.yaml` is a valid event, with its schema and sample;
 - every file in `testdata/bad/` is refused by its schema;
 - every file in `testdata/good/` meets its schema: the shapes a schema takes beyond its one sample;
+- every upgrade pair in `testdata/upgrade/` is a sample of the older version and the sample of the newer one its upgrade step makes;
 - the apiVersion table lists each form once, and each old form in one row only; a row with old forms has its upgrade command.

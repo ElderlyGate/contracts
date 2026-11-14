@@ -1,0 +1,23 @@
+{
+  "apiVersion": "elderlygate/example/app/v1",
+  "kind": "Error",
+  "ran": {
+    "name": "example",
+    "app": "example",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": null,
+  "errors": [
+    {
+      "apiVersion": "elderlygate/example/app/v1",
+      "kind": "Error",
+      "code": "unsupported_contract",
+      "message": "example does not answer contract v3; it answers v1, v2",
+      "supported": [
+        "v1",
+        "v2"
+      ]
+    }
+  ]
+}

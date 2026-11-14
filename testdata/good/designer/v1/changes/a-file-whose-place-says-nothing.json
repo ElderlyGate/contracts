@@ -10,7 +10,7 @@
   "data": [
     {
       "event": "unchanged",
-      "file": "/home/ana/shop/.designer/releases/notes.txt",
+      "file": ".designer/releases/notes.txt",
       "before": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "after": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     }

@@ -10,7 +10,7 @@
   "data": [
     {
       "event": "updated",
-      "file": "/home/ana/shop/.designer/releases/design.yml",
+      "file": ".designer/releases/design.yml",
       "kind": "Design",
       "id": "releases",
       "before": "1111111111111111111111111111111111111111111111111111111111111111",

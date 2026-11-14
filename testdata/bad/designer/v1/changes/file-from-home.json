@@ -10,7 +10,7 @@
   "data": [
     {
       "event": "created",
-      "file": "block/CMP-NEW.yml",
+      "file": "~/shop/.designer/releases/block/CMP-NEW.yml",
       "kind": "Block",
       "id": "CMP-NEW",
       "before": null,

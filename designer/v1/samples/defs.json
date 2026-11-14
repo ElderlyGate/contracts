@@ -235,7 +235,7 @@
   },
   "written": {
     "event": "updated",
-    "file": "/home/ana/shop/.designer/releases/layout.yml",
+    "file": ".designer/releases/layout.yml",
     "kind": "Layout",
     "id": "releases",
     "before": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -327,7 +327,7 @@
     "data": [
       {
         "event": "updated",
-        "file": "/home/ana/shop/.designer/releases/layout.yml",
+        "file": ".designer/releases/layout.yml",
         "kind": "Layout",
         "id": "releases",
         "before": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",

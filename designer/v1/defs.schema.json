@@ -956,9 +956,28 @@
           ]
         },
         "file": {
-          "description": "The file's path on the machine the write ran on, absolute, as the command found it; it means something only on that machine.",
+          "description": "The file, as a path inside the project folder the write ran in: the folder holding .designer/, else the folder holding the designs, such as .designer/default/block/CMP-API.yml; so the same write reads the same on every machine and over HTTP as in the CLI (ADR-S02, ADR-S21). Never a machine path, so it has no leading slash or backslash, no drive letter or scheme such as file:, no leading ~ or space, and no .. step.",
           "type": "string",
-          "pattern": "^/"
+          "minLength": 1,
+          "not": {
+            "anyOf": [
+              {
+                "pattern": "^[/\\\\]"
+              },
+              {
+                "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+              },
+              {
+                "pattern": "^~"
+              },
+              {
+                "pattern": "^\\s"
+              },
+              {
+                "pattern": "(^|[/\\\\])\\.\\.([/\\\\]|$)"
+              }
+            ]
+          }
         },
         "kind": {
           "description": "The kind of resource the file holds, such as Block, Link, Design, Definitions or Layout, by where it lies in the design; absent when its place says nothing.",

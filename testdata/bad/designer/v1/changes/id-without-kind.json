@@ -10,7 +10,7 @@
   "data": [
     {
       "event": "created",
-      "file": "/home/ana/shop/.designer/releases/block/CMP-NEW.yml",
+      "file": ".designer/releases/block/CMP-NEW.yml",
       "id": "CMP-NEW",
       "before": null,
       "after": "8888888888888888888888888888888888888888888888888888888888888888"

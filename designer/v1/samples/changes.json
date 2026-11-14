@@ -10,7 +10,7 @@
   "data": [
     {
       "event": "deleted",
-      "file": "/home/ana/shop/.designer/releases/block/CMP-NEW.yml",
+      "file": ".designer/releases/block/CMP-NEW.yml",
       "kind": "Block",
       "id": "CMP-NEW",
       "before": "8888888888888888888888888888888888888888888888888888888888888888",
@@ -18,7 +18,7 @@
     },
     {
       "event": "deleted",
-      "file": "/home/ana/shop/.designer/releases/link/CMP-NEW--calls--CMP-SIDECAR.yml",
+      "file": ".designer/releases/link/CMP-NEW--calls--CMP-SIDECAR.yml",
       "kind": "Link",
       "id": "CMP-NEW--calls--CMP-SIDECAR",
       "before": "5555555555555555555555555555555555555555555555555555555555555555",

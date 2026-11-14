@@ -1,0 +1,22 @@
+{
+  "apiVersion": "elderlygate/contracts/problem/v1",
+  "kind": "Problem",
+  "code": "refused",
+  "reason": "duplicate",
+  "at": [
+    {
+      "file": "request/second-copy.yml",
+      "document": 1,
+      "line": 3,
+      "path": "metadata.id"
+    },
+    {
+      "file": "request/second.yml",
+      "document": 1,
+      "line": 3,
+      "path": "metadata.id"
+    }
+  ],
+  "message": "another file already holds the request second",
+  "severity": "high"
+}

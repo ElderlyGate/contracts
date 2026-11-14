@@ -1,0 +1,10 @@
+{
+  "apiVersion": "elderlygate/contracts/problem/v1",
+  "kind": "Problem",
+  "code": "refused",
+  "message": "this app does not answer contract v3",
+  "supported": [
+    "v1",
+    "v2"
+  ]
+}

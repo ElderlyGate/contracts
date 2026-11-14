@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/version/v1/version.schema.json",
+  "title": "version",
+  "description": "Which contract versions an app serves, in the one version answer every app gives, in every contract version (ADR-S03): a reader that was told unsupported_contract, or that meets an app for the first time, asks it and then asks again with a version both speak. The app, its build and the contract this answer is in are read from ran. It never refuses a contract: ran.contract is the asked version when the app serves it, otherwise the newest version it serves.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/contracts/version/v1: the one form of the version answer, the same for every app and every contract version, so a reader knows its shape whatever it asked for.",
+          "const": "elderlygate/contracts/version/v1"
+        },
+        "kind": {
+          "description": "Always Version, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Version"
+        },
+        "data": {
+          "description": "What the app serves; which app, which build and which contract this answer is in are in ran, never here.",
+          "type": "object",
+          "required": [
+            "supportedContracts"
+          ],
+          "properties": {
+            "supportedContracts": {
+              "description": "Every contract version the app serves, so a reader picks one it also speaks and asks again with it (ADR-S03, ADR-S06). It includes ran.contract; each app's tests check that.",
+              "type": "array",
+              "items": {
+                "description": "One contract version the app serves, such as v1.",
+                "type": "string",
+                "pattern": "^v[0-9]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

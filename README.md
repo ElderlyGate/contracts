@@ -8,6 +8,7 @@ The rules and the layout of the folders are in `constitution/tech-stack.md`; the
 
 - `envelope/v1/`, `error/v1/`, `event/v1/`: the shapes every answer, error and event shares.
 - `problem/v1/`: the one Problem shape every app reports what went wrong in (ADR-S21), for errors and for problems an answer worked around. `error/v1` stays until each app moves.
+- `version/v1/`: the one version answer every app serves in every contract version (ADR-S03): the contract versions it serves, in `supportedContracts`. designer/v1's Version stays until each app moves.
 - `mankit/v1/`: what mankit serve answers for every app: the record a detached `serve` writes, the `servers` answers, the `<product>.stream.gapped` event a client of `GET /api/events` gets when it missed events, the change queue's ticket, backend marker and the `<app> queue` answer, and in `defs.schema.json` the shapes mankit gives every app's answers, such as a feature switch's state, which each app's own feature list references. Each app lists that event in its own `events.asyncapi.yaml`.
 - `<app>/<version>/`: one app's contract, named by its product ID. `designer/v1/` is the first.
 - `apiversion/v1/forms.yaml`: the one table of every apiVersion form. A row names a current form, the old forms it replaces and its kinds. A reader that meets an old form finds the row whose `old` list holds it, and gets the current form and the upgrade command (`hubman migrate <app> <folder>`).

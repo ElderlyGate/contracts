@@ -8,7 +8,7 @@ import (
 
 // An upgrade step is Upgrade<Kind>(from []byte) ([]byte, error), one per version step, tested by the pairs in testdata/upgrade/<dir>/<from>-<to>/ (CT-RULE-3).
 
-// reasonOf is the owner's mapping of an error/v1 code to a Problem's type and reason; a code not here stays the type, with no reason.
+// reasonOf is the owner's mapping of an error/v1 code to a Problem's type and reason, the one mankit serve writes; a code not here stays the type, with no reason.
 var reasonOf = map[string][2]string{
 	"token_refused":     {"refused", "token"},
 	"host_refused":      {"refused", "host"},
@@ -17,6 +17,15 @@ var reasonOf = map[string][2]string{
 	"unconfirmed":       {"refused", "unconfirmed"},
 	"config_unreadable": {"failed", "config_unreadable"},
 	"core_needs_values": {"failed", "core_needs_values"},
+	// mankit's other words, by the same pattern: failed when the request was fine and the app could not do it, refused when the request is not taken.
+	"feature_needs_values":      {"failed", "feature_needs_values"},
+	"queue_timeout":             {"failed", "queue_timeout"},
+	"not_read_back":             {"failed", "not_read_back"},
+	"ticket_lost":               {"failed", "ticket_lost"},
+	"queue_unusable":            {"failed", "queue_unusable"},
+	"queue_backend_unsupported": {"failed", "queue_backend_unsupported"},
+	"change_too_long":           {"failed", "change_too_long"},
+	"too_many_streams":          {"refused", "too_many_streams"},
 }
 
 type errorV1 struct {

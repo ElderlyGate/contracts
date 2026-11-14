@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/example/app/v1",
+  "kind": "Error",
+  "ran": {
+    "name": "example",
+    "app": "example",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": null,
+  "errors": [
+    {
+      "apiVersion": "elderlygate/example/app/v1",
+      "kind": "Error",
+      "code": "not_read_back",
+      "message": "c was written but could not be read back: x"
+    }
+  ]
+}

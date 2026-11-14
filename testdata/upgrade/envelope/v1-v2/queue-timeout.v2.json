@@ -1,0 +1,20 @@
+{
+  "apiVersion": "elderlygate/example/app/v1",
+  "kind": "Error",
+  "source": {
+    "name": "example",
+    "app": "example",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": null,
+  "errors": [
+    {
+      "apiVersion": "elderlygate/contracts/problem/v1",
+      "kind": "Problem",
+      "type": "failed",
+      "detail": "the change waited 30s for its turn in /q and did not run",
+      "reason": "queue_timeout"
+    }
+  ]
+}

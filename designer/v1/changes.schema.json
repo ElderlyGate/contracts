@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/changes.schema.json",
+  "title": "changes",
+  "description": "What a write answers when it has no answer of its own: every file it touched. delete, link, unlink, vocabulary, design create, move, delete, purpose and storage answer this, so one reader reads them all.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Changes, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Changes"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "One entry per file the write touched, in the order the files were first touched; empty when nothing was written. A refusal that changed nothing has an empty list, and a write that failed halfway still lists what it changed.",
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/written"
+          }
+        }
+      }
+    }
+  ]
+}

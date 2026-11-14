@@ -1,0 +1,338 @@
+{
+  "problem": {
+    "at": "spec.board.display.layout",
+    "says": "layout is not a word the board knows"
+  },
+  "document": {
+    "apiVersion": "elderlygate/designer/design/v2",
+    "kind": "Flow",
+    "metadata": {
+      "id": "drop-a-parcel",
+      "title": "Drop a parcel"
+    },
+    "spec": {
+      "entry": {
+        "method": "POST",
+        "path": "/v1/parcels"
+      },
+      "before": {
+        "CMP-LOCKS": {
+          "doors.open": 0
+        },
+        "CMP-LEDGER": {
+          "rows": 0
+        }
+      },
+      "steps": [
+        {
+          "id": "person",
+          "at": "CMP-KIOSK",
+          "phase": "caller",
+          "label": "Somebody scans a barcode",
+          "note": "The only actor. Everything after this is the locker answering one question \u2014 which door."
+        },
+        {
+          "id": "pick",
+          "at": "CMP-LOCKS",
+          "phase": "execute",
+          "label": "Choose a free door",
+          "budgetMs": 50,
+          "components": {
+            "CMP-LOCKS": {
+              "doors.open": 1
+            }
+          },
+          "findings": {
+            "RSK-001": "The step that picks one door is the step a fail-open would turn into all of them."
+          }
+        },
+        {
+          "id": "write",
+          "at": "CMP-LEDGER",
+          "phase": "execute",
+          "label": "Append the row",
+          "budgetMs": 10,
+          "components": {
+            "CMP-LEDGER": {
+              "rows": 1
+            }
+          },
+          "note": "Written before the door opens: a row with no parcel behind it is recoverable, a parcel with no row is not."
+        },
+        {
+          "id": "open",
+          "at": "CMP-LOCKS",
+          "phase": "return",
+          "label": "The door opens"
+        }
+      ]
+    }
+  },
+  "actionType": "edit",
+  "style": "yes-no",
+  "flow": {
+    "id": "drop-a-parcel",
+    "name": "Drop a parcel",
+    "source": "",
+    "entry": {
+      "method": "POST",
+      "path": "/v1/parcels"
+    },
+    "request": {},
+    "steps": [
+      {
+        "id": "person",
+        "at": "CMP-KIOSK",
+        "phase": "caller",
+        "source": "",
+        "label": "Somebody scans a barcode",
+        "note": "The only actor. Everything after this is the locker answering one question \u2014 which door."
+      },
+      {
+        "id": "pick",
+        "at": "CMP-LOCKS",
+        "phase": "execute",
+        "source": "",
+        "budgetMs": 50,
+        "label": "Choose a free door",
+        "components": {
+          "CMP-LOCKS": {
+            "doors.open": 1
+          }
+        },
+        "findings": {
+          "RSK-001": "The step that picks one door is the step a fail-open would turn into all of them."
+        }
+      },
+      {
+        "id": "write",
+        "at": "CMP-LEDGER",
+        "phase": "execute",
+        "source": "",
+        "budgetMs": 10,
+        "label": "Append the row",
+        "note": "Written before the door opens: a row with no parcel behind it is recoverable, a parcel with no row is not.",
+        "components": {
+          "CMP-LEDGER": {
+            "rows": 1
+          }
+        }
+      },
+      {
+        "id": "open",
+        "at": "CMP-LOCKS",
+        "phase": "return",
+        "source": "",
+        "label": "The door opens"
+      }
+    ],
+    "before": {
+      "CMP-LOCKS": {
+        "doors.open": 0
+      },
+      "CMP-LEDGER": {
+        "rows": 0
+      }
+    }
+  },
+  "request": {
+    "id": "drop",
+    "label": "Drop a parcel",
+    "type": {
+      "capability": "parcels",
+      "delivery": "unary",
+      "version": "v1"
+    },
+    "initial": {
+      "method": "POST",
+      "path": "/v1/parcels",
+      "header.authorization": "Bearer lk_kiosk_\u2026",
+      "state": "received"
+    },
+    "group": "parcels",
+    "send": {
+      "path": "/v1/parcels",
+      "method": "POST",
+      "body": {
+        "barcode": "0007734",
+        "bank": "north-street",
+        "note": "left of the bike rack "
+      }
+    }
+  },
+  "suite": {
+    "id": "a-full-bank-refuses",
+    "label": "A full bank refuses rather than picking a door twice",
+    "note": "Three drops against a bank of two. The third is the test; the first two only get it there.",
+    "steps": [
+      {
+        "request": "drop",
+        "expect": [
+          {
+            "kind": "status",
+            "status": 201
+          }
+        ]
+      },
+      {
+        "request": "drop",
+        "expect": [
+          {
+            "kind": "status",
+            "status": 201
+          }
+        ]
+      },
+      {
+        "request": "drop",
+        "expect": [
+          {
+            "kind": "status",
+            "status": 409
+          },
+          {
+            "kind": "spanAbsent",
+            "component": "locker.ledger"
+          }
+        ]
+      }
+    ]
+  },
+  "binding": {
+    "kind": "bound",
+    "flow": "drop-a-parcel"
+  },
+  "scalar": 50,
+  "when": "around",
+  "example": {
+    "request": [
+      "header.authorization"
+    ],
+    "components": {
+      "CMP-LOCKS": [
+        "doors.open"
+      ]
+    }
+  },
+  "boardProblem": {
+    "code": "undeclared_look",
+    "at": "block/CMP-KIOSK.yml: spec.ui-design.look",
+    "says": "ui-design.look: glass is not a look this design declares"
+  },
+  "refusal": {
+    "code": "flow_refused",
+    "file": "flow/collect-a-parcel.yml",
+    "message": "entry.path must start with /"
+  },
+  "blockFindings": {
+    "attached": [
+      "RSK-001",
+      "ADR-001"
+    ],
+    "open": [
+      "RSK-001"
+    ]
+  },
+  "written": {
+    "event": "updated",
+    "file": ".designer/releases/layout.yml",
+    "kind": "Layout",
+    "id": "releases",
+    "before": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "after": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "layoutSpot": {
+    "x": 0,
+    "y": 0
+  },
+  "layoutMove": {
+    "id": "CMP-API",
+    "what": "place",
+    "from": {
+      "x": 300,
+      "y": 140
+    },
+    "to": {
+      "x": 320,
+      "y": 140
+    }
+  },
+  "sideChange": {
+    "id": "CMP-API--calls--CMP-DB",
+    "from": "r",
+    "to": "l"
+  },
+  "tidiedView": {
+    "view": "structure",
+    "lines": 3,
+    "sides": [
+      {
+        "id": "CMP-API--calls--CMP-DB",
+        "from": "r",
+        "to": "l"
+      }
+    ],
+    "moves": [
+      {
+        "id": "CMP-API--calls--CMP-DB",
+        "what": "badge",
+        "from": {
+          "x": 410,
+          "y": 160
+        },
+        "to": {
+          "x": 430,
+          "y": 160
+        }
+      }
+    ]
+  },
+  "rect": {
+    "x": 300,
+    "y": 140,
+    "width": 180,
+    "height": 72
+  },
+  "migratedView": {
+    "view": "structure",
+    "boxes": 2,
+    "moved": [],
+    "framesMoved": [
+      "GRP-CORE"
+    ],
+    "shrunk": [],
+    "badgesKept": 1,
+    "badgesMiddle": 2,
+    "badgesUndrawn": 0,
+    "rects": {
+      "CMP-API": {
+        "before": {
+          "x": 300,
+          "y": 140,
+          "width": 180,
+          "height": 72
+        },
+        "after": {
+          "x": 300,
+          "y": 140,
+          "width": 180,
+          "height": 72
+        }
+      }
+    }
+  },
+  "step": {
+    "kind": "Apply",
+    "data": [
+      {
+        "event": "updated",
+        "file": ".designer/releases/layout.yml",
+        "kind": "Layout",
+        "id": "releases",
+        "before": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "after": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      }
+    ],
+    "errors": []
+  }
+}

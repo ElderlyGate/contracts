@@ -1,0 +1,36 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "TidyLines",
+  "ran": {
+    "name": "releases",
+    "app": "designer",
+    "version": "6.10.0",
+    "contract": "v1"
+  },
+  "data": {
+    "view": "structure",
+    "lines": 3,
+    "sides": [
+      {
+        "id": "CMP-API--calls--CMP-DB",
+        "from": "r",
+        "to": "l"
+      }
+    ],
+    "moves": [
+      {
+        "id": "CMP-API--calls--CMP-DB",
+        "what": "badge",
+        "from": {
+          "x": 410,
+          "y": 160
+        },
+        "to": {
+          "x": 430,
+          "y": 160
+        }
+      }
+    ]
+  },
+  "errors": []
+}

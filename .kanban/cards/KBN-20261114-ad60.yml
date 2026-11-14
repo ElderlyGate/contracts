@@ -1,0 +1,37 @@
+apiVersion: app/kanban/v1
+kind: Task
+metadata:
+  id: KBN-20261114-ad60
+  title: 'designer/v1: the write answers'
+  created_at: 2026-11-14T14:43:43.993Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999980926513672
+  summary: The write answers e-designer's routes give, for E4c
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/write-answers/contracts
+  description: |
+    #feature #epic:same-shape #feature:contracts
+
+    # designer/v1: the write answers
+
+    For e-designer step E4c (e-designer card KBN-20261112-c3b1): the routes that write a design move into Go serve and answer exactly as the CLI verbs do, so each answer they give gets its schema (Q7).
+
+    ## Changes
+    Additions to designer/v1, each with a sample, checked against the real output of e-designer 6.10.0; no released schema changes (CT-RULE-1):
+    - Changes: every file a write touched, what most write verbs answer (delete, link, vocabulary, design create, move, delete, purpose, storage).
+    - Apply, FocusSet, FocusClear: the same list under each verb's own kind.
+    - TidyLayout, TidyLines, ArrangeLayout, MigrateLayout: what the layout verbs answer.
+    - defs gains the shared shapes: written, layoutSpot, layoutMove, sideChange, tidiedView, rect, migratedView, step.
+    - forms.yaml lists the eight kinds; more good samples and broken samples for the main rules.
+
+    The answers of the verbs E4c-3 adds for board edits and layout positions come in a later release.
+
+    ## Done when
+    - `go test ./...` is green; v0.18.0 is released for e-designer to pin.
+  lifecycle:
+    done_at: 2026-11-14T14:43:48.932Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

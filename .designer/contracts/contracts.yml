@@ -399,7 +399,7 @@ spec:
     - "the server record every app's serve writes,"
     - "the servers, stop and link answers,"
     - "the stream.gapped event,"
-    - "the change queue's ticket, marker and list,"
+    - "the change queue's ticket, marker, list and settings,"
     - "and the feature-switch shapes every app shares"
   code:
     implements: mankit/v1

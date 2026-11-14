@@ -1,0 +1,23 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "QueueSettings",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "6.10.0",
+    "contract": "v1"
+  },
+  "data": {
+    "wait": {
+      "value": "0s",
+      "default": "30s",
+      "set": true
+    },
+    "limit": {
+      "value": "2m0s",
+      "default": "2m0s",
+      "set": false
+    }
+  },
+  "errors": []
+}

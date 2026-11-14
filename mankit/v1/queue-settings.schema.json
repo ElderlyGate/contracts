@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/queue-settings.schema.json",
+  "title": "queue settings",
+  "description": "What <app> config queue answers with -o json: how long a change waits for its turn and how long it may hold it, the two settings every app with a change queue has (queue.wait and queue.limit in the app's config.yaml, ADR-S14). Each is at least a second, so a typo never fails every change: the schema refuses zero and units below a second, and mankit's Queue.Settings is the final check.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "description": "Always QueueSettings, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "QueueSettings"
+        },
+        "data": {
+          "description": "The two settings of the app's change queue.",
+          "type": "object",
+          "required": [
+            "wait",
+            "limit"
+          ],
+          "properties": {
+            "wait": {
+              "description": "How long a change waits for its turn before it gives up, as the app takes it now.",
+              "type": "object",
+              "required": [
+                "value",
+                "default",
+                "set"
+              ],
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "pattern": "^([0-9]+(\\.[0-9]+)?(h|m|s))+$",
+                  "description": "The duration in effect, as a Go duration of hours, minutes and seconds such as 45s or 2m0s, never zero or in units below a second: the config's value when it sets one, else the default.",
+                  "not": {
+                    "pattern": "^(0+(\\.0+)?(h|m|s))+$"
+                  }
+                },
+                "default": {
+                  "type": "string",
+                  "pattern": "^([0-9]+(\\.[0-9]+)?(h|m|s))+$",
+                  "description": "The duration, in the same form, mankit takes when the config sets none, so a person sees what removing the row would give.",
+                  "not": {
+                    "pattern": "^(0+(\\.0+)?(h|m|s))+$"
+                  }
+                },
+                "set": {
+                  "description": "True when the app's config.yaml sets the row, so a person knows the value is chosen, not the default.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "limit": {
+              "description": "How long a change may hold its turn before it is stopped, as the app takes it now.",
+              "type": "object",
+              "required": [
+                "value",
+                "default",
+                "set"
+              ],
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "pattern": "^([0-9]+(\\.[0-9]+)?(h|m|s))+$",
+                  "description": "The duration in effect, as a Go duration of hours, minutes and seconds such as 45s or 2m0s, never zero or in units below a second: the config's value when it sets one, else the default.",
+                  "not": {
+                    "pattern": "^(0+(\\.0+)?(h|m|s))+$"
+                  }
+                },
+                "default": {
+                  "type": "string",
+                  "pattern": "^([0-9]+(\\.[0-9]+)?(h|m|s))+$",
+                  "description": "The duration, in the same form, mankit takes when the config sets none, so a person sees what removing the row would give.",
+                  "not": {
+                    "pattern": "^(0+(\\.0+)?(h|m|s))+$"
+                  }
+                },
+                "set": {
+                  "description": "True when the app's config.yaml sets the row, so a person knows the value is chosen, not the default.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

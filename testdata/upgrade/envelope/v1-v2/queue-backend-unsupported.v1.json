@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/example/app/v1",
+  "kind": "Error",
+  "ran": {
+    "name": "example",
+    "app": "example",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": null,
+  "errors": [
+    {
+      "apiVersion": "elderlygate/example/app/v1",
+      "kind": "Error",
+      "code": "queue_backend_unsupported",
+      "message": "the change queue's marker names the backend lock-service, which this build does not run"
+    }
+  ]
+}

@@ -947,7 +947,7 @@
       ],
       "properties": {
         "event": {
-          "description": "What happened to the file: created (it was not there), updated (its content changed), deleted (it is gone) or unchanged (written with the same content, or neither there before nor after).",
+          "description": "What happened to the file: created (it was not there, so before is null), updated (its content changed), deleted (it is gone, so after is null) or unchanged (written with the same content, so before equals after, or neither there before nor after).",
           "enum": [
             "created",
             "updated",
@@ -957,27 +957,7 @@
         },
         "file": {
           "description": "The file, as a path inside the project folder the write ran in: the folder holding .designer/, else the folder holding the designs, such as .designer/default/block/CMP-API.yml; so the same write reads the same on every machine and over HTTP as in the CLI (ADR-S02, ADR-S21). Never a machine path, so it has no leading slash or backslash, no drive letter or scheme such as file:, no leading ~ or space, and no .. step.",
-          "type": "string",
-          "minLength": 1,
-          "not": {
-            "anyOf": [
-              {
-                "pattern": "^[/\\\\]"
-              },
-              {
-                "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
-              },
-              {
-                "pattern": "^~"
-              },
-              {
-                "pattern": "^\\s"
-              },
-              {
-                "pattern": "(^|[/\\\\])\\.\\.([/\\\\]|$)"
-              }
-            ]
-          }
+          "$ref": "../../problem/v1/problem.schema.json#/$defs/place/properties/file"
         },
         "kind": {
           "description": "The kind of resource the file holds, such as Block, Link, Design, Definitions or Layout, by where it lies in the design; absent when its place says nothing.",
@@ -1014,7 +994,41 @@
           "id"
         ]
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "event": {
+                "const": "created"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "before": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event": {
+                "const": "deleted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "after": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "layoutSpot": {
       "description": "Where a box, line or badge stood or stands on the view, in the board's pixels; a box that grew also says its size.",

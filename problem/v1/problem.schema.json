@@ -20,7 +20,7 @@
       "const": "Problem"
     },
     "code": {
-      "description": "What happened, as an open word a program decides by; a reader matches the words it knows and shows the message for any other, so an app can report a new word without a new contract (CT-RULE-1). Known words: unread: a part was left out and the rest kept; refused: the whole thing was not taken; undeclared: it names something that is not declared; old: it is in an old form, which a migrate fixes; unsupported_contract: the asked contract version is not served, and supported lists the ones to ask again with (ADR-S03).",
+      "description": "What happened, as an open word a program decides by; a reader matches the words it knows and shows the message for any other, so an app can report a new word without a new contract (CT-RULE-1). Known words: unread: a part was left out and the rest kept; refused: the whole thing was not taken; undeclared: it names something that is not declared; old: it is in an old form, which a migrate fixes; unsupported_contract: the asked contract version is not served; the app's version answer lists the versions it serves (ADR-S03).",
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$"
     },
@@ -41,39 +41,9 @@
       "description": "What went wrong, in plain words for a person. A program reads code and reason instead, so this text may be reworded.",
       "type": "string",
       "minLength": 1
-    },
-    "supported": {
-      "description": "For unsupported_contract only: the contract versions the app answers. A reader that asked for a version the app cannot give picks one from this list that it also speaks and asks again (ADR-S03, ADR-S06).",
-      "type": "array",
-      "items": {
-        "description": "One contract version the app answers, such as v1.",
-        "type": "string",
-        "pattern": "^v[0-9]+$"
-      },
-      "minItems": 1,
-      "uniqueItems": true
     }
   },
   "additionalProperties": false,
-  "if": {
-    "not": {
-      "properties": {
-        "code": {
-          "const": "unsupported_contract"
-        }
-      },
-      "required": [
-        "code"
-      ]
-    }
-  },
-  "then": {
-    "not": {
-      "required": [
-        "supported"
-      ]
-    }
-  },
   "$defs": {
     "place": {
       "description": "One place a problem points to. Every field is optional, as a problem may know only the file, or only the field, but a place says at least one thing.",

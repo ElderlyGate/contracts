@@ -2,13 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/problem/v1/problem.schema.json",
   "title": "problem",
-  "description": "What went wrong, in the one shape every app uses (ADR-S21): an error, when the request failed, in an answer's errors; or a problem the answer worked around, in its problems. A program decides by code and reason, never by message (G-STACK-15). A field that does not apply is left out, never null.",
+  "description": "What went wrong, in the one shape every app uses (ADR-S21): an error, when the request failed, in an answer's errors; or a problem the answer worked around, in its problems. type, title and detail follow RFC 9457 Problem Details; reason, at, apiVersion and kind are this shape's extensions. A program decides by type and reason, never by title or detail (G-STACK-15). A field that does not apply is left out, never null.",
   "type": "object",
   "required": [
     "apiVersion",
     "kind",
-    "code",
-    "message"
+    "type",
+    "detail"
   ],
   "properties": {
     "apiVersion": {
@@ -19,13 +19,23 @@
       "description": "Always Problem, so a problem is told apart from every other kind, even outside an answer.",
       "const": "Problem"
     },
-    "code": {
-      "description": "What happened, as an open word a program decides by; a reader matches the words it knows and shows the message for any other, so an app can report a new word without a new contract (CT-RULE-1). Known words: unread: a part was left out and the rest kept; refused: the whole thing was not taken; undeclared: it names something that is not declared; old: it is in an old form, which a migrate fixes; unsupported_contract: the asked contract version is not served; the app's version answer lists the versions it serves (ADR-S03).",
+    "type": {
+      "description": "What happened, as an open word a program decides by; a plain word is a relative URI reference, as RFC 9457 allows. A reader matches the words it knows and shows the detail for any other, so an app can report a new word without a new contract (CT-RULE-1). Known words: unread: a part was left out and the rest kept; refused: the whole thing was not taken; undeclared: it names something that is not declared; old: it is in an old form, which a migrate fixes; unsupported_contract: the asked contract version is not served; the app's version answer lists the versions it serves (ADR-S03).",
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$"
     },
+    "title": {
+      "description": "A short text for the type, the same every time it happens, for people. A program reads type and reason instead, so this text may be reworded. Left out when the app has none.",
+      "type": "string",
+      "minLength": 1
+    },
+    "detail": {
+      "description": "What went wrong in this occurrence, in plain words for a person. A program reads type and reason instead, never this text, so it may be reworded.",
+      "type": "string",
+      "minLength": 1
+    },
     "reason": {
-      "description": "Why it happened, when a program needs more than the code to decide; an open word, read like code. Left out when the code says enough. Known words: wrong_type: a value is of another type than the field takes; empty: a value that must say something is empty; unknown_key: a key the shape does not have; out_of_range: a value outside what the field allows; duplicate: another place already holds the same thing.",
+      "description": "Why it happened, when a program needs more than the type to decide; an open word, read like type. Left out when the type says enough. Known words: wrong_type: a value is of another type than the field takes; empty: a value that must say something is empty; unknown_key: a key the shape does not have; out_of_range: a value outside what the field allows; duplicate: another place already holds the same thing.",
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$"
     },
@@ -36,11 +46,6 @@
       "items": {
         "$ref": "#/$defs/place"
       }
-    },
-    "message": {
-      "description": "What went wrong, in plain words for a person. A program reads code and reason instead, so this text may be reworded.",
-      "type": "string",
-      "minLength": 1
     }
   },
   "additionalProperties": false,

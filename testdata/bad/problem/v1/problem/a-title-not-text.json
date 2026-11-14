@@ -1,7 +1,9 @@
 {
   "apiVersion": "elderlygate/contracts/problem/v1",
   "kind": "Problem",
-  "code": "refused",
+  "type": "refused",
+  "title": 7,
+  "detail": "another file already holds the request second",
   "reason": "duplicate",
   "at": [
     {

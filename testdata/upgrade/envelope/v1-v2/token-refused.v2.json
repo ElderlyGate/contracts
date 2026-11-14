@@ -13,7 +13,7 @@
       "apiVersion": "elderlygate/contracts/problem/v1",
       "kind": "Problem",
       "type": "refused",
-      "detail": "example takes an API request only with its token",
+      "detail": "example takes an API request only with its token, as Authorization: Bearer <token> & the cookie",
       "reason": "token"
     }
   ]

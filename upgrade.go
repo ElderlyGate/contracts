@@ -1,9 +1,9 @@
 package contracts
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
-	"regexp"
 )
 
 // An upgrade step is Upgrade<Kind>(from []byte) ([]byte, error), one per version step, tested by the pairs in testdata/upgrade/<dir>/<from>-<to>/ (CT-RULE-3).
@@ -19,9 +19,6 @@ var reasonOf = map[string][2]string{
 	"core_needs_values": {"failed", "core_needs_values"},
 }
 
-// machinePath is what problem/v1 refuses as a place's file: a leading slash or backslash, a drive letter or scheme, a leading ~ or space, or a .. step.
-var machinePath = regexp.MustCompile(`^[/\\]|^[A-Za-z][A-Za-z0-9+.-]*:|^~|^\s|(^|[/\\])\.\.([/\\]|$)`)
-
 type errorV1 struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
@@ -30,6 +27,8 @@ type errorV1 struct {
 		Field string `json:"field"`
 	} `json:"at"`
 }
+
+const problemAPIVersion = "elderlygate/contracts/problem/v1"
 
 type place struct {
 	File string `json:"file,omitempty"`
@@ -47,7 +46,7 @@ type problem struct {
 
 // UpgradeEnvelope is the step from envelope/v1 to envelope/v2: ran becomes source unchanged, and each error/v1 item becomes a Problem.
 // A code becomes type and reason by the owner's mapping (any other code stays the type), message becomes detail, and at's file and field become one place's file and path.
-// Dropped: at's kind and id, as a place has no field for them; at's file when it is a machine path, which problem/v1 refuses, rather than refusing the whole answer; at itself when nothing is left; and supported, as the version answer lists the versions.
+// Dropped: at's kind and id, as a place has no field for them; at's file when problem/v1 refuses it as a machine path, rather than refusing the whole answer; at itself when nothing is left; and supported, as the version answer lists the versions.
 // The app's own apiVersion, kind and data are untouched: they name its contract, not the envelope.
 // It is Go only for now, as the readers that mix versions (servers, control-room) are Go; a TypeScript step comes only if a page needs one.
 func UpgradeEnvelope(v1 []byte) ([]byte, error) {
@@ -76,13 +75,13 @@ func UpgradeEnvelope(v1 []byte) ([]byte, error) {
 		if err := json.Unmarshal(raw, &e); err != nil {
 			return nil, err
 		}
-		p := problem{APIVersion: "elderlygate/contracts/problem/v1", Kind: "Problem", Type: e.Code, Detail: e.Message}
+		p := problem{APIVersion: problemAPIVersion, Kind: "Problem", Type: e.Code, Detail: e.Message}
 		if m, ok := reasonOf[e.Code]; ok {
 			p.Type, p.Reason = m[0], m[1]
 		}
 		if e.At != nil {
 			at := place{File: e.At.File, Path: e.At.Field}
-			if machinePath.MatchString(at.File) {
+			if at.File != "" && !takenFile(at.File) {
 				at.File = ""
 			}
 			if at != (place{}) {
@@ -91,5 +90,21 @@ func UpgradeEnvelope(v1 []byte) ([]byte, error) {
 		}
 		out.Errors = append(out.Errors, p)
 	}
-	return json.MarshalIndent(out, "", "  ")
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", "  ")
+	if err := enc.Encode(out); err != nil {
+		return nil, err
+	}
+	if err := Validate("envelope/v2/envelope.schema.json", buf.Bytes()); err != nil {
+		return nil, fmt.Errorf("the upgrade is not an envelope/v2 answer: %w", err)
+	}
+	return buf.Bytes(), nil
+}
+
+// takenFile is whether problem/v1 takes file as a place's file, so the rule is problem/v1's alone.
+func takenFile(file string) bool {
+	doc, err := json.Marshal(problem{APIVersion: problemAPIVersion, Kind: "Problem", Type: "x", Detail: "x", At: []place{{File: file}}})
+	return err == nil && Validate("problem/v1/problem.schema.json", doc) == nil
 }

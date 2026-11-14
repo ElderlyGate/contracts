@@ -1,0 +1,17 @@
+{
+  "apiVersion": "elderlygate/contracts/version/v1",
+  "kind": "Version",
+  "ran": {
+    "name": "example",
+    "app": "example",
+    "version": "2.3.0",
+    "contract": "v2"
+  },
+  "data": {
+    "supportedContracts": [
+      "v1",
+      "v1"
+    ]
+  },
+  "errors": []
+}

@@ -419,6 +419,22 @@ spec:
     - "for errors and problems (ADR-S21)"
   code:
     implements: problem/v1/problem.schema.json
+--- # block/CMP-VERSION.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Block
+metadata:
+  id: CMP-VERSION
+  title: "Version v1"
+spec:
+  place:
+    views:
+      - structure
+    group: GRP-REPO
+  caption:
+    - "the one version answer,"
+    - "served in every contract version (ADR-S03)"
+  code:
+    implements: version/v1/version.schema.json
 --- # link/CMP-GO-PACKAGE--reads--CMP-ENVELOPE.yml
 apiVersion: elderlygate/designer/design/v2
 kind: Link
@@ -455,3 +471,21 @@ spec:
   from: CMP-TESTS
   to: CMP-PROBLEM
   label: reads
+--- # link/CMP-TESTS--reads--CMP-VERSION.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Link
+metadata:
+  id: CMP-TESTS--reads--CMP-VERSION
+spec:
+  from: CMP-TESTS
+  to: CMP-VERSION
+  label: reads
+--- # link/CMP-VERSION--uses--CMP-ENVELOPE.yml
+apiVersion: elderlygate/designer/design/v2
+kind: Link
+metadata:
+  id: CMP-VERSION--uses--CMP-ENVELOPE
+spec:
+  from: CMP-VERSION
+  to: CMP-ENVELOPE
+  label: uses

@@ -35,3 +35,7 @@ forms:
     app: contracts
     kinds: [Problem]
     note: The one Problem shape for every app's errors and problems (ADR-S21); error/v1 stays until each app moves
+  - new: elderlygate/contracts/version/v1
+    app: contracts
+    kinds: [Version]
+    note: The one version answer every app serves in every contract version (ADR-S03); designer/v1 Version stays until each app moves

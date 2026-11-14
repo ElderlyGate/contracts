@@ -51,7 +51,7 @@
       "minProperties": 1,
       "properties": {
         "file": {
-          "description": "The file, as a path inside the folder the app works on, so the same problem reads the same on every machine; never a machine path, so it has no leading slash, no drive letter and no .. step.",
+          "description": "The file, as a path inside the folder the app works on, so the same problem reads the same on every machine; never a machine path, so it has no leading slash or backslash, no drive letter or scheme such as file:, no leading ~ or space, and no .. step.",
           "type": "string",
           "minLength": 1,
           "not": {
@@ -60,7 +60,13 @@
                 "pattern": "^[/\\\\]"
               },
               {
-                "pattern": "^[A-Za-z]:"
+                "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+              },
+              {
+                "pattern": "^~"
+              },
+              {
+                "pattern": "^\\s"
               },
               {
                 "pattern": "(^|[/\\\\])\\.\\.([/\\\\]|$)"

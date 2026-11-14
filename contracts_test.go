@@ -280,7 +280,10 @@ func TestNoSamplesWithoutSchemas(t *testing.T) {
 // Each file in testdata/good/<dir>/<version>/<kind>/ must meet <dir>/<version>/<kind>.schema.json: the shapes a schema takes beyond its one sample.
 func TestMoreSamplesAreTaken(t *testing.T) {
 	c := compiler(t)
-	cases, _ := filepath.Glob("testdata/good/*/*/*/*.json")
+	cases, err := filepath.Glob("testdata/good/*/*/*/*.json")
+	if err != nil || len(cases) == 0 {
+		t.Fatalf("no more samples found: %v", err)
+	}
 	for _, path := range cases {
 		t.Run(path, func(t *testing.T) {
 			kindDir := filepath.Dir(path)

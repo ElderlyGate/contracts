@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/example/app/v2",
+  "kind": "Error",
+  "source": {
+    "name": "example",
+    "app": "example",
+    "version": "2.0.0",
+    "contract": "v2"
+  },
+  "data": null,
+  "errors": [
+    {
+      "apiVersion": "elderlygate/example/app/v2",
+      "kind": "Error",
+      "code": "token_refused",
+      "message": "the board's token is missing or wrong"
+    }
+  ]
+}

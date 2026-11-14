@@ -6,25 +6,30 @@ metadata:
   created_at: 2026-11-14T07:30:32.877Z
   created_by: Tugbay Atilla <tugbayatilla@gmail.com>
 spec:
-  column: backlog
-  order: 0.5
-  summary: Rename the envelope's ran to source in envelope/v2; later, owner 2026-11-14
+  column: done
+  order: 0.99993896484375
+  summary: Rename the envelope's ran to source in envelope/v2, with Problems as errors; brought forward by the owner 2026-11-14
   tags: [feature, 'epic:same-shape', 'feature:contracts']
   work:
     agent: claude-opus-5-5
+    branch: feat/envelope-v2/contracts
   description: |
     #feature #epic:same-shape #feature:contracts
 
     # Envelope: `ran` becomes `source` (envelope/v2)
 
-    Asked by the owner on 2026-11-14 during step P: the envelope field name `ran` is confusing (it reads like a verb). Decided: rename it to `source`, later, in the next envelope version; not now.
+    Asked by the owner on 2026-11-14 during step P: the envelope field name `ran` is confusing, since it reads like a verb. Decided: rename it to `source` in envelope/v2. On 2026-11-14 the owner brought it forward, so envelope/v2 also carries Problems (problem/v1): envelope/v1's errors can only be error/v1 (CT-RULE-1).
 
-    ## Change, when envelope/v2 comes
-    - `ran` {name, app, version, contract} becomes `source` with the same fields and meaning: where the answer comes from (ADR-S08).
-    - envelope/v1 stays until each app moves (CT-RULE-1); mankit serve writes v2 for apps that moved; readers (servers, control-room) read both while apps move.
-    - version/v1 (org version answer) moves to the v2 envelope with it.
+    ## Change
+    - `ran` {name, app, version, contract} becomes `source`, with the same fields and meaning: where the answer comes from (ADR-S08).
+    - Each `errors` item is a Problem (problem/v1).
+    - envelope/v1 stays until each app moves (CT-RULE-1). mankit serve v3 writes v2 for the contract versions of apps that moved, and readers (servers, control-room) read both while apps move.
+    - version/v1, the org version answer, stays on envelope/v1 for good (owner, 2026-11-14).
 
     ## Not in this card
     - Other `source` fields (designer flows, config-confirm, events) stay as they are; the owner dropped the "one word, one meaning" idea on 2026-11-14.
 
-    Size M (touches every app through mankit).
+    Done by the envelope/v2 PR (feat/envelope-v2/contracts).
+  lifecycle:
+    done_at: 2026-11-14T07:57:04.731Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

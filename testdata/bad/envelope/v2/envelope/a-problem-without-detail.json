@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/example/app/v2",
+  "kind": "Error",
+  "source": {
+    "name": "example",
+    "app": "example",
+    "version": "2.0.0",
+    "contract": "v2"
+  },
+  "data": null,
+  "errors": [
+    {
+      "apiVersion": "elderlygate/contracts/problem/v1",
+      "kind": "Problem",
+      "type": "refused",
+      "reason": "token"
+    }
+  ]
+}

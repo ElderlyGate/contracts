@@ -1,0 +1,31 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261114-8dd0
+  title: 'problem/v1: the reason too_large'
+  created_at: 2026-11-14T09:22:16.235Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: done
+  order: 0.9999923706054688
+  summary: e-designer's too_large as refused + too_large, in problem/v1 and UpgradeEnvelope
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/too-large/contracts
+  description: |
+    #feature #epic:same-shape #feature:contracts
+
+    # problem/v1: the reason too_large
+
+    Before e-designer E4a. e-designer's board refuses a request body larger than it takes, with the code too_large. By ADR-S21 that is `refused` + `too_large`: the request itself is too big.
+
+    ## Changes
+    - problem/v1 lists `too_large` as a known reason. This is CT-RULE-1's open-word exception, so there is no new version.
+    - `UpgradeEnvelope` maps the code the same way, with an upgrade pair, so the upgrade step and the writers follow one mapping.
+
+    ## Done when
+    - Released as v0.16.0.
+  lifecycle:
+    done_at: 2026-11-14T09:22:28.661Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

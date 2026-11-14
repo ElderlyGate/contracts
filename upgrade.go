@@ -17,7 +17,7 @@ var reasonOf = map[string][2]string{
 	"unconfirmed":       {"refused", "unconfirmed"},
 	"config_unreadable": {"failed", "config_unreadable"},
 	"core_needs_values": {"failed", "core_needs_values"},
-	// mankit's other words, by the same pattern: failed when the request was fine and the app could not do it, refused when the request is not taken.
+	// mankit's and the apps' other words, by the same pattern: failed when the request was fine and the app could not do it, refused when the request is not taken.
 	"feature_needs_values":      {"failed", "feature_needs_values"},
 	"queue_timeout":             {"failed", "queue_timeout"},
 	"not_read_back":             {"failed", "not_read_back"},
@@ -26,6 +26,7 @@ var reasonOf = map[string][2]string{
 	"queue_backend_unsupported": {"failed", "queue_backend_unsupported"},
 	"change_too_long":           {"failed", "change_too_long"},
 	"too_many_streams":          {"refused", "too_many_streams"},
+	"too_large":                 {"refused", "too_large"},
 }
 
 type errorV1 struct {

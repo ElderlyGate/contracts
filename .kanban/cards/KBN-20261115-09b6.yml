@@ -1,0 +1,29 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261115-09b6
+  title: 'designer/v1: projectName and boardAddress'
+  created_at: 2026-11-15T21:18:31.144Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: done
+  order: 0.9999995231628418
+  summary: One project-name rule and the board address in designer/v1 defs
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+  description: |
+    #feature #epic:same-shape #feature:contracts
+
+    # designer/v1: projectName and boardAddress
+
+    For e-designer E5a (e-designer card KBN-20261112-8237). One rule for a project's name, and the address of a board that opens a project's design, before the page shows many projects (E5b).
+
+    ## Changes
+    - defs `projectName`: at most 64 letters, digits, '.', '_' and '-', not only dots; the one home of the rule.
+    - defs `boardAddress`: `/?project=<project>&design=<design>[&view=<view>]`.
+    - defs `eventSource` loosened to `^/designer/[^/]+$`; its project part is a projectName, said there, so the rule has no copy. Events were never released, so no reader notices.
+    - project-list stays as released (CT-RULE-1): a name listed before the rule is still a row; e-designer lists it as unavailable.
+  lifecycle:
+    done_at: 2026-11-15T21:18:44.596Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

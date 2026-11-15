@@ -79,6 +79,12 @@
     },
     "eventSource": {
       "$ref": "#/$defs/eventSource"
+    },
+    "projectName": {
+      "$ref": "#/$defs/projectName"
+    },
+    "boardAddress": {
+      "$ref": "#/$defs/boardAddress"
     }
   },
   "additionalProperties": false,
@@ -1359,9 +1365,22 @@
       "pattern": "^[0-9a-f]{16}$"
     },
     "eventSource": {
-      "description": "/designer/<project>: an event comes from e-designer and names the project it serves, so a reader listening to many products and projects knows where the change is (ADR-E2, ADR-S08).",
+      "description": "/designer/<project>: an event comes from e-designer and names the project it serves, so a reader listening to many products and projects knows where the change is (ADR-E2, ADR-S08). The project part is a projectName; its rule is written there alone.",
       "type": "string",
-      "pattern": "^/designer/[A-Za-z0-9._-]+$"
+      "pattern": "^/designer/[^/]+$"
+    },
+    "projectName": {
+      "description": "A project's name as e-designer serves it: what an event's source, a board's address and every route name it by. At most 64 letters, digits, '.', '_' and '-', and not only dots, so it is one path segment that needs no escaping. project add refuses any other name and says to give one with --name; a project listed with another name before this rule is listed as unavailable, saying why.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]{1,64}$",
+      "not": {
+        "pattern": "^\\.+$"
+      }
+    },
+    "boardAddress": {
+      "description": "The address of a board's page that opens one project's design, as a path and query on the server: /?project=<project>&design=<design>, then &view=<view> for a view other than the one the design opens on. project is a projectName, design a design's id and view a view's name, each URL-encoded; so a link opens the same project, design and view on any machine serving that project. The page keeps it in the address bar as it switches.",
+      "type": "string",
+      "pattern": "^/\\?project=[^&#]+&design=[^&#]+(&view=[^&#]+)?$"
     }
   }
 }

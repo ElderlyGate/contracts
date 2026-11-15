@@ -36,28 +36,23 @@
           "properties": {
             "board": {
               "description": "The design as Go takes it: every file of the design but layout.yml, and the build that reads them; when it moves, a reader fetches describe board and config again.",
-              "type": "string",
-              "pattern": "^[0-9a-f]{16}$"
+              "$ref": "defs.schema.json#/$defs/fingerprint"
             },
             "layout": {
               "description": "layout.yml alone, so a moved box refetches only the positions, not the board. While there is no layout.yml it is still a fingerprint, the same one until the file appears.",
-              "type": "string",
-              "pattern": "^[0-9a-f]{16}$"
+              "$ref": "defs.schema.json#/$defs/fingerprint"
             },
             "features": {
               "description": "The machine's feature switches, as get features answers them.",
-              "type": "string",
-              "pattern": "^[0-9a-f]{16}$"
+              "$ref": "defs.schema.json#/$defs/fingerprint"
             },
             "meta": {
               "description": "The build's version and the design checkout's git state (its HEAD, the ref it points to, the packed refs, its index); a reader fetches the board's version and git facts again when it moves, or when board does, since those name the last change.",
-              "type": "string",
-              "pattern": "^[0-9a-f]{16}$"
+              "$ref": "defs.schema.json#/$defs/fingerprint"
             },
             "runs": {
               "description": "The runs kept for the design: how many there are and the newest; a reader fetches the run list again when it moves. While none is kept it is still a fingerprint, the same one until the first run arrives.",
-              "type": "string",
-              "pattern": "^[0-9a-f]{16}$"
+              "$ref": "defs.schema.json#/$defs/fingerprint"
             }
           },
           "required": [

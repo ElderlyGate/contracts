@@ -70,6 +70,15 @@
     },
     "step": {
       "$ref": "#/$defs/step"
+    },
+    "partChanged": {
+      "$ref": "#/$defs/partChanged"
+    },
+    "fingerprint": {
+      "$ref": "#/$defs/fingerprint"
+    },
+    "eventSource": {
+      "$ref": "#/$defs/eventSource"
     }
   },
   "additionalProperties": false,
@@ -1318,6 +1327,41 @@
         }
       },
       "additionalProperties": false
+    },
+    "partChanged": {
+      "description": "Which part of a design moved, and where it stands now: an event relays what the revision says, so a reader fetches only that part, as it would after polling the revision.",
+      "type": "object",
+      "properties": {
+        "part": {
+          "description": "The part of the design that moved: one of the revision's parts, so a reader knows which to fetch.",
+          "enum": [
+            "board",
+            "layout",
+            "features",
+            "meta",
+            "runs"
+          ]
+        },
+        "fingerprint": {
+          "description": "The part's fingerprint now, as the revision gives it, so a reader that already read this one need not fetch it again.",
+          "$ref": "#/$defs/fingerprint"
+        }
+      },
+      "required": [
+        "part",
+        "fingerprint"
+      ],
+      "additionalProperties": false
+    },
+    "fingerprint": {
+      "description": "Where one part of a design stands: 16 lowercase hex characters, the same until the part moves, so a reader compares two and fetches the part only when they differ.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "eventSource": {
+      "description": "/designer/<project>: an event comes from e-designer and names the project it serves, so a reader listening to many products and projects knows where the change is (ADR-E2, ADR-S08).",
+      "type": "string",
+      "pattern": "^/designer/[A-Za-z0-9._-]+$"
     }
   }
 }

@@ -10,8 +10,8 @@
     {
       "properties": {
         "source": {
-          "description": "/designer/<design>: the event comes from e-designer and names the design it serves, so a reader listening to many products knows which design changed (ADR-E2).",
-          "pattern": "^/designer/[A-Za-z0-9._-]+$"
+          "description": "Where the event comes from: the project e-designer serves.",
+          "$ref": "defs.schema.json#/$defs/eventSource"
         },
         "type": {
           "description": "Always designer.stream.gapped (ADR-E2).",

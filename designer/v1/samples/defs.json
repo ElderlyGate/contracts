@@ -335,5 +335,11 @@
       }
     ],
     "errors": []
-  }
+  },
+  "partChanged": {
+    "part": "board",
+    "fingerprint": "3f9a0c1e7b2d4a68"
+  },
+  "fingerprint": "3f9a0c1e7b2d4a68",
+  "eventSource": "/designer/shop"
 }

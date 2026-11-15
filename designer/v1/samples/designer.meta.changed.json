@@ -8,7 +8,7 @@
   "datacontenttype": "application/json",
   "data": {
     "part": "meta",
-    "fingerprint": "9f2c1a0e"
+    "fingerprint": "3f9a0c1e7b2d4a68"
   },
   "traceparent": "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01"
 }

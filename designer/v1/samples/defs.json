@@ -335,5 +335,9 @@
       }
     ],
     "errors": []
+  },
+  "partChanged": {
+    "part": "board",
+    "fingerprint": "9f2c1a0e"
   }
 }

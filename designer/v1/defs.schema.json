@@ -70,6 +70,9 @@
     },
     "step": {
       "$ref": "#/$defs/step"
+    },
+    "partChanged": {
+      "$ref": "#/$defs/partChanged"
     }
   },
   "additionalProperties": false,
@@ -1317,6 +1320,32 @@
           }
         }
       },
+      "additionalProperties": false
+    },
+    "partChanged": {
+      "description": "Which part of a design moved, and where it stands now: an event relays what the revision says, so a reader fetches only that part, as it would after polling the revision.",
+      "type": "object",
+      "properties": {
+        "part": {
+          "description": "The part of the design that moved: one of the revision's parts, so a reader knows which to fetch.",
+          "enum": [
+            "board",
+            "layout",
+            "features",
+            "meta",
+            "runs"
+          ]
+        },
+        "fingerprint": {
+          "description": "The part's fingerprint now, as the revision gives it, so a reader that already read this one need not fetch it again.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "part",
+        "fingerprint"
+      ],
       "additionalProperties": false
     }
   }

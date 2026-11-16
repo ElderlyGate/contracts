@@ -1,0 +1,32 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Meta",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.17.0",
+    "contract": "v1"
+  },
+  "data": {
+    "version": "6.17.0",
+    "since": {
+      "tag": "v6.16.0",
+      "ahead": 3
+    },
+    "running": {
+      "version": "6.17.0",
+      "branch": "main",
+      "commit": "0a61e56",
+      "dirty": false,
+      "tag": "v6.17.0",
+      "released": true
+    },
+    "commit": "3f9a0c1",
+    "branch": "main",
+    "dirty": false,
+    "boardBranch": "main",
+    "updatedAt": 1763280000000,
+    "updatedWhat": "block/CMP-API.yml"
+  },
+  "errors": []
+}

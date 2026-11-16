@@ -1,0 +1,16 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Changed",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.17.0",
+    "contract": "v1"
+  },
+  "data": {
+    "known": false,
+    "why": "unknown_ref",
+    "says": "nowhere is not a commit this checkout knows; nothing is compared against it"
+  },
+  "errors": []
+}

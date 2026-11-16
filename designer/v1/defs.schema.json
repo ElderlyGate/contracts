@@ -1367,7 +1367,7 @@
       "pattern": "^/designer/[A-Za-z0-9._-]+$"
     },
     "projectName": {
-      "description": "A project's name as e-designer serves it: what an event's source and every route name it by. At most 64 letters, digits, '.', '_' and '-', and not only dots: the same as an event thing (event/v1 source, ADR-E2), so every served project can be an event's source. project add refuses any other name and says to give one with --name; a project listed with another name before this rule is listed as unavailable, saying why. project-list's name keeps its released, looser rule until designer/v2 (card KBN-20261116-d15a).",
+      "description": "A project's name as e-designer serves it: what an event's source and every route name it by. At most 64 letters, digits, '.', '_' and '-', and not only dots: it fits inside an event thing (event/v1 source, ADR-E2), so every served project can be an event's source. project add refuses any other name and says to give one with --name; a project listed with another name before this rule is listed as unavailable, saying why. project-list's name keeps its released, looser rule until designer/v2 (card KBN-20261116-d15a).",
       "type": "string",
       "pattern": "^[A-Za-z0-9._-]{1,64}$",
       "not": {

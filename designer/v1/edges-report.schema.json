@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/edges-report.schema.json",
+  "title": "edges report",
+  "description": "What check edges finds, from check edges -o json: every link that does not land on a component, then the labels no check reads. A link that lands nowhere fails the check; an unread label does not.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always EdgesReport, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "EdgesReport"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The findings.",
+          "type": "object",
+          "properties": {
+            "findings": {
+              "description": "Faults first, then unread labels.",
+              "type": "array",
+              "items": {
+                "description": "One finding.",
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "description": "What is wrong, an open word. Known words: dangling: an end names nothing on the board, or nothing at all; not_a_component: an end names something that is not a component; unread: a label no selector names, so no check reads its links.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "link": {
+                    "description": "The link's id; absent for unread, which is about a label.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "end": {
+                    "description": "Which end: from or to; absent for unread.",
+                    "enum": [
+                      "from",
+                      "to"
+                    ]
+                  },
+                  "id": {
+                    "description": "What the end names, or the unread label.",
+                    "type": "string"
+                  },
+                  "message": {
+                    "description": "The same for people; programs never decide by it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "rule",
+                  "id",
+                  "message"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "findings"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

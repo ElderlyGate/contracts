@@ -790,6 +790,26 @@
         }
       }
     ],
+    "blockRoles": {
+      "CMP-API": {
+        "visitedBy": [
+          "drop-a-parcel"
+        ],
+        "touchedBy": []
+      },
+      "CMP-STORE": {
+        "visitedBy": [],
+        "touchedBy": [
+          "drop-a-parcel"
+        ]
+      }
+    },
+    "journeys": {
+      "drop-a-parcel": {
+        "CMP-API": 0,
+        "CMP-STORE": 0.5
+      }
+    },
     "requests": [
       {
         "id": "drop",

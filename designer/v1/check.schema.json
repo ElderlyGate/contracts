@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/check.schema.json",
+  "title": "check",
+  "description": "Which checks ran, from check -o json with no check named: each one's exit and whether that is ok. Each named check answers its own report instead, with its findings.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Check, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Check"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "One per check that ran, in the order the checks run: by name.",
+          "type": "array",
+          "items": {
+            "description": "One check.",
+            "type": "object",
+            "properties": {
+              "check": {
+                "description": "The check's name.",
+                "type": "string",
+                "minLength": 1
+              },
+              "exit": {
+                "description": "Its exit status; 0 is ok.",
+                "type": "integer",
+                "minimum": 0
+              },
+              "ok": {
+                "description": "Derived from exit: true exactly when exit is 0.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "check",
+              "exit",
+              "ok"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ]
+}

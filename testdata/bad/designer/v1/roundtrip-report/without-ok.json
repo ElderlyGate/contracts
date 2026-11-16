@@ -1,0 +1,24 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "RoundtripReport",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.18.0",
+    "contract": "v1"
+  },
+  "data": {
+    "flows": [
+      {
+        "id": "drop-a-parcel"
+      },
+      {
+        "id": "pick-up",
+        "ok": false,
+        "says": "came back different from what was written",
+        "reason": "changed"
+      }
+    ]
+  },
+  "errors": []
+}

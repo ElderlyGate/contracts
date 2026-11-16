@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/conformance-report.schema.json",
+  "title": "conformance report",
+  "description": "What check conformance finds, from check conformance -o json: each block that binds code, checked against that code. A block not built yet is a fact, not a fault, so a finding never fails the check. Paths are the machine's, shown on purpose behind the token, as the board names its project's folder (ED-RUN-2). Probes stay closed until the flows-and-tracing talk.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always ConformanceReport, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "ConformanceReport"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Where the code is, and each block's state.",
+          "type": "object",
+          "properties": {
+            "root": {
+              "description": "The code's root as configured; absent when none is.",
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "description": "Where the root came from, an open word. Known words: env: ED_IMPL_ROOT; file: the design's implementation setting; checkout: the checkout around the design; none: nowhere.",
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            "rootPath": {
+              "description": "The root, absolute, once resolved. A path on the machine running e-designer, served only behind the token; a reader elsewhere cannot open it.",
+              "type": "string",
+              "pattern": "^/"
+            },
+            "reason": {
+              "description": "Why no block could be checked, an open word programs decide by (G-STACK-15); absent when the check ran. Known words: no_root: nothing says where the code is; root_missing: the root is not there; root_not_a_folder: the root is a file.",
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            "says": {
+              "description": "The same for people, with what would fix it; present exactly when reason is. Programs never decide by it.",
+              "type": "string",
+              "minLength": 1
+            },
+            "at": {
+              "description": "When it was checked, in milliseconds since the epoch.",
+              "type": "integer",
+              "minimum": 0
+            },
+            "blocks": {
+              "description": "One per block, in the design's order.",
+              "type": "array",
+              "items": {
+                "description": "One block.",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "The block's id.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "description": "Its title.",
+                    "type": "string"
+                  },
+                  "state": {
+                    "description": "What was found, an open word. Known words: unbound: it binds no code; missing: the file or symbol is not there; mismatch: the members differ; present: the code is there and agrees.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "summary": {
+                    "description": "One line for people.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "binding": {
+                    "description": "The binding as written on the block.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "file": {
+                    "description": "The file checked, absolute. A path on the machine running e-designer, served only behind the token; a reader elsewhere cannot open it.",
+                    "type": "string",
+                    "pattern": "^/"
+                  },
+                  "symbol": {
+                    "description": "The symbol checked in it.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "method": {
+                    "description": "How the members were found, which says how much the state means. Known words: structural: from the code's own blocks; text: by searching its text; none: not at all.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "missingMembers": {
+                    "description": "Members the board expects and the code does not have.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "extraMembers": {
+                    "description": "Members the code has and the board does not register.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "found": {
+                    "description": "Every member the code exposes, so a mismatch can be read.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "state",
+                  "summary",
+                  "method"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "counts": {
+              "description": "How many blocks are in each state, by its word.",
+              "type": "object",
+              "propertyNames": {
+                "description": "A state word.",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "additionalProperties": {
+                "description": "How many blocks are in that state.",
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "required": [
+            "source",
+            "at",
+            "blocks",
+            "counts"
+          ],
+          "additionalProperties": false,
+          "dependentRequired": {
+            "reason": [
+              "says"
+            ],
+            "says": [
+              "reason"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

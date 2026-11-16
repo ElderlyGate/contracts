@@ -1,0 +1,47 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ConformanceReport",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.18.0",
+    "contract": "v1"
+  },
+  "data": {
+    "root": "../shop",
+    "source": "file",
+    "rootPath": "/home/u/shop",
+    "at": 1763280000000,
+    "blocks": [
+      {
+        "id": "CMP-STORE",
+        "title": "Store",
+        "state": "present",
+        "summary": "src/store.ts Store has the 3 members the board expects",
+        "binding": "src/store.ts#Store",
+        "file": "/home/u/shop/src/store.ts",
+        "symbol": "Store",
+        "method": "structural",
+        "found": [
+          "get",
+          "put",
+          "remove"
+        ]
+      },
+      {
+        "id": "CMP-API",
+        "title": "API",
+        "state": "unbound",
+        "summary": "binds no code",
+        "method": "none"
+      }
+    ],
+    "counts": {
+      "unbound": 1,
+      "missing": 0,
+      "mismatch": 0,
+      "present": 1
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/hexagon-report.schema.json",
+  "title": "hexagon report",
+  "description": "What check hexagon finds, from check hexagon -o json: each flow against the hexagon's rules, and each rule that could not run with what would let it. A finding, or a rule that could not run, fails the check.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always HexagonReport, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "HexagonReport"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The findings and the flows read.",
+          "type": "object",
+          "properties": {
+            "findings": {
+              "description": "Rules that could not run first, then findings by flow.",
+              "type": "array",
+              "items": {
+                "description": "One finding.",
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "description": "The rule, an open word. Known words: entry: a request enters where the hexagon says it may not; port_visited: a port is stood on rather than passed through; undrawn_hop: a step goes where no link is drawn; adapter_without_port: an adapter talks to the inside without a port.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "flow": {
+                    "description": "The flow it was found in; empty when it is about the declaration.",
+                    "type": "string"
+                  },
+                  "step": {
+                    "description": "The step that carries it, when one does.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "blocks": {
+                    "description": "The blocks involved, so a board can light them.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "message": {
+                    "description": "The same for people; programs never decide by it.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "needs": {
+                    "description": "Present only on a rule that did not run: the declaration that would let it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "rule",
+                  "flow",
+                  "blocks",
+                  "message"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "flows": {
+              "description": "The ids of the flows read.",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "findings",
+            "flows"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

@@ -50,6 +50,48 @@
                 "$ref": "defs.schema.json#/$defs/flow"
               }
             },
+            "blockRoles": {
+              "description": "What each block does across every flow the board takes, by block id, worked out by e-designer from the flows and never declared, so the board draws roles and coverage counts them from one rule. A block no flow names is left out.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "One block's part.",
+                "type": "object",
+                "properties": {
+                  "visitedBy": {
+                    "description": "The flows that visit it: a step stands on it.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "touchedBy": {
+                    "description": "The flows that touch it without visiting it: a step writes into it, or sends to it.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "visitedBy",
+                  "touchedBy"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "journeys": {
+              "description": "Where each block first comes in each flow, by flow id then block id, so a view can be laid along the request: the step's place from 0, and half a step after the step that sends to it for a block a request lands on.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            },
             "requests": {
               "description": "The saved requests the board takes, in id order; a request it refuses is in refused instead.",
               "type": "array",

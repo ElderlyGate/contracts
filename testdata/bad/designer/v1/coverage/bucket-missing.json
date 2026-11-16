@@ -1,0 +1,45 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Coverage",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.18.0",
+    "contract": "v1"
+  },
+  "data": {
+    "blocks": [
+      {
+        "id": "CMP-API",
+        "title": "API",
+        "group": "Service",
+        "visitedBy": [
+          "drop-a-parcel"
+        ],
+        "touchedBy": [],
+        "unclaimed": false,
+        "actor": false
+      },
+      {
+        "id": "CMP-LOG",
+        "title": "Log",
+        "bucket": "dark",
+        "visitedBy": [],
+        "touchedBy": [],
+        "unclaimed": true,
+        "actor": false
+      }
+    ],
+    "counts": {
+      "total": 2,
+      "visited": 1,
+      "touched": 0,
+      "dark": 1,
+      "unclaimed": 1
+    },
+    "flows": [
+      "drop-a-parcel"
+    ]
+  },
+  "errors": []
+}

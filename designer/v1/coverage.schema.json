@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/coverage.schema.json",
+  "title": "coverage",
+  "description": "Which blocks a flow describes a use for, from describe coverage, or for one flow with describe coverage --flow <id>: every block in a bucket, visited, touched or dark. The numbers are not a target.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Coverage, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Coverage"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Every block's bucket, the counts and the flows read.",
+          "type": "object",
+          "properties": {
+            "blocks": {
+              "description": "One per block, in the design's order.",
+              "type": "array",
+              "items": {
+                "description": "One block.",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "The block's id.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "description": "Its title.",
+                    "type": "string"
+                  },
+                  "group": {
+                    "description": "The title of the group it sits in, else the group's id; absent outside any group.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "bucket": {
+                    "description": "What the flows do with it, an open word. Known words: visited: a step stands on it; touched: a step writes into it or sends to it without the request going there; dark: no flow names it.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "visitedBy": {
+                    "description": "The flows that visit it, in flow order.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "touchedBy": {
+                    "description": "The flows that touch it without visiting it, in flow order.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "unclaimed": {
+                    "description": "It names no service and could, since it is not outside the system.",
+                    "type": "boolean"
+                  },
+                  "actor": {
+                    "description": "Its kind is one the design casts as outside the system, a caller rather than part of it.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "bucket",
+                  "visitedBy",
+                  "touchedBy",
+                  "unclaimed",
+                  "actor"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "counts": {
+              "description": "How many blocks in each bucket.",
+              "type": "object",
+              "properties": {
+                "total": {
+                  "description": "Every block.",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "visited": {
+                  "description": "Visited.",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "touched": {
+                  "description": "Touched.",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "dark": {
+                  "description": "Dark.",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unclaimed": {
+                  "description": "Unclaimed.",
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "total",
+                "visited",
+                "touched",
+                "dark",
+                "unclaimed"
+              ],
+              "additionalProperties": false
+            },
+            "flows": {
+              "description": "The ids of the flows read: every flow, or the one asked for.",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "blocks",
+            "counts",
+            "flows"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

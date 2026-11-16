@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/roundtrip-report.schema.json",
+  "title": "roundtrip report",
+  "description": "What check roundtrip finds, from check roundtrip -o json: whether each flow comes back the same after e-designer writes it and reads it again. A flow that does not fails the check.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always RoundtripReport, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "RoundtripReport"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Each flow's trip.",
+          "type": "object",
+          "properties": {
+            "flows": {
+              "description": "One per flow, in id order.",
+              "type": "array",
+              "items": {
+                "description": "One flow.",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "The flow's id.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ok": {
+                    "description": "It came back the same.",
+                    "type": "boolean"
+                  },
+                  "says": {
+                    "description": "Why not, for people; absent when it came back the same.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "ok"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "flows"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

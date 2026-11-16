@@ -98,6 +98,27 @@
               ],
               "additionalProperties": false
             },
+            "build": {
+              "description": "What stamped the image it runs from, ED_BUILD_BRANCH, ED_BUILD_COMMIT and ED_BUILD_DIRTY, shown for a board that has no checkout of its own to name; absent when nothing stamped it. running says the same build when stamped, with whether it is a release.",
+              "type": "object",
+              "properties": {
+                "branch": {
+                  "description": "The branch it was built from.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "commit": {
+                  "description": "The short commit it was built from.",
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{4,40}$"
+                },
+                "dirty": {
+                  "description": "The tree it was built from held changes its commit does not; absent when the stamp does not say.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
             "commit": {
               "type": "string",
               "pattern": "^[0-9a-f]{4,40}$",

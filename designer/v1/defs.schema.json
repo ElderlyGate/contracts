@@ -82,6 +82,12 @@
     },
     "projectName": {
       "$ref": "#/$defs/projectName"
+    },
+    "visitedBy": {
+      "$ref": "#/$defs/visitedBy"
+    },
+    "touchedBy": {
+      "$ref": "#/$defs/touchedBy"
     }
   },
   "additionalProperties": false,
@@ -1372,6 +1378,24 @@
       "pattern": "^[A-Za-z0-9._-]{1,64}$",
       "not": {
         "pattern": "^\\.+$"
+      }
+    },
+    "visitedBy": {
+      "description": "The flows that visit a block, a step standing on it, in the order the flows are read, each once.",
+      "type": "array",
+      "items": {
+        "description": "A flow's id.",
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "touchedBy": {
+      "description": "The flows that touch a block without visiting it, in the order the flows are read, each once: a step writes into it, or sends something to it, every leg of the send counted, the first leg too.",
+      "type": "array",
+      "items": {
+        "description": "A flow's id.",
+        "type": "string",
+        "minLength": 1
       }
     }
   }

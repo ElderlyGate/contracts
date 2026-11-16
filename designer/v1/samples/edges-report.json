@@ -18,8 +18,6 @@
       },
       {
         "rule": "unread",
-        "link": "",
-        "end": "",
         "id": "mentions",
         "message": "2 edge(s) are drawn as `mentions`, and no check reads them"
       }

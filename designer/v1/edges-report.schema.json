@@ -47,15 +47,15 @@
                     "pattern": "^[a-z][a-z0-9_]*$"
                   },
                   "link": {
-                    "description": "The link's id; empty for unread, which is about a label.",
-                    "type": "string"
+                    "description": "The link's id; absent for unread, which is about a label.",
+                    "type": "string",
+                    "minLength": 1
                   },
                   "end": {
-                    "description": "Which end: from or to; empty for unread.",
+                    "description": "Which end: from or to; absent for unread.",
                     "enum": [
                       "from",
-                      "to",
-                      ""
+                      "to"
                     ]
                   },
                   "id": {
@@ -70,8 +70,6 @@
                 },
                 "required": [
                   "rule",
-                  "link",
-                  "end",
                   "id",
                   "message"
                 ],

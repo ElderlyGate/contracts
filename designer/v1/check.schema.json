@@ -31,7 +31,7 @@
           }
         },
         "data": {
-          "description": "One per check that ran, in name order.",
+          "description": "One per check that ran, in the order the checks run: by name.",
           "type": "array",
           "items": {
             "description": "One check.",
@@ -48,7 +48,7 @@
                 "minimum": 0
               },
               "ok": {
-                "description": "It exited 0.",
+                "description": "Derived from exit: true exactly when exit is 0.",
                 "type": "boolean"
               }
             },

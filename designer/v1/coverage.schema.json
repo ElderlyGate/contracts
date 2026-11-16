@@ -56,25 +56,18 @@
                     "minLength": 1
                   },
                   "bucket": {
-                    "description": "What the flows do with it, an open word. Known words: visited: a step stands on it; touched: a step writes into it or sends to it without the request going there; dark: no flow names it.",
-                    "type": "string",
-                    "pattern": "^[a-z][a-z0-9_]*$"
+                    "description": "What the flows do with it: visited when a flow visits it (see defs visitedBy), touched when flows only touch it (see defs touchedBy), dark when no flow names it.",
+                    "enum": [
+                      "visited",
+                      "touched",
+                      "dark"
+                    ]
                   },
                   "visitedBy": {
-                    "description": "The flows that visit it, in flow order.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "minLength": 1
-                    }
+                    "$ref": "defs.schema.json#/$defs/visitedBy"
                   },
                   "touchedBy": {
-                    "description": "The flows that touch it without visiting it, in flow order.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "minLength": 1
-                    }
+                    "$ref": "defs.schema.json#/$defs/touchedBy"
                   },
                   "unclaimed": {
                     "description": "It names no service and could, since it is not outside the system.",

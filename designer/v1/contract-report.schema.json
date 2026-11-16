@@ -89,49 +89,21 @@
               }
             },
             "counts": {
-              "description": "How many of each, and how many blocks could be checked.",
+              "description": "How many blocks could be checked, declared and unstated, and how many findings of each rule word; an open map, as rule is an open word. declared: blocks that hold state and list the fields they write, the only ones that can be checked; unstated: blocks that hold state and list nothing yet, not a finding.",
               "type": "object",
-              "properties": {
-                "declared": {
-                  "description": "Blocks that hold state and list the fields they write, the only ones that can be checked.",
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "unstated": {
-                  "description": "Blocks that hold state and list nothing yet; not a finding.",
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "undeclared": {
-                  "description": "undeclared findings.",
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "unexercised": {
-                  "description": "unexercised findings.",
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "misplaced": {
-                  "description": "misplaced findings.",
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "unknown": {
-                  "description": "unknown findings.",
-                  "type": "integer",
-                  "minimum": 0
-                }
+              "propertyNames": {
+                "description": "declared, unstated, or a rule word.",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "additionalProperties": {
+                "description": "How many.",
+                "type": "integer",
+                "minimum": 0
               },
               "required": [
                 "declared",
-                "unstated",
-                "undeclared",
-                "unexercised",
-                "misplaced",
-                "unknown"
-              ],
-              "additionalProperties": false
+                "unstated"
+              ]
             },
             "flows": {
               "description": "The ids of the flows read.",

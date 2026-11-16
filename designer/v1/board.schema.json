@@ -51,27 +51,21 @@
               }
             },
             "blockRoles": {
-              "description": "What each block does across every flow the board takes, by block id, worked out by e-designer from the flows and never declared, so the board draws roles and coverage counts them from one rule. A block no flow names is left out.",
+              "description": "What each id the flows name does across every flow the board takes, worked out by e-designer from the flows and never declared, so the board draws roles and coverage counts them from one rule. The keys are the ids the flows name, which may name no block; an id no flow names is left out.",
               "type": "object",
+              "propertyNames": {
+                "description": "An id a flow names.",
+                "minLength": 1
+              },
               "additionalProperties": {
-                "description": "One block's part.",
+                "description": "One id's part.",
                 "type": "object",
                 "properties": {
                   "visitedBy": {
-                    "description": "The flows that visit it: a step stands on it.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "minLength": 1
-                    }
+                    "$ref": "defs.schema.json#/$defs/visitedBy"
                   },
                   "touchedBy": {
-                    "description": "The flows that touch it without visiting it: a step writes into it, or sends to it.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "minLength": 1
-                    }
+                    "$ref": "defs.schema.json#/$defs/touchedBy"
                   }
                 },
                 "required": [
@@ -82,11 +76,21 @@
               }
             },
             "journeys": {
-              "description": "Where each block first comes in each flow, by flow id then block id, so a view can be laid along the request: the step's place from 0, and half a step after the step that sends to it for a block a request lands on.",
+              "description": "Where each id first comes in each flow, so a view can be laid along the request.",
               "type": "object",
+              "propertyNames": {
+                "description": "A flow's id.",
+                "minLength": 1
+              },
               "additionalProperties": {
+                "description": "One flow's journey, by the ids it names.",
                 "type": "object",
+                "propertyNames": {
+                  "description": "An id the flow names.",
+                  "minLength": 1
+                },
                 "additionalProperties": {
+                  "description": "Where the id first comes: the place of the first step standing on it, from 0; an id a step only sends to comes half a step after the step whose emitted object first lands on it, the first leg of the send. A step with no at places nothing.",
                   "type": "number",
                   "minimum": 0
                 }

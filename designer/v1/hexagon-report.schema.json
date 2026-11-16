@@ -47,8 +47,9 @@
                     "pattern": "^[a-z][a-z0-9_]*$"
                   },
                   "flow": {
-                    "description": "The flow it was found in; empty when it is about the declaration.",
-                    "type": "string"
+                    "description": "The flow it was found in; absent when it is about the declaration.",
+                    "type": "string",
+                    "minLength": 1
                   },
                   "step": {
                     "description": "The step that carries it, when one does.",
@@ -76,7 +77,6 @@
                 },
                 "required": [
                   "rule",
-                  "flow",
                   "blocks",
                   "message"
                 ],

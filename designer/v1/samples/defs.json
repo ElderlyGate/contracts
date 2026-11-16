@@ -342,5 +342,11 @@
   },
   "fingerprint": "3f9a0c1e7b2d4a68",
   "eventSource": "/designer/shop",
-  "projectName": "shop"
+  "projectName": "shop",
+  "visitedBy": [
+    "drop-a-parcel"
+  ],
+  "touchedBy": [
+    "pick-up"
+  ]
 }

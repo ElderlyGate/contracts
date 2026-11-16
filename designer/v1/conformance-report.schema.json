@@ -45,12 +45,17 @@
               "pattern": "^[a-z][a-z0-9_]*$"
             },
             "rootPath": {
-              "description": "The root, absolute, once resolved.",
+              "description": "The root, absolute, once resolved. A path on the machine running e-designer, served only behind the token; a reader elsewhere cannot open it.",
               "type": "string",
               "pattern": "^/"
             },
-            "problem": {
-              "description": "Why no block could be checked, such as a root that is not there; absent when the check ran.",
+            "reason": {
+              "description": "Why no block could be checked, an open word programs decide by (G-STACK-15); absent when the check ran. Known words: no_root: nothing says where the code is; root_missing: the root is not there; root_not_a_folder: the root is a file.",
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            "says": {
+              "description": "The same for people, with what would fix it; present exactly when reason is. Programs never decide by it.",
               "type": "string",
               "minLength": 1
             },
@@ -91,7 +96,7 @@
                     "minLength": 1
                   },
                   "file": {
-                    "description": "The file checked, absolute.",
+                    "description": "The file checked, absolute. A path on the machine running e-designer, served only behind the token; a reader elsewhere cannot open it.",
                     "type": "string",
                     "pattern": "^/"
                   },
@@ -143,7 +148,12 @@
             "counts": {
               "description": "How many blocks are in each state, by its word.",
               "type": "object",
+              "propertyNames": {
+                "description": "A state word.",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
               "additionalProperties": {
+                "description": "How many blocks are in that state.",
                 "type": "integer",
                 "minimum": 0
               }
@@ -155,7 +165,15 @@
             "blocks",
             "counts"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "dependentRequired": {
+            "reason": [
+              "says"
+            ],
+            "says": [
+              "reason"
+            ]
+          }
         }
       }
     }

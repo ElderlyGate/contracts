@@ -50,8 +50,13 @@
                     "description": "It came back the same.",
                     "type": "boolean"
                   },
+                  "reason": {
+                    "description": "Why not, an open word programs decide by; absent when it came back the same. Known words: refused: e-designer would not write it again, or could not read it back; changed: it came back different from what was written.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
                   "says": {
-                    "description": "Why not, for people; absent when it came back the same.",
+                    "description": "The same for people; present exactly when reason is.",
                     "type": "string",
                     "minLength": 1
                   }
@@ -60,7 +65,15 @@
                   "id",
                   "ok"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "dependentRequired": {
+                  "reason": [
+                    "says"
+                  ],
+                  "says": [
+                    "reason"
+                  ]
+                }
               }
             }
           },

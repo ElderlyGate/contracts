@@ -1,0 +1,15 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Export",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.19.0",
+    "contract": "v1"
+  },
+  "data": {
+    "text": "apiVersion: elderlygate/designer/design/v2\nkind: Design\nmetadata:\n  id: default\nspec: {}\n",
+    "filename": "default.yml"
+  },
+  "errors": []
+}

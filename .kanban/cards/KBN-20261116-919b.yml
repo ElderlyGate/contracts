@@ -1,0 +1,30 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261116-919b
+  title: 'designer/v1: the export answer'
+  created_at: 2026-11-16T16:17:38.069Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999403953552
+  summary: Schema for export's answer, for E6c
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/export-answer/contracts
+  description: |
+    #feature #epic:same-shape #feature:contracts
+
+    # designer/v1: the export answer
+
+    For e-designer E6c (e-designer card KBN-20261116-05c3): export and import move to Go, and the board's GET …/designs/{design}/export answers as `export -o json` does, so its answer needs its schema (Q5 of E6).
+
+    ## Changes
+    - export: the Export answer, data.text the whole design as one YAML stream.
+    - A sample and bad cases.
+
+    Import needs no schema here: it is apply's route and answer. Its body schema comes at the end of the epic (constitution KBN-20261114-3e1d).
+  lifecycle:
+    done_at: 2026-11-16T16:17:38.443Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

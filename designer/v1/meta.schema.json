@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/meta.schema.json",
+  "title": "meta",
+  "description": "What the board says about itself, from describe meta: the tool's version and running build, which decides the preview banner, and the git checkout the design sits in, with when the design last changed. A reader asks it again when the revision's meta or board part moves.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Meta, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Meta"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "What the board says about itself: the running build, with the tool's version, and the checkout the design sits in, with when the design last changed. A fact that cannot be known is left out, never guessed.",
+          "type": "object",
+          "properties": {
+            "since": {
+              "description": "How far the tool's own tree is past its nearest tag, and which tag, against running.version; absent when git cannot say, as in a container.",
+              "type": "object",
+              "properties": {
+                "tag": {
+                  "description": "The nearest tag.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ahead": {
+                  "description": "How many commits past it; 0 on the tag itself.",
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "tag",
+                "ahead"
+              ],
+              "additionalProperties": false
+            },
+            "running": {
+              "description": "What the running build was made from, and whether it is a release from main. source says where that comes from: the ED_BUILD_BRANCH, ED_BUILD_COMMIT, ED_BUILD_DIRTY and ED_BUILD_TAG stamp, as a container has no .git, else the tool's own checkout. Kept apart from branch and commit, which describe the checkout the design's writes land in.",
+              "type": "object",
+              "properties": {
+                "source": {
+                  "description": "Where the build's facts come from, an open word a reader decides by (G-STACK-15). Known words: stamp: what stamped the image it runs from, shown for a board with no checkout of its own; checkout: the tool's own checkout.",
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "version": {
+                  "description": "The tool's version, from its single VERSION; absent when there is none. released is decided against it. It is the version in the envelope's ran.version of the app that answered, except that a build with no version stamped in (dev) names the VERSION its checkout declares.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "branch": {
+                  "description": "The branch it was built from; absent on a detached HEAD or when nothing says.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "commit": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{4,64}$",
+                  "description": "The short commit it was built from, in lowercase hex; absent when nothing says."
+                },
+                "dirty": {
+                  "description": "The tree it was built from held changes its commit does not; absent when nothing says.",
+                  "type": "boolean"
+                },
+                "tag": {
+                  "description": "The release tag on the built commit, v<version>, when it carries one.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "released": {
+                  "description": "Whether this is a release from main: the built commit carries the tag v<version>, from a clean tree, on main or a detached HEAD. Decided by the server, so every page agrees; a page that is not a release wears the preview banner.",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "source",
+                "released"
+              ],
+              "additionalProperties": false
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{4,64}$",
+              "description": "The short commit of the checkout the design sits in, in lowercase hex; absent outside a checkout."
+            },
+            "branch": {
+              "description": "The branch the design's writes land on, from git, else ED_BRANCH; absent on a detached HEAD with nothing to name.",
+              "type": "string",
+              "minLength": 1
+            },
+            "dirty": {
+              "description": "The design's checkout holds changes its commit does not; absent outside a checkout or when git cannot say.",
+              "type": "boolean"
+            },
+            "boardBranch": {
+              "description": "The branch board sessions are meant to run on, from ED_BOARD_BRANCH; a branch that differs is shown, never refused.",
+              "type": "string",
+              "minLength": 1
+            },
+            "updatedAt": {
+              "description": "When a file of the design last changed, in milliseconds since the epoch; absent when the design holds no file.",
+              "type": "integer",
+              "minimum": 0
+            },
+            "updatedWhat": {
+              "description": "Which file that was, as a path inside the design, never a machine path.",
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^/\\\\~][^\\\\]*$",
+              "not": {
+                "pattern": "(^|/)\\.\\.(/|$)"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "running"
+          ]
+        }
+      }
+    }
+  ]
+}

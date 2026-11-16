@@ -1,0 +1,18 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Meta",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.17.0",
+    "contract": "v1"
+  },
+  "data": {
+    "running": {
+      "source": "checkout",
+      "released": false
+    },
+    "updatedWhat": "/home/u/shop/.designer/default/block/A.yml"
+  },
+  "errors": []
+}

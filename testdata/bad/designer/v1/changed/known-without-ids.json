@@ -1,0 +1,15 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Changed",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.17.0",
+    "contract": "v1"
+  },
+  "data": {
+    "known": true,
+    "ref": "main"
+  },
+  "errors": []
+}

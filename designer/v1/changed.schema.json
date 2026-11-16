@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/changed.schema.json",
+  "title": "changed",
+  "description": "What changed since a git ref, from describe changed --since <ref>: the resources whose file differs from the ref, for the board's history view, which dims the rest.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always Changed, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Changed"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Which resources differ from a git ref, or why that cannot be known. Not knowing is an answer, not an error, so a board that cannot tell shows every resource undimmed, never dimmed.",
+          "oneOf": [
+            {
+              "description": "Known: the resources whose text differs from the ref, uncommitted and untracked work included.",
+              "type": "object",
+              "properties": {
+                "known": {
+                  "description": "Always true here.",
+                  "const": true
+                },
+                "ref": {
+                  "description": "The ref compared against, as asked.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ids": {
+                  "description": "The ids of resources in the design now whose text differs from their text at the ref, or that the ref does not hold, sorted; a resource removed since the ref is not named. Empty when none differs.",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "known",
+                "ref",
+                "ids"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "description": "Not known, with why, so a reader knows what would answer it.",
+              "type": "object",
+              "properties": {
+                "known": {
+                  "description": "Always false here.",
+                  "const": false
+                },
+                "why": {
+                  "description": "Why it cannot be known, an open word a program decides by (G-STACK-15). Known words: no_git: git is not on this machine; not_a_checkout: the design is not inside a git checkout, or git could not compare it; unknown_ref: the ref is not a commit this checkout knows; unreadable_at_ref: the design as it was at the ref cannot be read.",
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "says": {
+                  "description": "The same for people, never a machine path; programs never decide by it.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "known",
+                "why",
+                "says"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

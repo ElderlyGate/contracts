@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/config-paths.schema.json",
   "title": "config paths",
-  "description": "Where the design's definitions file is, from config --paths, so a person or a script can open it; the CLI's own answer on the machine it runs on, which the board does not ask over HTTP.",
+  "description": "Where the design's definitions file is, from config --paths, so a person or a script can open it; the CLI's own answer on the machine it runs on, which the board does not ask over HTTP. Where e-designer keeps things on the machine is config path's answer (ConfigPath), a different one.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"

@@ -72,7 +72,7 @@
                   "const": false
                 },
                 "why": {
-                  "description": "Why it cannot be known, an open word a program decides by (G-STACK-15). Known words: no_git: git is not on this machine; not_a_checkout: the design is not inside a git checkout, or git could not compare it; unknown_ref: the ref is not a commit this checkout knows.",
+                  "description": "Why it cannot be known, an open word a program decides by (G-STACK-15). Known words: no_git: git is not on this machine; not_a_checkout: the design is not inside a git checkout, or git could not compare it; unknown_ref: the ref is not a commit this checkout knows; unreadable_at_ref: the design as it was at the ref cannot be read.",
                   "type": "string",
                   "pattern": "^[a-z][a-z0-9_]*$"
                 },

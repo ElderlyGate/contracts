@@ -65,7 +65,7 @@
                   "pattern": "^[a-z][a-z0-9_]*$"
                 },
                 "version": {
-                  "description": "The tool's version, from its single VERSION; absent when there is none. released is decided against it.",
+                  "description": "The tool's version, from its single VERSION; absent when there is none. released is decided against it. It is the version in the envelope's ran.version of the app that answered, except that a build with no version stamped in (dev) names the VERSION its checkout declares.",
                   "type": "string",
                   "minLength": 1
                 },

@@ -35,7 +35,7 @@
           "type": "object",
           "properties": {
             "text": {
-              "description": "A stream of YAML documents, separated by ---: a comment header naming the tool's version, the design and when it was exported, then the design file, definitions.yml, every resource by kind and then by id, and layout.yml last. Each document meets its own kind's schema in the design form (design/v2). Documents keep the text they have on disk, comments and all, so applying the text to the design it came from changes nothing, and applying it to an empty design of the same name writes the same files. Only the header's exported line differs between two exports of one design.",
+              "description": "A stream of YAML documents, separated by ---. It opens with a header of comment lines in front of the first document, not a document of its own, naming the tool's version, the design and when it was exported; then come the design file, definitions.yml, every resource by kind and then by id, and layout.yml last. Each document meets its own kind's schema in the design form (design/v2). Documents keep the text they have on disk, comments and all, so applying the text to the design it came from changes nothing, and applying it to an empty design of the same name writes the same files. Only the header's exported line differs between two exports of one design by the same tool version.",
               "type": "string",
               "minLength": 1
             }

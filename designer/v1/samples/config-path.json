@@ -1,0 +1,42 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ConfigPath",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "6.17.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "key": "config",
+      "label": "This app's config",
+      "path": "/home/u/.config/elderlygate/e-designer/config.yaml",
+      "note": "how each type of change asks in e-designer, and the projects on this machine"
+    },
+    {
+      "key": "data",
+      "label": "This app's data",
+      "path": "/home/u/.local/share/elderlygate/e-designer"
+    },
+    {
+      "key": "token",
+      "label": "This machine's token",
+      "path": "/home/u/.local/share/elderlygate/e-designer/servers/token",
+      "note": "the board's token, which `e-designer serve` makes; `e-designer servers token renew` replaces it"
+    },
+    {
+      "key": "designs",
+      "label": "This project's designs",
+      "path": "/home/u/shop/.designer",
+      "note": "the designs and the board's docker-compose.yml"
+    },
+    {
+      "key": "board",
+      "label": "This project's board",
+      "path": "/home/u/shop/.designer/.env",
+      "note": "this machine's port and settings; install.sh writes it"
+    }
+  ],
+  "errors": []
+}

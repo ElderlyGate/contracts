@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/config-path.schema.json",
+  "title": "config path",
+  "description": "Where e-designer keeps things, from config path: this machine's config, data and token, then the project's designs and its board's .env, so the board's Settings and a person at a terminal see the same places. Paths are the machine's, shown on purpose behind the token, as the board names its project's folder (ED-RUN-2).",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v1: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v1"
+        },
+        "kind": {
+          "description": "Always ConfigPath, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "ConfigPath"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "One row per place, the machine's first, then the project's.",
+          "type": "array",
+          "items": {
+            "description": "One place.",
+            "type": "object",
+            "properties": {
+              "key": {
+                "description": "Names the place for a program, which never reads the label: an open word. Known words: config, data, token, designs, board.",
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "label": {
+                "description": "The place for people.",
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "description": "Where it is on this machine, absolute; the token's path only, never the token.",
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "description": "What it holds, for people; absent when the label says enough.",
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "key",
+              "label",
+              "path"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ]
+}

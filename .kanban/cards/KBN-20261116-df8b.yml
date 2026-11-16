@@ -8,20 +8,21 @@ metadata:
 spec:
   column: done
   order: 0.9999997615814209
-  summary: Schemas for describe meta and describe changed, for E6a
+  summary: Schemas for describe meta, describe changed and config path, for E6a
   tags: [feature, 'epic:same-shape', 'feature:contracts']
   work:
     agent: claude-opus-5-5
   description: |
     #feature #epic:same-shape #feature:contracts
 
-    # designer/v1: meta and changed
+    # designer/v1: meta, changed and config path
 
     For e-designer E6a (e-designer card KBN-20261116-7863): the board's meta and the history view's changed-since move from the Node server to Go, each answered by a CLI verb first (describe meta, describe changed --since <ref>), so each needs its schema (Q5 of E6).
 
     ## Changes
     - designer/v1 meta (kind Meta): the tool's version, how far past its tag, the running build with released (which decides the preview banner), the design checkout's commit, branch and dirty, the board branch, and when and which file of the design last changed.
     - designer/v1 changed (kind Changed): known with the ref and the changed resource ids, or not known with why (no_git, not_a_checkout, unknown_ref) and says.
+    - designer/v1 config-path (kind ConfigPath): where e-designer keeps things, which config path answered with no schema until now; the board's Settings reads it over HTTP from E6a.
     - Samples, a good not-known case, and bad cases.
   lifecycle:
     done_at: 2026-11-16T08:51:29.104Z

@@ -8,6 +8,10 @@
     "contract": "v1"
   },
   "data": {
+    "running": {
+      "source": "stamp",
+      "released": false
+    },
     "uptime": 3
   },
   "errors": []

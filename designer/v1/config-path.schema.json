@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/config-path.schema.json",
   "title": "config path",
-  "description": "Where e-designer keeps things, from config path: this machine's config, data and token, then the project's designs and its board's .env, so the board's Settings and a person at a terminal see the same places. Paths are the machine's, shown on purpose behind the token, as the board names its project's folder (ED-RUN-2).",
+  "description": "Where e-designer keeps things, from config path: this machine's config, data and token, then the project's designs and its board's .env, so the board's Settings and a person at a terminal see the same places. Paths are the machine's, shown on purpose behind the token, as the board names its project's folder (ED-RUN-2). Not config --paths (ConfigPaths), which names only the design's definitions file.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -50,7 +50,8 @@
               "path": {
                 "description": "Where it is on this machine, absolute; the token's path only, never the token.",
                 "type": "string",
-                "minLength": 1
+                "minLength": 1,
+                "pattern": "^/"
               },
               "note": {
                 "description": "What it holds, for people; absent when the label says enough.",

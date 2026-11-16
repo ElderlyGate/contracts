@@ -9,6 +9,7 @@
   },
   "data": {
     "running": {
+      "source": "stamp",
       "version": "6.17.0"
     }
   },

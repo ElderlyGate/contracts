@@ -34,7 +34,7 @@
           "description": "Which resources differ from a git ref, or why that cannot be known. Not knowing is an answer, not an error, so a board that cannot tell shows every resource undimmed, never dimmed.",
           "oneOf": [
             {
-              "description": "Known: the resources whose file differs from the ref, uncommitted and untracked work included.",
+              "description": "Known: the resources whose text differs from the ref, uncommitted and untracked work included.",
               "type": "object",
               "properties": {
                 "known": {
@@ -47,7 +47,7 @@
                   "minLength": 1
                 },
                 "ids": {
-                  "description": "The ids of the resources whose file differs from the ref, sorted; empty when none does.",
+                  "description": "The ids of resources in the design now whose text differs from their text at the ref, or that the ref does not hold, sorted; a resource removed since the ref is not named. Empty when none differs.",
                   "type": "array",
                   "items": {
                     "type": "string",
@@ -77,7 +77,7 @@
                   "pattern": "^[a-z][a-z0-9_]*$"
                 },
                 "says": {
-                  "description": "The same for people; programs never decide by it.",
+                  "description": "The same for people, never a machine path; programs never decide by it.",
                   "type": "string",
                   "minLength": 1
                 }

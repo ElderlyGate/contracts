@@ -8,6 +8,10 @@
     "contract": "v1"
   },
   "data": {
+    "running": {
+      "source": "checkout",
+      "released": false
+    },
     "updatedWhat": "/home/u/shop/.designer/default/block/A.yml"
   },
   "errors": []

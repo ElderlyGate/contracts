@@ -31,16 +31,11 @@
           }
         },
         "data": {
-          "description": "What the board says about itself: the tool's version and build, and the checkout the design sits in, with when the design last changed. A fact that cannot be known is left out, never guessed.",
+          "description": "What the board says about itself: the running build, with the tool's version, and the checkout the design sits in, with when the design last changed. A fact that cannot be known is left out, never guessed.",
           "type": "object",
           "properties": {
-            "version": {
-              "description": "The tool's version, from its single VERSION; absent when there is none.",
-              "type": "string",
-              "minLength": 1
-            },
             "since": {
-              "description": "How far the tool's own tree is past its nearest tag, and which tag; absent when git cannot say, as in a container.",
+              "description": "How far the tool's own tree is past its nearest tag, and which tag, against running.version; absent when git cannot say, as in a container.",
               "type": "object",
               "properties": {
                 "tag": {
@@ -61,11 +56,16 @@
               "additionalProperties": false
             },
             "running": {
-              "description": "What the running build was made from: ED_BUILD_BRANCH, ED_BUILD_COMMIT, ED_BUILD_DIRTY and ED_BUILD_TAG where something stamped them, since a container has no .git, else the tool's own checkout. Kept apart from branch and commit, which describe the checkout the design's writes land in.",
+              "description": "What the running build was made from, and whether it is a release from main. source says where that comes from: the ED_BUILD_BRANCH, ED_BUILD_COMMIT, ED_BUILD_DIRTY and ED_BUILD_TAG stamp, as a container has no .git, else the tool's own checkout. Kept apart from branch and commit, which describe the checkout the design's writes land in.",
               "type": "object",
               "properties": {
+                "source": {
+                  "description": "Where the build's facts come from, an open word a reader decides by (G-STACK-15). Known words: stamp: what stamped the image it runs from, shown for a board with no checkout of its own; checkout: the tool's own checkout.",
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
                 "version": {
-                  "description": "The version the build declares; absent when it declares none.",
+                  "description": "The tool's version, from its single VERSION; absent when there is none. released is decided against it.",
                   "type": "string",
                   "minLength": 1
                 },
@@ -76,8 +76,8 @@
                 },
                 "commit": {
                   "type": "string",
-                  "pattern": "^[0-9a-f]{4,40}$",
-                  "description": "The short commit it was built from; absent when nothing says."
+                  "pattern": "^[0-9a-f]{4,64}$",
+                  "description": "The short commit it was built from, in lowercase hex; absent when nothing says."
                 },
                 "dirty": {
                   "description": "The tree it was built from held changes its commit does not; absent when nothing says.",
@@ -94,35 +94,15 @@
                 }
               },
               "required": [
+                "source",
                 "released"
               ],
               "additionalProperties": false
             },
-            "build": {
-              "description": "What stamped the image it runs from, ED_BUILD_BRANCH, ED_BUILD_COMMIT and ED_BUILD_DIRTY, shown for a board that has no checkout of its own to name; absent when nothing stamped it. running says the same build when stamped, with whether it is a release.",
-              "type": "object",
-              "properties": {
-                "branch": {
-                  "description": "The branch it was built from.",
-                  "type": "string",
-                  "minLength": 1
-                },
-                "commit": {
-                  "description": "The short commit it was built from.",
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{4,40}$"
-                },
-                "dirty": {
-                  "description": "The tree it was built from held changes its commit does not; absent when the stamp does not say.",
-                  "type": "boolean"
-                }
-              },
-              "additionalProperties": false
-            },
             "commit": {
               "type": "string",
-              "pattern": "^[0-9a-f]{4,40}$",
-              "description": "The short commit of the checkout the design sits in; absent outside a checkout."
+              "pattern": "^[0-9a-f]{4,64}$",
+              "description": "The short commit of the checkout the design sits in, in lowercase hex; absent outside a checkout."
             },
             "branch": {
               "description": "The branch the design's writes land on, from git, else ED_BRANCH; absent on a detached HEAD with nothing to name.",
@@ -153,7 +133,10 @@
               }
             }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "required": [
+            "running"
+          ]
         }
       }
     }

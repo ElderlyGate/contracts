@@ -8,23 +8,18 @@
     "contract": "v1"
   },
   "data": {
-    "version": "6.17.0",
     "since": {
       "tag": "v6.16.0",
       "ahead": 3
     },
     "running": {
+      "source": "stamp",
       "version": "6.17.0",
       "branch": "main",
       "commit": "0a61e56",
       "dirty": false,
       "tag": "v6.17.0",
       "released": true
-    },
-    "build": {
-      "branch": "main",
-      "commit": "0a61e56",
-      "dirty": false
     },
     "commit": "3f9a0c1",
     "branch": "main",

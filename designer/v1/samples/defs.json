@@ -342,6 +342,5 @@
   },
   "fingerprint": "3f9a0c1e7b2d4a68",
   "eventSource": "/designer/shop",
-  "projectName": "shop",
-  "boardAddress": "/?project=shop&design=default&view=structure"
+  "projectName": "shop"
 }

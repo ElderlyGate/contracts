@@ -1,0 +1,29 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261116-d15a
+  title: 'designer/v2: project-list name $refs projectName'
+  created_at: 2026-11-16T06:34:22.437Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: backlog
+  order: 0.5
+  summary: Drop the looser released project-list name rule in designer/v2
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+  description: |
+    #feature #epic:same-shape #feature:contracts
+
+    # designer/v2: project-list name $refs projectName
+
+    designer/v1's project-list keeps its released name rule (`^[^/]+$`, not . or ..) under CT-RULE-1, so it is a second, looser project-name rule beside defs `projectName` (contracts#26). It is a named stopgap, said in projectName's description.
+
+    ## When
+    With designer/v2 (e-designer card KBN-20261114-54db), after E7.
+
+    ## Changes
+    - designer/v2 project-list's `name` is `$ref: defs.schema.json#/$defs/projectName`.
+    - projectName's description drops the stopgap clause.
+  links:
+    related: [KBN-20261115-09b6]

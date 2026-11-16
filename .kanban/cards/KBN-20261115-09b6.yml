@@ -8,22 +8,22 @@ metadata:
 spec:
   column: done
   order: 0.9999995231628418
-  summary: One project-name rule and the board address in designer/v1 defs
+  summary: One project-name rule in designer/v1 defs
   tags: [feature, 'epic:same-shape', 'feature:contracts']
   work:
     agent: claude-opus-5-5
   description: |
     #feature #epic:same-shape #feature:contracts
 
-    # designer/v1: projectName and boardAddress
+    # designer/v1: projectName
 
-    For e-designer E5a (e-designer card KBN-20261112-8237). One rule for a project's name, and the address of a board that opens a project's design, before the page shows many projects (E5b).
+    For e-designer E5a (e-designer card KBN-20261112-8237). One rule for a project's name before Go serve answers every listed project.
 
     ## Changes
-    - defs `projectName`: at most 64 letters, digits, '.', '_' and '-', not only dots; the one home of the rule.
-    - defs `boardAddress`: `/?project=<project>&design=<design>[&view=<view>]`.
-    - defs `eventSource` loosened to `^/designer/[^/]+$`; its project part is a projectName, said there, so the rule has no copy. Events were never released, so no reader notices.
-    - project-list stays as released (CT-RULE-1): a name listed before the rule is still a row; e-designer lists it as unavailable.
+    - defs `projectName`: at most 64 letters, digits, '.', '_' and '-', not only dots, the same as an event thing (event/v1 source, ADR-E2), so every served project can be an event's source.
+    - defs `eventSource` keeps its released pattern; its description points to projectName. e-designer 6.15.0 ships events on contracts v0.19.0, so eventSource is released (CT-RULE-1).
+    - project-list keeps its released, looser name rule (CT-RULE-1) until designer/v2 (card KBN-20261116-d15a), a named stopgap said in projectName's description; e-designer lists a name outside projectName as unavailable.
+    - The board address is left to E5b (e-designer card KBN-20261115-e0c2), as facts rather than a string.
   lifecycle:
     done_at: 2026-11-15T21:18:44.596Z
     done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

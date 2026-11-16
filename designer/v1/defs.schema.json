@@ -1381,7 +1381,7 @@
       }
     },
     "visitedBy": {
-      "description": "The flows that visit a block, a step standing on it, in the order the flows are read, each once.",
+      "description": "The flows that visit an id, a step standing on it, in the order the flows are read, each once.",
       "type": "array",
       "items": {
         "description": "A flow's id.",
@@ -1390,7 +1390,7 @@
       }
     },
     "touchedBy": {
-      "description": "The flows that touch a block without visiting it, in the order the flows are read, each once: a step writes into it, or sends something to it, every leg of the send counted, the first leg too.",
+      "description": "The flows that touch an id without visiting it, in the order the flows are read, each once: a step writes into it, or sends something to it, every leg of the send counted, the first leg too.",
       "type": "array",
       "items": {
         "description": "A flow's id.",

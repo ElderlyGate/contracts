@@ -51,12 +51,12 @@
                     "type": "boolean"
                   },
                   "reason": {
-                    "description": "Why not, an open word programs decide by; absent when it came back the same. Known words: refused: e-designer would not write it again, or could not read it back; changed: it came back different from what was written.",
+                    "description": "Why not, an open word programs decide by (G-STACK-15); present exactly when ok is false. Known words: refused: e-designer would not write it again, or could not read it back; changed: it came back different from what was written.",
                     "type": "string",
                     "pattern": "^[a-z][a-z0-9_]*$"
                   },
                   "says": {
-                    "description": "The same for people; present exactly when reason is.",
+                    "description": "The same for people; present exactly when reason is. Programs never decide by it.",
                     "type": "string",
                     "minLength": 1
                   }
@@ -66,12 +66,33 @@
                   "ok"
                 ],
                 "additionalProperties": false,
-                "dependentRequired": {
-                  "reason": [
+                "if": {
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "reason"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "says"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "else": {
+                  "required": [
+                    "reason",
                     "says"
-                  ],
-                  "says": [
-                    "reason"
                   ]
                 }
               }

@@ -8,7 +8,7 @@ metadata:
 spec:
   column: in-progress
   order: 0.75
-  summary: boardAddress def {project, design, view?} for the board's link
+  summary: boardAddress def {project, design?, view?} for the board's link
   tags: [feature, 'epic:same-shape', 'feature:cli-first']
   work:
     agent: claude-opus-5-5
@@ -21,7 +21,7 @@ spec:
     For e-designer step E5b (e-designer card KBN-20261115-e0c2): the address names the project, the design and the view as facts, not as a string.
 
     ## Changes
-    - A def `boardAddress` in designer/v1 defs: {project: $ref projectName, design, view?}. Its description says it is written as query parameters (project, design, view) next to any others the page reads (token, component, flow, open, help), in any order.
+    - A def `boardAddress` in designer/v1 defs: {project: $ref projectName, design?, view?}. Its description says it is written as query parameters of the same name next to any others the page reads, in any order. design is absent only for a project with no design yet (owner, 2026-11-17).
     - A sample and refusal samples (no project; a project name with a slash).
 
     ## Done when

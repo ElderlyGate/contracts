@@ -40,7 +40,7 @@
               "minLength": 1
             },
             "source": {
-              "description": "Where the root came from, an open word. Known words: env: ED_IMPL_ROOT; file: the design's implementation setting; checkout: the checkout around the design; none: nowhere.",
+              "description": "Where the root came from, an open word. Known words: env: NW_IMPL_ROOT; file: the design's implementation setting; checkout: the checkout around the design; none: nowhere.",
               "type": "string",
               "pattern": "^[a-z][a-z0-9_]*$"
             },

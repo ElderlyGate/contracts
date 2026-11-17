@@ -56,7 +56,7 @@
               "additionalProperties": false
             },
             "running": {
-              "description": "What the running build was made from, and whether it is a release from main. source says where that comes from: the ED_BUILD_BRANCH, ED_BUILD_COMMIT, ED_BUILD_DIRTY and ED_BUILD_TAG stamp, as a container has no .git, else the tool's own checkout. Kept apart from branch and commit, which describe the checkout the design's writes land in.",
+              "description": "What the running build was made from, and whether it is a release from main. source says where that comes from: the NW_BUILD_BRANCH, NW_BUILD_COMMIT, NW_BUILD_DIRTY and NW_BUILD_TAG stamp, as a container has no .git, else the tool's own checkout. Kept apart from branch and commit, which describe the checkout the design's writes land in.",
               "type": "object",
               "properties": {
                 "source": {
@@ -105,7 +105,7 @@
               "description": "The short commit of the checkout the design sits in, in lowercase hex; absent outside a checkout."
             },
             "branch": {
-              "description": "The branch the design's writes land on, from git, else ED_BRANCH; absent on a detached HEAD with nothing to name.",
+              "description": "The branch the design's writes land on, from git; absent on a detached HEAD with nothing to name.",
               "type": "string",
               "minLength": 1
             },
@@ -114,7 +114,7 @@
               "type": "boolean"
             },
             "boardBranch": {
-              "description": "The branch board sessions are meant to run on, from ED_BOARD_BRANCH; a branch that differs is shown, never refused.",
+              "description": "The branch board sessions are meant to run on, from NW_BOARD_BRANCH; a branch that differs is shown, never refused.",
               "type": "string",
               "minLength": 1
             },

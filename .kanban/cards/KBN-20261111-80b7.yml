@@ -9,7 +9,7 @@ spec:
   column: in-progress
   order: 0.5
   summary: 'Start the contracts repo: envelope, error, e-designer/v1, tests, CI, design'
-  tags: ['feature:contracts', 'epic:same-shape']
+  tags: ['feature:contracts', 'epic:same-shape', 'product:contracts']
   work:
     agent: claude-opus-5-5
     branch: feat/start/same-shape

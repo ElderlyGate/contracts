@@ -1384,7 +1384,7 @@
       }
     },
     "boardAddress": {
-      "description": "Which project, design and view a board's page shows, so a link opens the same place. The page writes each part as a query parameter of the same name (?project=shop&design=checkout&view=runtime), beside any others it reads, such as token, component, flow, open and help, in any order; it holds no other part and no branch, since a project is one folder (owner, 2026-11-16). A part left out is the page's to choose: the served project, the design last shown, the design's first view.",
+      "description": "Which project, design and view a board's page shows, so a link opens the same place. The page writes each part as a query parameter of the same name (?project=shop&design=checkout&view=runtime), beside any others it reads, in any order. It holds no branch, since a project is one folder.",
       "type": "object",
       "required": [
         "project"
@@ -1395,7 +1395,7 @@
           "$ref": "#/$defs/projectName"
         },
         "design": {
-          "description": "A design of that project, by its id, its folder's name, as project-list's designs name it.",
+          "description": "A design of that project, by its id, its folder's name, as project-list's designs name it. Absent only for a project that holds no design yet, so a link can still open it to make one.",
           "type": "string",
           "minLength": 1
         },

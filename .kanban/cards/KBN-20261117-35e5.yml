@@ -1,0 +1,17 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261117-35e5
+  title: Action type run becomes execute for contracts
+  created_at: 2026-11-17T20:35:00.217Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: backlog
+  order: 0.9921875
+  summary: the change-type word in schemas
+  tags: [feature, 'epic:same-shape-contracts', 'feature:contracts-org-rules-split', 'product:contracts']
+  work:
+    agent: claude-opus-5-5
+  description: "#feature #epic:same-shape-contracts #feature:contracts-org-rules-split #product:contracts\n\n# Action type run becomes execute for contracts\n\nthe change-type word in schemas; split.\n\nSource: 292b (KBN-20261114-292b).\nPlan: https://claude.ai/artifact/K1aK1QXU6PYzhyfcjiE2oS"
+  links:
+    related: [KBN-20261114-292b]

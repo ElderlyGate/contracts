@@ -1,0 +1,17 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261117-4dc3
+  title: ADR-S15 follow-ups for contracts
+  created_at: 2026-11-17T20:35:00.268Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: backlog
+  order: 0.99609375
+  summary: resource base + CI check
+  tags: [feature, 'epic:same-shape-contracts', 'feature:contracts-org-rules-split', 'product:contracts']
+  work:
+    agent: claude-opus-5-5
+  description: "#feature #epic:same-shape-contracts #feature:contracts-org-rules-split #product:contracts\n\n# ADR-S15 follow-ups for contracts\n\nresource base + CI check; files with no apiVersion; split.\n\nSource: 4565 (KBN-20261117-4565).\nPlan: https://claude.ai/artifact/K1aK1QXU6PYzhyfcjiE2oS"
+  links:
+    related: [KBN-20261117-4565]

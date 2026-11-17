@@ -1,0 +1,30 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261117-d96c
+  title: 'designer/v1: the template answer'
+  created_at: 2026-11-17T06:55:21.448Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999701976776
+  summary: Schema for resource template's answer, for E6e
+  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/template-answer/contracts
+  description: |
+    # designer/v1: the template answer
+
+    For e-designer E6e PR 2 (e-designer card KBN-20261116-03c4): GET /api/template moves to Go as `template <kind> [--id]` and the board's GET …/designs/{design}/template, so its answer needs its schema (Q5 of E6).
+
+    ## Changes
+    - template: the Template answer, data.text one kind's shape as a YAML document to fill in.
+    - A sample and bad cases.
+
+    preview gets no schema: it stays in the page, which turns a draft into an item itself (team-lead, 17 Nov).
+  lifecycle:
+    active_at: 2026-11-17T06:55:46.138Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-17T08:46:05.132Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

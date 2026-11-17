@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/project-list.schema.json",
   "title": "project list",
-  "description": "The projects added on this machine, from project list; project add and project remove answer it too, as it stands after the change. One server serves every project in it (ED-MISSION-2), so a reader such as the board's picker gets every project, and why one is unavailable, in one answer.",
+  "description": "The projects added on this machine, from project list; project add, create, rename, repath and remove answer it too, as it stands after the change. One server serves every project in it (ED-MISSION-2), so a reader such as the board's picker gets every project, and why one is unavailable, in one answer.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"

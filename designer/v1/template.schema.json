@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/template.schema.json",
   "title": "template",
-  "description": "A kind's whole shape as a document to fill in, from resource template -o json and the board's GET …/designs/{design}/template, so a reader can start a new resource of that kind from it. A kind the design does not declare is refused with not_found, naming the kinds it does.",
+  "description": "A kind's whole shape as a document to fill in, from template -o json and the board's GET …/designs/{design}/template, so a reader can start a new resource of that kind from it. A kind the design does not declare is refused with not_found, naming the kinds it does.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"

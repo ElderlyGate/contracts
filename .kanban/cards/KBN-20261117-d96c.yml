@@ -16,7 +16,7 @@ spec:
   description: |
     # designer/v1: the template answer
 
-    For e-designer E6e PR 2 (e-designer card KBN-20261116-03c4): GET /api/template moves to Go as `resource template <kind> [--id]` and the board's GET …/designs/{design}/template, so its answer needs its schema (Q5 of E6).
+    For e-designer E6e PR 2 (e-designer card KBN-20261116-03c4): GET /api/template moves to Go as `template <kind> [--id]` and the board's GET …/designs/{design}/template, so its answer needs its schema (Q5 of E6).
 
     ## Changes
     - template: the Template answer, data.text one kind's shape as a YAML document to fill in.

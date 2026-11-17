@@ -83,6 +83,9 @@
     "projectName": {
       "$ref": "#/$defs/projectName"
     },
+    "boardAddress": {
+      "$ref": "#/$defs/boardAddress"
+    },
     "visitedBy": {
       "$ref": "#/$defs/visitedBy"
     },
@@ -1379,6 +1382,30 @@
       "not": {
         "pattern": "^\\.+$"
       }
+    },
+    "boardAddress": {
+      "description": "Which project, design and view a board's page shows, so a link opens the same place. The page writes each part as a query parameter of the same name (?project=shop&design=checkout&view=runtime), beside any others it reads, such as token, component, flow, open and help, in any order; it holds no other part and no branch, since a project is one folder (owner, 2026-11-16). A part left out is the page's to choose: the served project, the design last shown, the design's first view.",
+      "type": "object",
+      "required": [
+        "project"
+      ],
+      "properties": {
+        "project": {
+          "description": "The project, by the name the machine's project list gives it.",
+          "$ref": "#/$defs/projectName"
+        },
+        "design": {
+          "description": "A design of that project, by its id, its folder's name, as project-list's designs name it.",
+          "type": "string",
+          "minLength": 1
+        },
+        "view": {
+          "description": "A view of that design, by its name, as views answers it.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
     },
     "visitedBy": {
       "description": "The flows that visit an id, a step standing on it, in the order the flows are read, each once.",

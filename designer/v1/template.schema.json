@@ -35,7 +35,7 @@
           "type": "object",
           "properties": {
             "text": {
-              "description": "One YAML document in the design form (design/v2): apiVersion, the kind, metadata with the id asked for (or the kind's id prefix and THING when none was) and a title to replace, then spec with every property the design draws for the kind, in its schema's order, each key written out with no value. A comment after a key says what it takes: its permitted values joined by |, or one per line, prose, true or leave it out, or its type; a text property carries none. A dotted key is written as a nested path. A kind with no drawn properties has spec: {}.",
+              "description": "One YAML document in the design form (design/v2): a resource of that kind to fill in, under the id asked for, each key with a comment hinting what it takes.",
               "type": "string",
               "minLength": 1
             }

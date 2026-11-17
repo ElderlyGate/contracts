@@ -9,7 +9,7 @@ spec:
   column: backlog
   order: 0.5
   summary: Drop the looser released project-list name rule in designer/v2
-  tags: [feature, 'epic:same-shape', 'feature:contracts']
+  tags: [feature, 'epic:same-shape', 'feature:contracts', 'product:contracts']
   work:
     agent: claude-opus-5-5
   description: |

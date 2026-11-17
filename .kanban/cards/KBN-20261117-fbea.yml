@@ -1,0 +1,32 @@
+apiVersion: app/kanban/v1
+kind: Bug
+metadata:
+  id: KBN-20261117-fbea
+  title: designer/v1 descriptions name the NW_ variables
+  created_at: 2026-11-17T19:27:54.666Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: in-progress
+  order: 0.75
+  summary: Four designer/v1 descriptions still name ED_ variables that e-designer#95 renames
+  tags: [bug, 'epic:same-shape', 'feature:cli-first']
+  work:
+    agent: claude-opus-5-5
+    branch: fix/nw-variables/cli-first
+  description: |
+    #bug #epic:same-shape #feature:cli-first
+
+    # designer/v1 descriptions name the NW_ variables
+
+    e-designer#95 (card 1fdf in e-designer) renames every ED_ variable to NW_ and removes ED_BRANCH. Four descriptions in designer/v1 still name the old variables.
+
+    ## Changes
+    - designer/v1/meta.schema.json: build.source (NW_BUILD_*), branch (from git only; ED_BRANCH is gone), boardBranch (NW_BOARD_BRANCH).
+    - designer/v1/conformance-report.schema.json: the root's source word env names NW_IMPL_ROOT.
+    - Descriptions only; no field, pattern or word changes (CT-RULE-1). mankit samples and testdata that use ED_ as sample text stay.
+
+    ## Done when
+    - No designer/v1 description names an ED_ variable; go test ./... passes; e-designer#95 pins the patch release.
+  lifecycle:
+    active_at: 2026-11-17T19:27:54.816Z
+    active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

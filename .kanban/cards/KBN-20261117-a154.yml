@@ -1,0 +1,30 @@
+apiVersion: app/kanban/v1
+kind: Bug
+metadata:
+  id: KBN-20261117-a154
+  title: 'designer/v1 meta: running.version names the release tag, not a VERSION file'
+  created_at: 2026-11-17T21:47:12.627Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: in-progress
+  order: 0.5
+  summary: running.version description still names e-designer's VERSION file, which goes in E7a
+  tags: [bug, 'epic:same-shape', 'feature:cli-first', 'product:contracts', 'product:designer']
+  work:
+    agent: claude-opus-5-5
+    branch: fix/running-version/cli-first
+  description: |
+    #bug #epic:same-shape #feature:cli-first #product:contracts #product:designer
+
+    # designer/v1 meta: running.version names the release tag, not a VERSION file
+
+    e-designer drops its VERSION file (e-designer#100, step E7a): the version comes from the tag, stamped into the binary as v6.29.0. The description of `data.running.version` in `designer/v1/meta.schema.json` still says "from its single VERSION" and that it equals the envelope's `ran.version`, which now carries the `v`.
+
+    ## Change
+    - The description says what the value is now: the release tag without its v; absent for a dev build unless the tool's checkout is exactly on a release tag; `ran.version` carries the tag itself. The value a reader sees does not change.
+
+    ## Done when
+    - The description reads as agreed; `go test ./...` passes; e-designer#100 pins the patch release.
+  lifecycle:
+    active_at: 2026-11-17T21:47:20.527Z
+    active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

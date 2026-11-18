@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "RawFile",
+  "ran": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v1"
+  },
+  "data": {
+    "text": "version: 7\nviews: {}\n",
+    "path": "layout.yml",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "unreadable": [
+      "layout.yml says version 7; this build reads versions 2 and 3, and version 1 (no version key) for migrating"
+    ]
+  },
+  "errors": []
+}

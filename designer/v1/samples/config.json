@@ -286,6 +286,53 @@
         ]
       }
     },
+    "readings": {
+      "components": [
+        "Block",
+        "Risk",
+        "Question",
+        "Contradiction",
+        "Suggestion",
+        "Decision"
+      ],
+      "outside": [
+        "actor",
+        "external"
+      ],
+      "writesInto": [
+        "store"
+      ],
+      "traverses": [
+        "calls"
+      ],
+      "annotates": [
+        "affects",
+        "related"
+      ],
+      "linkLabels": [
+        "calls",
+        "affects",
+        "related"
+      ],
+      "hexagon": {
+        "inside": [
+          "domain"
+        ],
+        "boundary": [
+          "port"
+        ],
+        "adapter": [
+          "adapter"
+        ],
+        "outside": [
+          "actor",
+          "external"
+        ]
+      },
+      "notACall": [
+        "caller"
+      ]
+    },
     "problems": [],
     "moved": [],
     "releaseLanes": [

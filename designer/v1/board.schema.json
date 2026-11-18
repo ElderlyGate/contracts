@@ -43,6 +43,10 @@
               "type": "string",
               "pattern": "^[0-9a-f]{64}$"
             },
+            "defaultViews": {
+              "description": "The views the board draws when design.yml says nothing about views, as defs defaultViews describes; always given, so a reader never keeps its own list.",
+              "$ref": "defs.schema.json#/$defs/defaultViews"
+            },
             "flows": {
               "description": "The flows the board takes, in id order; a flow it refuses is in refused instead.",
               "type": "array",

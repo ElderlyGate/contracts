@@ -25,6 +25,7 @@
     "branch": "main",
     "dirty": false,
     "boardBranch": "main",
+    "offBoard": false,
     "updatedAt": 1763280000000,
     "updatedWhat": "block/CMP-API.yml"
   },

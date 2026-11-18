@@ -353,5 +353,32 @@
   ],
   "touchedBy": [
     "pick-up"
+  ],
+  "defaultViews": [
+    {
+      "name": "structure",
+      "title": "Building Blocks View",
+      "question": "What are the parts, and what calls what?"
+    },
+    {
+      "name": "context",
+      "title": "Context View",
+      "question": "What is the system, who uses it, and what does it talk to?",
+      "draws": []
+    },
+    {
+      "name": "runtime",
+      "title": "Runtime View",
+      "question": "What happens, in order, when the system does its job?",
+      "draws": [
+        "Flow"
+      ]
+    },
+    {
+      "name": "deployment",
+      "title": "Deployment View",
+      "question": "What is installed where?",
+      "draws": []
+    }
   ]
 }

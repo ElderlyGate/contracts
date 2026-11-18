@@ -190,15 +190,6 @@
                     "minLength": 1
                   }
                 },
-                "outside": {
-                  "description": "The roles that stand outside the system (features.hexagon selectors outside), in lower case, each once.",
-                  "type": "array",
-                  "items": {
-                    "description": "One role.",
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
                 "writesInto": {
                   "description": "The roles a flow may write state into (features.contract selectors writes_into), in lower case, each once.",
                   "type": "array",
@@ -236,7 +227,7 @@
                   }
                 },
                 "hexagon": {
-                  "description": "Each part of the hexagon and the roles the design casts in it (features.hexagon selectors), in lower case, each once; every part is named, an uncast one with no roles.",
+                  "description": "Each part of the hexagon and the roles the design casts in it (features.hexagon selectors), in lower case, each once; every part is named, an uncast one with no roles. outside is the roles that stand outside the system.",
                   "type": "object",
                   "properties": {
                     "inside": {
@@ -296,7 +287,6 @@
               },
               "required": [
                 "components",
-                "outside",
                 "writesInto",
                 "traverses",
                 "annotates",

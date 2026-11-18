@@ -1429,7 +1429,7 @@
       }
     },
     "defaultViews": {
-      "description": "The views the board draws for a design whose design.yml says nothing about views, in the order it opens them: arc42's. Held once by e-designer, so the page, its views form and the layout verbs agree on them; a design that declares views draws its own instead, and an empty map draws none.",
+      "description": "The views the board draws for a design whose design.yml says nothing about views, in the order it opens them: arc42's. Held once by e-designer, so the page, its views form and the layout verbs agree on them; a design that declares views draws its own instead, and a design.yml saying views: {} draws none.",
       "type": "array",
       "items": {
         "description": "One default view.",

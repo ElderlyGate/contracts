@@ -295,10 +295,6 @@
         "Suggestion",
         "Decision"
       ],
-      "outside": [
-        "actor",
-        "external"
-      ],
       "writesInto": [
         "store"
       ],

@@ -177,6 +177,125 @@
               "description": "The definitions in use after every layer: classes, properties, sections, presentations, schemas, features and vocabulary. Their entries are the design's own words, written by its user, so they stay open (CT-RULE-4); config's sections say where each came from.",
               "type": "object"
             },
+            "readings": {
+              "description": "What the merged definitions say the board and the checks turn on, worked out once by e-designer from the features' selectors and the vocabulary, so no reader works them out again. A list a design leaves empty is empty, never filled in. Always given.",
+              "type": "object",
+              "properties": {
+                "components": {
+                  "description": "The kinds read as components, those whose class features.components selects, in declaration order, which decides the winner when two files claim an id.",
+                  "type": "array",
+                  "items": {
+                    "description": "One kind, as declared.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "writesInto": {
+                  "description": "The roles a flow may write state into (features.contract selectors writes_into), in lower case, each once.",
+                  "type": "array",
+                  "items": {
+                    "description": "One role.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "traverses": {
+                  "description": "The link labels whose lines are hops a request takes, the call graph (features.edges selectors traverses), in lower case, each once.",
+                  "type": "array",
+                  "items": {
+                    "description": "One label.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "annotates": {
+                  "description": "The link labels whose lines attach a note to a component (features.edges selectors annotates), in lower case, each once; the first is the one a new note is linked by when none is named.",
+                  "type": "array",
+                  "items": {
+                    "description": "One label.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "linkLabels": {
+                  "description": "The link-label words the vocabulary declares, as written, in order.",
+                  "type": "array",
+                  "items": {
+                    "description": "One word.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "hexagon": {
+                  "description": "Each part of the hexagon and the roles the design casts in it (features.hexagon selectors), in lower case, each once; every part is named, an uncast one with no roles. outside is the roles that stand outside the system.",
+                  "type": "object",
+                  "properties": {
+                    "inside": {
+                      "description": "The roles cast as inside.",
+                      "type": "array",
+                      "items": {
+                        "description": "One role.",
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "boundary": {
+                      "description": "The roles cast as boundary.",
+                      "type": "array",
+                      "items": {
+                        "description": "One role.",
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "adapter": {
+                      "description": "The roles cast as adapter.",
+                      "type": "array",
+                      "items": {
+                        "description": "One role.",
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "outside": {
+                      "description": "The roles cast as outside.",
+                      "type": "array",
+                      "items": {
+                        "description": "One role.",
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "inside",
+                    "boundary",
+                    "adapter",
+                    "outside"
+                  ],
+                  "additionalProperties": false
+                },
+                "notACall": {
+                  "description": "The phases a step may be in that are no call (features.hexagon selectors not_a_call), as written, each once.",
+                  "type": "array",
+                  "items": {
+                    "description": "One phase.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "components",
+                "writesInto",
+                "traverses",
+                "annotates",
+                "linkLabels",
+                "hexagon",
+                "notACall"
+              ],
+              "additionalProperties": false
+            },
             "problems": {
               "description": "Every definition e-designer could not take, so a reader shows why something is not drawn as written. The board section's problems are not here: DesignContents.board.problems holds them, one place for each fact.",
               "type": "array",

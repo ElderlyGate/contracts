@@ -91,6 +91,9 @@
     },
     "touchedBy": {
       "$ref": "#/$defs/touchedBy"
+    },
+    "defaultViews": {
+      "$ref": "#/$defs/defaultViews"
     }
   },
   "additionalProperties": false,
@@ -1423,6 +1426,46 @@
         "description": "A flow's id.",
         "type": "string",
         "minLength": 1
+      }
+    },
+    "defaultViews": {
+      "description": "The views the board draws for a design whose design.yml says nothing about views, in the order it opens them: arc42's. Held once by e-designer, so the page, its views form and the layout verbs agree on them; a design that declares views draws its own instead, and a design.yml saying views: {} draws none.",
+      "type": "array",
+      "items": {
+        "description": "One default view.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Its name, the key layout.yml files the view's positions under.",
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "description": "Its title, as the board shows it.",
+            "type": "string",
+            "minLength": 1
+          },
+          "question": {
+            "description": "The question the view answers.",
+            "type": "string",
+            "minLength": 1
+          },
+          "draws": {
+            "description": "The kinds the view draws; absent when it draws every kind, including kinds a design adds later; empty draws nothing until a component names the view in place.views.",
+            "type": "array",
+            "items": {
+              "description": "One kind the view draws, by its name.",
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "name",
+          "title",
+          "question"
+        ],
+        "additionalProperties": false
       }
     }
   }

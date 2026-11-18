@@ -118,6 +118,10 @@
               "type": "string",
               "minLength": 1
             },
+            "offBoard": {
+              "description": "True when the design's writes land on another branch than board sessions are meant to run on: branch and boardBranch are both known and differ, so a position nudged here lands in a commit about something else. Decided by e-designer, the rule its start warning uses too, so every reader agrees; the difference is shown, never refused. Always given.",
+              "type": "boolean"
+            },
             "updatedAt": {
               "description": "When a file of the design last changed, in milliseconds since the epoch; absent when the design holds no file.",
               "type": "integer",

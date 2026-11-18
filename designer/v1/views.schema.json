@@ -85,6 +85,10 @@
                 "additionalProperties": false
               }
             },
+            "defaultViews": {
+              "description": "The views the board draws while declared is false, as defs defaultViews describes, so a form shows what the board draws without a list of its own; always given.",
+              "$ref": "defs.schema.json#/$defs/defaultViews"
+            },
             "namePattern": {
               "description": "What a view's name may be, as a regular expression, so a form can say so while it is typed.",
               "type": "string"

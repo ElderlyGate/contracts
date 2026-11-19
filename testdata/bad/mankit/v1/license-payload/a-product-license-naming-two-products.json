@@ -1,4 +1,5 @@
 {
+  "id": "lic-20261106-acme",
   "kind": "product",
   "for": "ada@acme.example",
   "products": {

@@ -1,4 +1,11 @@
 {
-  "payload": "",
-  "signature": "5YgdtKbKT3Jw1RIoJjsH4NydeVH4LTH3JDuvbF2P20PXZGkl6GPLEVbA4Ut5Ohtm/zlH1pZ+QM40oCePJE9DBQ=="
+  "apiVersion": "elderlygate/mankit/license/v1",
+  "kind": "License",
+  "metadata": {
+    "id": "lic-20261106-acme"
+  },
+  "spec": {
+    "payload": "",
+    "signature": "s0/R1neiMAkk+5byophXuMRDmxODdQO1rUn74vc7V0umozI06IzazeNrjH2Sj+mOgQNvh85SktlUtLajGlsWCA=="
+  }
 }

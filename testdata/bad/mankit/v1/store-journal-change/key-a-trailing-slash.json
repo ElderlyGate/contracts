@@ -1,0 +1,12 @@
+{
+  "apiVersion": "elderlygate/mankit/store/v1",
+  "kind": "StoreJournalChange",
+  "metadata": {
+    "id": 1
+  },
+  "spec": {
+    "key": "blocks/",
+    "before": "a2luZDogQmxvY2sK",
+    "after": "a2luZDogQmxvY2sKbmFtZTogc2hvcAo="
+  }
+}

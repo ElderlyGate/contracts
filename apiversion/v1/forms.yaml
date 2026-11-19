@@ -33,8 +33,8 @@ forms:
     note: "The change queue's files in a served folder's .queue/ (mankit queue): QueueTicket, a change waiting its turn; QueueBackend, the marker naming how every writer takes turns"
   - new: elderlygate/mankit/store/v1
     app: mankit
-    kinds: [StoreJournal, StoreJournalChange]
-    note: "The store's journal in the user's own data folder (mankit store, ADR-S22), JSON lines: StoreJournal, the first line naming its writer and scope; StoreJournalChange, each write after it"
+    kinds: [StoreJournal, StoreJournalChange, StoreUnfinished]
+    note: "The store's own files (mankit store, ADR-S22): StoreJournal, a journal's first line naming its writer and scope, and StoreJournalChange, each write after it, JSON lines in the user's own data folder; StoreUnfinished, the mark in a served folder's .queue/ of a change not yet finished"
   - new: elderlygate/contracts/problem/v1
     app: contracts
     kinds: [Problem]

@@ -73,26 +73,6 @@
           "description": "The version of the app that waits. Two app versions may share one queue, so a person sees which one holds each place.",
           "type": "string",
           "minLength": 1
-        },
-        "unfinishedChange": {
-          "description": "The mark of a change being made: set once the change's journal is written and removed once its writes are read back, so a ticket left stale while it holds the mark says a change was cut short. Such a ticket goes to bad/ like any other, but the thing stays refused with unfinished_change, naming the user, until that user's next run puts the journal back; only the user who owns a journal puts it back (ADR-S22). Left out while no change is being made. Open like the rest of spec, so an older reader accepts what a newer app adds to it (CT-RULE-4).",
-          "type": "object",
-          "required": [
-            "user",
-            "journal"
-          ],
-          "properties": {
-            "user": {
-              "description": "The user on host whose data folder holds the journal, by the name the system knows them by, so the refusal names who must run again.",
-              "type": "string",
-              "minLength": 1
-            },
-            "journal": {
-              "description": "The id of the journal that holds the change (a StoreJournal's metadata.id), so that user's next run finds the change to put back.",
-              "$ref": "store-journal.schema.json#/properties/metadata/properties/id"
-            }
-          },
-          "additionalProperties": true
         }
       },
       "additionalProperties": true,

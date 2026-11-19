@@ -1,0 +1,16 @@
+{
+  "apiVersion": "elderlygate/mankit/store/v1",
+  "kind": "StoreUnfinished",
+  "metadata": {
+    "id": "01794398400000000000"
+  },
+  "spec": {
+    "user": "ada",
+    "host": "build-01",
+    "journal": "../escape",
+    "folder": true,
+    "things": [
+      "design/shop"
+    ]
+  }
+}

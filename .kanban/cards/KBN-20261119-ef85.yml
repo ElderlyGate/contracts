@@ -8,7 +8,7 @@ metadata:
 spec:
   column: done
   order: 0.9999999998835847
-  summary: 'S: SP2 of storage-port: four store reasons in problem/v1, StoreJournal (JSON lines) in mankit/v1, ticket unfinished-change mark'
+  summary: 'S: SP2 of storage-port: four store reasons in problem/v1, StoreJournal (JSON lines) and the StoreUnfinished mark in mankit/v1'
   tags: [feature, 'product:contracts', 'epic:constitution/storage-port']
   work:
     agent: claude-opus-5-5
@@ -24,7 +24,7 @@ spec:
     ## Changes
     - `problem/v1` gains the reasons `outside`, `changed`, `not_owned` and `unfinished_change`.
     - `mankit/v1` gains StoreJournal as JSON lines, each line a Resource: line 1 `kind: StoreJournal` with `metadata {id, app, pid, host}` and `spec {scope}`; each later line `kind: StoreJournalChange` with `metadata {id: <n>}` and `spec {key, before, after, dir, gone, from}`.
-    - The queue ticket's `spec` grows the unfinished-change mark: the writer's ticket names an unfinished change, so a stale ticket blocks the thing with `unfinished_change` until that user's next run puts it back (ADR-S15 lets `spec` grow, never `metadata`).
+    - `mankit/v1` gains StoreUnfinished, the unfinished-change mark: a dot-file the store writes in the `.queue/` folder of every turn a change holds, naming the user, the journal and the things held, so a change cut short blocks them with `unfinished_change` until that user's next run puts it back (owner, 19 Nov: not a ticket field, as the queue removes a dead process's ticket).
     - Samples for each, tested.
 
     ## Waits on
@@ -32,7 +32,7 @@ spec:
     - The contracts line takes one change at a time: this sits beside hubman/v1 KBN-20261117-31fb.
 
     ## Done when
-    - [ ] contracts is released (v0.27.x), samples are tested, and mankit's CI reads them.
+    - [x] The schemas and samples are in contracts and tested, and merging cuts v0.27.0.
 
     Plan: https://claude.ai/artifact/KC33PubdFQpe9837mTbJ5m (refreshed 19 Nov, linked from f239).
 

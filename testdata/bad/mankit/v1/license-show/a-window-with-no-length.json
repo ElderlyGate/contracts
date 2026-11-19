@@ -28,9 +28,7 @@
         "daysLeft": 102,
         "ended": false,
         "keyId": "prod-2026",
-        "window": {
-          "left": 10
-        }
+        "window": {}
       }
     ],
     "refused": [],

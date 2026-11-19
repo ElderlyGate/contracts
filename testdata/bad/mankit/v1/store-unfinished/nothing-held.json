@@ -8,6 +8,7 @@
     "user": "ada",
     "host": "build-01",
     "journal": "01794398400000000000",
-    "things": []
+    "folder": true,
+    "keys": []
   }
 }

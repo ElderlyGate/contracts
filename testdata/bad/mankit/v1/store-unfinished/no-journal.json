@@ -8,7 +8,7 @@
     "user": "ada",
     "host": "build-01",
     "folder": true,
-    "things": [
+    "keys": [
       "design/shop"
     ]
   }

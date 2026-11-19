@@ -9,7 +9,7 @@
     "host": "build-01",
     "journal": "01794398400000000000",
     "folder": true,
-    "things": [
+    "keys": [
       "design/shop"
     ],
     "since": "2026-11-19T08:00:00Z"

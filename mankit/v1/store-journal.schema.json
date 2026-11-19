@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/store-journal.schema.json",
   "title": "store journal",
-  "description": "The first line of a store journal: whose journal it is and which scope its changes are in. A journal is the store's record of one change, written before its writes are made, so a change cut short can be put back (ADR-S22). It is JSON lines, one Resource per line, as lines are only ever appended and a crash then cuts only the last: this line first, then one StoreJournalChange per write, in the order they are made, their ids counted from 1. A last line cut short was never acted on and is left out. Any other line that cannot be read, or an id out of order or with a gap, stops the reader there: it reports the journal and puts nothing back from it, never skipping a line (G-CODE-6). Its lifetime: the store writes the change's StoreUnfinished marks, then the journal, then the writes; once the writes are read back it removes the journal, and the marks last. So a journal that is there is a change cut short, and a mark with no journal is a change that finished but for removing the mark. A journal lives in the user's own data folder, one per machine, never in a shared folder, and is put back only by the user who owns it, once its writer no longer runs. Two app versions may read one journal, as the next run may be another version: apiVersion, kind and metadata never change; spec may grow (ADR-S15).",
+  "description": "The first line of a store journal: whose journal it is and which scope its changes are in. A journal is the store's record of one change, written before its writes are made, so a change cut short can be put back (ADR-S22). It is JSON lines, one Resource per line, as lines are only ever appended and a crash then cuts only the last: this line first, then one StoreJournalChange per write, in the order they are made, their ids counted from 1. A last line cut short was never acted on and is left out. Any other line that cannot be read, or an id out of order or with a gap, stops the reader there: it reports the journal and puts nothing back from it, never skipping a line (G-CODE-6). Its lifetime: the store writes the change's StoreUnfinished marks, then the journal, then the writes; once the writes are read back it removes the journal, and the marks last, before the turn is given up. So a journal that is there is a change cut short, and a mark with no journal is a change that finished but for removing the mark. A journal lives in the user's own data folder, one per machine, never in a shared folder, and is put back only by the user who owns it, once its writer no longer runs. Two app versions may read one journal, as the next run may be another version: apiVersion, kind and metadata never change; spec may grow (ADR-S15).",
   "type": "object",
   "required": [
     "apiVersion",
@@ -52,13 +52,18 @@
     "spec": {
       "type": "object",
       "required": [
-        "scope"
+        "scope",
+        "mark"
       ],
       "properties": {
         "scope": {
           "description": "The folder of the scope the change's keys are inside (the folder an app serves, or its own config or data folder, G-STACK-8), as an absolute path on the journal's machine: from / on Linux and macOS, from a drive letter on Windows. A journal never leaves its machine, so here, and only here, a key's folder is named by a machine path; putting the change back starts from it.",
           "type": "string",
           "pattern": "^(/|[A-Za-z]:[\\\\/])"
+        },
+        "mark": {
+          "description": "The id of the change's StoreUnfinished marks, so putting the change back finds them, in the .queue/ of the served folder and of each thing the change holds a turn of, and removes them last.",
+          "$ref": "store-unfinished.schema.json#/properties/metadata/properties/id"
         }
       },
       "additionalProperties": true,

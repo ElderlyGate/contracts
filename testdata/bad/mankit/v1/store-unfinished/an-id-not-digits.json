@@ -2,13 +2,16 @@
   "apiVersion": "elderlygate/mankit/store/v1",
   "kind": "StoreUnfinished",
   "metadata": {
-    "id": "01794398400000000000"
+    "id": "shop-change"
   },
   "spec": {
     "user": "ada",
     "host": "build-01",
     "journal": "01794398400000000000",
     "folder": true,
-    "things": []
+    "keys": [
+      "design/shop/blocks/cart.yml",
+      "design/shop/blocks/shop.yml"
+    ]
   }
 }

@@ -8,6 +8,7 @@
     "host": "build-01"
   },
   "spec": {
-    "scope": "work/shop"
+    "scope": "work/shop",
+    "mark": "01794398400000000000"
   }
 }

@@ -9,8 +9,9 @@
     "host": "build-01",
     "journal": "01794398400000000000",
     "folder": true,
-    "things": [
-      "design/shop"
+    "keys": [
+      "design/shop/blocks/cart.yml",
+      "design/shop/blocks/shop.yml"
     ]
   }
 }

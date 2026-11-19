@@ -9,7 +9,7 @@
     "host": "build-01",
     "journal": "01794398400000000000",
     "folder": true,
-    "things": [
+    "keys": [
       "design/shop",
       "design/shop"
     ]

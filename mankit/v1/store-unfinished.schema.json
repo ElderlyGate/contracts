@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/store-unfinished.schema.json",
   "title": "store unfinished mark",
-  "description": "The mark of a change the store is making, a file .unfinished-<id>.json that mankit's store writes in the .queue/ folder of every turn the change holds: the served folder's own and each thing's (ADR-S14). A dot-file, so the change queue's rules leave it alone, and it outlives a ticket taken for stale (README, The change queue on disk). While a mark is there, every change to a thing it names is refused with unfinished_change, naming the user, until that user's next run puts the journal back and removes the mark; only the user who owns a journal puts it back (ADR-S22). Its lifetime is the journal's: written before the journal, removed after it, last (StoreJournal). Two app versions may read one mark: apiVersion, kind and metadata never change; spec may grow (ADR-S15).",
+  "description": "The mark of a change the store is making, a file .unfinished-<id>.json that mankit's store writes in the .queue/ folder of every turn the change holds: the served folder's own and each thing's (ADR-S14). A dot-file, so the change queue's rules leave it alone, and it outlives a ticket taken for stale (README, The change queue on disk). While a mark is there, every change to a key it names is refused with unfinished_change, naming the user, the machine and the app's command that clears the mark, until that user's next run puts the journal back and removes the mark; only the user who owns a journal puts it back (ADR-S22). Its lifetime is the journal's: written before the journal, removed after it, last, before the turn is given up (StoreJournal). When that user never runs again, a person may clear the mark through the app's own command (such as <app> store unfinished clear <thing>), which shows the change and asks first (G-STACK-13), once sure the change was put back or given up; nothing clears a mark unasked. Two app versions may read one mark: apiVersion, kind and metadata never change; spec may grow (ADR-S15).",
   "type": "object",
   "required": [
     "apiVersion",
@@ -27,9 +27,9 @@
       ],
       "properties": {
         "id": {
-          "description": "The mark's name and its file name between .unfinished- and .json, the same in every .queue/ folder the change writes it to, so the marks of one change are found together.",
+          "description": "The mark's name and its file name between .unfinished- and .json, the same in every .queue/ folder the change writes it to, so the marks of one change are found together (a StoreJournal's spec.mark names it). 20 digits made like a ticket id, from the time and a random part, so it is one of a kind among the marks of every folder it is written to, whichever user wrote them.",
           "type": "string",
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+          "pattern": "^[0-9]{20}$"
         }
       },
       "additionalProperties": false
@@ -40,7 +40,7 @@
         "user",
         "host",
         "journal",
-        "things"
+        "keys"
       ],
       "properties": {
         "user": {
@@ -60,31 +60,13 @@
           "description": "true when the change also holds the served folder's own turn, as adding, moving or removing a thing does (ADR-S14), so a change to the folder itself is refused too. Left out when false.",
           "type": "boolean"
         },
-        "things": {
-          "description": "Every thing whose turn the change holds, by its key, so each copy of the mark names the whole change, whichever queue a later change meets it in. Empty only when the change holds the served folder's turn alone.",
+        "keys": {
+          "description": "Every key the change writes, a new thing's too, whose turn is the served folder's (ADR-S14), so each copy of the mark names the whole change, whichever queue a later change meets it in, and a change to any of them is refused.",
           "type": "array",
+          "minItems": 1,
           "uniqueItems": true,
           "items": {
             "$ref": "defs.schema.json#/$defs/storeKey"
-          }
-        }
-      },
-      "if": {
-        "not": {
-          "required": [
-            "folder"
-          ],
-          "properties": {
-            "folder": {
-              "const": true
-            }
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "things": {
-            "minItems": 1
           }
         }
       },

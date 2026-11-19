@@ -9,7 +9,7 @@
     "host": "build-01",
     "journal": "../escape",
     "folder": true,
-    "things": [
+    "keys": [
       "design/shop"
     ]
   }

@@ -91,7 +91,7 @@
       "additionalProperties": false
     },
     "storeKey": {
-      "description": "A thing's key in mankit's store: a slash path inside the store's scope, never a machine path (ADR-S21, S22), so nothing named by a key reaches outside the scope. Each thing has one key: the store normalises a key before using it, so a key it writes is never in another form, with no . or .. step, no empty step (no leading, trailing or doubled slash) and no backslash; and no drive letter or scheme such as file:, no leading ~ and no leading space, which would read as a machine path.",
+      "description": "A thing's key in mankit's store: a slash path inside the store's scope, never a machine path (ADR-S21, S22), so nothing named by a key reaches outside the scope. Each thing has one key: the store normalises a key before using it, so a key it writes is never in another form, with no . or .. step, no empty step (no leading, trailing or doubled slash) and no backslash; and no drive letter or scheme such as file:, no leading ~ and no leading space, which would read as a machine path; so a key's first step holds no colon after its leading letters, as C:shop or file:shop would name a place outside the scope.",
       "type": "string",
       "pattern": "^[^/\\\\\\x00-\\x1f]+(/[^/\\\\\\x00-\\x1f]+)*$",
       "not": {

@@ -58,7 +58,7 @@
               }
             },
             "refused": {
-              "description": "Every license file the app read but did not take: a bad signature, a key this build does not trust, a key of the other build (ADR-L5), or a file it cannot read, so a refused file never shows as a license and a person sees why (ADR-L1, L5, L6). Empty when none was refused.",
+              "description": "Every license file the app read but did not take, so a refused file never shows as a license and a person sees why (ADR-L1, L5, L6, L8). Its reason is one of signature, untrusted_key, other_build, unreadable and wrong_place, each meaning what problem/v1's reason says. Empty when none was refused.",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/refusedFile"
@@ -156,20 +156,14 @@
           "minLength": 1
         },
         "window": {
-          "description": "The countdown the License group's bar shows, present only while one shows: a trial key's days (ADR-L9), or a license in the warning the threshold of ADR-L3 sets.",
+          "description": "The countdown the License group's bar shows, present only while one shows: a trial key's days (ADR-L9), or a license in the warning the threshold of ADR-L3 sets. Its days left are daysLeft.",
           "type": "object",
           "required": [
-            "left",
             "of"
           ],
           "properties": {
-            "left": {
-              "description": "The days left in the countdown.",
-              "type": "integer",
-              "minimum": 0
-            },
             "of": {
-              "description": "The countdown's whole length in days: a trial key's length from its signed file (ADR-L9), or the warning window mankit reads from the threshold (ADR-L3), so the bar shows how much is gone.",
+              "description": "The countdown's whole length in days: a trial key's length from its signed file (ADR-L9), or the warning window mankit reads from the threshold (ADR-L3), so the bar shows daysLeft out of it.",
               "type": "integer",
               "minimum": 1
             }

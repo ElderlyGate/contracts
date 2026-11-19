@@ -1,0 +1,33 @@
+apiVersion: app/kanban/v1
+kind: Feature
+metadata:
+  id: KBN-20261119-eba1
+  title: 'designer/v1: the style and status words in config readings'
+  created_at: 2026-11-19T16:20:46.489Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999999708962
+  tags: [feature, 'epic:same-shape-designer', 'feature:go-words', 'product:contracts', 'product:designer']
+  description: |
+    #feature #epic:same-shape-designer #feature:go-words #product:contracts #product:designer
+
+    # designer/v1: the style and status words in config readings
+
+    e-designer's page keeps its own lists of the border styles, line styles and statuses (e-designer card KBN-20261119-bb16). Go reads them from the vocabulary, so Go says them and the page reads them.
+
+    ## Change
+    - `config` readings gain `borderStyles`, `lineStyles` and `statuses` (value in lower case, settled always given, mark, badge, color, recede, note).
+    - `linkLabels` description says a line with one of its labels is declared, styled or not.
+
+    ## Done when
+    - The schema and sample carry the fields, contracts tests green; e-designer#127 pins the release.
+  summary: config readings gain borderStyles, lineStyles, statuses
+  work:
+    agent: claude-opus-5-5
+    branch: feat/go-answers/go-words
+  lifecycle:
+    active_at: 2026-11-19T16:21:02.396Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-19T16:26:45.542Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

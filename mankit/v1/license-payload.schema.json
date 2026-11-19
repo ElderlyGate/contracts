@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/license-payload.schema.json",
+  "title": "license payload",
+  "description": "What a license file signs (license-file.schema.json's payload, once decoded): whom it is for, its kind, the enterprise features it names per product, its first and last day and the key that signed it (ADR-L1, L4, L6, L8, L9). nw-license writes it and mankit's licenses package reads it; a field it does not know makes the file unreadable, as every field is signed. One rule no schema can say: until is never before issued.",
+  "type": "object",
+  "required": [
+    "kind",
+    "for",
+    "issued",
+    "until",
+    "keyId"
+  ],
+  "properties": {
+    "kind": {
+      "description": "Which kind of license it is; license-show.schema.json's licenses[].kind says what each kind covers (ADR-L8, L9).",
+      "$ref": "license-show.schema.json#/$defs/license/properties/kind"
+    },
+    "for": {
+      "description": "The person or org the license names, never a machine, so whoever has the file sees whose it was (ADR-L4); never only spaces.",
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "products": {
+      "description": "The enterprise feature ids the license names, per product id, so an app opens a feature only when its own product id names it (ADR-L2). An org license names one or more products, a product license exactly one; a trial key names none, as it opens every enterprise feature (ADR-L9).",
+      "type": "object",
+      "propertyNames": {
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "description": "The product's enterprise feature ids, as its feature list names them; never empty.",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "defs.schema.json#/$defs/featureState/properties/id"
+        }
+      }
+    },
+    "issued": {
+      "description": "The license's first day, an RFC 3339 date in UTC; a trial key runs from it (ADR-L9).",
+      "type": "string",
+      "format": "date"
+    },
+    "until": {
+      "description": "The license's last day, an RFC 3339 date in UTC, never before issued; after it its features lock again (ADR-L3).",
+      "type": "string",
+      "format": "date"
+    },
+    "keyId": {
+      "description": "The id of the key that signed it, so an app checks it against the keys its build trusts (ADR-L5, L6).",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "description": "A trial key names no products (ADR-L9).",
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "trial"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "products": {
+            "maxProperties": 0
+          }
+        }
+      }
+    },
+    {
+      "description": "A product license names exactly one product (ADR-L8).",
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "product"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "products"
+        ],
+        "properties": {
+          "products": {
+            "minProperties": 1,
+            "maxProperties": 1
+          }
+        }
+      }
+    },
+    {
+      "description": "An org license names its products, one or more (ADR-L8).",
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "org"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "products"
+        ],
+        "properties": {
+          "products": {
+            "minProperties": 1
+          }
+        }
+      }
+    }
+  ]
+}

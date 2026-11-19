@@ -23,6 +23,8 @@ spec:
       what: Tool contracts, one per product epic
     - id: contracts-control-room-v1
       what: control-room/v1
+    - id: contracts-record-v1
+      what: 'record/v1: work records as data'
     - id: contracts-org-rules-split
       what: Org rules split per product
     - id: contracts-readme-map

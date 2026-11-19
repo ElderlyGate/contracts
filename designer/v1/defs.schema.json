@@ -933,7 +933,7 @@
       "additionalProperties": false
     },
     "blockFindings": {
-      "description": "What one block has attached: every component a link whose label annotates ties to it, in either direction (from the block, as attach writes it, or to the block), findings mostly, and which are still open by the statuses the definitions mark settled.",
+      "description": "What one block has attached: every component a link whose label annotates ties to it, in either direction (from the block, as attach writes it, or to the block), findings mostly (a link between two blocks attaches the `to` block to the `from` block only), and which are still open by the statuses the definitions mark settled.",
       "type": "object",
       "properties": {
         "attached": {

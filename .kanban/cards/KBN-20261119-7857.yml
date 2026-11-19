@@ -1,0 +1,32 @@
+apiVersion: app/kanban/v1
+kind: Feature
+metadata:
+  id: KBN-20261119-7857
+  title: 'designer/v1: the open view and each view''s layout page in the board answer'
+  created_at: 2026-11-19T16:20:46.597Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999999708962
+  tags: [feature, 'epic:same-shape-designer', 'feature:open-view', 'product:contracts', 'product:designer']
+  description: |
+    #feature #epic:same-shape-designer #feature:open-view #product:contracts #product:designer
+
+    # designer/v1: the open view and each view's layout page in the board answer
+
+    Which view opens and which layout.yml page a view reads are decided by Go and by the page (e-designer card KBN-20261119-16ac). Go says both, so the page reads them.
+
+    ## Change
+    - `board` gains `openView` and `layoutPages` (each view's page as read now).
+
+    ## Done when
+    - The schema and sample carry the fields, contracts tests green; e-designer#128 pins the release. Merges after the go-words fields.
+  summary: board gains openView and layoutPages
+  work:
+    agent: claude-opus-5-5
+    branch: feat/go-answers/open-view
+  lifecycle:
+    active_at: 2026-11-19T16:21:02.534Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-19T16:26:48.106Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

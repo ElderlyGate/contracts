@@ -933,11 +933,11 @@
       "additionalProperties": false
     },
     "blockFindings": {
-      "description": "What one block has attached: every component a link whose label annotates ties to it, findings mostly, as the board has always counted them, and which are still open by the statuses the definitions mark settled.",
+      "description": "What one block has attached: every component a link whose label annotates ties to it, in either direction (from the block, as attach writes it, or to the block), findings mostly (a link between two blocks attaches the `to` block to the `from` block only), and which are still open by the statuses the definitions mark settled.",
       "type": "object",
       "properties": {
         "attached": {
-          "description": "Every component attached to the block, settled ones too, by id in the order the block's links list them, so a decided ADR still counts.",
+          "description": "Every component attached to the block, settled ones too, by id in the order describe board lists Links, each once even when links run both ways or repeat, so a decided ADR still counts.",
           "type": "array",
           "minItems": 1,
           "items": {

@@ -1,0 +1,19 @@
+apiVersion: app/kanban/v1
+kind: Bug
+metadata:
+  id: KBN-20261118-f6cd
+  title: 'Findings: an annotating link counts either way'
+  created_at: 2026-11-18T22:15:10.061Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999997671694
+  summary: designer/v1 blockFindings says a finding is attached whichever end of the link holds the block
+  tags: [bug, 'product:contracts', 'epic:same-shape', 'feature:cli-first', 'product:designer']
+  work:
+    agent: claude-opus-5-5
+    branch: fix/findings-either-way/cli-first
+  description: "#bug #epic:same-shape #feature:cli-first #product:contracts #product:designer\n\n# Findings: an annotating link counts either way\n\ne-designer's own design links its findings finding → block, and the board counted block → finding only, so those blocks drew no badges. The owner decided (18 Nov) that an annotating link ties a finding to a block whichever end holds the block.\n\ndesigner/v1 `blockFindings` now says so: either direction, each component once even when links run both ways, in the order the links are read. Wording only, no shape change. e-designer follows in e-designer#114.\n"
+  lifecycle:
+    done_at: 2026-11-18T22:15:20.999Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

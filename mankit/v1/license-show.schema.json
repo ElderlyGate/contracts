@@ -26,7 +26,7 @@
           ],
           "properties": {
             "state": {
-              "description": "What the License group says, one word for the license state of the whole app; whether the build is a release is build's alone to say. none: no license, so use is free and nothing warns; trial: a trial key runs (ADR-L9); trial-ended: the trial key has ended, so use is free again and nothing warns (ADR-L3, L9); licensed: a paid license runs; ending: a paid license the threshold of ADR-L3 warns about; ended: a paid license has ended; ADR-L3's notice stays until it is replaced or removed.",
+              "description": "What the License group says, one word for the license state of the whole app; whether the build is a release is build's alone to say. The first of these decides it: a running paid license, then an ended paid license, then a running trial key, then an ended trial key, then none. none: no license, so use is free and nothing warns; trial: a trial key runs (ADR-L9); trial-ended: the trial key has ended, so use is free again and nothing warns (ADR-L3, L9); licensed: a paid license runs; ending: a paid license the threshold of ADR-L3 warns about; ended: a paid license has ended; ADR-L3's notice stays until it is replaced or removed.",
               "enum": [
                 "none",
                 "trial",
@@ -58,7 +58,7 @@
               }
             },
             "refused": {
-              "description": "Every license file the app read but did not take, so a refused file never shows as a license and a person sees why (ADR-L1, L5, L6, L8). Its reason is one of signature, untrusted_key, other_build, unreadable and wrong_place, each meaning what problem/v1's reason says. Empty when none was refused.",
+              "description": "Every license file the app read but did not take, so a refused file never shows as a license and a person sees why (ADR-L1, L5, L6, L8). Its reason is one of signature, untrusted_key, other_build, unreadable, wrong_place and id_mismatch, each meaning what problem/v1's reason says. Empty when none was refused.",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/refusedFile"
@@ -132,14 +132,12 @@
           ]
         },
         "for": {
-          "description": "The person or org the license names, never a machine, so whoever has the file sees whose it was (ADR-L4).",
-          "type": "string",
-          "minLength": 1
+          "description": "Whom the license names, as its signed payload says.",
+          "$ref": "license-payload.schema.json#/properties/for"
         },
         "until": {
-          "description": "The last day the license opens its features, an RFC 3339 date; after it they lock again (ADR-L3).",
-          "type": "string",
-          "format": "date"
+          "description": "The license's last day, as its signed payload says.",
+          "$ref": "license-payload.schema.json#/properties/until"
         },
         "daysLeft": {
           "description": "The days left until the license ends, 0 once it has ended. license-check gives only this; when to warn is the threshold's to say (ADR-L3).",
@@ -151,9 +149,8 @@
           "type": "boolean"
         },
         "keyId": {
-          "description": "The id of the key that signed the license, so a reader sees which of the keys this build trusts it rests on, as a key is moved or replaced (ADR-L6).",
-          "type": "string",
-          "minLength": 1
+          "description": "The key that signed the license, as its signed payload says, so a reader sees which of the keys this build trusts it rests on.",
+          "$ref": "license-payload.schema.json#/properties/keyId"
         },
         "window": {
           "description": "The countdown the License group's bar shows, present only while one shows: a trial key's days (ADR-L9), or a license in the warning the threshold of ADR-L3 sets. Its days left are daysLeft.",
@@ -279,6 +276,9 @@
         {
           "description": "A license names enterprise features only, and a trial key opens only those, so a free feature is never unlocked from one (ADR-L2, L9).",
           "if": {
+            "required": [
+              "tier"
+            ],
             "properties": {
               "tier": {
                 "const": "free"
@@ -311,7 +311,8 @@
         },
         "type": {
           "description": "What happened, a Problem type: refused, as the whole file was not taken.",
-          "$ref": "../../problem/v1/problem.schema.json#/properties/type"
+          "$ref": "../../problem/v1/problem.schema.json#/properties/type",
+          "const": "refused"
         },
         "reason": {
           "description": "Why it was refused, a Problem reason, so a program decides by it.",

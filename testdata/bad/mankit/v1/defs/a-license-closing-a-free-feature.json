@@ -1,0 +1,10 @@
+{
+  "featureState": {
+    "id": "layout",
+    "title": "Arrange boxes",
+    "covers": "moving, tidying and arranging boxes",
+    "tier": "free",
+    "on": false,
+    "by": "license"
+  }
+}

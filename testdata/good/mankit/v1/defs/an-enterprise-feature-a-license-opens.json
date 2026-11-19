@@ -1,0 +1,10 @@
+{
+  "featureState": {
+    "id": "events",
+    "title": "Live events",
+    "covers": "the /api/events stream",
+    "startsOff": true,
+    "tier": "enterprise",
+    "on": true
+  }
+}

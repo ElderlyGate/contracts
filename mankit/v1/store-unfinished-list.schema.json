@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/store-unfinished-list.schema.json",
   "title": "store unfinished list",
-  "description": "What <app> store unfinished list answers with -o json: the changes cut short in the app's store scope, every user's whose mark is there and this user's journals whose marks are gone, so a person sees what holds a thing back and who must run again before clearing a mark (ADR-S22, G-STACK-13).",
+  "description": "What <app> store unfinished list answers with -o json, and the app's server on GET /api/store/unfinished (?thing= for one thing): the changes cut short in the app's store scope, every user's whose mark is there and this user's journals whose marks are gone, so a person sees what holds a thing back and who must run again before clearing a mark (ADR-S22, G-STACK-13).",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"

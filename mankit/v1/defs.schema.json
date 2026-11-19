@@ -143,11 +143,11 @@
           "$ref": "store-journal.schema.json#/properties/metadata/properties/id"
         },
         "folder": {
-          "description": "true when the change also holds the served folder's own turn, as adding, moving or removing a thing does, so changes to the folder itself wait too. Left out when false.",
+          "description": "true when the change also holds the served folder's own turn: a change to the scope itself, or one that adds a thing, or moves or removes the thing itself, so changes to the folder itself wait too. Left out when false.",
           "const": true
         },
         "keys": {
-          "description": "Every key the change writes, so a person sees what it holds back; for a left journal, the keys its lines name.",
+          "description": "Every key the change writes, so a person sees what it holds back; never empty for a change whose mark is there. A left journal names the keys of its lines, none when it was cut short before its first line was written: it still shows, as a file a person may look at and remove.",
           "type": "array",
           "uniqueItems": true,
           "items": {
@@ -155,7 +155,7 @@
           }
         },
         "file": {
-          "description": "The journal's file on this machine, only when it is this user's and still there, so a person can look at what was there before clearing the mark or putting it back by hand. A machine path, shown to a person only, never a key.",
+          "description": "The journal's file on this machine, only when it is this user's and still there, so a person can look at what was there before clearing the mark or putting it back by hand; always there for a left journal, which is one of this user's files. A machine path, shown to a person only, never a key.",
           "type": "string",
           "minLength": 1
         },
@@ -164,7 +164,39 @@
           "const": true
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "A left journal is this user's file on this machine, so it always names it.",
+          "if": {
+            "required": [
+              "left"
+            ]
+          },
+          "then": {
+            "required": [
+              "file"
+            ]
+          }
+        },
+        {
+          "description": "A change whose mark is there holds at least one key, as its mark does (store-unfinished.schema.json).",
+          "if": {
+            "not": {
+              "required": [
+                "left"
+              ]
+            }
+          },
+          "then": {
+            "properties": {
+              "keys": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

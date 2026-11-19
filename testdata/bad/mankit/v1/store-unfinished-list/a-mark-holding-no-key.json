@@ -1,0 +1,34 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "StoreUnfinishedList",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "8.1.0",
+    "contract": "v1"
+  },
+  "data": {
+    "changes": [
+      {
+        "id": "01794398400000000000",
+        "user": "ada",
+        "host": "build-01",
+        "journal": "01794398400000000000",
+        "folder": true,
+        "keys": []
+      },
+      {
+        "id": "01794398500000000000",
+        "user": "grace",
+        "host": "designer-shop",
+        "journal": "01794398500000000000",
+        "keys": [
+          "shop/layout.yml"
+        ],
+        "file": "/home/grace/.local/share/elderlygate/designer/.store/designer-shop/01794398500000000000.jsonl",
+        "left": true
+      }
+    ]
+  },
+  "errors": []
+}

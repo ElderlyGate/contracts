@@ -23,5 +23,16 @@
     "name": "ED_TARGET_URL",
     "purpose": "where the requests are sent"
   },
-  "storeKey": "blocks/shop.yml"
+  "storeKey": "blocks/shop.yml",
+  "storeUnfinishedChange": {
+    "id": "01794398400000000000",
+    "user": "ada",
+    "host": "build-01",
+    "journal": "01794398400000000000",
+    "folder": true,
+    "keys": [
+      "shop/blocks/cart.yml",
+      "shop/blocks/shop.yml"
+    ]
+  }
 }

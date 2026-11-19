@@ -1,0 +1,28 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "StoreUnfinishedCleared",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "8.1.0",
+    "contract": "v1"
+  },
+  "data": {
+    "thing": "shop",
+    "cleared": [
+      {
+        "id": "01794398400000000000",
+        "user": "ada",
+        "host": "build-01",
+        "journal": "01794398400000000000",
+        "folder": true,
+        "keys": [
+          "shop/blocks/cart.yml",
+          "shop/blocks/shop.yml"
+        ],
+        "file": "/home/ada/.local/share/elderlygate/designer/.store/build-01/01794398400000000000.jsonl"
+      }
+    ]
+  },
+  "errors": []
+}

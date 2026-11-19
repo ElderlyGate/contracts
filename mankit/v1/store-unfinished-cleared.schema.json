@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/store-unfinished-cleared.schema.json",
+  "title": "store unfinished cleared",
+  "description": "What <app> store unfinished clear <thing> answers with -o json once a person said yes: the marks it removed, so changes to the keys they held are made again. Clearing puts nothing back; each journal stays where it is, this user's shown as left by <app> store unfinished list (ADR-S22, G-STACK-13).",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "description": "Always StoreUnfinishedCleared, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "StoreUnfinishedCleared"
+        },
+        "data": {
+          "description": "The thing asked for and the changes whose marks were removed.",
+          "type": "object",
+          "required": [
+            "thing",
+            "cleared"
+          ],
+          "properties": {
+            "thing": {
+              "description": "The thing whose changes cut short were cleared: a key's first step, as the unfinished_change refusal names it.",
+              "allOf": [
+                {
+                  "$ref": "defs.schema.json#/$defs/storeKey"
+                },
+                {
+                  "pattern": "^[^/]+$"
+                }
+              ]
+            },
+            "cleared": {
+              "description": "Each change whose marks were removed, as it was before; file names this user's journal, which stays. Never empty: clearing a thing no mark holds is not_found, so nothing is cleared by a typo.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "defs.schema.json#/$defs/storeUnfinishedChange"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

@@ -35,6 +35,10 @@ forms:
     app: mankit
     kinds: [StoreJournal, StoreJournalChange, StoreUnfinished]
     note: "The store's own files (mankit store, ADR-S22): StoreJournal, a journal's first line naming its writer and scope, and StoreJournalChange, each write after it, JSON lines in the user's own data folder; StoreUnfinished, the mark in a served folder's .queue/ of a change not yet finished"
+  - new: elderlygate/mankit/license/v1
+    app: mankit
+    kinds: [License]
+    note: "A signed license file (mankit licenses, ADR-L1, L8): nw-license writes it, every app reads it from the org's or its own place"
   - new: elderlygate/contracts/problem/v1
     app: contracts
     kinds: [Problem]

@@ -1,0 +1,12 @@
+{
+  "apiVersion": "elderlygate/mankit/license/v1",
+  "kind": "License",
+  "metadata": {
+    "id": "lic-20261106-acme-note"
+  },
+  "spec": {
+    "payload": "eyJpZCI6ImxpYy0yMDI2MTEwNi1hY21lLW5vdGUiLCJraW5kIjoib3JnIiwiZm9yIjoiQWNtZSBMdGQiLCJwcm9kdWN0cyI6eyJkZXNpZ25lciI6WyJldmVudHMiXX0sImlzc3VlZCI6IjIwMjYtMTEtMDYiLCJ1bnRpbCI6IjIwMjctMTEtMDYiLCJrZXlJZCI6InByb2QtMjAyNiIsIm5vdGUiOiJpc3N1ZWQgZm9yIHRlc3RpbmcifQ==",
+    "signature": "GG/qIxH7zrELnRlZhZRY68W3Fj0fEV/sgkZYAoy5wIYAB1rBnbmvEneBkUIAg6w5BdCOg58p4oAqDVA3XKeRDg==",
+    "comment": "a field a newer nw-license adds beside the payload"
+  }
+}

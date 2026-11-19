@@ -1,0 +1,92 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "LicenseShow",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "9.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "state": "licensed",
+    "build": {
+      "release": true
+    },
+    "licenses": [
+      {
+        "kind": "org",
+        "for": "Acme Ltd",
+        "until": "2027-11-06",
+        "daysLeft": 352,
+        "ended": false,
+        "keyId": "prod-2026"
+      },
+      {
+        "kind": "product",
+        "for": "ada@acme.example",
+        "until": "2027-03-01",
+        "daysLeft": 102,
+        "ended": false,
+        "keyId": "prod-2026"
+      }
+    ],
+    "refused": [],
+    "counts": {
+      "free": 1,
+      "enterprise": 4,
+      "on": 4,
+      "locked": -1
+    },
+    "features": [
+      {
+        "id": "edit",
+        "title": "Change a design",
+        "covers": "apply, edit, connect, delete, focus, the design's files and its word lists",
+        "tier": "free",
+        "on": true,
+        "from": "none"
+      },
+      {
+        "id": "events",
+        "title": "Live events",
+        "covers": "the /api/events stream",
+        "startsOff": true,
+        "tier": "enterprise",
+        "on": true,
+        "from": "org",
+        "until": "2027-11-06"
+      },
+      {
+        "id": "multi-design",
+        "title": "Many designs",
+        "covers": "more than one design in a folder",
+        "startsOff": true,
+        "tier": "enterprise",
+        "on": true,
+        "from": "product",
+        "until": "2027-03-01"
+      },
+      {
+        "id": "share",
+        "title": "Share a design",
+        "covers": "sharing a design with others",
+        "startsOff": true,
+        "tier": "enterprise",
+        "on": true,
+        "from": "both",
+        "until": "2027-11-06"
+      },
+      {
+        "id": "sync",
+        "title": "Sync designs",
+        "covers": "keeping designs the same on several machines",
+        "startsOff": true,
+        "tier": "enterprise",
+        "on": false,
+        "by": "license",
+        "from": "none"
+      }
+    ]
+  },
+  "errors": []
+}

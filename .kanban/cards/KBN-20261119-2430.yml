@@ -1,0 +1,43 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261119-2430
+  title: license show answer schema
+  created_at: 2026-11-19T16:08:40.397Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999999854481
+  summary: 'S1b: mankit/v1 LicenseShow, the <app> license show answer'
+  tags: [feature, 'epic:license', 'feature:license-check', 'product:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/license-show/license-check
+  description: |
+    #feature #epic:license #feature:license-check #product:contracts
+
+    # license show answer schema
+
+    ## Why
+    `<app> license show` (and `-o json`) is a mankit shared command: every app answers it alike, so its shape is written once under mankit/v1, as Help is (ADR-S15). The License group on the Settings page (ui-kit, step S2) and the CLI read the same answer: the state, the build, every license read and every feature with its tier and where it is unlocked from (ADR-L3, L4, L5, L6, L8, L9). mankit's license package (after mankit v4) answers it. Step S1 of the license epic (control-room card e99b).
+
+    ## Changes
+    - `mankit/v1/license-show.schema.json` (kind LicenseShow): state (none, trial, trial-ended, licensed, ending, ended), build.release, licenses (with window { of } for the countdown bar), refused (G-CODE-6), counts, and features as featureState plus from and until, so the License group joins nothing.
+    - `problem/v1` reason words for a refused license file: signature, untrusted_key, other_build, unreadable, wrong_place.
+    - `mankit/v1/license-file.schema.json`, a Resource (apiVersion elderlygate/mankit/license/v1, kind License, metadata.id, spec { payload, signature }, base64), and `license-payload.schema.json` (id, kind, for, products, issued, until, keyId); forms.yaml row, the file mankit's licenses package (mankit#61) reads and nw-license writes.
+    - Its sample, good and bad cases; README names it.
+
+    ## Waits on
+    - KBN-20261119-49c4 (featureState tier): `features[].tier` $refs it, so this branch is stacked on that one.
+
+    ## Done when
+    - [ ] Merged after the tier card, and mankit's license package answers it.
+
+    Size S.
+  links:
+    depends_on: [KBN-20261119-49c4]
+  lifecycle:
+    active_at: 2026-11-19T16:08:45.117Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-19T16:10:20.679Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

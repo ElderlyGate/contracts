@@ -1,0 +1,10 @@
+{
+  "apiVersion": "elderlygate/mankit/license/v1",
+  "kind": "License",
+  "metadata": {
+    "id": "lic-20261106-acme"
+  },
+  "spec": {
+    "payload": "eyJpZCI6ImxpYy0yMDI2MTEwNi1hY21lIiwia2luZCI6Im9yZyIsImZvciI6IkFjbWUgTHRkIiwicHJvZHVjdHMiOnsiZGVzaWduZXIiOlsiZXZlbnRzIiwic2hhcmUiXSwia2FuYmFuIjpbInN5bmMiXX0sImlzc3VlZCI6IjIwMjYtMTEtMDYiLCJ1bnRpbCI6IjIwMjctMTEtMDYiLCJrZXlJZCI6InByb2QtMjAyNiJ9"
+  }
+}

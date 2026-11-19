@@ -1,0 +1,8 @@
+{
+  "id": "lic-20261106-acme",
+  "kind": "product",
+  "for": "ada@acme.example",
+  "issued": "2026-11-06",
+  "until": "2027-03-01",
+  "keyId": "prod-2026"
+}

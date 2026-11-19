@@ -38,6 +38,16 @@
         }
       }
     ],
+    "placed": [
+      {
+        "view": "runtime",
+        "boxes": [
+          "CMP-API",
+          "CMP-STORE"
+        ],
+        "hexagon": []
+      }
+    ],
     "groups": 1,
     "steps": [
       {

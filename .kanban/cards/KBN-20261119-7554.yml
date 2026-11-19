@@ -1,0 +1,30 @@
+apiVersion: app/kanban/v1
+kind: Bug
+metadata:
+  id: KBN-20261119-7554
+  title: 'designer/v1: layout.yml version 4 and the migrate''s placed boxes'
+  created_at: 2026-11-19T22:56:23.002Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: in-progress
+  order: 0.5
+  tags: [bug, 'epic:same-shape-designer', 'feature:layout-place', 'product:contracts', 'product:designer']
+  work:
+    agent: claude-opus-5-5
+    branch: fix/layout-v4/layout-place
+  description: |
+    #bug #epic:same-shape-designer #feature:layout-place #product:contracts #product:designer
+
+    # designer/v1: layout.yml version 4 and the migrate's placed boxes
+
+    e-designer's boxes stop being placed live on every draw (e-designer card KBN-20261119-0fe2): a place is worked out once and kept in layout.yml.
+
+    ## Change
+    - design-contents: layout.yml `version` 4 means every box each view draws has its place, and every hexagon block its place in `hexagon`; versions 2 and 3 may leave boxes without one. `views` says `hexagon` holds every hexagon block's place at version 4.
+    - migrate-layout gains `placed` (defs `placedView`: view, boxes, hexagon): what migrating to version 4 gave a place.
+
+    ## Done when
+    - Samples and test cases pass; e-designer's migrate answer passes.
+  lifecycle:
+    active_at: 2026-11-19T22:56:35.784Z
+    active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

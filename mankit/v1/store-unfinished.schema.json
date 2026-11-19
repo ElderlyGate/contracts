@@ -61,7 +61,7 @@
           "type": "boolean"
         },
         "keys": {
-          "description": "Every key the change writes, a new thing's too, whose turn is the served folder's (ADR-S14), so each copy of the mark names the whole change, whichever queue a later change meets it in, and a change to any of them is refused.",
+          "description": "Every key the change writes, a new thing's too, whose turn is the served folder's (ADR-S14), so each copy of the mark names the whole change, whichever queue a later change meets it in, and a change to a key it names, or to one inside a folder key it names, is refused.",
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,

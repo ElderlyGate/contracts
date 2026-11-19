@@ -22,7 +22,8 @@ spec:
     `<app> license show` (and `-o json`) is a mankit shared command: every app answers it alike, so its shape is written once under mankit/v1, as Help is (ADR-S15). The License group on the Settings page (ui-kit, step S2) and the CLI read the same answer: the state, the build, every license read and every feature with its tier and where it is unlocked from (ADR-L3, L4, L5, L6, L8, L9). mankit's license package (after mankit v4) answers it. Step S1 of the license epic (control-room card e99b).
 
     ## Changes
-    - `mankit/v1/license-show.schema.json` (kind LicenseShow): state, build, licenses, features.
+    - `mankit/v1/license-show.schema.json` (kind LicenseShow): state (none, trial, trial-ended, licensed, ending, ended), build.release, licenses (with window for the countdown bar), refused (G-CODE-6), counts, and features as featureState plus from and until, so the License group joins nothing.
+    - `problem/v1` reason words for a refused license file: signature, untrusted_key, other_build, unreadable.
     - Its sample, good and bad cases; README names it.
 
     ## Waits on

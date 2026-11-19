@@ -1,0 +1,39 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261119-49c4
+  title: Feature tier in featureState
+  created_at: 2026-11-19T16:06:44.075Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999999708962
+  summary: 'S1a: featureState gains tier (free | enterprise) and by: license (ADR-L2, L9)'
+  tags: [feature, 'epic:license', 'feature:app-features', 'product:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/feature-tier/app-features
+  description: |
+    #feature #epic:license #feature:app-features #product:contracts
+
+    # Feature tier in featureState
+
+    ## Why
+    The owner decided on 19 Nov that every feature has a tier, free or enterprise, and that the field's meaning lives in the contracts schema (featureState.tier, ADR-L2). Only an enterprise feature can be locked; one that no valid license or trial key names is closed with `by: license` (ADR-L2, L9). Step S1 of the license epic (control-room card e99b).
+
+    ## Changes
+    - `mankit/v1/defs.schema.json` featureState: optional `tier` (free | enterprise; absent = free), and `license` as a known `by` word (an open word, CT-RULE-1).
+    - The defs sample stays as it is (no tier, so free); good and bad cases cover both.
+
+    ## Waits on
+    - Nothing. S2 (ui-kit) and mankit's license package (after mankit v4) read it.
+
+    ## Done when
+    - [ ] Merged and released; mankit pins this contracts version.
+
+    Size S.
+  lifecycle:
+    active_at: 2026-11-19T16:06:48.539Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-19T16:07:53.240Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

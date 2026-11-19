@@ -48,12 +48,19 @@
           "description": "True for a feature that is off until switched on, so a reader says why it is off on a new machine; absent when it starts on.",
           "const": true
         },
+        "tier": {
+          "description": "The feature's tier, so a reader knows whether a license can lock it (ADR-L2). free: it never needs a license; enterprise: it is locked until a valid license or a trial key opens it (ADR-L2, L9). Absent means free, so an answer made before tiers stays valid.",
+          "enum": [
+            "free",
+            "enterprise"
+          ]
+        },
         "on": {
           "description": "True when nothing closes the feature, so its routes and controls are open.",
           "type": "boolean"
         },
         "by": {
-          "description": "What closed it; absent while it is on. An open word, so a later closer (public mode, a license) needs no new contract, and a reader shows the words for any other. Known words: switch: the owner switched it off; default: it starts off and nobody switched it on.",
+          "description": "What closed it; absent while it is on. An open word, so a later closer (public mode) needs no new contract, and a reader shows the words for any other. Known words: switch: the owner switched it off; default: it starts off and nobody switched it on; license: an enterprise feature that no valid license or trial key names (ADR-L2, L9).",
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$"
         },
@@ -71,7 +78,32 @@
         "covers",
         "on"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "Only an enterprise feature can be locked (ADR-L2), so a feature a license closes names its tier enterprise.",
+          "if": {
+            "required": [
+              "by"
+            ],
+            "properties": {
+              "by": {
+                "const": "license"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "tier"
+            ],
+            "properties": {
+              "tier": {
+                "const": "enterprise"
+              }
+            }
+          }
+        }
+      ]
     },
     "featureValue": {
       "description": "One value a feature needs, such as an environment variable or a settings row: mankit's features.Value.",

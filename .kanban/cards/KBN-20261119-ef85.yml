@@ -1,0 +1,40 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261119-ef85
+  title: problem/v1 store reasons and mankit/v1 StoreJournal
+  created_at: 2026-11-19T07:37:54.281Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: backlog
+  order: 0.99993896484375
+  summary: 'S: SP2 of storage-port: four store reasons in problem/v1, StoreJournal (JSON lines) in mankit/v1, ticket unfinished-change mark'
+  tags: [feature, 'epic:storage-port', 'product:contracts']
+  work:
+    agent: claude-opus-5-5
+  description: |
+    #feature #epic:storage-port #product:contracts
+
+    # problem/v1 store reasons and mankit/v1 StoreJournal
+
+    ## Why
+    Step SP2 of the storage-port epic (constitution card KBN-20261114-f239). The mankit store (SP3) answers with Problems and writes a journal, and both shapes live in contracts first (ADR-S11, CT-RULE-5).
+
+    ## Changes
+    - `problem/v1` gains the reasons `outside`, `changed`, `not_owned` and `unfinished_change`.
+    - `mankit/v1` gains StoreJournal as JSON lines, each line a Resource: line 1 `kind: StoreJournal` with `metadata {id, app, pid, host}` and `spec {scope}`; each later line `kind: StoreJournalChange` with `metadata {id: <n>}` and `spec {key, before, after, dir, gone, from}`.
+    - The queue ticket's `spec` grows the unfinished-change mark: the writer's ticket names an unfinished change, so a stale ticket blocks the thing with `unfinished_change` until that user's next run puts it back (ADR-S15 lets `spec` grow, never `metadata`).
+    - Samples for each, tested.
+
+    ## Waits on
+    - Constitution SP1 KBN-20261119-d8b3 (ADR-S22 and the ADR-E9 change), merged soon. Cross-board links are not supported, so named here.
+    - The contracts line takes one change at a time: this sits beside hubman/v1 KBN-20261117-31fb.
+
+    ## Done when
+    - [ ] contracts is released (v0.27.x), samples are tested, and mankit's CI reads them.
+
+    Plan: https://claude.ai/artifact/KC33PubdFQpe9837mTbJ5m (refreshed 19 Nov, linked from f239).
+
+    Size S.
+  links:
+    related: [KBN-20261117-31fb]

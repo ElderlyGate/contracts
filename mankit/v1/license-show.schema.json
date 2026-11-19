@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/license-show.schema.json",
   "title": "license show",
-  "description": "What <app> license show answers with -o json: the app's license state, whether this build is a release, every license it read and every feature with where it is unlocked from, so the CLI, its JSON and the License group on the app's Settings page show the same list (ADR-L8). mankit's license check makes it for every app, so every app answers it alike.",
+  "description": "What <app> license show answers with -o json: the app's license state, whether this build is a release, the licenses it took and the files it refused, and every feature in its feature state with where it is unlocked from, so the CLI, its JSON and the License group on the app's Settings page show the same list and the page joins nothing (ADR-L8). mankit's license check makes it for every app, so every app answers it alike.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"
@@ -14,24 +14,26 @@
           "const": "LicenseShow"
         },
         "data": {
-          "description": "The app's license state, its build, the licenses it read and its features.",
+          "description": "The app's license state, its build, the licenses it took and refused, the counts and its features.",
           "type": "object",
           "required": [
             "state",
             "build",
             "licenses",
+            "refused",
+            "counts",
             "features"
           ],
           "properties": {
             "state": {
-              "description": "What the License group says, one word for the whole app. none: no license, so use is free and nothing warns; trial: a trial key runs (ADR-L9); trial-ended: the trial key has ended, so use is free again and nothing warns (ADR-L3, L9); licensed: a paid license runs; ending: a paid license the threshold of ADR-L3 warns about; dev: a build that is not a release, which accepts dev-key licenses only (ADR-L5).",
+              "description": "What the License group says, one word for the license state of the whole app; whether the build is a release is build's alone to say. none: no license, so use is free and nothing warns; trial: a trial key runs (ADR-L9); trial-ended: the trial key has ended, so use is free again and nothing warns (ADR-L3, L9); licensed: a paid license runs; ending: a paid license the threshold of ADR-L3 warns about; ended: a paid license has ended; ADR-L3's notice stays until it is replaced or removed.",
               "enum": [
                 "none",
                 "trial",
                 "trial-ended",
                 "licensed",
                 "ending",
-                "dev"
+                "ended"
               ]
             },
             "build": {
@@ -49,44 +51,61 @@
               "additionalProperties": false
             },
             "licenses": {
-              "description": "Every license file the app read, the org license first and then the product license (ADR-L8). Empty when there is none, so a reader tells no license from a failure.",
+              "description": "Every license file the app read and took, the org license first and then the product license; a trial key takes the product license's place (ADR-L8). A file it refused is in refused instead, never here. Empty when there is none, so a reader tells no license from a failure.",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/license"
               }
             },
+            "refused": {
+              "description": "Every license file the app read but did not take: a bad signature, a key this build does not trust, a key of the other build (ADR-L5), or a file it cannot read, so a refused file never shows as a license and a person sees why (ADR-L1, L5, L6). Empty when none was refused.",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/refusedFile"
+              }
+            },
+            "counts": {
+              "description": "How many features there are of each tier, how many are on and how many are locked, so the License group shows them without counting (ADR-L2).",
+              "type": "object",
+              "required": [
+                "free",
+                "enterprise",
+                "on",
+                "locked"
+              ],
+              "properties": {
+                "free": {
+                  "description": "The features whose tier is free.",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "enterprise": {
+                  "description": "The features whose tier is enterprise.",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "on": {
+                  "description": "The features that are on.",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "locked": {
+                  "description": "The enterprise features a license closes, those with by license.",
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
             "features": {
-              "description": "Every feature of the app, in the order its feature list gives them, each with its tier and where it is unlocked from (ADR-L2, L8).",
+              "description": "Every feature of the app, in the order its feature list gives them: its feature state and where it is unlocked from, so the License group draws this answer alone (ADR-L2, L8).",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/feature"
               }
             }
           },
-          "additionalProperties": false,
-          "allOf": [
-            {
-              "description": "dev is said only by a build that is not a release (ADR-L5).",
-              "if": {
-                "properties": {
-                  "state": {
-                    "const": "dev"
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "build": {
-                    "properties": {
-                      "release": {
-                        "const": false
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
+          "additionalProperties": false
         }
       }
     }
@@ -135,6 +154,27 @@
           "description": "The id of the key that signed the license, so a reader sees which of the keys this build trusts it rests on, as a key is moved or replaced (ADR-L6).",
           "type": "string",
           "minLength": 1
+        },
+        "window": {
+          "description": "The countdown the License group's bar shows, present only while one shows: a trial key's days (ADR-L9), or a license in the warning the threshold of ADR-L3 sets.",
+          "type": "object",
+          "required": [
+            "left",
+            "of"
+          ],
+          "properties": {
+            "left": {
+              "description": "The days left in the countdown.",
+              "type": "integer",
+              "minimum": 0
+            },
+            "of": {
+              "description": "The countdown's whole length in days: a trial key's length from its signed file (ADR-L9), or the warning window mankit reads from the threshold (ADR-L3), so the bar shows how much is gone.",
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false,
@@ -159,29 +199,47 @@
       ]
     },
     "feature": {
-      "description": "One feature of the app and where it is unlocked from, a row of the License group's features table (ADR-L8).",
+      "description": "One feature of the app: its feature state, each field as mankit/v1 defs' featureState says, and where it is unlocked from, a row of the License group's features table (ADR-L8).",
       "type": "object",
       "required": [
         "id",
         "title",
+        "covers",
         "tier",
+        "on",
         "from"
       ],
       "properties": {
         "id": {
-          "description": "The feature's id, the one its feature list and a license name it by (ADR-L2).",
           "$ref": "defs.schema.json#/$defs/featureState/properties/id"
         },
         "title": {
-          "description": "The feature's name for people, as its feature list gives it.",
           "$ref": "defs.schema.json#/$defs/featureState/properties/title"
         },
+        "covers": {
+          "$ref": "defs.schema.json#/$defs/featureState/properties/covers"
+        },
+        "needs": {
+          "$ref": "defs.schema.json#/$defs/featureState/properties/needs"
+        },
+        "startsOff": {
+          "$ref": "defs.schema.json#/$defs/featureState/properties/startsOff"
+        },
         "tier": {
-          "description": "The feature's tier, always written here, so the License group marks which features are enterprise (ADR-L2, L9).",
+          "description": "Always written here, so the License group marks which features are enterprise (ADR-L2, L9).",
           "$ref": "defs.schema.json#/$defs/featureState/properties/tier"
         },
+        "on": {
+          "$ref": "defs.schema.json#/$defs/featureState/properties/on"
+        },
+        "by": {
+          "$ref": "defs.schema.json#/$defs/featureState/properties/by"
+        },
+        "missing": {
+          "$ref": "defs.schema.json#/$defs/featureState/properties/missing"
+        },
         "from": {
-          "description": "Where the feature is unlocked from (ADR-L8, L9). org: the org license names it; product: the product license names it; both: both name it; trial: a trial key opens it; none: nothing opens it, as a free feature needs nothing and an enterprise feature with none is locked.",
+          "description": "Where the feature is unlocked from (ADR-L8, L9). org: the org license names it; product: the product license names it; both: both name it; trial: a trial key opens it, trial only when no license names it; none: nothing opens it, as a free feature needs nothing and an enterprise feature with none is locked.",
           "enum": [
             "org",
             "product",
@@ -198,6 +256,10 @@
       },
       "additionalProperties": false,
       "allOf": [
+        {
+          "description": "featureState's own rules hold here too.",
+          "$ref": "defs.schema.json#/$defs/featureState/allOf/0"
+        },
         {
           "description": "A feature nothing opens has no last day; one a license opens has.",
           "if": {
@@ -238,6 +300,31 @@
           }
         }
       ]
+    },
+    "refusedFile": {
+      "description": "One license file the app refused, and why, in the words of the Problem shape (ADR-S21).",
+      "type": "object",
+      "required": [
+        "file",
+        "type",
+        "reason"
+      ],
+      "properties": {
+        "file": {
+          "description": "The file's path on this machine, so a person finds it to replace or remove it. A machine path, shown to a person only.",
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "description": "What happened, a Problem type: refused, as the whole file was not taken.",
+          "$ref": "../../problem/v1/problem.schema.json#/properties/type"
+        },
+        "reason": {
+          "description": "Why it was refused, a Problem reason, so a program decides by it.",
+          "$ref": "../../problem/v1/problem.schema.json#/properties/reason"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

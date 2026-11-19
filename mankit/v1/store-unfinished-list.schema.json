@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/store-unfinished-list.schema.json",
+  "title": "store unfinished list",
+  "description": "What <app> store unfinished list answers with -o json, and the app's server on GET /api/store/unfinished (?thing= for one thing): the changes cut short in the app's store scope, every user's whose mark is there and this user's journals whose marks are gone, so a person sees what holds a thing back and who must run again before clearing a mark (ADR-S22, G-STACK-13).",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "description": "Always StoreUnfinishedList, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "StoreUnfinishedList"
+        },
+        "data": {
+          "description": "The changes cut short in the scope, or in the one thing asked for.",
+          "type": "object",
+          "required": [
+            "changes"
+          ],
+          "properties": {
+            "changes": {
+              "description": "Each change cut short: first those whose marks are there, then this user's left journals. Empty when none is, so a reader tells nothing left from a failure.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/storeUnfinishedChange"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

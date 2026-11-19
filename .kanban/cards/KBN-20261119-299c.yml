@@ -1,0 +1,39 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261119-299c
+  title: mankit/v1 StoreUnfinishedList and StoreUnfinishedCleared
+  created_at: 2026-11-19T09:59:05.962Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999999417923
+  summary: 'S: answer shapes of mankit''s store unfinished list|clear (mankit 0a33)'
+  tags: [feature, 'product:contracts', 'epic:constitution/storage-port']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/store-unfinished-shapes/storage-port
+  description: |
+    #feature #epic:constitution/storage-port #product:contracts
+
+    # mankit/v1 StoreUnfinishedList and StoreUnfinishedCleared
+
+    ## Why
+    mankit card 20261119-0a33 builds the shared command `<app> store unfinished list` and `<app> store unfinished clear <thing>` (owner, 19 Nov). Its answers need their shapes in contracts first (CT-RULE-5, ADR-S03). Cross-board, named here.
+
+    ## Changes
+    - `mankit/v1/defs.schema.json` gains `storeUnfinishedChange`: one change cut short (id, user, host, journal, folder, keys, file, left), mankit's `store.Unfinished`.
+    - `mankit/v1/store-unfinished-list.schema.json`, kind StoreUnfinishedList: `data.changes`.
+    - `mankit/v1/store-unfinished-cleared.schema.json`, kind StoreUnfinishedCleared: `data.thing` and `data.cleared` (never empty).
+    - Samples, more good cases and broken ones, tested. Additive: a minor.
+
+    ## Blocks
+    - mankit 20261119-0a33 (cross-board, named here).
+
+    ## Done when
+    - [x] The schemas and samples are in contracts and tested, and merging cuts the next minor.
+
+    Size S.
+  lifecycle:
+    done_at: 2026-11-19T09:59:13.066Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

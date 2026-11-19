@@ -13,6 +13,9 @@
     },
     "storeKey": {
       "$ref": "#/$defs/storeKey"
+    },
+    "storeUnfinishedChange": {
+      "$ref": "#/$defs/storeUnfinishedChange"
     }
   },
   "additionalProperties": false,
@@ -110,6 +113,90 @@
           }
         ]
       }
+    },
+    "storeUnfinishedChange": {
+      "description": "One change cut short, as <app> store unfinished list and clear show it: mankit's store.Unfinished. A change with a mark holds its keys back until its user's next run puts it back or a person clears the mark; a left journal is this user's journal whose marks are gone, kept as the only copy of what was there (ADR-S22, store-unfinished.schema.json).",
+      "type": "object",
+      "required": [
+        "id",
+        "user",
+        "host",
+        "journal",
+        "keys"
+      ],
+      "properties": {
+        "id": {
+          "description": "The mark's id, the same in every .queue/ folder the change marked, so a person names one change whichever thing they look at.",
+          "$ref": "store-unfinished.schema.json#/properties/metadata/properties/id"
+        },
+        "user": {
+          "description": "The user whose journal holds the change, so a person knows who must run the app again to put it back.",
+          "type": "string",
+          "minLength": 1
+        },
+        "host": {
+          "description": "The machine the journal is on, so a person knows where that run must be.",
+          "$ref": "queue-ticket.schema.json#/properties/metadata/properties/host"
+        },
+        "journal": {
+          "description": "The id of the journal that holds the change (a StoreJournal's metadata.id).",
+          "$ref": "store-journal.schema.json#/properties/metadata/properties/id"
+        },
+        "folder": {
+          "description": "true when the change also holds the served folder's own turn: a change to the scope itself, or one that adds a thing, or moves or removes the thing itself, so changes to the folder itself wait too. Left out when false.",
+          "const": true
+        },
+        "keys": {
+          "description": "Every key the change writes, so a person sees what it holds back; never empty for a change whose mark is there. A left journal names the keys of its lines, none when it was cut short before its first line was written: it still shows, as a file a person may look at and remove.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/storeKey"
+          }
+        },
+        "file": {
+          "description": "The journal's file on this machine, only when it is this user's and still there, so a person can look at what was there before clearing the mark or putting it back by hand; always there for a left journal, which is one of this user's files. A machine path, shown to a person only, never a key.",
+          "type": "string",
+          "minLength": 1
+        },
+        "left": {
+          "description": "true for a journal of this user's whose marks are gone, cleared or lost: it holds nothing back and puts nothing back by itself, and stays as the only copy of what was there. Left out for a change whose mark is there.",
+          "const": true
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "A left journal is this user's file on this machine, so it always names it.",
+          "if": {
+            "required": [
+              "left"
+            ]
+          },
+          "then": {
+            "required": [
+              "file"
+            ]
+          }
+        },
+        {
+          "description": "A change whose mark is there holds at least one key, as its mark does (store-unfinished.schema.json).",
+          "if": {
+            "not": {
+              "required": [
+                "left"
+              ]
+            }
+          },
+          "then": {
+            "properties": {
+              "keys": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

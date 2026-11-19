@@ -92,11 +92,11 @@
           "pattern": "^[a-z][a-z0-9-]*$"
         },
         "summary": {
-          "description": "The command's one-line help, as the layout lists it.",
+          "description": "The command's one-line help, as the layout lists it, so a reader shows what it does without running it.",
           "type": "string"
         },
         "usage": {
-          "description": "The command's line as it is typed after the app's name, with its arguments, such as server stop [addr|name], so a reader knows what it takes.",
+          "description": "The command's line as it is typed after the app's name, with its arguments, such as server stop [addr|name], so a reader knows what it takes before it runs it.",
           "type": "string",
           "minLength": 1
         },
@@ -142,11 +142,11 @@
           "minLength": 1
         },
         "default": {
-          "description": "The value it has when not given, as text, when that is not the type's zero value.",
+          "description": "The value it has when not given, as text, when that is not the type's zero value, so a reader knows what leaving the flag out gives.",
           "type": "string"
         },
         "usage": {
-          "description": "The flag's one-line help.",
+          "description": "The flag's one-line help, so a reader shows what the flag does.",
           "type": "string"
         }
       },

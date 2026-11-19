@@ -1,0 +1,16 @@
+{
+  "kind": "org",
+  "for": "Acme Ltd",
+  "products": {
+    "designer": [
+      "events",
+      "share"
+    ],
+    "kanban": [
+      "sync"
+    ]
+  },
+  "issued": "2026-11-06",
+  "until": "2027-11-06T00:00:00Z",
+  "keyId": "prod-2026"
+}

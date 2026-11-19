@@ -1,0 +1,19 @@
+{
+  "payload": {
+    "kind": "org",
+    "for": "Acme Ltd",
+    "products": {
+      "designer": [
+        "events",
+        "share"
+      ],
+      "kanban": [
+        "sync"
+      ]
+    },
+    "issued": "2026-11-06",
+    "until": "2027-11-06",
+    "keyId": "prod-2026"
+  },
+  "signature": "5YgdtKbKT3Jw1RIoJjsH4NydeVH4LTH3JDuvbF2P20PXZGkl6GPLEVbA4Ut5Ohtm/zlH1pZ+QM40oCePJE9DBQ=="
+}

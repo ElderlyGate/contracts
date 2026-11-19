@@ -141,7 +141,7 @@ func TestATicketTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 	}
 }
 
-// A license file's payload, once decoded, meets the payload schema, since the file schema cannot say so itself.
+// A license file's payload, once decoded, meets the payload schema and names the file's id, since the file schema cannot say either itself.
 func TestLicenseFilePayloads(t *testing.T) {
 	files, _ := filepath.Glob("testdata/good/mankit/v1/license-file/*.json")
 	files = append(files, "mankit/v1/samples/license-file.json")
@@ -151,13 +151,28 @@ func TestLicenseFilePayloads(t *testing.T) {
 			t.Fatal(err)
 		}
 		var file struct {
-			Payload []byte `json:"payload"`
+			Metadata struct {
+				ID string `json:"id"`
+			} `json:"metadata"`
+			Spec struct {
+				Payload []byte `json:"payload"`
+			} `json:"spec"`
 		}
 		if err := json.Unmarshal(raw, &file); err != nil {
 			t.Fatalf("%s: %v", path, err)
 		}
-		if err := contracts.Validate("mankit/v1/license-payload.schema.json", file.Payload); err != nil {
+		if err := contracts.Validate("mankit/v1/license-payload.schema.json", file.Spec.Payload); err != nil {
 			t.Errorf("%s: its payload: %v", path, err)
+			continue
+		}
+		var payload struct {
+			ID string `json:"id"`
+		}
+		if err := json.Unmarshal(file.Spec.Payload, &payload); err != nil {
+			t.Fatalf("%s: %v", path, err)
+		}
+		if payload.ID != file.Metadata.ID {
+			t.Errorf("%s: metadata.id %q is not the payload's id %q", path, file.Metadata.ID, payload.ID)
 		}
 	}
 }

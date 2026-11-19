@@ -1,0 +1,16 @@
+{
+  "apiVersion": "elderlygate/mankit/store/v1",
+  "kind": "StoreUnfinished",
+  "metadata": {
+    "id": ".hidden"
+  },
+  "spec": {
+    "user": "ada",
+    "host": "build-01",
+    "journal": "01794398400000000000",
+    "folder": true,
+    "keys": [
+      "design/shop"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "apiVersion": "elderlygate/contracts/problem/v1",
+  "kind": "Problem",
+  "type": "refused",
+  "reason": "unfinished_change",
+  "detail": "a change by ada was cut short on build-01 and waits to be put back; ada's next run puts it back",
+  "at": [
+    {
+      "file": "blocks/shop.yml"
+    }
+  ]
+}

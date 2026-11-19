@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/store-journal.schema.json",
+  "title": "store journal",
+  "description": "The first line of a store journal: whose journal it is and which scope its changes are in. A journal is the store's record of one change, written before its writes are made, so a change cut short can be put back (ADR-S22). It is JSON lines, one Resource per line, as lines are only ever appended and a crash then cuts only the last: this line first, then one StoreJournalChange per write, in the order they are made, their ids counted from 1. A last line cut short was never acted on and is left out. Any other line that cannot be read, or an id out of order or with a gap, stops the reader there: it reports the journal and puts nothing back from it, never skipping a line (G-CODE-6). Its lifetime: the store writes the change's StoreUnfinished marks, then the journal, then the writes; once the writes are read back it removes the journal, and the marks last, before the turn is given up. So a journal that is there is a change cut short, and a mark with no journal is a change that finished but for removing the mark. A journal lives in the user's own data folder, one per machine, never in a shared folder, and is put back only by the user who owns it, once its writer no longer runs. Two app versions may read one journal, as the next run may be another version: apiVersion, kind and metadata never change; spec may grow (ADR-S15).",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "The form every line of a journal is in. It never changes, so two app versions both read every journal (ADR-S15).",
+      "const": "elderlygate/mankit/store/v1"
+    },
+    "kind": {
+      "description": "Always StoreJournal. It tells the first line apart from the change lines after it, which carry the same apiVersion.",
+      "const": "StoreJournal"
+    },
+    "metadata": {
+      "description": "Which journal it is and which process writes it, the same owner fields as a queue ticket's. It never changes in v1, since every app version reads every journal by it (ADR-S15).",
+      "type": "object",
+      "required": [
+        "id",
+        "app",
+        "pid",
+        "host"
+      ],
+      "properties": {
+        "id": {
+          "description": "The journal's name, one of a kind among this user's journals on this machine, so a queue ticket's unfinished-change mark can name it.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        "app": {
+          "description": "The product ID of the app whose change it records, so a person who finds a journal sees which app wrote it.",
+          "$ref": "queue-ticket.schema.json#/properties/metadata/properties/app"
+        },
+        "pid": {
+          "description": "The process that writes it, on host. A journal is put back only once this process no longer runs.",
+          "$ref": "queue-ticket.schema.json#/properties/metadata/properties/pid"
+        },
+        "host": {
+          "description": "The machine the process runs on, as it names itself. A pid means something only on its own machine, so host says which one.",
+          "$ref": "queue-ticket.schema.json#/properties/metadata/properties/host"
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "scope",
+        "mark"
+      ],
+      "properties": {
+        "scope": {
+          "description": "The folder of the scope the change's keys are inside (the folder an app serves, or its own config or data folder, G-STACK-8), as an absolute path on the journal's machine: from / on Linux and macOS, from a drive letter on Windows. A journal never leaves its machine, so here, and only here, a key's folder is named by a machine path; putting the change back starts from it.",
+          "type": "string",
+          "pattern": "^(/|[A-Za-z]:[\\\\/])"
+        },
+        "mark": {
+          "description": "The id of the change's StoreUnfinished marks, so putting the change back finds them, in the .queue/ of the served folder and of each thing the change holds a turn of, and removes them last.",
+          "$ref": "store-unfinished.schema.json#/properties/metadata/properties/id"
+        }
+      },
+      "additionalProperties": true,
+      "description": "What the journal says about its change. Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4). A field a newer app adds never changes how the journal is put back; a journal an older reader could not put back is a new kind or a new version."
+    }
+  },
+  "additionalProperties": false
+}

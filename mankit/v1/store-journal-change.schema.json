@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/store-journal-change.schema.json",
+  "title": "store journal change",
+  "description": "One line after a store journal's first: one write of the change, logged before it is made, so putting the change back undoes it (ADR-S22). How the lines of a journal follow each other is in the StoreJournal schema. apiVersion, kind and metadata never change; spec may grow (ADR-S15).",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "The form every line of a journal is in, the same as the first line's. It never changes, so two app versions both read every journal (ADR-S15).",
+      "const": "elderlygate/mankit/store/v1"
+    },
+    "kind": {
+      "description": "Always StoreJournalChange. It tells a change line apart from the first line, which carries the same apiVersion.",
+      "const": "StoreJournalChange"
+    },
+    "metadata": {
+      "description": "Which write of the journal it is. It never changes in v1, since every app version reads every journal by it (ADR-S15).",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "The write's place in the journal, counted from 1 with no gap, so a reader puts writes back last first and sees when a line is missing.",
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "key"
+      ],
+      "properties": {
+        "key": {
+          "description": "The thing written, by its key (a store key, defs.schema.json), so putting it back never reaches outside the scope.",
+          "$ref": "defs.schema.json#/$defs/storeKey"
+        },
+        "before": {
+          "description": "What the file held before the write, so putting it back writes it again. The content, base64 in the standard alphabet with padding (RFC 4648 §4), as a file may hold any bytes; an empty file is the empty string. Left out where there was no file, so putting it back removes the one the write made; never null.",
+          "$ref": "#/$defs/content"
+        },
+        "after": {
+          "description": "What the write leaves in the file, so a reader sees whether the write was made before putting it back. The content, base64 in the standard alphabet with padding (RFC 4648 §4), as a file may hold any bytes; an empty file is the empty string. Left out where the write removes the file; never null.",
+          "$ref": "#/$defs/content"
+        },
+        "dir": {
+          "description": "true when the write is to a folder, not a file: a folder made, or with gone one taken away, or with from one moved here whole. A folder has no content, so it has no before or after. A file moved in one line, with from and no dir, would be a new kind, never this one loosened. Left out when false.",
+          "type": "boolean"
+        },
+        "gone": {
+          "description": "true when the folder at key is taken away, so putting it back makes it again. Only with dir, never with from. Before it, each file the folder held is its own line with before and no after, and each folder inside it its own gone line, so putting them back gives back what the folder held. Left out when false.",
+          "type": "boolean"
+        },
+        "from": {
+          "description": "The key the folder at key was moved from, whole, so putting it back is one move back. Only with dir, never with gone.",
+          "$ref": "defs.schema.json#/$defs/storeKey"
+        }
+      },
+      "dependentSchemas": {
+        "gone": {
+          "required": [
+            "dir"
+          ],
+          "properties": {
+            "dir": {
+              "const": true
+            }
+          },
+          "not": {
+            "required": [
+              "from"
+            ]
+          }
+        },
+        "from": {
+          "required": [
+            "dir"
+          ],
+          "properties": {
+            "dir": {
+              "const": true
+            }
+          }
+        }
+      },
+      "if": {
+        "required": [
+          "dir"
+        ],
+        "properties": {
+          "dir": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "before"
+              ]
+            },
+            {
+              "required": [
+                "after"
+              ]
+            }
+          ]
+        }
+      },
+      "else": {
+        "anyOf": [
+          {
+            "required": [
+              "before"
+            ]
+          },
+          {
+            "required": [
+              "after"
+            ]
+          }
+        ]
+      },
+      "additionalProperties": true,
+      "description": "What the write does. A file write has before, after or both; a folder write has dir and no content. Open: a newer app may add fields here, and an older reader accepts them (CT-RULE-4). A field a newer app adds never changes how a line is put back; a write an older reader could not put back is a new kind or a new version."
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "content": {
+      "description": "A file's content, base64 in the standard alphabet with padding (RFC 4648 §4).",
+      "type": "string",
+      "contentEncoding": "base64",
+      "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+    }
+  }
+}

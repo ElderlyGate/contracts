@@ -22,5 +22,6 @@
   "featureValue": {
     "name": "ED_TARGET_URL",
     "purpose": "where the requests are sent"
-  }
+  },
+  "storeKey": "blocks/shop.yml"
 }

@@ -2,29 +2,64 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/license-file.schema.json",
   "title": "license file",
-  "description": "A license file on disk, as nw-license writes it and mankit's licenses package reads it: the payload's bytes exactly as signed and the Ed25519 signature over them, so an app checks the file offline against the keys its build trusts (ADR-L1, L5, L6). Stored at the org's or the app's place (ADR-L8). A file that is not this shape is refused as unreadable.",
+  "description": "A license file on disk, as nw-license writes it and mankit's licenses package reads it: a Resource (ADR-S15) whose spec holds the payload's bytes exactly as signed and the Ed25519 signature over them, so an app checks the file offline against the keys its build trusts (ADR-L1, L5, L6). The signature covers the payload alone. Stored at the org's or the app's place (ADR-L8). A file that is not this shape is refused as unreadable.",
   "type": "object",
   "required": [
-    "payload",
-    "signature"
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
   ],
   "properties": {
-    "payload": {
-      "description": "The signed bytes, standard base64: JSON that meets license-payload.schema.json. Kept as bytes, not as an object, so the signature is checked over exactly what was signed.",
-      "type": "string",
-      "minLength": 1,
-      "pattern": "^[A-Za-z0-9+/]+={0,2}$",
-      "contentEncoding": "base64",
-      "contentMediaType": "application/json",
-      "contentSchema": {
-        "$ref": "license-payload.schema.json"
-      }
+    "apiVersion": {
+      "description": "The form the file is in, so a reader knows which schema it meets (ADR-S15, apiversion/v1/forms.yaml).",
+      "const": "elderlygate/mankit/license/v1"
     },
-    "signature": {
-      "description": "The Ed25519 signature over the payload's bytes, standard base64: 64 bytes, so 88 characters ending ==, made with the key the payload's keyId names (ADR-L1, L6).",
-      "type": "string",
-      "pattern": "^[A-Za-z0-9+/]{86}==$",
-      "contentEncoding": "base64"
+    "kind": {
+      "description": "Always License, the kind of this file.",
+      "const": "License"
+    },
+    "metadata": {
+      "description": "What names the file.",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "The license's id: always the same as the signed payload's id, so a signed id names the file; mankit refuses a file whose two ids differ.",
+          "$ref": "license-payload.schema.json#/properties/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "description": "The signed license: the payload's bytes and the signature over them.",
+      "type": "object",
+      "required": [
+        "payload",
+        "signature"
+      ],
+      "properties": {
+        "payload": {
+          "description": "The signed bytes, standard base64: JSON that meets license-payload.schema.json. Kept as bytes, not as an object, so the signature is checked over exactly what was signed.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9+/]+={0,2}$",
+          "contentEncoding": "base64",
+          "contentMediaType": "application/json",
+          "contentSchema": {
+            "$ref": "license-payload.schema.json"
+          }
+        },
+        "signature": {
+          "description": "The Ed25519 signature over the payload's bytes, standard base64: 64 bytes, so 88 characters ending ==, made with the key the payload's keyId names (ADR-L1, L6).",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]{86}==$",
+          "contentEncoding": "base64"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

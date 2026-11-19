@@ -2,9 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/license-payload.schema.json",
   "title": "license payload",
-  "description": "What a license file signs (license-file.schema.json's payload, once decoded): whom it is for, its kind, the enterprise features it names per product, its first and last day and the key that signed it (ADR-L1, L4, L6, L8, L9). nw-license writes it and mankit's licenses package reads it; a field it does not know makes the file unreadable, as every field is signed. One rule no schema can say: until is never before issued.",
+  "description": "What a license file signs (license-file.schema.json's spec.payload, once decoded): whom it is for, its kind, the enterprise features it names per product, its first and last day and the key that signed it (ADR-L1, L4, L6, L8, L9). nw-license writes it and mankit's licenses package reads it; a field it does not know makes the file unreadable, as every field is signed. Two rules no schema can say: until is never before issued, and id is the file's metadata.id.",
   "type": "object",
   "required": [
+    "id",
     "kind",
     "for",
     "issued",
@@ -12,6 +13,11 @@
     "keyId"
   ],
   "properties": {
+    "id": {
+      "description": "The license's id, which nw-license writes, signed so it cannot be changed: the license file's metadata.id must be the same, so a signed id names the file, and mankit refuses a file whose two ids differ (ADR-S15).",
+      "type": "string",
+      "pattern": "^\\S+$"
+    },
     "kind": {
       "description": "Which kind of license it is; license-show.schema.json's licenses[].kind says what each kind covers (ADR-L8, L9).",
       "$ref": "license-show.schema.json#/$defs/license/properties/kind"

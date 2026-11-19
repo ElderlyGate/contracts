@@ -140,3 +140,24 @@ func TestATicketTakesNewSpecFieldsButNoNewHeader(t *testing.T) {
 		t.Fatal("a ticket with a renamed header field was taken")
 	}
 }
+
+// A license file's payload, once decoded, meets the payload schema, since the file schema cannot say so itself.
+func TestLicenseFilePayloads(t *testing.T) {
+	files, _ := filepath.Glob("testdata/good/mankit/v1/license-file/*.json")
+	files = append(files, "mankit/v1/samples/license-file.json")
+	for _, path := range files {
+		raw, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var file struct {
+			Payload []byte `json:"payload"`
+		}
+		if err := json.Unmarshal(raw, &file); err != nil {
+			t.Fatalf("%s: %v", path, err)
+		}
+		if err := contracts.Validate("mankit/v1/license-payload.schema.json", file.Payload); err != nil {
+			t.Errorf("%s: its payload: %v", path, err)
+		}
+	}
+}

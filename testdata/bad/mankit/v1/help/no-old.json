@@ -1,0 +1,72 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Help",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "9.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "name": "e-designer",
+    "what": "a live visual board for a design project",
+    "start": [
+      "e-designer serve --detach",
+      "run it in the project's folder"
+    ],
+    "commands": [
+      {
+        "name": "help",
+        "summary": "Help about any command",
+        "usage": "help [command]",
+        "commands": [],
+        "flags": []
+      },
+      {
+        "name": "server",
+        "summary": "The servers of this app on this machine",
+        "usage": "server",
+        "commands": [
+          {
+            "name": "list",
+            "summary": "List the servers on this machine",
+            "usage": "server list [addr]",
+            "commands": [],
+            "flags": [
+              {
+                "name": "check",
+                "type": "bool",
+                "usage": "fail unless at least one server is listed and every one answers"
+              },
+              {
+                "name": "output",
+                "shorthand": "o",
+                "type": "string",
+                "default": "table",
+                "usage": "output format: table, json or yaml"
+              }
+            ]
+          },
+          {
+            "name": "stop",
+            "summary": "Stop a server",
+            "usage": "server stop [addr|name]",
+            "commands": [],
+            "flags": []
+          }
+        ],
+        "flags": []
+      }
+    ],
+    "flags": [
+      {
+        "name": "theme",
+        "shorthand": "t",
+        "type": "string",
+        "usage": "the colours"
+      }
+    ],
+    "more": "https://github.com/ElderlyGate/e-designer"
+  },
+  "errors": []
+}

@@ -1467,6 +1467,42 @@
         ],
         "additionalProperties": false
       }
+    },
+    "leg": {
+      "description": "One leg of a flow: the move from the block the step before stands on to the block this step stands on, and the design link it rides.",
+      "type": "object",
+      "properties": {
+        "step": {
+          "description": "The step the leg arrives with: its place in the flow's steps, counted from 1, so the first leg is step 2 and the number is the one the board shows on the line.",
+          "type": "integer",
+          "minimum": 2
+        },
+        "from": {
+          "description": "The id the step before stands on (its at): where the request is when this step begins, so the board knows which end of the line the step leaves from.",
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "description": "The id this step stands on (its at): where the request is when this step ends, the end of the line the step arrives at. The same as from when the step stays on one block; such a leg has link null unless the design holds a traversing Link from that block to itself.",
+          "type": "string",
+          "minLength": 1
+        },
+        "link": {
+          "description": "The id of the Link the leg rides: one whose label the definitions name in features.edges.traverses and whose own from and to are this leg's from and to, either way. Only a Link drawn directly between the two ids counts; one ending on a group or frame that holds either of them does not. When several count, one drawn from from to to wins over one drawn the other way, then the id first in byte order. Null when none counts, and the board draws the leg without a link.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "required": [
+        "step",
+        "from",
+        "to",
+        "link"
+      ],
+      "additionalProperties": false
     }
   }
 }

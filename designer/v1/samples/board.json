@@ -844,6 +844,28 @@
         "CMP-STORE": 0.5
       }
     },
+    "legs": {
+      "drop-a-parcel": [
+        {
+          "step": 2,
+          "from": "CMP-KIOSK",
+          "to": "CMP-LOCKS",
+          "link": "CMP-KIOSK--calls--CMP-LOCKS"
+        },
+        {
+          "step": 3,
+          "from": "CMP-LOCKS",
+          "to": "CMP-LEDGER",
+          "link": "CMP-LOCKS--calls--CMP-LEDGER"
+        },
+        {
+          "step": 4,
+          "from": "CMP-LEDGER",
+          "to": "CMP-LOCKS",
+          "link": "CMP-LOCKS--calls--CMP-LEDGER"
+        }
+      ]
+    },
     "requests": [
       {
         "id": "drop",

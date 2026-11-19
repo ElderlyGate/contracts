@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/help.schema.json",
+  "title": "help",
+  "description": "What <app> help answers with -o json: the same commands and flags the H-1 layout shows, as data, so a program (hubman, an agent, a test) reads an app's commands without parsing text, and the hidden old forms of renamed commands, marked old (G-STACK-5). mankit's helpout makes it for every app, so every app answers it alike.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "description": "Always Help, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Help"
+        },
+        "data": {
+          "description": "The app's help: what it is, how to start it, its commands and flags, and its old forms.",
+          "type": "object",
+          "required": [
+            "name",
+            "what",
+            "start",
+            "commands",
+            "flags",
+            "more",
+            "old"
+          ],
+          "properties": {
+            "name": {
+              "description": "The app's command, the first word of every command line, so a reader builds each full form from it.",
+              "type": "string",
+              "minLength": 1
+            },
+            "what": {
+              "description": "One line: what the app is, as the layout's first line says it. Empty when the app says nothing.",
+              "type": "string"
+            },
+            "start": {
+              "description": "How to start the app and where to run it, one line each, as the layout's Start section. Empty when the app says nothing.",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "commands": {
+              "description": "The commands people see, the ones the layout lists, in its order: each thing with its own verbs and things, each command that has no thing. A hidden command is left out; an old form is only in old.",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/command"
+              }
+            },
+            "flags": {
+              "description": "The app's own flags, those the layout's Flags section lists. Empty when it has none.",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/flag"
+              }
+            },
+            "more": {
+              "description": "The repository URL, as the layout's More line gives it, so a person finds the source and the docs. Empty when the app names none.",
+              "type": "string"
+            },
+            "old": {
+              "description": "The hidden old forms of renamed commands, each with the full form it runs: an old form still runs for one release and says the new name on stderr (G-STACK-5). Listed here, and never in the layout, so a reader moves a script to the full form. Empty when there is none.",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/oldForm"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "command": {
+      "description": "One command: a thing, which holds verbs and things of its own, or a verb, which runs.",
+      "type": "object",
+      "required": [
+        "name",
+        "summary",
+        "usage",
+        "commands",
+        "flags"
+      ],
+      "properties": {
+        "name": {
+          "description": "The command's own word; its full form is the words of the commands it sits in, then this one.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "summary": {
+          "description": "The command's one-line help, as the layout lists it, so a reader shows what it does without running it.",
+          "type": "string"
+        },
+        "usage": {
+          "description": "The command's line as it is typed after the app's name, with its arguments, such as server stop [addr|name], so a reader knows what it takes before it runs it.",
+          "type": "string",
+          "minLength": 1
+        },
+        "commands": {
+          "description": "A thing's own verbs and things, in the layout's order; empty for a verb.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/command"
+          }
+        },
+        "flags": {
+          "description": "The command's own flags, not those it takes from the commands it sits in. Empty when it has none.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/flag"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "flag": {
+      "description": "One flag a command takes.",
+      "type": "object",
+      "required": [
+        "name",
+        "type",
+        "usage"
+      ],
+      "properties": {
+        "name": {
+          "description": "The flag's long name, without the dashes: --output is output.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "shorthand": {
+          "description": "The flag's one-letter form, without the dash, when it has one: -o is o.",
+          "type": "string",
+          "pattern": "^[a-zA-Z]$"
+        },
+        "type": {
+          "description": "The kind of value it takes, as the flag library names it (bool, string, int, duration, stringSlice …), so a reader knows whether it takes a value.",
+          "type": "string",
+          "minLength": 1
+        },
+        "default": {
+          "description": "The value it has when not given, as text, when that is not the type's zero value, so a reader knows what leaving the flag out gives.",
+          "type": "string"
+        },
+        "usage": {
+          "description": "The flag's one-line help, so a reader shows what the flag does.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "oldForm": {
+      "description": "One old form of a renamed command and the full form it runs.",
+      "type": "object",
+      "required": [
+        "words",
+        "now"
+      ],
+      "properties": {
+        "words": {
+          "description": "The old words after the app's name, such as servers stop.",
+          "type": "string",
+          "minLength": 1
+        },
+        "now": {
+          "description": "The full form's words after the app's name, such as server stop: the command the old form runs.",
+          "type": "string",
+          "minLength": 1
+        },
+        "args": {
+          "description": "The arguments the old form stands for, given first after the full form's words, when it stood for a verb with an argument: config queue wait runs queue set wait. Left out when it stands for none.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

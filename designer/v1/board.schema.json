@@ -113,6 +113,21 @@
                 }
               }
             },
+            "legs": {
+              "description": "Each flow's legs, worked out by e-designer from the flows and the design's links and never declared, so the board draws a whole flow over its links without deciding which link a step rides. The keys are the ids of the flows the board takes; a flow with fewer than two steps has an empty list.",
+              "type": "object",
+              "propertyNames": {
+                "description": "A flow's id.",
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "description": "One flow's legs, in step order: one for each step whose step before it and itself both stand on a block (at); a step either of the two leaves without at has no leg.",
+                "type": "array",
+                "items": {
+                  "$ref": "defs.schema.json#/$defs/leg"
+                }
+              }
+            },
             "requests": {
               "description": "The saved requests the board takes, in id order; a request it refuses is in refused instead.",
               "type": "array",

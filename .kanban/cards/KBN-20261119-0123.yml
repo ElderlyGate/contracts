@@ -1,0 +1,36 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261119-0123
+  title: 'mankit/v1 Help: the help -o json answer'
+  created_at: 2026-11-19T15:11:29.744Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: done
+  order: 0.9999999999708962
+  summary: 'S: the shape of <app> help -o json, with old forms marked old (mankit a79c)'
+  tags: [feature, 'epic:thing-first', 'feature:mankit-thing-first', 'product:contracts']
+  work:
+    agent: claude-opus-5-5
+    branch: feat/mankit-help/mankit-thing-first
+  description: |
+    #feature #epic:thing-first #feature:mankit-thing-first #product:contracts
+
+    # mankit/v1 Help: the help -o json answer
+
+    ## Why
+    H-1 says `<app> help -o json` prints the same commands and flags as data, and the thing-first rule (G-STACK-5, 19 Nov) adds the hidden old forms, marked old. No app answers it yet, because the shape was never written down (ADR-S15: every answer has its schema). mankit card 20261117-a79c (mankit#56) builds it for every app. Cross-board, named here.
+
+    ## Changes
+    - `mankit/v1/help.schema.json` (kind Help): name, what, start, commands (a tree of things and verbs, each with usage and flags), flags, more, old (words, now, args).
+    - Its sample, good and bad cases; README names it.
+
+    ## Done when
+    - [ ] Merged, and mankit#56 pins this contracts version.
+
+    Size S.
+  lifecycle:
+    active_at: 2026-11-19T15:11:36.307Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-19T15:11:43.830Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

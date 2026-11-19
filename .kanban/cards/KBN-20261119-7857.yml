@@ -6,8 +6,8 @@ metadata:
   created_at: 2026-11-19T16:20:46.597Z
   created_by: Tugbay Atilla <tugbayatilla@gmail.com>
 spec:
-  column: in-progress
-  order: 0.5
+  column: done
+  order: 0.9999999999708962
   tags: [feature, 'epic:same-shape-designer', 'feature:open-view', 'product:contracts', 'product:designer']
   description: |
     #feature #epic:same-shape-designer #feature:open-view #product:contracts #product:designer
@@ -28,3 +28,5 @@ spec:
   lifecycle:
     active_at: 2026-11-19T16:21:02.534Z
     active_by: Tugbay Atilla <tugbayatilla@gmail.com>
+    done_at: 2026-11-19T16:26:48.106Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

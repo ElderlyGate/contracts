@@ -12,7 +12,7 @@ spec:
   tags: [feature, 'product:contracts', 'epic:constitution/storage-port']
   work:
     agent: claude-opus-5-5
-    branch: feat/store-unfinished-answers/storage-port
+    branch: feat/store-unfinished-shapes/storage-port
   description: |
     #feature #epic:constitution/storage-port #product:contracts
 

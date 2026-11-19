@@ -23,7 +23,7 @@ spec:
 
     ## Changes
     - `mankit/v1/defs.schema.json` featureState: optional `tier` (free | enterprise; absent = free), and `license` as a known `by` word (an open word, CT-RULE-1).
-    - The defs sample shows a tier; good and bad cases for both.
+    - The defs sample stays as it is (no tier, so free); good and bad cases cover both.
 
     ## Waits on
     - Nothing. S2 (ui-kit) and mankit's license package (after mankit v4) read it.

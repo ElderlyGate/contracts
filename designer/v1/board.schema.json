@@ -48,11 +48,11 @@
               "$ref": "defs.schema.json#/$defs/defaultViews"
             },
             "openView": {
-              "description": "The view the board opens on, and the one a layout request naming no view is filed under: the first view design.yml declares, else the first of defaultViews; empty when design.yml declares no views. Always given, so a reader with no view chosen, or one whose choice the design no longer declares, opens this one and decides no default of its own.",
+              "description": "The view the board opens on, and the one a layout request naming no view is filed under: the first view design.yml declares; when design.yml says nothing about views, the first of defaultViews; empty when it declares an empty views list, a design with no views. Always given, so a reader with no view chosen, or one whose choice the design no longer declares, opens this one and decides no default of its own.",
               "type": "string"
             },
             "layoutPages": {
-              "description": "Each view the board draws, by name, with the page of layout.yml its positions are read from now, so a reader looks a view up and keeps no rule of its own: the view's own page; for the view the board opens on, the file's default page when the file holds no page of that name, since a write files that page under the view; for a design that declares no views, one entry under the empty name, the file's first page, else default. Always given.",
+              "description": "Each view the board draws, by name, with the page of layout.yml its positions are read from now, so a reader looks a view up and keeps no rule of its own: the view's own page; for the view the board opens on, the file's default page when the file holds no page of that name, since a write files that page under the view. When design.yml says nothing about views, the views are defaultViews; when it declares an empty views list, there is one entry, under the empty name: the file's first page, else default. Always given.",
               "type": "object",
               "additionalProperties": {
                 "description": "The page of layout.yml, a key under its views, as written in the file.",

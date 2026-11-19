@@ -1,0 +1,28 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "Help",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "9.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "name": "e-designer",
+    "what": "",
+    "start": [],
+    "commands": [
+      {
+        "name": "help",
+        "summary": "Help about any command",
+        "usage": "help [command]",
+        "commands": [],
+        "flags": []
+      }
+    ],
+    "flags": [],
+    "more": "",
+    "old": []
+  },
+  "errors": []
+}

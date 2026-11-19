@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/license-show.schema.json",
+  "title": "license show",
+  "description": "What <app> license show answers with -o json: the app's license state, whether this build is a release, every license it read and every feature with where it is unlocked from, so the CLI, its JSON and the License group on the app's Settings page show the same list (ADR-L8). mankit's license check makes it for every app, so every app answers it alike.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "kind": {
+          "description": "Always LicenseShow, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "LicenseShow"
+        },
+        "data": {
+          "description": "The app's license state, its build, the licenses it read and its features.",
+          "type": "object",
+          "required": [
+            "state",
+            "build",
+            "licenses",
+            "features"
+          ],
+          "properties": {
+            "state": {
+              "description": "What the License group says, one word for the whole app. none: no license, so use is free and nothing warns; trial: a trial key runs (ADR-L9); trial-ended: the trial key has ended, so use is free again and nothing warns (ADR-L3, L9); licensed: a paid license runs; ending: a paid license the threshold of ADR-L3 warns about; dev: a build that is not a release, which accepts dev-key licenses only (ADR-L5).",
+              "enum": [
+                "none",
+                "trial",
+                "trial-ended",
+                "licensed",
+                "ending",
+                "dev"
+              ]
+            },
+            "build": {
+              "description": "This build, so a reader knows which keys' licenses it accepts (ADR-L5).",
+              "type": "object",
+              "required": [
+                "release"
+              ],
+              "properties": {
+                "release": {
+                  "description": "True for a release from a tag, which accepts prod-key licenses only; false for every other build, which accepts dev-key licenses only (ADR-L5). Set by the build, never by a flag, setting or environment variable.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "licenses": {
+              "description": "Every license file the app read, the org license first and then the product license (ADR-L8). Empty when there is none, so a reader tells no license from a failure.",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/license"
+              }
+            },
+            "features": {
+              "description": "Every feature of the app, in the order its feature list gives them, each with its tier and where it is unlocked from (ADR-L2, L8).",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/feature"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "description": "dev is said only by a build that is not a release (ADR-L5).",
+              "if": {
+                "properties": {
+                  "state": {
+                    "const": "dev"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "build": {
+                    "properties": {
+                      "release": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "license": {
+      "description": "One license file the app read: whom it names, until when, and the key that signed it.",
+      "type": "object",
+      "required": [
+        "kind",
+        "for",
+        "until",
+        "daysLeft",
+        "ended",
+        "keyId"
+      ],
+      "properties": {
+        "kind": {
+          "description": "Which kind of license it is, so a reader knows what it covers. org: features of several or all products, read by every app; product: features of this app alone (ADR-L8); trial: a trial key, which opens every enterprise feature of every product and names none (ADR-L9).",
+          "enum": [
+            "org",
+            "product",
+            "trial"
+          ]
+        },
+        "for": {
+          "description": "The person or org the license names, never a machine, so whoever has the file sees whose it was (ADR-L4).",
+          "type": "string",
+          "minLength": 1
+        },
+        "until": {
+          "description": "The last day the license opens its features, an RFC 3339 date; after it they lock again (ADR-L3).",
+          "type": "string",
+          "format": "date"
+        },
+        "daysLeft": {
+          "description": "The days left until the license ends, 0 once it has ended. license-check gives only this; when to warn is the threshold's to say (ADR-L3).",
+          "type": "integer",
+          "minimum": 0
+        },
+        "ended": {
+          "description": "True once the license has ended: its features are locked again, and what they made stays readable (ADR-L3).",
+          "type": "boolean"
+        },
+        "keyId": {
+          "description": "The id of the key that signed the license, so a reader sees which of the keys this build trusts it rests on, as a key is moved or replaced (ADR-L6).",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "An ended license has no days left.",
+          "if": {
+            "properties": {
+              "ended": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "daysLeft": {
+                "const": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "feature": {
+      "description": "One feature of the app and where it is unlocked from, a row of the License group's features table (ADR-L8).",
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "tier",
+        "from"
+      ],
+      "properties": {
+        "id": {
+          "description": "The feature's id, the one its feature list and a license name it by (ADR-L2).",
+          "$ref": "defs.schema.json#/$defs/featureState/properties/id"
+        },
+        "title": {
+          "description": "The feature's name for people, as its feature list gives it.",
+          "$ref": "defs.schema.json#/$defs/featureState/properties/title"
+        },
+        "tier": {
+          "description": "The feature's tier, always written here, so the License group marks which features are enterprise (ADR-L2, L9).",
+          "$ref": "defs.schema.json#/$defs/featureState/properties/tier"
+        },
+        "from": {
+          "description": "Where the feature is unlocked from (ADR-L8, L9). org: the org license names it; product: the product license names it; both: both name it; trial: a trial key opens it; none: nothing opens it, as a free feature needs nothing and an enterprise feature with none is locked.",
+          "enum": [
+            "org",
+            "product",
+            "both",
+            "trial",
+            "none"
+          ]
+        },
+        "until": {
+          "description": "The last day the feature stays open, an RFC 3339 date: the latest until of the licenses it is unlocked from. Absent when from is none.",
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "A feature nothing opens has no last day; one a license opens has.",
+          "if": {
+            "properties": {
+              "from": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "until"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "until"
+            ]
+          }
+        },
+        {
+          "description": "A license names enterprise features only, and a trial key opens only those, so a free feature is never unlocked from one (ADR-L2, L9).",
+          "if": {
+            "properties": {
+              "tier": {
+                "const": "free"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "from": {
+                "const": "none"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -310,6 +310,49 @@
         "affects",
         "related"
       ],
+      "borderStyles": [
+        "solid",
+        "dashed",
+        "dotted",
+        "double",
+        "none"
+      ],
+      "lineStyles": [
+        "solid",
+        "dashed",
+        "dotted"
+      ],
+      "statuses": [
+        {
+          "value": "open",
+          "settled": false,
+          "mark": "",
+          "note": "outstanding; drawn unmarked, so the board reads as what is left"
+        },
+        {
+          "value": "decided",
+          "settled": true,
+          "mark": "✓",
+          "color": "#46c17c",
+          "note": "settled, ticked"
+        },
+        {
+          "value": "parked",
+          "settled": true,
+          "mark": "⏸",
+          "color": "#ffcc00",
+          "recede": "aside",
+          "note": "set aside, dashed border"
+        },
+        {
+          "value": "dropped",
+          "settled": true,
+          "mark": "✕",
+          "color": "#8b93a1",
+          "recede": "gone",
+          "note": "gone, struck through and faded hardest"
+        }
+      ],
       "hexagon": {
         "inside": [
           "domain"

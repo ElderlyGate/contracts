@@ -1,0 +1,63 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "LicenseShow",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "9.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "state": "trial",
+    "build": {
+      "release": true
+    },
+    "licenses": [
+      {
+        "kind": "trial",
+        "for": "ada@acme.example",
+        "until": "2026-12-03",
+        "daysLeft": 14,
+        "ended": false,
+        "keyId": "prod-2026"
+      }
+    ],
+    "features": [
+      {
+        "id": "edit",
+        "title": "Change a design",
+        "tier": "free",
+        "from": "none"
+      },
+      {
+        "id": "events",
+        "title": "Live events",
+        "tier": "enterprise",
+        "from": "trial",
+        "until": "2026-12-03"
+      },
+      {
+        "id": "multi-design",
+        "title": "Many designs",
+        "tier": "enterprise",
+        "from": "trial",
+        "until": "2026-12-03"
+      },
+      {
+        "id": "share",
+        "title": "Share a design",
+        "tier": "enterprise",
+        "from": "trial",
+        "until": "2026-12-03"
+      },
+      {
+        "id": "sync",
+        "title": "Sync designs",
+        "tier": "enterprise",
+        "from": "trial",
+        "until": "2026-12-03"
+      }
+    ]
+  },
+  "errors": []
+}

@@ -1,0 +1,50 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "LicenseShow",
+  "ran": {
+    "name": "designer",
+    "app": "designer",
+    "version": "9.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "state": "none",
+    "build": {
+      "release": true
+    },
+    "licenses": [],
+    "features": [
+      {
+        "id": "edit",
+        "title": "Change a design",
+        "tier": "free",
+        "from": "none"
+      },
+      {
+        "id": "events",
+        "title": "Live events",
+        "tier": "enterprise",
+        "from": "none"
+      },
+      {
+        "id": "multi-design",
+        "title": "Many designs",
+        "tier": "enterprise",
+        "from": "none"
+      },
+      {
+        "id": "share",
+        "title": "Share a design",
+        "tier": "enterprise",
+        "from": "none"
+      },
+      {
+        "id": "sync",
+        "title": "Sync designs",
+        "tier": "enterprise",
+        "from": "none"
+      }
+    ]
+  },
+  "errors": []
+}

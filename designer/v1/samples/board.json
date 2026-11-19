@@ -750,6 +750,13 @@
         "draws": []
       }
     ],
+    "openView": "structure",
+    "layoutPages": {
+      "structure": "structure",
+      "context": "context",
+      "runtime": "runtime",
+      "deployment": "deployment"
+    },
     "flows": [
       {
         "id": "drop-a-parcel",

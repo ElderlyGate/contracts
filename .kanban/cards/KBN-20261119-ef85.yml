@@ -9,11 +9,11 @@ spec:
   column: backlog
   order: 0.99993896484375
   summary: 'S: SP2 of storage-port: four store reasons in problem/v1, StoreJournal (JSON lines) in mankit/v1, ticket unfinished-change mark'
-  tags: [feature, 'epic:storage-port', 'product:contracts']
+  tags: [feature, 'product:contracts', 'epic:constitution/storage-port']
   work:
     agent: claude-opus-5-5
   description: |
-    #feature #epic:storage-port #product:contracts
+    #feature #epic:constitution/storage-port #product:contracts
 
     # problem/v1 store reasons and mankit/v1 StoreJournal
 
@@ -27,7 +27,7 @@ spec:
     - Samples for each, tested.
 
     ## Waits on
-    - Constitution SP1 KBN-20261119-d8b3 (ADR-S22 and the ADR-E9 change), merged soon. Cross-board links are not supported, so named here.
+    - Constitution SP1 KBN-20261119-08f7 (ADR-S22 and the ADR-E9 change), merged soon. Cross-board links are not supported, so named here.
     - The contracts line takes one change at a time: this sits beside hubman/v1 KBN-20261117-31fb.
 
     ## Done when

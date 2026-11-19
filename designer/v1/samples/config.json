@@ -326,12 +326,14 @@
         {
           "value": "open",
           "settled": false,
+          "badge": "O",
           "mark": "",
           "note": "outstanding; drawn unmarked, so the board reads as what is left"
         },
         {
           "value": "decided",
           "settled": true,
+          "badge": "D",
           "mark": "✓",
           "color": "#46c17c",
           "note": "settled, ticked"
@@ -339,6 +341,7 @@
         {
           "value": "parked",
           "settled": true,
+          "badge": "P",
           "mark": "⏸",
           "color": "#ffcc00",
           "recede": "aside",
@@ -347,6 +350,7 @@
         {
           "value": "dropped",
           "settled": true,
+          "badge": "D",
           "mark": "✕",
           "color": "#8b93a1",
           "recede": "gone",

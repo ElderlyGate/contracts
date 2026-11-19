@@ -245,7 +245,7 @@
                   }
                 },
                 "statuses": {
-                  "description": "The status words the vocabulary declares (its status list), in order, each in lower case as a component's status is compared and each once, with how each draws, so a reader neither finds the list nor judges a status itself.",
+                  "description": "The status words the vocabulary declares (its status list, the only list a status is read from), in order, each in lower case as a component's status is compared and each once, with how each draws, so a reader neither finds the list nor judges a status itself.",
                   "type": "array",
                   "items": {
                     "description": "One status.",
@@ -254,40 +254,42 @@
                       "value": {
                         "description": "The status word, in lower case.",
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "pattern": "^[^A-Z]+$"
                       },
                       "settled": {
                         "description": "True when the vocabulary marks it settled: a thing with this status needs no more work, so it closes a finding and cannot be in the focus.",
                         "type": "boolean"
                       },
                       "mark": {
-                        "description": "The mark drawn beside a component with this status; an empty mark is drawn as none. Absent when the vocabulary gives none, and then the status has no treatment.",
+                        "description": "The mark drawn beside a component with this status; an empty mark is drawn as none. Given only when the vocabulary gives one; a status without one has no treatment.",
                         "type": "string"
                       },
                       "badge": {
-                        "description": "The letter a component's status badge shows; absent means the status's first letter.",
+                        "description": "The letter a component's status badge shows: the vocabulary's, else the status's first letter in upper case. Always given.",
                         "type": "string",
                         "minLength": 1
                       },
                       "color": {
-                        "description": "The colour the mark draws in, a CSS colour or a theme name; absent means the board's own.",
+                        "description": "The colour the mark draws in, a CSS colour or a theme name, as the vocabulary gives it. Given only when it gives one.",
                         "type": "string",
                         "minLength": 1
                       },
                       "recede": {
-                        "description": "How a component with this status steps back, such as aside or gone; absent means it does not.",
+                        "description": "How a component with this status steps back, such as aside or gone, as the vocabulary gives it. Given only when it gives one.",
                         "type": "string",
                         "minLength": 1
                       },
                       "note": {
-                        "description": "What the status means, in words for people.",
+                        "description": "What the status means, in words for people, as the vocabulary gives it. Given only when it gives one.",
                         "type": "string",
                         "minLength": 1
                       }
                     },
                     "required": [
                       "value",
-                      "settled"
+                      "settled",
+                      "badge"
                     ],
                     "additionalProperties": false
                   }

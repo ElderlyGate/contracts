@@ -1,0 +1,11 @@
+{
+  "apiVersion": "elderlygate/mankit/store/v1",
+  "kind": "StoreJournal",
+  "metadata": {
+    "id": "01794398400000000000",
+    "app": "designer",
+    "pid": 4242,
+    "host": "build-01"
+  },
+  "spec": {}
+}

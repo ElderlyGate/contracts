@@ -1,0 +1,13 @@
+{
+  "apiVersion": "elderlygate/mankit/store/v1",
+  "kind": "StoreJournalChange",
+  "metadata": {
+    "id": "01794398400000000000",
+    "app": "designer",
+    "pid": 4242,
+    "host": "build-01"
+  },
+  "spec": {
+    "scope": "/home/ada/work/shop/.designer/shop"
+  }
+}

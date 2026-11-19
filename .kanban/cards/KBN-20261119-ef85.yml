@@ -6,12 +6,13 @@ metadata:
   created_at: 2026-11-19T07:37:54.281Z
   created_by: Tugbay Atilla <tugbayatilla@gmail.com>
 spec:
-  column: backlog
-  order: 0.99993896484375
+  column: done
+  order: 0.9999999998835847
   summary: 'S: SP2 of storage-port: four store reasons in problem/v1, StoreJournal (JSON lines) in mankit/v1, ticket unfinished-change mark'
   tags: [feature, 'product:contracts', 'epic:constitution/storage-port']
   work:
     agent: claude-opus-5-5
+    branch: feat/store-reasons/storage-port
   description: |
     #feature #epic:constitution/storage-port #product:contracts
 
@@ -38,3 +39,6 @@ spec:
     Size S.
   links:
     related: [KBN-20261117-31fb]
+  lifecycle:
+    done_at: 2026-11-19T07:58:36.476Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

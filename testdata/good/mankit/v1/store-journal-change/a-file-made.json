@@ -1,0 +1,8 @@
+{
+  "apiVersion": "elderlygate/mankit/store/v1",
+  "kind": "StoreJournalChange",
+  "metadata": {
+    "id": 2
+  },
+  "spec": { "key": "blocks/cart.yml", "after": "" }
+}

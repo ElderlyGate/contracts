@@ -31,6 +31,10 @@ forms:
     app: mankit
     kinds: [QueueTicket, QueueBackend]
     note: "The change queue's files in a served folder's .queue/ (mankit queue): QueueTicket, a change waiting its turn; QueueBackend, the marker naming how every writer takes turns"
+  - new: elderlygate/mankit/store/v1
+    app: mankit
+    kinds: [StoreJournal, StoreJournalChange]
+    note: "The store's journal in the user's own data folder (mankit store, ADR-S22), JSON lines: StoreJournal, the first line naming its writer and scope; StoreJournalChange, each write after it"
   - new: elderlygate/contracts/problem/v1
     app: contracts
     kinds: [Problem]

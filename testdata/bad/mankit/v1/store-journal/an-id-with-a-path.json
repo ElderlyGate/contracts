@@ -1,0 +1,13 @@
+{
+  "apiVersion": "elderlygate/mankit/store/v1",
+  "kind": "StoreJournal",
+  "metadata": {
+    "id": "../escape",
+    "app": "designer",
+    "pid": 4242,
+    "host": "build-01"
+  },
+  "spec": {
+    "scope": "/home/ada/work/shop/.designer/shop"
+  }
+}

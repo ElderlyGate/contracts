@@ -24,7 +24,7 @@ spec:
     ## Changes
     - `mankit/v1/license-show.schema.json` (kind LicenseShow): state (none, trial, trial-ended, licensed, ending, ended), build.release, licenses (with window { of } for the countdown bar), refused (G-CODE-6), counts, and features as featureState plus from and until, so the License group joins nothing.
     - `problem/v1` reason words for a refused license file: signature, untrusted_key, other_build, unreadable, wrong_place.
-    - `mankit/v1/license-file.schema.json` (payload and signature, base64) and `license-payload.schema.json` (kind, for, products, issued, until, keyId), the file mankit's licenses package (mankit#61) reads and nw-license writes.
+    - `mankit/v1/license-file.schema.json`, a Resource (apiVersion elderlygate/mankit/license/v1, kind License, metadata.id, spec { payload, signature }, base64), and `license-payload.schema.json` (id, kind, for, products, issued, until, keyId); forms.yaml row, the file mankit's licenses package (mankit#61) reads and nw-license writes.
     - Its sample, good and bad cases; README names it.
 
     ## Waits on

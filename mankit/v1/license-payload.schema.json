@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/license-payload.schema.json",
   "title": "license payload",
-  "description": "What a license file signs (license-file.schema.json's spec.payload, once decoded): whom it is for, its kind, the enterprise features it names per product, its first and last day and the key that signed it (ADR-L1, L4, L6, L8, L9). nw-license writes it and mankit's licenses package reads it; a field it does not know makes the file unreadable, as every field is signed. Two rules no schema can say: until is never before issued, and id is the file's metadata.id.",
+  "description": "What a license file signs (license-file.schema.json's spec.payload, once decoded): whom it is for, its kind, the enterprise features it names per product, its first and last day and the key that signed it (ADR-L1, L4, L6, L8, L9). nw-license writes it and mankit's licenses package reads it. Open: a newer nw-license may add fields here, and an older app accepts them (CT-RULE-4), as several app versions read the org license at once (ADR-S15); the signature still covers the payload's bytes exactly, a field the app does not know included. Two rules no schema can say: until is never before issued, and id is the file's metadata.id.",
   "type": "object",
   "required": [
     "id",
@@ -58,7 +58,6 @@
       "minLength": 1
     }
   },
-  "additionalProperties": false,
   "allOf": [
     {
       "description": "A trial key names no products (ADR-L9).",

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/mankit/v1/license-file.schema.json",
   "title": "license file",
-  "description": "A license file on disk, as nw-license writes it and mankit's licenses package reads it: a Resource (ADR-S15) whose spec holds the payload's bytes exactly as signed and the Ed25519 signature over them, so an app checks the file offline against the keys its build trusts (ADR-L1, L5, L6). The signature covers the payload alone. Stored at the org's or the app's place (ADR-L8). A file that is not this shape is refused as unreadable.",
+  "description": "A license file on disk, as nw-license writes it and mankit's licenses package reads it: a Resource (ADR-S15) whose spec holds the payload's bytes exactly as signed and the Ed25519 signature over them, so an app checks the file offline against the keys its build trusts (ADR-L1, L5, L6). The signature covers the payload alone. Stored at the org's or the app's place (ADR-L8). Several app versions read it at once: apiVersion, kind and metadata never change; spec may grow (ADR-S15). A file that is not this shape is refused as unreadable.",
   "type": "object",
   "required": [
     "apiVersion",
@@ -34,7 +34,7 @@
       "additionalProperties": false
     },
     "spec": {
-      "description": "The signed license: the payload's bytes and the signature over them.",
+      "description": "The signed license: the payload's bytes and the signature over them. Open: a newer nw-license may add fields here, and an older app accepts them (CT-RULE-4).",
       "type": "object",
       "required": [
         "payload",
@@ -58,8 +58,7 @@
           "pattern": "^[A-Za-z0-9+/]{86}==$",
           "contentEncoding": "base64"
         }
-      },
-      "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

@@ -1467,6 +1467,42 @@
         ],
         "additionalProperties": false
       }
+    },
+    "leg": {
+      "description": "One leg of a flow: the move from the block the step before stands on to the block this step stands on, and the design link it rides.",
+      "type": "object",
+      "properties": {
+        "step": {
+          "description": "The step the leg arrives with: its place in the flow's steps, counted from 1, so the first leg is step 2 and the number is the one the board shows on the line.",
+          "type": "integer",
+          "minimum": 2
+        },
+        "from": {
+          "description": "The id the step before stands on (its at).",
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "description": "The id this step stands on (its at); the same as from when the step stays on one block.",
+          "type": "string",
+          "minLength": 1
+        },
+        "link": {
+          "description": "The id of the Link the leg rides: one whose label the definitions name in features.edges.traverses and that joins from and to, either way. When several do, one from from to to wins over one the other way, then the lowest id. Null when no such link is in the design, and the board draws the leg without a link.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "required": [
+        "step",
+        "from",
+        "to",
+        "link"
+      ],
+      "additionalProperties": false
     }
   }
 }

@@ -1,0 +1,12 @@
+{
+  "apiVersion": "elderlygate/mankit/license/v1",
+  "kind": "License",
+  "metadata": {
+    "id": "lic-20261106-acme-seats"
+  },
+  "spec": {
+    "payload": "eyJpZCI6ImxpYy0yMDI2MTEwNi1hY21lLXNlYXRzIiwia2luZCI6Im9yZyIsImZvciI6IkFjbWUgTHRkIiwicHJvZHVjdHMiOnsiZGVzaWduZXIiOlsiZXZlbnRzIl19LCJpc3N1ZWQiOiIyMDI2LTExLTA2IiwidW50aWwiOiIyMDI3LTExLTA2Iiwia2V5SWQiOiJwcm9kLTIwMjYiLCJzZWF0cyI6NX0=",
+    "signature": "jqmelX11RlsEqxPf42cxp6gRD+5DN4+1mT1Zd48OJaoJDmo5YYgqjcpcpx8qi+ZteSfMaGtaXUB2y4xwynM7DQ==",
+    "note": "a field a newer nw-license adds beside the payload"
+  }
+}

@@ -6,7 +6,7 @@
   },
   "spec": {
     "payload": "eyJpZCI6ImxpYy0yMDI2MTEwNi1hY21lIiwia2luZCI6Im9yZyIsImZvciI6IkFjbWUgTHRkIiwicHJvZHVjdHMiOnsiZGVzaWduZXIiOlsiZXZlbnRzIiwic2hhcmUiXSwia2FuYmFuIjpbInN5bmMiXX0sImlzc3VlZCI6IjIwMjYtMTEtMDYiLCJ1bnRpbCI6IjIwMjctMTEtMDYiLCJrZXlJZCI6InByb2QtMjAyNiJ9",
-    "signature": "s0/R1neiMAkk+5byophXuMRDmxODdQO1rUn74vc7V0umozI06IzazeNrjH2Sj+mOgQNvh85SktlUtLajGlsWCA==",
-    "machine": "build-01"
-  }
+    "signature": "s0/R1neiMAkk+5byophXuMRDmxODdQO1rUn74vc7V0umozI06IzazeNrjH2Sj+mOgQNvh85SktlUtLajGlsWCA=="
+  },
+  "machine": "build-01"
 }

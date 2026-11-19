@@ -14,5 +14,5 @@
   "issued": "2026-11-06",
   "until": "2027-11-06",
   "keyId": "prod-2026",
-  "machine": "build-01"
+  "seats": 5
 }

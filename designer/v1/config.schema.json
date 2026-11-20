@@ -174,7 +174,7 @@
               "additionalProperties": false
             },
             "definitions": {
-              "description": "The definitions in use after every layer: classes, properties, sections, presentations, schemas, features and vocabulary. Their entries are the design's own words, written by its user, so they stay open (CT-RULE-4); config's sections say where each came from. The vocabulary says what words mean (a status's value, settled and note; a link label's value and note); how things look is styles, colours and rules, given below, never the vocabulary.",
+              "description": "The definitions in use after every layer: classes, properties, sections, presentations, schemas, features and vocabulary. Their entries are the design's own words, written by its user, so they stay open (CT-RULE-4); config's sections say where each came from. The vocabulary says what words mean (a status's value, settled and note; a link label's value and note); how things look is styles, colours and rules, given below. The looks the vocabulary held before are still read, each with the problem old_style_field naming its new home.",
               "type": "object"
             },
             "readings": {

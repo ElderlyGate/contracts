@@ -42,16 +42,8 @@
             ],
             "properties": {
               "name": {
-                "description": "The project's name on this machine, unique in the list: the name --project takes and a picker shows. It is the folder's name unless another was given when it was added, so two folders with the same name can both be added. It holds no / and is not . or .., since --project would read those as a path.",
-                "type": "string",
-                "minLength": 1,
-                "pattern": "^[^/]+$",
-                "not": {
-                  "enum": [
-                    ".",
-                    ".."
-                  ]
-                }
+                "description": "The project's name on this machine, unique in the list: the name --project takes and a picker shows. It is the folder's name unless another was given when it was added, so two folders with the same name can both be added. It follows the one rule for a served project's name, so it can be an event's source.",
+                "$ref": "defs.schema.json#/$defs/projectName"
               },
               "path": {
                 "description": "The project's folder on this machine, absolute and with links resolved, so one folder reached two ways is one project: the folder holding .designer/. The list is kept on the machine, never in a repository, so the path is only meaningful here.",

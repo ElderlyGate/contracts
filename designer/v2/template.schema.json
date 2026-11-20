@@ -35,7 +35,7 @@
           "type": "object",
           "properties": {
             "text": {
-              "description": "One YAML document in the design form (design/v2): a resource of that kind to fill in, under the id asked for, each key with a comment hinting what it takes.",
+              "description": "One YAML document in the design form (design/v3): a resource of that kind to fill in, under the id asked for, each key with a comment hinting what it takes.",
               "type": "string",
               "minLength": 1
             }

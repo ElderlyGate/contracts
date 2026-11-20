@@ -65,7 +65,7 @@
                   "pattern": "^[a-z][a-z0-9_]*$"
                 },
                 "version": {
-                  "description": "The tool's version, its release tag without the v (6.29.0); absent for a dev build, unless the tool's checkout is exactly on a release tag, which it then names. released is decided against it. The envelope's ran.version carries the tag itself (v6.29.0).",
+                  "description": "The tool's version, its release tag without the v (6.29.0); absent for a dev build, unless the tool's checkout is exactly on a release tag, which it then names. released is decided against it. The envelope's source.version carries the tag itself (v6.29.0).",
                   "type": "string",
                   "minLength": 1
                 },

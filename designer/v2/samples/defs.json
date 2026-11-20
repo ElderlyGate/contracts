@@ -215,9 +215,9 @@
     }
   },
   "boardProblem": {
-    "code": "undeclared_look",
-    "at": "block/CMP-KIOSK.yml: spec.ui-design.look",
-    "says": "ui-design.look: glass is not a look this design declares"
+    "code": "undeclared_style",
+    "at": "block/CMP-KIOSK.yml: spec.ui-design.styles",
+    "says": "ui-design.styles: glass is not a style this design declares"
   },
   "refusal": {
     "code": "flow_refused",

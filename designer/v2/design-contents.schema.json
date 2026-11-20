@@ -68,7 +68,7 @@
                           "$ref": "defs.schema.json#/$defs/document"
                         },
                         {
-                          "description": "layout.yml as read: where the boxes and lines of each view sit. Its version says its form; a version 1 file is refused by the board, which says to run e-designer migrate layout.",
+                          "description": "layout.yml as read: where the boxes and lines of each view sit. Its version says its form; a version 1 file is refused by the board, which says to run nw-designer project migrate.",
                           "type": "object",
                           "properties": {
                             "version": {

@@ -62,13 +62,13 @@
                       "minimum": 0
                     },
                     "document": {
-                      "description": "The document as its file holds it: a resource, or for the kind Layout, layout.yml.",
+                      "description": "The document as its file holds it: a resource, or for the kind Layout, layout.yml in the form it is in: layout/v2, a Resource, or the bare layout/v1 file.",
                       "oneOf": [
                         {
                           "$ref": "defs.schema.json#/$defs/document"
                         },
                         {
-                          "description": "layout.yml as read: where the boxes and lines of each view sit. Its version says its form; a version 1 file is refused by the board, which says to run e-designer migrate layout.",
+                          "description": "layout.yml as read in the form layout/v1: where the boxes and lines of each view sit, which may leave boxes without a place. Its version says its form; a version 1 file is refused by the board, which says to run hubman product migrate designer <folder>. `e-designer project migrate` brings a layout/v1 file to layout/v2.",
                           "type": "object",
                           "properties": {
                             "version": {
@@ -86,6 +86,9 @@
                             "views"
                           ],
                           "additionalProperties": false
+                        },
+                        {
+                          "$ref": "layout-file.schema.json"
                         }
                       ]
                     }

@@ -1503,6 +1503,121 @@
         "link"
       ],
       "additionalProperties": false
+    },
+    "migratedFile": {
+      "description": "What a project migration did, or would do, to one file of one design: its form before and after, where it moved, and what the step did, so a person sees each file's change before the write is kept.",
+      "type": "object",
+      "required": [
+        "design",
+        "file",
+        "from",
+        "to",
+        "did"
+      ],
+      "properties": {
+        "design": {
+          "description": "The design the file belongs to, by its id, so a project with several designs says whose file it is.",
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "description": "The file, by its path inside the design's folder, as it is before the step.",
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "description": "The file's form before the step, so a reader knows which row of forms.yaml it came from.",
+          "type": "object",
+          "required": [
+            "apiVersion",
+            "kind"
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "The file's apiVersion form, as forms.yaml lists it; a bare layout.yml, which carries none, is named elderlygate/designer/layout/v1.",
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "description": "The file's kind.",
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "to": {
+          "description": "The file's form after the step, the current one.",
+          "type": "object",
+          "required": [
+            "apiVersion",
+            "kind"
+          ],
+          "properties": {
+            "apiVersion": {
+              "description": "The file's apiVersion form, as forms.yaml lists it; a bare layout.yml, which carries none, is named elderlygate/designer/layout/v1.",
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "description": "The file's kind.",
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "movedTo": {
+          "description": "Where the file goes, by its path inside the design's folder, when the step gives it another name; absent when it keeps its name.",
+          "type": "string",
+          "minLength": 1
+        },
+        "did": {
+          "description": "What the step did to the file, in words for people.",
+          "type": "string",
+          "minLength": 1
+        },
+        "placed": {
+          "description": "For layout.yml, what the step gave a place, one entry per view that had a box without one; absent for any other file.",
+          "type": "array",
+          "items": {
+            "description": "The boxes of one view given a place, worked out once by the same rule a write uses.",
+            "type": "object",
+            "required": [
+              "view",
+              "boxes",
+              "hexagon"
+            ],
+            "properties": {
+              "view": {
+                "description": "The view, by its name in design.yml, so a reader shows each view's new places apart.",
+                "type": "string",
+                "minLength": 1
+              },
+              "boxes": {
+                "description": "The boxes and groups placed in the view's rows, by id, in id order, so a person sees which got a place.",
+                "type": "array",
+                "items": {
+                  "description": "A resource id.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "hexagon": {
+                "description": "The blocks placed on the view's hexagon, by id, in id order; always empty when the view draws no hexagon.",
+                "type": "array",
+                "items": {
+                  "description": "A resource id.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

@@ -1,0 +1,61 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ProjectMigrate",
+  "ran": {
+    "name": "lending",
+    "app": "designer",
+    "version": "9.6.0",
+    "contract": "v1"
+  },
+  "data": {
+    "project": {
+      "name": "lending",
+      "folder": "/work/lending"
+    },
+    "files": [
+      {
+        "design": "lending",
+        "file": "connection/CMP-DESK--calls--CMP-SHELF.yml",
+        "from": {
+          "apiVersion": "elderlygate/designer/design/v2",
+          "kind": "Connection"
+        },
+        "movedTo": "link/CMP-DESK--calls--CMP-SHELF.yml",
+        "did": "rewritten as a Link"
+      },
+      {
+        "design": "lending",
+        "file": "layout.yml",
+        "from": {
+          "apiVersion": "elderlygate/designer/layout/v1",
+          "kind": "Layout"
+        },
+        "to": {
+          "apiVersion": "elderlygate/designer/layout/v2",
+          "kind": "Layout"
+        },
+        "did": "written as a Resource; 3 box(es) given a place",
+        "placed": [
+          {
+            "view": "runtime",
+            "boxes": [
+              "CMP-DESK",
+              "CMP-SHELF",
+              "GRP-LIBRARY"
+            ],
+            "hexagon": []
+          }
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "command": "apply",
+        "kind": "Apply",
+        "data": [],
+        "errors": []
+      }
+    ]
+  },
+  "errors": []
+}

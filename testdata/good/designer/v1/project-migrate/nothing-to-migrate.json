@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/designer/app/v1",
+  "kind": "ProjectMigrate",
+  "ran": {
+    "name": "lending",
+    "app": "designer",
+    "version": "9.6.0",
+    "contract": "v1"
+  },
+  "data": {
+    "project": {
+      "name": "lending",
+      "folder": "/work/lending"
+    },
+    "nothing": "every file of lending is in its current form, so there is nothing to migrate",
+    "files": []
+  },
+  "errors": []
+}

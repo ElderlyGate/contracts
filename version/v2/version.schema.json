@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/version/v2/version.schema.json",
+  "title": "version",
+  "description": "Which contract versions an app reads and writes, in the one version answer every app gives, in every contract version from version/v2 on (ADR-S03, ADR-S16): a reader that was told unsupported_contract, or that meets an app for the first time, asks it and then asks again with a version both speak, one the app reads for a read and one it writes for a write. The app, its build and the contract this answer is in are read from source. It never refuses a contract: source.contract is the asked version when the app reads it, otherwise the newest it reads. It is on envelope/v3; version/v1 stays on envelope/v1 for readers that ask for it.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v3/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/contracts/version/v2: the one form of this version answer, the same for every app and every contract version, so a reader knows its shape whatever it asked for.",
+          "const": "elderlygate/contracts/version/v2"
+        },
+        "kind": {
+          "description": "Always Version, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Version"
+        },
+        "data": {
+          "description": "Which contract versions the app reads and writes; which app, which build and which contract this answer is in are in source, never here.",
+          "type": "object",
+          "required": [
+            "reads",
+            "writes"
+          ],
+          "properties": {
+            "reads": {
+              "description": "Every contract version the app answers a read in: its own and each older one its down steps reach, on envelope/v3 or later (ADR-S16). An answer in an older version than its own says so with the problem converted_down. It includes source.contract; each app's tests check that.",
+              "type": "array",
+              "items": {
+                "description": "One contract version, such as v2.",
+                "type": "string",
+                "pattern": "^v[0-9]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "writes": {
+              "description": "Every contract version the app takes a write in: its own and the one before, whose writes it steps up, keeping the fields the older form cannot hold (ADR-S16). A write in any other version gets unsupported_contract. Each one is also in reads; each app's tests check that.",
+              "type": "array",
+              "items": {
+                "description": "One contract version, such as v3.",
+                "type": "string",
+                "pattern": "^v[0-9]+$"
+              },
+              "minItems": 1,
+              "maxItems": 2,
+              "uniqueItems": true
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

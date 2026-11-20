@@ -51,3 +51,7 @@ forms:
     app: contracts
     kinds: [Version]
     note: The one version answer every app serves in every contract version (ADR-S03); designer/v1 Version stays until each app moves
+  - new: elderlygate/contracts/version/v2
+    app: contracts
+    kinds: [Version]
+    note: "The version answer from version/v2 on, on envelope/v3: the contract versions an app reads and the ones it writes (ADR-S03, ADR-S16); version/v1 stays for readers that ask for it, made by the down step"

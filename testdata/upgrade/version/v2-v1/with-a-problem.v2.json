@@ -1,0 +1,29 @@
+{
+  "apiVersion": "elderlygate/contracts/version/v2",
+  "kind": "Version",
+  "source": {
+    "name": "example",
+    "app": "example",
+    "version": "3.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "reads": [
+      "v1",
+      "v3"
+    ],
+    "writes": [
+      "v3"
+    ]
+  },
+  "errors": [],
+  "problems": [
+    {
+      "apiVersion": "elderlygate/contracts/problem/v1",
+      "kind": "Problem",
+      "type": "unread",
+      "reason": "converted_down",
+      "detail": "converted from contract v3 to v1"
+    }
+  ]
+}

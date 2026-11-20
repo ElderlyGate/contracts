@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-// An upgrade step is Upgrade<Kind>(from []byte) ([]byte, error), one per version step, tested by the pairs in testdata/upgrade/<dir>/<from>-<to>/ (CT-RULE-3).
+// An upgrade step is Upgrade<Kind>(from []byte) ([]byte, error), one per version step, and its down step Downgrade<Kind>To<v>(from []byte) ([]byte, []string, error); each is tested by the pairs in testdata/upgrade/<dir>/<from>-<to>/ (CT-RULE-3).
 
 // reasonOf is the owner's mapping of an error/v1 code to a Problem's type and reason, the one mankit serve writes; a code not here stays the type, with no reason.
 var reasonOf = map[string][2]string{
@@ -100,6 +100,26 @@ func UpgradeEnvelope(v1 []byte) ([]byte, error) {
 		}
 		out.Errors = append(out.Errors, p)
 	}
+	b, err := encode(out)
+	if err != nil {
+		return nil, err
+	}
+	if err := Validate("envelope/v2/envelope.schema.json", b); err != nil {
+		return nil, fmt.Errorf("the upgrade is not an envelope/v2 answer: %w", err)
+	}
+	return b, nil
+}
+
+// takenFile is whether problem/v1 takes file as a place's file, so the rule is problem/v1's alone.
+func takenFile(file string) bool {
+	doc, err := json.Marshal(problem{APIVersion: problemAPIVersion, Kind: "Problem", Type: "x", Detail: "x", At: []place{{File: file}}})
+	return err == nil && Validate("problem/v1/problem.schema.json", doc) == nil
+}
+
+// Each version step converts both ways in one place (ADR-S16): Upgrade<Kind>To<v> makes the newer form, Downgrade<Kind>To<v> the older one and says, as paths such as problems.0, what the older form could not hold and was left out. Both are tested by pairs in testdata/upgrade/<dir>/<from>-<to>/.
+
+// encode is out as a step writes it: indented by two, with <, > and & kept for people.
+func encode(out any) ([]byte, error) {
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	enc.SetEscapeHTML(false)
@@ -107,14 +127,161 @@ func UpgradeEnvelope(v1 []byte) ([]byte, error) {
 	if err := enc.Encode(out); err != nil {
 		return nil, err
 	}
-	if err := Validate("envelope/v2/envelope.schema.json", buf.Bytes()); err != nil {
-		return nil, fmt.Errorf("the upgrade is not an envelope/v2 answer: %w", err)
-	}
 	return buf.Bytes(), nil
 }
 
-// takenFile is whether problem/v1 takes file as a place's file, so the rule is problem/v1's alone.
-func takenFile(file string) bool {
-	doc, err := json.Marshal(problem{APIVersion: problemAPIVersion, Kind: "Problem", Type: "x", Detail: "x", At: []place{{File: file}}})
-	return err == nil && Validate("problem/v1/problem.schema.json", doc) == nil
+// envelopeV3 is an envelope/v3 answer; v2 is the same without problems.
+type envelopeV3 struct {
+	APIVersion string            `json:"apiVersion"`
+	Kind       string            `json:"kind"`
+	Source     json.RawMessage   `json:"source"`
+	Data       json.RawMessage   `json:"data"`
+	Errors     []json.RawMessage `json:"errors"`
+	Problems   []json.RawMessage `json:"problems"`
+}
+
+type envelopeV2 struct {
+	APIVersion string            `json:"apiVersion"`
+	Kind       string            `json:"kind"`
+	Source     json.RawMessage   `json:"source"`
+	Data       json.RawMessage   `json:"data"`
+	Errors     []json.RawMessage `json:"errors"`
+}
+
+// UpgradeEnvelopeToV3 is the step from envelope/v2 to envelope/v3: everything stays, and problems is there and empty, as an envelope/v2 answer worked nothing around that it could say.
+func UpgradeEnvelopeToV3(v2 []byte) ([]byte, error) {
+	if err := Validate("envelope/v2/envelope.schema.json", v2); err != nil {
+		return nil, fmt.Errorf("not an envelope/v2 answer: %w", err)
+	}
+	var in envelopeV2
+	if err := json.Unmarshal(v2, &in); err != nil {
+		return nil, err
+	}
+	out, err := encode(envelopeV3{APIVersion: in.APIVersion, Kind: in.Kind, Source: in.Source, Data: in.Data, Errors: nonNil(in.Errors), Problems: []json.RawMessage{}})
+	if err != nil {
+		return nil, err
+	}
+	if err := Validate("envelope/v3/envelope.schema.json", out); err != nil {
+		return nil, fmt.Errorf("the upgrade is not an envelope/v3 answer: %w", err)
+	}
+	return out, nil
+}
+
+// DowngradeEnvelopeToV2 is the step from envelope/v3 back to envelope/v2: everything stays but problems, which envelope/v2 has no place for, each one lost.
+func DowngradeEnvelopeToV2(v3 []byte) ([]byte, []string, error) {
+	if err := Validate("envelope/v3/envelope.schema.json", v3); err != nil {
+		return nil, nil, fmt.Errorf("not an envelope/v3 answer: %w", err)
+	}
+	var in envelopeV3
+	if err := json.Unmarshal(v3, &in); err != nil {
+		return nil, nil, err
+	}
+	out, err := encode(envelopeV2{APIVersion: in.APIVersion, Kind: in.Kind, Source: in.Source, Data: in.Data, Errors: nonNil(in.Errors)})
+	if err != nil {
+		return nil, nil, err
+	}
+	if err := Validate("envelope/v2/envelope.schema.json", out); err != nil {
+		return nil, nil, fmt.Errorf("the downgrade is not an envelope/v2 answer: %w", err)
+	}
+	return out, indexed("problems", len(in.Problems)), nil
+}
+
+// versionV1 and versionV2 are the data of the two version answers.
+type versionV1 struct {
+	SupportedContracts []string `json:"supportedContracts"`
+}
+
+type versionV2 struct {
+	Reads  []string `json:"reads"`
+	Writes []string `json:"writes"`
+}
+
+// UpgradeVersionToV2 is the step from version/v1 to version/v2: the envelope steps up from v1 to v3, the versions it served become reads, and the newest two of them writes, as an app before version/v2 took its own version and the one before.
+func UpgradeVersionToV2(v1 []byte) ([]byte, error) {
+	if err := Validate("version/v1/version.schema.json", v1); err != nil {
+		return nil, fmt.Errorf("not a version/v1 answer: %w", err)
+	}
+	v2, err := UpgradeEnvelope(v1)
+	if err != nil {
+		return nil, err
+	}
+	v3, err := UpgradeEnvelopeToV3(v2)
+	if err != nil {
+		return nil, err
+	}
+	var env envelopeV3
+	if err := json.Unmarshal(v3, &env); err != nil {
+		return nil, err
+	}
+	var data versionV1
+	if err := json.Unmarshal(env.Data, &data); err != nil {
+		return nil, err
+	}
+	writes := data.SupportedContracts[max(0, len(data.SupportedContracts)-2):]
+	if env.Data, err = json.Marshal(versionV2{Reads: data.SupportedContracts, Writes: writes}); err != nil {
+		return nil, err
+	}
+	env.APIVersion = "elderlygate/contracts/version/v2"
+	out, err := encode(env)
+	if err != nil {
+		return nil, err
+	}
+	if err := Validate("version/v2/version.schema.json", out); err != nil {
+		return nil, fmt.Errorf("the upgrade is not a version/v2 answer: %w", err)
+	}
+	return out, nil
+}
+
+// DowngradeVersionToV1 is the step from version/v2 back to version/v1, which stays on envelope/v1: source becomes ran, the versions it reads become the ones it served, and writes and the problems, which version/v1 has no place for, are lost.
+// An answer with errors is refused, as the version answer never fails (ADR-S03) and envelope/v1 errors are a form apart.
+func DowngradeVersionToV1(v2 []byte) ([]byte, []string, error) {
+	if err := Validate("version/v2/version.schema.json", v2); err != nil {
+		return nil, nil, fmt.Errorf("not a version/v2 answer: %w", err)
+	}
+	var in envelopeV3
+	if err := json.Unmarshal(v2, &in); err != nil {
+		return nil, nil, err
+	}
+	if len(in.Errors) > 0 {
+		return nil, nil, fmt.Errorf("a version/v2 answer with errors has no version/v1 form: the version answer never fails")
+	}
+	var data versionV2
+	if err := json.Unmarshal(in.Data, &data); err != nil {
+		return nil, nil, err
+	}
+	body, err := json.Marshal(versionV1{SupportedContracts: data.Reads})
+	if err != nil {
+		return nil, nil, err
+	}
+	out, err := encode(struct {
+		APIVersion string            `json:"apiVersion"`
+		Kind       string            `json:"kind"`
+		Ran        json.RawMessage   `json:"ran"`
+		Data       json.RawMessage   `json:"data"`
+		Errors     []json.RawMessage `json:"errors"`
+	}{APIVersion: "elderlygate/contracts/version/v1", Kind: in.Kind, Ran: in.Source, Data: body, Errors: []json.RawMessage{}})
+	if err != nil {
+		return nil, nil, err
+	}
+	if err := Validate("version/v1/version.schema.json", out); err != nil {
+		return nil, nil, fmt.Errorf("the downgrade is not a version/v1 answer: %w", err)
+	}
+	return out, append([]string{"data.writes"}, indexed("problems", len(in.Problems))...), nil
+}
+
+// nonNil is list, or an empty one in place of none, as an envelope's lists are always there.
+func nonNil(list []json.RawMessage) []json.RawMessage {
+	if list == nil {
+		return []json.RawMessage{}
+	}
+	return list
+}
+
+// indexed is the path of each of n items of the list at field, such as problems.0.
+func indexed(field string, n int) []string {
+	out := []string{}
+	for i := range n {
+		out = append(out, fmt.Sprintf("%s.%d", field, i))
+	}
+	return out
 }

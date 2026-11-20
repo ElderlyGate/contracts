@@ -1,0 +1,341 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "Snapshot",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": {
+    "taken": "2026-11-20T07:16:22.887553+01:00",
+    "org": "Org",
+    "owner": "ada",
+    "github": {
+      "connected": true,
+      "from": "the Keychain item control-room-github",
+      "account": "org-bot",
+      "read_only": true,
+      "checked_at": "2026-10-28T15:36:16.56613+01:00"
+    },
+    "waiting": {
+      "prs": [
+        {
+          "repo": "Org/fleet",
+          "number": 6,
+          "title": "docs(constitution): how products talk in fleet (F1-F10, S21)",
+          "url": "https://github.com/Org/fleet/pull/6",
+          "author": "org-bot",
+          "draft": true,
+          "review": "no review",
+          "ci": "no checks",
+          "branch": "docs/talk-rules/expedite",
+          "head_repo": "Org/fleet",
+          "base": "main",
+          "created": "2026-11-10T12:49:38Z",
+          "size": {
+            "files": 3,
+            "additions": 55,
+            "deletions": 32
+          },
+          "approved_at": "0001-01-01T00:00:00Z",
+          "epics": [
+            "fleet-v2"
+          ],
+          "features": [
+            "fleet-talk"
+          ],
+          "expedite": true
+        },
+        {
+          "repo": "Org/constitution",
+          "number": 32,
+          "title": "docs(design): how products talk in fleet",
+          "url": "https://github.com/Org/constitution/pull/32",
+          "author": "org-bot",
+          "draft": true,
+          "review": "no review",
+          "ci": "passing",
+          "checks": [
+            {
+              "name": "local · rule-dates",
+              "state": "passing",
+              "url": "https://github.com/Org/constitution/actions/runs/42825543768/job/129861770478"
+            }
+          ],
+          "branch": "docs/fleet-talk",
+          "head_repo": "Org/constitution",
+          "base": "main",
+          "created": "2026-11-10T10:12:03Z",
+          "size": {
+            "files": 5,
+            "additions": 3127,
+            "deletions": 1328
+          },
+          "conflict": true,
+          "approved_at": "0001-01-01T00:00:00Z",
+          "epics": [
+            "fleet-v2"
+          ],
+          "features": [
+            "fleet-talk"
+          ]
+        }
+      ],
+      "in_review": [
+        {
+          "product": "ui-kit",
+          "board": "/home/ada/Projects/github/org/ui-kit/.kanban",
+          "id": "20261102-5ea5",
+          "title": "A section link dims its section while it reloads",
+          "column": "Review",
+          "tags": [
+            "epic:control-room/work-tracking",
+            "feature:read-all-epics",
+            "product:ui-kit"
+          ],
+          "source": "kanban show 20261102-5ea5 --board /home/ada/Projects/github/org/ui-kit/.kanban"
+        }
+      ],
+      "your_turn": null
+    },
+    "products": [
+      {
+        "id": "hubman",
+        "kind": "github-release",
+        "status": "installed",
+        "installed": "v0.14.2",
+        "latest": "v0.14.2",
+        "repo": "Org/hubman",
+        "repo_url": "https://github.com/Org/hubman",
+        "release": {
+          "tag": "v0.14.2",
+          "from": "GitHub",
+          "source": "https://github.com/Org/hubman/releases/tag/v0.14.2"
+        },
+        "ci": {
+          "workflow": "rule-dates",
+          "conclusion": "success",
+          "url": "https://github.com/Org/hubman/actions/runs/44553663941"
+        },
+        "board": {
+          "path": "/home/ada/Projects/github/org/hubman/.kanban",
+          "columns": [
+            {
+              "id": "backlog",
+              "label": "Backlog",
+              "count": 15
+            },
+            {
+              "id": "refined",
+              "label": "Refined",
+              "count": 0
+            },
+            {
+              "id": "in-progress",
+              "label": "In Progress",
+              "count": 0
+            },
+            {
+              "id": "review",
+              "label": "Review",
+              "count": 0
+            },
+            {
+              "id": "done",
+              "label": "Done",
+              "count": 12
+            }
+          ],
+          "open": 15,
+          "waiting": 0,
+          "source": "kanban board --board /home/ada/Projects/github/org/hubman/.kanban"
+        },
+        "designs": {
+          "list": [
+            {
+              "id": "hubman",
+              "title": "hubman, as main builds it today",
+              "blocks": 40,
+              "open": 0,
+              "source": "e-designer get all --design hubman"
+            }
+          ],
+          "source": "e-designer get design (in /home/ada/Projects/github/org/hubman)"
+        },
+        "checkout": {
+          "path": "/home/ada/Projects/github/org/hubman",
+          "others": 1,
+          "status": {
+            "branch": "main",
+            "upstream": "ai/main",
+            "ahead": 0,
+            "behind": 3,
+            "dirty": 0
+          },
+          "source": "git -C /home/ada/Projects/github/org/hubman status"
+        }
+      },
+      {
+        "id": "gitman",
+        "kind": "github-release",
+        "status": "installed",
+        "installed": "v2.1.0",
+        "latest": "v2.1.0",
+        "repo": "Org/gitman",
+        "repo_url": "https://github.com/Org/gitman",
+        "release": {
+          "tag": "v2.1.0",
+          "from": "GitHub",
+          "source": "https://github.com/Org/gitman/releases/tag/v2.1.0"
+        },
+        "ci": {
+          "workflow": "release",
+          "conclusion": "success",
+          "url": "https://github.com/Org/gitman/actions/runs/44483157574"
+        },
+        "board": {
+          "path": "/home/ada/Projects/github/org/gitman/.kanban",
+          "columns": [
+            {
+              "id": "backlog",
+              "label": "Backlog",
+              "count": 11
+            },
+            {
+              "id": "refined",
+              "label": "Refined",
+              "count": 0
+            },
+            {
+              "id": "in-progress",
+              "label": "In Progress",
+              "count": 0
+            },
+            {
+              "id": "review",
+              "label": "Review",
+              "count": 0
+            },
+            {
+              "id": "done",
+              "label": "Done",
+              "count": 3
+            }
+          ],
+          "open": 11,
+          "waiting": 0,
+          "source": "kanban board --board /home/ada/Projects/github/org/gitman/.kanban"
+        },
+        "designs": {
+          "list": [
+            {
+              "id": "gitman",
+              "title": "gitman",
+              "blocks": 41,
+              "open": 0,
+              "source": "e-designer get all --design gitman"
+            }
+          ],
+          "source": "e-designer get design (in /home/ada/Projects/github/org/gitman)"
+        },
+        "checkout": {
+          "path": "/home/ada/Projects/github/org/gitman",
+          "others": 1,
+          "status": {
+            "branch": "main",
+            "upstream": "ai/main",
+            "ahead": 0,
+            "behind": 0,
+            "dirty": 0
+          },
+          "source": "git -C /home/ada/Projects/github/org/gitman status"
+        }
+      },
+      {
+        "id": "dcman",
+        "kind": "github-release",
+        "status": "installed",
+        "installed": "v2.1.0",
+        "latest": "v2.1.0",
+        "repo": "Org/dcman",
+        "repo_url": "https://github.com/Org/dcman",
+        "release": {
+          "tag": "v2.1.0",
+          "from": "GitHub",
+          "source": "https://github.com/Org/dcman/releases/tag/v2.1.0"
+        },
+        "ci": {
+          "workflow": "release",
+          "conclusion": "success",
+          "url": "https://github.com/Org/dcman/actions/runs/44483167660"
+        },
+        "board": {
+          "path": "/home/ada/Projects/github/org/dcman/.kanban",
+          "columns": [
+            {
+              "id": "backlog",
+              "label": "Backlog",
+              "count": 9
+            },
+            {
+              "id": "refined",
+              "label": "Refined",
+              "count": 0
+            },
+            {
+              "id": "in-progress",
+              "label": "In Progress",
+              "count": 0
+            },
+            {
+              "id": "review",
+              "label": "Review",
+              "count": 0
+            },
+            {
+              "id": "done",
+              "label": "Done",
+              "count": 4
+            }
+          ],
+          "open": 9,
+          "waiting": 0,
+          "source": "kanban board --board /home/ada/Projects/github/org/dcman/.kanban"
+        },
+        "designs": {
+          "list": [
+            {
+              "id": "dcman",
+              "title": "dcman as it is today",
+              "blocks": 36,
+              "open": 0,
+              "source": "e-designer get all --design dcman"
+            }
+          ],
+          "source": "e-designer get design (in /home/ada/Projects/github/org/dcman)"
+        },
+        "checkout": {
+          "path": "/home/ada/Projects/github/org/dcman",
+          "others": 1,
+          "status": {
+            "branch": "main",
+            "upstream": "ai/main",
+            "ahead": 0,
+            "behind": 0,
+            "dirty": 0
+          },
+          "source": "git -C /home/ada/Projects/github/org/dcman status"
+        }
+      }
+    ],
+    "focus": {
+      "key": "same-shape",
+      "title": "Every product in the same shape",
+      "product": "control-room",
+      "board": "/home/ada/Projects/github/org/control-room/.kanban",
+      "card": "KBN-20261102-a898"
+    }
+  },
+  "errors": []
+}

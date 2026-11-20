@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/control-room/v1/snapshot.schema.json",
+  "title": "snapshot",
+  "description": "The snapshot: every product, where each part of it stands, and what waits for the owner, as the Focus and Products pages and `status -o json` show it. It is made from the parts control-room's connectors read and keep in memory, so a reader sees what the pages see.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/control-room/app/v1: the form of control-room's answers (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/control-room/app/v1"
+        },
+        "kind": {
+          "description": "Always Snapshot, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Snapshot"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always control-room, its product ID, since only control-room gives this answer.",
+              "const": "control-room"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "$ref": "defs.schema.json#/$defs/snapshot-Snapshot",
+          "description": "Every product and what waits for the owner."
+        }
+      }
+    }
+  ]
+}

@@ -26,7 +26,7 @@
           ],
           "properties": {
             "state": {
-              "description": "What the License group says, one word for the license state of the whole app; whether the build is a release is build's alone to say. The first of these decides it: a running paid license, then an ended paid license, then a running trial key, then an ended trial key, then none. none: no license, so use is free and nothing warns; trial: a trial key runs (ADR-L9); trial-ended: the trial key has ended, so use is free again and nothing warns (ADR-L3, L9); licensed: a paid license runs; ending: a paid license the threshold of ADR-L3 warns about; ended: a paid license has ended; ADR-L3's notice stays until it is replaced or removed.",
+              "description": "What the License group says, one word for the license state of the whole app; whether the build is a release is build's alone to say. The first of these decides it: a running paid license, then an ended paid license, then a running trial key, then an ended trial key, then none. A license not begun yet, whose issued day is still to come, counts as none here, though licenses lists it. none: no license, so use is free and nothing warns; trial: a trial key runs (ADR-L9); trial-ended: the trial key has ended, so use is free again and nothing warns (ADR-L3, L9); licensed: a paid license runs; ending: a paid license the threshold of ADR-L3 warns about; ended: a paid license has ended; ADR-L3's notice stays until it is replaced or removed.",
               "enum": [
                 "none",
                 "trial",
@@ -37,7 +37,7 @@
               ]
             },
             "endedOn": {
-              "description": "The last day of the paid license that ended, the one whose end set state to ended: the latest until of the paid licenses, all of which have ended. So the notice of ADR-L3 names the day, and a page never picks a license. Present exactly when state is ended.",
+              "description": "The last day of the paid license that ended, the one whose end set state to ended: the latest until among the ended paid licenses. So the notice of ADR-L3 names the day, and a page never picks a license. Present exactly when state is ended.",
               "$ref": "license-payload.schema.json#/properties/until"
             },
             "build": {

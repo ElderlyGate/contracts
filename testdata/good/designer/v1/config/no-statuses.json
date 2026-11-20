@@ -464,7 +464,7 @@
             "border-color": "accent",
             "border-width": "thick"
           },
-          "for": "changed"
+          "for": "3s"
         },
         "source": "built-in"
       },

@@ -1587,13 +1587,10 @@
           ]
         },
         "text": {
-          "description": "How the text is set: normal, bold, italic, or struck through.",
-          "enum": [
-            "normal",
-            "bold",
-            "italic",
-            "strike"
-          ]
+          "description": "A short text drawn on a line, its label as the picture shows it, such as SQL.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
         }
       },
       "additionalProperties": false
@@ -1887,7 +1884,7 @@
       ]
     },
     "ruleThen": {
-      "description": "What a rule draws: its styles, and for an event rule which things the event reaches. An empty map switches the rule off.",
+      "description": "What a rule draws: its styles, and for an event rule how long the overlay shows. An empty map switches the rule off.",
       "type": "object",
       "properties": {
         "styles": {
@@ -1895,11 +1892,9 @@
           "$ref": "#/$defs/styleWritten"
         },
         "for": {
-          "description": "Which things an event rule reaches: changed, only the ids the event names as changed; \"*\", every thing the rule is about. Written with an event only.",
-          "enum": [
-            "changed",
-            "*"
-          ]
+          "description": "How long an event rule's overlay shows after the event, such as 3s or 500ms; which things it reaches is the event's changed ids together with given. Written with an event only.",
+          "type": "string",
+          "pattern": "^[0-9]+(ms|s)$"
         }
       },
       "additionalProperties": false
@@ -1976,7 +1971,7 @@
       }
     },
     "ruleForEvent": {
-      "description": "A rule writes for exactly when it reacts to an event: an event rule that draws something says which things it reaches, and a rule with no event has nothing to reach.",
+      "description": "A rule writes for exactly when it reacts to an event: an event rule that draws something says how long its overlay shows, and a rule with no event has no overlay to time.",
       "allOf": [
         {
           "description": "for is written with an event only.",

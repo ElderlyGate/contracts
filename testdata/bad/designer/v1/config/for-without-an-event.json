@@ -455,7 +455,7 @@
           "styles": [
             "planned"
           ],
-          "for": "changed"
+          "for": "3s"
         },
         "source": "design"
       },
@@ -499,7 +499,7 @@
             "border-color": "accent",
             "border-width": "thick"
           },
-          "for": "changed"
+          "for": "3s"
         },
         "source": "built-in"
       },

@@ -1914,12 +1914,9 @@
       "type": "object",
       "properties": {
         "id": {
-          "description": "The fixed name of the rule, in kebab case, so a later layer can replace or switch it off. own is not a rule id: applied uses it for a thing's own styles.",
+          "description": "The fixed name of the rule, in kebab case, so a later layer can replace or switch it off.",
           "type": "string",
-          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
-          "not": {
-            "const": "own"
-          }
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
         },
         "description": {
           "description": "What the rule is for, in words for people.",
@@ -2042,99 +2039,6 @@
         ]
       }
     },
-    "finalStyle": {
-      "description": "The style a thing is drawn in once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. Every box and line property is given for every thing, at the value the board would use, so a reader never fills a gap; the line properties of a box and the box properties of a line are never drawn. mark, badge and text are given only when something says them: absent draws none.",
-      "type": "object",
-      "properties": {
-        "fill": {
-          "description": "The colour inside a box.",
-          "$ref": "#/$defs/colorName"
-        },
-        "border-color": {
-          "description": "The colour of a box's border.",
-          "$ref": "#/$defs/colorName"
-        },
-        "text-color": {
-          "description": "The colour of the text.",
-          "$ref": "#/$defs/colorName"
-        },
-        "line-color": {
-          "description": "The colour of a line between two things.",
-          "$ref": "#/$defs/colorName"
-        },
-        "border-style": {
-          "description": "How a box's border is drawn; none draws no border.",
-          "enum": [
-            "solid",
-            "dashed",
-            "dotted",
-            "double",
-            "none"
-          ]
-        },
-        "border-width": {
-          "description": "How heavy a box's border is.",
-          "enum": [
-            "thin",
-            "normal",
-            "thick"
-          ]
-        },
-        "line-width": {
-          "description": "How heavy a line is.",
-          "enum": [
-            "thin",
-            "normal",
-            "thick"
-          ]
-        },
-        "line-style": {
-          "description": "How a line is drawn.",
-          "enum": [
-            "solid",
-            "dashed",
-            "dotted"
-          ]
-        },
-        "mark": {
-          "description": "One character drawn beside the thing, such as a tick; given only when something says one.",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 1
-        },
-        "badge": {
-          "description": "One letter on the thing's badge, such as D for decided.",
-          "type": "string",
-          "pattern": "^\\S$"
-        },
-        "fade": {
-          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
-          "enum": [
-            "none",
-            "aside",
-            "gone"
-          ]
-        },
-        "text": {
-          "description": "A short text drawn on a line, its label as the picture shows it, such as SQL.",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 40
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "fill",
-        "border-color",
-        "text-color",
-        "line-color",
-        "border-style",
-        "border-width",
-        "line-width",
-        "line-style",
-        "fade"
-      ]
-    },
     "styleOverlay": {
       "description": "A rule whose when holds only while something happens on the board (an action) or after an event, given as what it adds over the final style, so the page lays it on while that holds and takes it off after.",
       "type": "object",
@@ -2142,10 +2046,7 @@
         "rule": {
           "description": "The id of the rule that adds it.",
           "type": "string",
-          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
-          "not": {
-            "const": "own"
-          }
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
         },
         "action": {
           "description": "The action that lays it on, for a rule about an action.",
@@ -2216,35 +2117,70 @@
       "additionalProperties": false
     },
     "elementStyle": {
-      "description": "How one block, group or line is drawn in one view: its final style, what made it, and the overlays that come and go.",
+      "description": "How one block, group or line is drawn in one view: its final style, each step that made it, and the overlays that come and go.",
       "type": "object",
       "properties": {
         "style": {
-          "$ref": "#/$defs/finalStyle"
+          "description": "The final style: a box style for a block, a finding or a group, a line style for a line.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/boxStyle"
+            },
+            {
+              "$ref": "#/$defs/lineStyle"
+            }
+          ]
         },
         "applied": {
-          "description": "What made the final style, in the order it was taken: each rule's id, and own for the thing's own ui-design.styles, so an inspector shows why it looks so.",
+          "description": "Each step that made the final style, in the order it was taken, with the styles it brought, so an inspector shows why the thing looks so: a rule by its id, or the thing's own ui-design.styles.",
           "type": "array",
           "items": {
-            "description": "A rule id, or own for the thing's own ui-design.styles.",
+            "description": "One step.",
             "oneOf": [
               {
-                "description": "A rule id.",
-                "type": "string",
-                "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
-                "not": {
-                  "const": "own"
-                }
+                "description": "A rule.",
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "description": "The rule's id.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+                  },
+                  "styles": {
+                    "description": "The styles the rule brought, as its then wrote them.",
+                    "$ref": "#/$defs/elementStyles"
+                  }
+                },
+                "required": [
+                  "rule",
+                  "styles"
+                ],
+                "additionalProperties": false
               },
               {
                 "description": "The thing's own styles.",
-                "const": "own"
+                "type": "object",
+                "properties": {
+                  "own": {
+                    "description": "Always true: this step is the thing's own ui-design.styles.",
+                    "const": true
+                  },
+                  "styles": {
+                    "description": "The styles the thing names itself.",
+                    "$ref": "#/$defs/elementStyles"
+                  }
+                },
+                "required": [
+                  "own",
+                  "styles"
+                ],
+                "additionalProperties": false
               }
             ]
           }
         },
         "rules": {
-          "description": "The overlays for actions and events, in rule order; empty when none. Each thing carries its own, the same overlay repeated on every thing it reaches, so the page needs no lookup.",
+          "description": "The overlays for actions and events, in rule order; empty when none. Each thing carries its own, the same overlay repeated on every thing it reaches, so the page decides nothing.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/styleOverlay"
@@ -2255,6 +2191,117 @@
         "style",
         "applied",
         "rules"
+      ],
+      "additionalProperties": false
+    },
+    "boxStyle": {
+      "description": "How a box (a block, a finding or a group) is drawn once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. mark and badge are given only when something says them: absent draws none.",
+      "type": "object",
+      "properties": {
+        "fill": {
+          "description": "The colour inside a box.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-color": {
+          "description": "The colour of a box's border.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-style": {
+          "description": "How a box's border is drawn; none draws no border.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ]
+        },
+        "border-width": {
+          "description": "How heavy a box's border is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "text-color": {
+          "description": "The colour of the text.",
+          "$ref": "#/$defs/colorName"
+        },
+        "mark": {
+          "description": "One character drawn beside the box, such as a tick; given only when something says one.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "badge": {
+          "description": "One letter on the thing's badge, such as D for decided.",
+          "type": "string",
+          "pattern": "^\\S$"
+        },
+        "fade": {
+          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
+          "enum": [
+            "none",
+            "aside",
+            "gone"
+          ]
+        }
+      },
+      "required": [
+        "fill",
+        "border-color",
+        "border-style",
+        "border-width",
+        "text-color",
+        "fade"
+      ],
+      "additionalProperties": false
+    },
+    "lineStyle": {
+      "description": "How a line is drawn once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. text is given only when something says it: absent draws none.",
+      "type": "object",
+      "properties": {
+        "line-color": {
+          "description": "The colour of a line between two things.",
+          "$ref": "#/$defs/colorName"
+        },
+        "line-style": {
+          "description": "How a line is drawn.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted"
+          ]
+        },
+        "line-width": {
+          "description": "How heavy a line is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "text": {
+          "description": "A short text drawn on a line, its label as the picture shows it, such as SQL.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "fade": {
+          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
+          "enum": [
+            "none",
+            "aside",
+            "gone"
+          ]
+        }
+      },
+      "required": [
+        "line-color",
+        "line-style",
+        "line-width",
+        "fade"
       ],
       "additionalProperties": false
     }

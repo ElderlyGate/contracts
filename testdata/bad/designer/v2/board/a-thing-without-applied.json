@@ -741,15 +741,17 @@
             "fill": "bg",
             "border-color": "line",
             "text-color": "ink",
-            "line-color": "line",
             "border-style": "solid",
             "border-width": "normal",
-            "line-width": "normal",
-            "line-style": "solid",
             "fade": "none"
           },
           "applied": [
-            "groups-quiet"
+            {
+              "rule": "groups-quiet",
+              "styles": [
+                "quiet"
+              ]
+            }
           ],
           "rules": [
             {
@@ -767,16 +769,24 @@
             "fill": "lagoon-soft",
             "border-color": "lagoon",
             "text-color": "ink",
-            "line-color": "line",
             "border-style": "solid",
             "border-width": "thick",
-            "line-width": "normal",
-            "line-style": "solid",
             "fade": "none"
           },
           "applied": [
-            "groups-quiet",
-            "edge-in-lagoon"
+            {
+              "rule": "groups-quiet",
+              "styles": [
+                "quiet"
+              ]
+            },
+            {
+              "rule": "edge-in-lagoon",
+              "styles": [
+                "quiet",
+                "lagoon"
+              ]
+            }
           ],
           "rules": [
             {
@@ -794,18 +804,25 @@
             "fill": "panel",
             "border-color": "ink",
             "text-color": "sec",
-            "line-color": "line",
             "border-style": "solid",
             "border-width": "normal",
-            "line-width": "normal",
-            "line-style": "solid",
             "fade": "none",
             "mark": "✓",
             "badge": "D"
           },
           "applied": [
-            "blocks-plain",
-            "decided-is-ticked"
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            },
+            {
+              "rule": "decided-is-ticked",
+              "styles": [
+                "ticked"
+              ]
+            }
           ],
           "rules": [
             {
@@ -833,11 +850,8 @@
             "fill": "panel",
             "border-color": "ink",
             "text-color": "ink",
-            "line-color": "line",
             "border-style": "solid",
             "border-width": "normal",
-            "line-width": "normal",
-            "line-style": "solid",
             "fade": "none"
           },
           "rules": [
@@ -866,16 +880,26 @@
             "fill": "panel",
             "border-color": "ink",
             "text-color": "ink",
-            "line-color": "line",
             "border-style": "dashed",
             "border-width": "normal",
-            "line-width": "normal",
-            "line-style": "solid",
             "fade": "aside"
           },
           "applied": [
-            "blocks-plain",
-            "own"
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            },
+            {
+              "own": true,
+              "styles": [
+                {
+                  "border-style": "dashed",
+                  "fade": "aside"
+                }
+              ]
+            }
           ],
           "rules": [
             {
@@ -900,55 +924,70 @@
         },
         "CMP-KIOSK--calls--CMP-LOCKS": {
           "style": {
-            "fill": "panel",
-            "border-color": "ink",
-            "text-color": "ink",
             "line-color": "ink",
-            "border-style": "solid",
-            "border-width": "normal",
             "line-width": "normal",
             "line-style": "solid",
             "fade": "none"
           },
           "applied": [
-            "lines-plain"
+            {
+              "rule": "lines-plain",
+              "styles": [
+                "plain-line"
+              ]
+            }
           ],
           "rules": []
         },
         "CMP-LOCKS--calls--CMP-LEDGER": {
           "style": {
-            "fill": "panel",
-            "border-color": "ink",
-            "text-color": "ink",
             "line-color": "ink",
-            "border-style": "solid",
-            "border-width": "normal",
             "line-width": "normal",
             "line-style": "solid",
             "fade": "none",
             "text": "writes"
           },
           "applied": [
-            "lines-plain",
-            "own"
+            {
+              "rule": "lines-plain",
+              "styles": [
+                "plain-line"
+              ]
+            },
+            {
+              "own": true,
+              "styles": [
+                {
+                  "text": "writes"
+                }
+              ]
+            }
           ],
           "rules": []
         },
         "CMP-KIOSK--related--CMP-LEDGER": {
           "style": {
-            "fill": "panel",
-            "border-color": "ink",
-            "text-color": "ink",
             "line-color": "muted",
-            "border-style": "solid",
-            "border-width": "normal",
             "line-width": "normal",
             "line-style": "dashed",
             "fade": "none"
           },
           "applied": [
-            "lines-plain",
-            "related-is-dashed"
+            {
+              "rule": "lines-plain",
+              "styles": [
+                "plain-line"
+              ]
+            },
+            {
+              "rule": "related-is-dashed",
+              "styles": [
+                {
+                  "line-style": "dashed",
+                  "line-color": "muted"
+                }
+              ]
+            }
           ],
           "rules": []
         }
@@ -960,18 +999,25 @@
             "fill": "panel",
             "border-color": "ink",
             "text-color": "sec",
-            "line-color": "line",
             "border-style": "solid",
             "border-width": "normal",
-            "line-width": "normal",
-            "line-style": "solid",
             "fade": "none",
             "mark": "✓",
             "badge": "D"
           },
           "applied": [
-            "blocks-plain",
-            "decided-is-ticked"
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            },
+            {
+              "rule": "decided-is-ticked",
+              "styles": [
+                "ticked"
+              ]
+            }
           ],
           "rules": [
             {
@@ -999,15 +1045,17 @@
             "fill": "panel",
             "border-color": "ink",
             "text-color": "ink",
-            "line-color": "line",
             "border-style": "solid",
             "border-width": "normal",
-            "line-width": "normal",
-            "line-style": "solid",
             "fade": "none"
           },
           "applied": [
-            "blocks-plain"
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            }
           ],
           "rules": [
             {

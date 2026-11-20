@@ -407,10 +407,7 @@
                   "id": {
                     "description": "The fixed name of the rule.",
                     "type": "string",
-                    "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
-                    "not": {
-                      "const": "own"
-                    }
+                    "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
                   },
                   "description": {
                     "description": "What the rule is for, in words for people.",

@@ -885,7 +885,7 @@
       "type": "object",
       "properties": {
         "code": {
-          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now, and e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only e-designer migrate layout reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file.",
+          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now, and e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only e-designer migrate layout reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file. undeclared_style: a rule or an element names a style nothing declares, so it is drawn without it; style_field_unread: a style says a property or a value the board does not draw, so the style is used without it; rule_field_unread: a rule writes a part or a condition that cannot be read, so the rule is used without it; undeclared_<thing>: a rule names a kind, group, view, status, label, severity or release the design does not have (such as undeclared_status), so that condition matches nothing; old_style_field: a style field from before styles and rules is still written, and the problem says its new home.",
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$"
         },
@@ -1503,6 +1503,541 @@
         "link"
       ],
       "additionalProperties": false
+    },
+    "colorName": {
+      "description": "A colour by name, never a CSS colour, so a style reads the same in light and dark: one of the theme's names (bg, panel, ink, muted, line, accent, sec, warn, bad, blue, violet, teal, each also with -soft) or a name the design adds in colors.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "styleName": {
+      "description": "The name of a style, in kebab case, as the built-in styles or the design's styles declare it.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "styleProperties": {
+      "description": "What a style says about how a thing is drawn, each property one the board knows how to draw; a property a style leaves out is left to the layer before it. The values are fixed here and nowhere else.",
+      "type": "object",
+      "properties": {
+        "fill": {
+          "description": "The colour inside a box.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-color": {
+          "description": "The colour of a box's border.",
+          "$ref": "#/$defs/colorName"
+        },
+        "text-color": {
+          "description": "The colour of the text.",
+          "$ref": "#/$defs/colorName"
+        },
+        "line-color": {
+          "description": "The colour of a line between two things.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-style": {
+          "description": "How a box's border is drawn; none draws no border.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ]
+        },
+        "border-width": {
+          "description": "How heavy a box's border is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "line-width": {
+          "description": "How heavy a line is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "line-style": {
+          "description": "How a line is drawn.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted"
+          ]
+        },
+        "mark": {
+          "description": "One character drawn beside the thing, such as a tick; empty draws none.",
+          "type": "string",
+          "pattern": "^.?$"
+        },
+        "badge": {
+          "description": "One letter on the thing's badge, such as D for decided.",
+          "type": "string",
+          "pattern": "^\\S$"
+        },
+        "fade": {
+          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
+          "enum": [
+            "none",
+            "aside",
+            "gone"
+          ]
+        },
+        "text": {
+          "description": "How the text is set: normal, bold, italic, or struck through.",
+          "enum": [
+            "normal",
+            "bold",
+            "italic",
+            "strike"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "styleWritten": {
+      "description": "A style as a design writes it: one style by name, its own properties, or a list of style names and properties taken in order, where the last to say a property wins.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/styleName"
+        },
+        {
+          "$ref": "#/$defs/styleProperties"
+        },
+        {
+          "description": "Style names and properties, in order; the last to say a property wins.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "description": "A style by name, or properties of its own.",
+            "oneOf": [
+              {
+                "$ref": "#/$defs/styleName"
+              },
+              {
+                "$ref": "#/$defs/styleProperties"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "action": {
+      "description": "What a person is doing on the board, which a rule may draw: a thing selected, hovered, focused (the keyboard's), being dragged, the current step of a played flow, or in the design's focus. Drawn by the page and needs no license.",
+      "enum": [
+        "selected",
+        "hovered",
+        "focused",
+        "dragging",
+        "flow-step",
+        "in-focus"
+      ]
+    },
+    "eventType": {
+      "description": "An event by its CloudEvents type name, as events.asyncapi.yaml lists it, which a rule may draw while live events are on.",
+      "enum": [
+        "designer.board.changed",
+        "designer.layout.changed",
+        "designer.features.changed",
+        "designer.meta.changed",
+        "designer.runs.changed"
+      ]
+    },
+    "ruleGiven": {
+      "description": "What a rule is about: \"*\" is everything; otherwise every condition written must hold, and an empty map matches nothing. A value is \"*\", one value, or a list meaning any of.",
+      "oneOf": [
+        {
+          "description": "Everything.",
+          "const": "*"
+        },
+        {
+          "type": "object",
+          "description": "The conditions on what a thing is.",
+          "properties": {
+            "kind": {
+              "description": "The kind of the thing, such as Block or Group.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "group": {
+              "description": "The id of the group the thing sits in.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "view": {
+              "description": "The view the thing is drawn in.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ruleWhen": {
+      "description": "When a rule holds: \"*\" is always; otherwise every condition written must hold, and an empty map never holds. A value is \"*\", one value, or a list meaning any of.",
+      "oneOf": [
+        {
+          "description": "Always.",
+          "const": "*"
+        },
+        {
+          "type": "object",
+          "description": "The conditions on the state of the thing.",
+          "properties": {
+            "status": {
+              "description": "The thing's status, as the vocabulary lists it.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "label": {
+              "description": "A line's label, as the vocabulary lists it.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "severity": {
+              "description": "The thing's severity, as the vocabulary lists it.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "release": {
+              "description": "The release the thing comes in.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "action": {
+              "description": "What a person is doing to the thing.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "$ref": "#/$defs/action"
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/action"
+                  }
+                }
+              ]
+            },
+            "event": {
+              "description": "An event that names the thing; needs live events.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "$ref": "#/$defs/eventType"
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/eventType"
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ruleThen": {
+      "description": "What a rule draws: its styles, and for an event rule which things the event reaches. An empty map switches the rule off.",
+      "type": "object",
+      "properties": {
+        "styles": {
+          "description": "The style the rule gives what it matches.",
+          "$ref": "#/$defs/styleWritten"
+        },
+        "for": {
+          "description": "Which things an event rule reaches: changed, only the ids the event names as changed; \"*\", every thing the rule is about. Written with an event only.",
+          "enum": [
+            "changed",
+            "*"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "rule": {
+      "description": "One rule, the only link between what a thing is and how it looks; rules are read top to bottom and the last to say a property wins. A new id writes all three parts; an id already used (built-in or earlier) replaces only the parts it writes, each part whole.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ruleForEvent"
+        }
+      ],
+      "properties": {
+        "id": {
+          "description": "The fixed name of the rule, in kebab case, so a later layer can replace or switch it off.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+        },
+        "description": {
+          "description": "What the rule is for, in words for people.",
+          "type": "string",
+          "minLength": 1
+        },
+        "given": {
+          "$ref": "#/$defs/ruleGiven"
+        },
+        "when": {
+          "$ref": "#/$defs/ruleWhen"
+        },
+        "then": {
+          "$ref": "#/$defs/ruleThen"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "colorPair": {
+      "description": "What a colour name draws as on a light and on a dark canvas, as CSS hex colours, so a style that names it reads in both.",
+      "type": "object",
+      "properties": {
+        "light": {
+          "description": "The colour on a light canvas.",
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+        },
+        "dark": {
+          "description": "The colour on a dark canvas.",
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+        }
+      },
+      "required": [
+        "light",
+        "dark"
+      ],
+      "additionalProperties": false
+    },
+    "elementStyles": {
+      "description": "How one block, group or line asks for its own look, in its spec.ui-design.styles: style names and properties in order, the last to say a property wins, taken after every rule. The spec stays open (CT-RULE-4); this is how e-designer reads it.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "description": "A style by name, or properties of its own.",
+        "oneOf": [
+          {
+            "$ref": "#/$defs/styleName"
+          },
+          {
+            "$ref": "#/$defs/styleProperties"
+          }
+        ]
+      }
+    },
+    "ruleForEvent": {
+      "description": "A rule writes for exactly when it reacts to an event: an event rule that draws something says which things it reaches, and a rule with no event has nothing to reach.",
+      "allOf": [
+        {
+          "description": "for is written with an event only.",
+          "if": {
+            "properties": {
+              "then": {
+                "required": [
+                  "for"
+                ]
+              }
+            },
+            "required": [
+              "then"
+            ]
+          },
+          "then": {
+            "properties": {
+              "when": {
+                "type": "object",
+                "required": [
+                  "event"
+                ]
+              }
+            },
+            "required": [
+              "when"
+            ]
+          }
+        },
+        {
+          "description": "An event rule that draws something says for.",
+          "if": {
+            "properties": {
+              "when": {
+                "type": "object",
+                "required": [
+                  "event"
+                ]
+              },
+              "then": {
+                "required": [
+                  "styles"
+                ]
+              }
+            },
+            "required": [
+              "when",
+              "then"
+            ]
+          },
+          "then": {
+            "properties": {
+              "then": {
+                "required": [
+                  "for"
+                ]
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

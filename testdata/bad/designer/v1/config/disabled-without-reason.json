@@ -286,6 +286,96 @@
         ]
       }
     },
+    "readings": {
+      "components": [
+        "Block",
+        "Risk",
+        "Question",
+        "Contradiction",
+        "Suggestion",
+        "Decision"
+      ],
+      "writesInto": [
+        "store"
+      ],
+      "traverses": [
+        "calls"
+      ],
+      "annotates": [
+        "affects",
+        "related"
+      ],
+      "linkLabels": [
+        "calls",
+        "affects",
+        "related"
+      ],
+      "borderStyles": [
+        "solid",
+        "dashed",
+        "dotted",
+        "double",
+        "none"
+      ],
+      "lineStyles": [
+        "solid",
+        "dashed",
+        "dotted"
+      ],
+      "statuses": [
+        {
+          "value": "open",
+          "settled": false,
+          "badge": "O",
+          "mark": "",
+          "note": "outstanding; drawn unmarked, so the board reads as what is left"
+        },
+        {
+          "value": "decided",
+          "settled": true,
+          "badge": "D",
+          "mark": "\u2713",
+          "color": "#46c17c",
+          "note": "settled, ticked"
+        },
+        {
+          "value": "parked",
+          "settled": true,
+          "badge": "P",
+          "mark": "\u23f8",
+          "color": "#ffcc00",
+          "recede": "aside",
+          "note": "set aside, dashed border"
+        },
+        {
+          "value": "dropped",
+          "settled": true,
+          "badge": "D",
+          "mark": "\u2715",
+          "color": "#8b93a1",
+          "recede": "gone",
+          "note": "gone, struck through and faded hardest"
+        }
+      ],
+      "hexagon": {
+        "inside": [
+          "domain"
+        ],
+        "boundary": [
+          "port"
+        ],
+        "adapter": [
+          "adapter"
+        ],
+        "outside": [
+          "actor",
+          "external"
+        ]
+      },
+      "notACall": [
+        "caller"
+      ]
+    },
     "styles": {
       "quiet": {
         "properties": {

@@ -36,6 +36,10 @@
                 "ended"
               ]
             },
+            "endedOn": {
+              "description": "The last day of the paid license that ended, the one whose end set state to ended: the latest until of the paid licenses, all of which have ended. So the notice of ADR-L3 names the day, and a page never picks a license. Present exactly when state is ended.",
+              "$ref": "license-payload.schema.json#/properties/until"
+            },
             "build": {
               "description": "This build, so a reader knows which keys' licenses it accepts (ADR-L5).",
               "type": "object",
@@ -105,7 +109,31 @@
               }
             }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "description": "Only an ended paid license has a day it ended, and it always has one.",
+              "if": {
+                "properties": {
+                  "state": {
+                    "const": "ended"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "endedOn"
+                ]
+              },
+              "else": {
+                "not": {
+                  "required": [
+                    "endedOn"
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
     }

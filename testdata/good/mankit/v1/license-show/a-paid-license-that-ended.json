@@ -9,6 +9,7 @@
   },
   "data": {
     "state": "ended",
+    "endedOn": "2026-11-01",
     "build": {
       "release": true
     },

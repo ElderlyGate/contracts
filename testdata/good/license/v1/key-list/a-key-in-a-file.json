@@ -1,0 +1,18 @@
+{
+  "apiVersion": "elderlygate/license/app/v1",
+  "kind": "KeyList",
+  "ran": {
+    "name": "license",
+    "app": "license",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "id": "dev-2026",
+      "publicKey": "G6+ijkjcJt/ktbZ09TITWqF1q6E6n93C0FuNe8KP2RU=",
+      "signer": "file"
+    }
+  ],
+  "errors": []
+}

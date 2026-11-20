@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/license/v1/key-list.schema.json",
+  "title": "key list",
+  "description": "What nw-license key list answers with -o json: every key of the signer, its id and its public key, the list apps' builds trust, so the owner copies it into a build without reading a private key (ADR-L6, L7). It reads no private key, so it never asks.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/license/app/v1: the form of nw-license's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the license files they describe.",
+          "const": "elderlygate/license/app/v1"
+        },
+        "kind": {
+          "description": "Always KeyList, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "KeyList"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always license, nw-license's product ID, since only nw-license gives this answer (ADR-L7).",
+              "const": "license"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "Every key of the signer, by id in order; empty when it has none, so a reader tells no key from a failure.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/key"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "key": {
+      "description": "One signing key as anyone may see it: never its private key, which never leaves the signer (ADR-L6).",
+      "type": "object",
+      "required": [
+        "id",
+        "publicKey",
+        "signer"
+      ],
+      "properties": {
+        "id": {
+          "description": "The key's id, which a license's keyId names, so an app finds the public key that checks it (ADR-L6). nw-license makes it a-z, 0-9 and -, starting with a letter or digit, at most 63 long.",
+          "$ref": "../../mankit/v1/license-payload.schema.json#/properties/keyId",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "publicKey": {
+          "description": "The key's Ed25519 public key, standard base64: 32 bytes, so 44 characters ending =. A build trusts a list of these, so a key can be moved or replaced while the licenses it signed keep working (ADR-L1, L6).",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]{43}=$",
+          "contentEncoding": "base64"
+        },
+        "signer": {
+          "description": "The signer backend that keeps the key, so the owner sees where it is; the signer setting picks it. An open word, as backends may be added without changing the rest (ADR-L6). Known words: keychain, the macOS Keychain; file, a key file only the owner can read, on Linux and in a workspace.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

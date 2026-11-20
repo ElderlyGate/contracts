@@ -1,0 +1,37 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "Apply",
+  "source": {
+    "name": "releases",
+    "app": "designer",
+    "version": "6.10.0",
+    "contract": "v2"
+  },
+  "data": [
+    {
+      "event": "created",
+      "file": ".designer/releases/block/CMP-NEW.yml",
+      "kind": "Block",
+      "id": "CMP-NEW",
+      "before": null,
+      "after": "8888888888888888888888888888888888888888888888888888888888888888"
+    }
+  ],
+  "errors": [
+    {
+      "apiVersion": "elderlygate/contracts/problem/v1",
+      "kind": "Problem",
+      "type": "refused",
+      "detail": "block/CMP-OVEN.yml changed since it was read; read it again.",
+      "reason": "changed",
+      "at": [
+        {
+          "file": "block/CMP-OVEN.yml"
+        },
+        {
+          "file": "block/CMP-FRIDGE.yml"
+        }
+      ]
+    }
+  ]
+}

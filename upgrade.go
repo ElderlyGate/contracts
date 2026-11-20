@@ -167,6 +167,7 @@ func UpgradeDesigner(v1 []byte) ([]byte, error) {
 
 // DowngradeDesigner is the step back from designer/app/v2 to v1, for a v1 reader (ADR-S16): the envelope back to ran and error/v1, the app's own form and contract, the design files' form back to design/v2, and for Config without what v1 cannot hold.
 // It gives the data only: saying what was lost waits for the envelope decision in mankit's conversion plan.
+// A Problem's first place survives as at; error/v1 holds one place, so the rest are dropped.
 func DowngradeDesigner(v2 []byte) ([]byte, error) {
 	var head struct {
 		APIVersion string `json:"apiVersion"`
@@ -211,13 +212,18 @@ func upConfig(data map[string]any) {
 	data["rules"] = []any{}
 }
 
-// statusesOf is each status of the list the status property names, in lower case and once, with what it means; empty when the definitions name none.
+// statusesOf is each status of the list the property at state.status names, in lower case and once, with what it means; empty when the definitions name none.
 func statusesOf(definitions any) []any {
 	out := []any{}
 	defs, _ := definitions.(map[string]any)
 	props, _ := defs["properties"].(map[string]any)
-	status, _ := props["status"].(map[string]any)
-	name, _ := status["values"].(string)
+	var name string
+	for _, p := range props {
+		if prop, _ := p.(map[string]any); prop["key"] == "state.status" {
+			name, _ = prop["values"].(string)
+			break
+		}
+	}
 	vocabulary, _ := defs["vocabulary"].(map[string]any)
 	list, _ := vocabulary[name].([]any)
 	seen := map[string]bool{}
@@ -258,10 +264,15 @@ func downConfig(data map[string]any) {
 
 // errorOf turns a Problem back into an error/v1 item: the owner's mapping read backwards, the detail as the message, the first place as at.
 func errorOf(p map[string]any) map[string]any {
-	code, _ := p["type"].(string)
+	kind, _ := p["type"].(string)
 	reason, _ := p["reason"].(string)
+	// As mankit serve writes a Problem for an envelope/v1 reader: the owner's mapping, else the reason, else the type.
+	code := kind
+	if reason != "" {
+		code = reason
+	}
 	for c, m := range reasonOf {
-		if m[0] == code && m[1] == reason {
+		if m[0] == kind && m[1] == reason {
 			code = c
 			break
 		}

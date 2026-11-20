@@ -14,7 +14,7 @@
         "*"
       ],
       "note": "The files of a design",
-      "upgrade": "hubman migrate designer <folder>"
+      "upgrade": "hubman product migrate designer <folder>"
     }
   ]
 }

@@ -369,7 +369,7 @@ func TestApiVersionFormsListEveryFormOnce(t *testing.T) {
 		if len(row.Old) == 0 {
 			continue
 		}
-		if want := "hubman migrate " + row.App + " <folder>"; row.Upgrade != want {
+		if want := "hubman product migrate " + row.App + " <folder>"; row.Upgrade != want {
 			t.Errorf("%s: upgrade is %q, want %q", row.New, row.Upgrade, want)
 		}
 		for _, old := range row.Old {

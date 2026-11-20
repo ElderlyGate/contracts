@@ -6,7 +6,7 @@ forms:
     app: designer
     kinds: [Design, Definitions, "*"]
     note: The files of a design. Kinds are open, the built-in ones (Block, Group, Flow, Link, Adr, Question, Risk, Suite, Request, Open, Contradiction, Suggestion) and the ones a project declares share this apiVersion; every product's design uses it
-    upgrade: hubman migrate designer <folder>
+    upgrade: hubman product migrate designer <folder>
   - new: elderlygate/designer/app/v1
     app: designer
     kinds: [Version, DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, MigrateLayout]
@@ -20,13 +20,13 @@ forms:
     app: kanban
     kinds: [Card, Epic, Feature, Story, Task, Bug]
     note: The cards of a board, read by control-room
-    upgrade: hubman migrate kanban <folder>
+    upgrade: hubman product migrate kanban <folder>
   - new: elderlygate/work-records/log/v1
     old: [org/work-record/v1]
     app: work-records
     kinds: [WorkRecord]
     note: Work records the org skill writes and control-room reads
-    upgrade: hubman migrate work-records <folder>
+    upgrade: hubman product migrate work-records <folder>
   - new: elderlygate/mankit/server/v1
     app: mankit
     kinds: [Server]

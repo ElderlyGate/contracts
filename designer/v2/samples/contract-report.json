@@ -1,0 +1,38 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "ContractReport",
+  "source": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.18.0",
+    "contract": "v2"
+  },
+  "data": {
+    "findings": [
+      {
+        "rule": "undeclared",
+        "block": "CMP-STORE",
+        "title": "Store",
+        "fields": [
+          "status"
+        ],
+        "flows": [
+          "drop-a-parcel"
+        ],
+        "message": "a flow writes status into CMP-STORE and its block does not say so. The journey knows something the block does not."
+      }
+    ],
+    "counts": {
+      "declared": 2,
+      "unstated": 1,
+      "undeclared": 1,
+      "unexercised": 0,
+      "misplaced": 0,
+      "unknown": 0
+    },
+    "flows": [
+      "drop-a-parcel"
+    ]
+  },
+  "errors": []
+}

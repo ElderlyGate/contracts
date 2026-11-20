@@ -1,0 +1,70 @@
+asyncapi: 3.0.0
+info:
+  title: designer events
+  version: v2
+  description: What changed in a design, one event per part of its revision (board, layout, features, meta, runs), sent on GET /api/events as CloudEvents (event/v1) while live events are on (ADR-E9); source /designer/<project>, subject the design id.
+channels:
+  events:
+    address: /api/events
+    messages:
+      boardChanged:
+        $ref: '#/components/messages/boardChanged'
+      layoutChanged:
+        $ref: '#/components/messages/layoutChanged'
+      featuresChanged:
+        $ref: '#/components/messages/featuresChanged'
+      metaChanged:
+        $ref: '#/components/messages/metaChanged'
+      runsChanged:
+        $ref: '#/components/messages/runsChanged'
+      streamGapped:
+        $ref: '#/components/messages/streamGapped'
+operations:
+  sendEvents:
+    action: send
+    channel:
+      $ref: '#/channels/events'
+components:
+  messages:
+    boardChanged:
+      name: designer.board.changed
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.board.changed.schema.json
+    layoutChanged:
+      name: designer.layout.changed
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.layout.changed.schema.json
+    featuresChanged:
+      name: designer.features.changed
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.features.changed.schema.json
+    metaChanged:
+      name: designer.meta.changed
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.meta.changed.schema.json
+    runsChanged:
+      name: designer.runs.changed
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.runs.changed.schema.json
+    streamGapped:
+      name: designer.stream.gapped
+      contentType: application/cloudevents+json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: designer.stream.gapped.schema.json

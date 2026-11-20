@@ -1,0 +1,72 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "Views",
+  "source": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.3.0",
+    "contract": "v2"
+  },
+  "data": {
+    "declared": true,
+    "views": [
+      {
+        "name": "structure",
+        "title": "Parts",
+        "question": "What calls what?",
+        "draws": [
+          "Block",
+          "Group"
+        ]
+      },
+      {
+        "name": "runtime",
+        "title": "Flows",
+        "draws": [
+          "Flow"
+        ]
+      },
+      {
+        "name": "sketch",
+        "title": "Sketch",
+        "drawsUnreadable": true
+      },
+      {
+        "name": "broken",
+        "unreadable": true,
+        "title": ""
+      }
+    ],
+    "defaultViews": [
+      {
+        "name": "structure",
+        "title": "Building Blocks View",
+        "question": "What are the parts, and what calls what?"
+      },
+      {
+        "name": "context",
+        "title": "Context View",
+        "question": "What is the system, who uses it, and what does it talk to?",
+        "draws": []
+      },
+      {
+        "name": "runtime",
+        "title": "Runtime View",
+        "question": "What happens, in order, when the system does its job?",
+        "draws": [
+          "Flow"
+        ]
+      },
+      {
+        "name": "deployment",
+        "title": "Deployment View",
+        "question": "What is installed where?",
+        "draws": []
+      }
+    ],
+    "namePattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+    "nameRule": "letters, digits, - and _, starting with a letter or digit",
+    "sha256": "9bb6429e9a52b9dbc3a4b7003e673bd9d450077ba3717421856560f68d3c6121"
+  },
+  "errors": []
+}

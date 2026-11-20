@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/roundtrip-report.schema.json",
+  "title": "roundtrip report",
+  "description": "What check roundtrip finds, from check roundtrip -o json: whether each flow comes back the same after e-designer writes it and reads it again. A flow that does not fails the check.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v2: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v2"
+        },
+        "kind": {
+          "description": "Always RoundtripReport, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "RoundtripReport"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v2, the contract version this schema belongs to.",
+              "const": "v2"
+            }
+          }
+        },
+        "data": {
+          "description": "Each flow's trip.",
+          "type": "object",
+          "properties": {
+            "flows": {
+              "description": "One per flow, in id order.",
+              "type": "array",
+              "items": {
+                "description": "One flow.",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "The flow's id.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ok": {
+                    "description": "It came back the same.",
+                    "type": "boolean"
+                  },
+                  "reason": {
+                    "description": "Why not, an open word programs decide by (G-STACK-15); present exactly when ok is false. Known words: refused: e-designer would not write it again, or could not read it back; changed: it came back different from what was written.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "says": {
+                    "description": "The same for people; present exactly when reason is. Programs never decide by it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "ok"
+                ],
+                "additionalProperties": false,
+                "if": {
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "reason"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "says"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "else": {
+                  "required": [
+                    "reason",
+                    "says"
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "flows"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,2033 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/defs.schema.json",
+  "title": "shared shapes",
+  "description": "The shapes several designer answers share, written once and referenced with $ref, so each is described in one place. The document itself takes one of each, so its sample shows them.",
+  "type": "object",
+  "properties": {
+    "problem": {
+      "$ref": "#/$defs/problem"
+    },
+    "document": {
+      "$ref": "#/$defs/document"
+    },
+    "actionType": {
+      "$ref": "#/$defs/actionType"
+    },
+    "style": {
+      "$ref": "#/$defs/style"
+    },
+    "flow": {
+      "$ref": "#/$defs/flow"
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "suite": {
+      "$ref": "#/$defs/suite"
+    },
+    "binding": {
+      "$ref": "#/$defs/binding"
+    },
+    "scalar": {
+      "$ref": "#/$defs/scalar"
+    },
+    "when": {
+      "$ref": "#/$defs/when"
+    },
+    "example": {
+      "$ref": "#/$defs/example"
+    },
+    "boardProblem": {
+      "$ref": "#/$defs/boardProblem"
+    },
+    "refusal": {
+      "$ref": "#/$defs/refusal"
+    },
+    "blockFindings": {
+      "$ref": "#/$defs/blockFindings"
+    },
+    "written": {
+      "$ref": "#/$defs/written"
+    },
+    "layoutSpot": {
+      "$ref": "#/$defs/layoutSpot"
+    },
+    "layoutMove": {
+      "$ref": "#/$defs/layoutMove"
+    },
+    "sideChange": {
+      "$ref": "#/$defs/sideChange"
+    },
+    "tidiedView": {
+      "$ref": "#/$defs/tidiedView"
+    },
+    "rect": {
+      "$ref": "#/$defs/rect"
+    },
+    "migratedView": {
+      "$ref": "#/$defs/migratedView"
+    },
+    "step": {
+      "$ref": "#/$defs/step"
+    },
+    "partChanged": {
+      "$ref": "#/$defs/partChanged"
+    },
+    "fingerprint": {
+      "$ref": "#/$defs/fingerprint"
+    },
+    "eventSource": {
+      "$ref": "#/$defs/eventSource"
+    },
+    "projectName": {
+      "$ref": "#/$defs/projectName"
+    },
+    "boardAddress": {
+      "$ref": "#/$defs/boardAddress"
+    },
+    "visitedBy": {
+      "$ref": "#/$defs/visitedBy"
+    },
+    "touchedBy": {
+      "$ref": "#/$defs/touchedBy"
+    },
+    "defaultViews": {
+      "$ref": "#/$defs/defaultViews"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "problem": {
+      "description": "One thing e-designer could not take, with where it is, so nobody has to hunt for it.",
+      "type": "object",
+      "properties": {
+        "at": {
+          "description": "Where the problem is: a file and a path in it, such as spec.board.display.layout.",
+          "type": "string"
+        },
+        "says": {
+          "description": "What is wrong, in words for people; a program never decides by it (G-STACK-15).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "says"
+      ],
+      "additionalProperties": false
+    },
+    "document": {
+      "description": "One resource as its file holds it, in the form this contract reads.",
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/design/v3, the form a design's files are written in at this contract (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/designer/design/v3"
+        },
+        "kind": {
+          "description": "The resource's kind, a built-in kind or one the design declares.",
+          "type": "string"
+        },
+        "metadata": {
+          "description": "What names the resource, apart from what it says.",
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "The resource's id, unique within its kind; other resources point to it by it.",
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "description": "The resource's name for people, shown on its card on the board.",
+              "type": "string"
+            },
+            "tags": {
+              "description": "Labels the design's user puts on the resource.",
+              "type": "array",
+              "items": {
+                "description": "One label, as the user wrote it, so a reader can filter by it.",
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "spec": {
+          "description": "What the resource says. Written by the design's user, so it stays open: a design's fields are its own (CT-RULE-4).",
+          "type": "object"
+        }
+      },
+      "required": [
+        "apiVersion",
+        "kind",
+        "metadata"
+      ],
+      "additionalProperties": false
+    },
+    "actionType": {
+      "description": "One type of change, the words every product of the org shares (G-STACK-13), so a reader names a change as every product does.",
+      "enum": [
+        "create",
+        "edit",
+        "move",
+        "focus",
+        "delete",
+        "settings",
+        "connect",
+        "run"
+      ]
+    },
+    "style": {
+      "description": "How a change of this type asks: name (type the name), yes-no (y/N) or never (does not ask), as G-STACK-13 names them.",
+      "enum": [
+        "name",
+        "yes-no",
+        "never"
+      ]
+    },
+    "flow": {
+      "description": "One flow as the board takes it: a request's walk through the blocks, one step at a time, entered by one method and path.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The flow's id, its file name, so the board and a run name the same flow.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "name": {
+          "description": "The flow's name for people; its id when the file gives none.",
+          "type": "string"
+        },
+        "source": {
+          "description": "Where the flow is described; empty when it names none.",
+          "type": "string"
+        },
+        "entry": {
+          "description": "How a request enters this flow, matched against a request's method and path, never declared by the request.",
+          "type": "object",
+          "properties": {
+            "method": {
+              "description": "The HTTP method.",
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "description": "The path, which may hold {name} parts that match one segment.",
+              "type": "string",
+              "pattern": "^/"
+            }
+          },
+          "required": [
+            "method",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        "request": {
+          "description": "The request as it arrives, by field; empty when the flow says nothing of it.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        "before": {
+          "description": "What each block holds before the request arrives, by block id.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "The block's fields and values.",
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/scalar"
+            }
+          }
+        },
+        "example": {
+          "$ref": "#/$defs/example"
+        },
+        "throughout": {
+          "description": "Blocks that run with the steps rather than as one of them, by block id.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "When the block runs: a bare when for every step, or a when for some steps only.",
+            "oneOf": [
+              {
+                "$ref": "#/$defs/when"
+              },
+              {
+                "description": "A when for the steps named only.",
+                "type": "object",
+                "properties": {
+                  "when": {
+                    "$ref": "#/$defs/when"
+                  },
+                  "only": {
+                    "description": "The steps it runs with, by step id, each a step of this flow.",
+                    "type": "array",
+                    "items": {
+                      "description": "One step id.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "when",
+                  "only"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "steps": {
+          "description": "The steps, in order.",
+          "type": "array",
+          "items": {
+            "description": "One step of a flow: where the request is, and what it writes there.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The step's id, unique in its flow, so a run's spans and a throughout entry can name it.",
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "at": {
+                "description": "The block the step happens at.",
+                "type": "string",
+                "minLength": 1
+              },
+              "phase": {
+                "description": "Where the step sits in a request's life, one of the phases the design declares.",
+                "type": "string"
+              },
+              "label": {
+                "description": "What happens, in the user's words.",
+                "type": "string"
+              },
+              "request": {
+                "description": "What the step writes onto the request, by field.",
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/scalar"
+                }
+              },
+              "components": {
+                "description": "What the step writes into each block's own state, by block id; a block listed here is touched by the step.",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "The block's fields and values.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/scalar"
+                  },
+                  "minProperties": 1
+                }
+              },
+              "example": {
+                "$ref": "#/$defs/example"
+              },
+              "budgetMs": {
+                "description": "The step's latency target in milliseconds; absent means not costed.",
+                "type": "number",
+                "minimum": 0
+              },
+              "emits": {
+                "description": "Work forked here that does not hold the request. A part of an emission the board cannot read is left out and reported as the problem emission_unread, never dropped in silence; the flow itself is kept.",
+                "type": "array",
+                "items": {
+                  "description": "An event forked off a step, settling on its own without holding the request.",
+                  "type": "object",
+                  "properties": {
+                    "event": {
+                      "description": "The event's name, as the flow writes it.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "description": "What kind of object it is, when it is an object rather than a signal.",
+                      "enum": [
+                        "span",
+                        "log",
+                        "metric",
+                        "stream"
+                      ]
+                    },
+                    "carries": {
+                      "description": "What the object carries, by field name.",
+                      "type": "object",
+                      "additionalProperties": {
+                        "$ref": "#/$defs/scalar"
+                      }
+                    },
+                    "example": {
+                      "description": "Which of carries are invented.",
+                      "type": "array",
+                      "items": {
+                        "description": "One field of carries.",
+                        "type": "string"
+                      }
+                    },
+                    "to": {
+                      "description": "Where it travels, in order; the first leg is where it lands.",
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "description": "One leg of an emitted object's journey; the tracer moves it one leg per step.",
+                        "type": "object",
+                        "properties": {
+                          "at": {
+                            "description": "The block the object arrives at on this leg.",
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "state": {
+                            "description": "The object's own state once it arrives; absent when the flow does not say.",
+                            "type": "string"
+                          },
+                          "sets": {
+                            "description": "Fields the object gains or changes on arrival.",
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/$defs/scalar"
+                            }
+                          },
+                          "example": {
+                            "description": "Which of sets are invented.",
+                            "type": "array",
+                            "items": {
+                              "description": "One field of sets.",
+                              "type": "string"
+                            }
+                          },
+                          "source": {
+                            "description": "Where this leg is described, as the flow names it.",
+                            "type": "string"
+                          },
+                          "note": {
+                            "description": "The user's words on this leg.",
+                            "type": "string"
+                          },
+                          "deadEnd": {
+                            "description": "Set when the path stops because the design does not say what happens next, so a reader tells a gap from an arrival.",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "at"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "source": {
+                      "description": "Where this event is described, as the flow names it.",
+                      "type": "string"
+                    },
+                    "note": {
+                      "description": "The user's words on this event.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "event",
+                    "to"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "findings": {
+                "description": "The findings that sit on this step, by finding id, each with what this flow adds, or null when it adds nothing.",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "What this flow adds to the finding, or null.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "onFail": {
+                "description": "What happens when the step does not continue.",
+                "type": "string"
+              },
+              "source": {
+                "description": "Where in the design's documents the step comes from; empty when the flow names none.",
+                "type": "string"
+              },
+              "note": {
+                "description": "The user's words on this step.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "at",
+              "phase",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "source",
+        "entry",
+        "request",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "request": {
+      "description": "One saved request as the board takes it: a scenario to send or to walk, never a measurement.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The request's id, its file name, so a suite and the tracer name the same request.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "description": "Its name for people; its id when the file gives none.",
+          "type": "string"
+        },
+        "note": {
+          "description": "Why the scenario is the way it is, in the user's words.",
+          "type": "string"
+        },
+        "group": {
+          "description": "Which part of the request list it belongs to, a flat name.",
+          "type": "string"
+        },
+        "default": {
+          "description": "Present and true on the one request the tracer starts with; the first of several that say so wins.",
+          "const": true
+        },
+        "type": {
+          "description": "One value per axis the design declares, by axis, so the board can place it.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "The axis's value.",
+            "type": "string"
+          }
+        },
+        "initial": {
+          "description": "The request's starting values, by field.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        "origins": {
+          "description": "Where each initial value came from, by field. An origin for a field initial does not hold, or one that is not design, example or observed, is left out and reported as the problem request_field_unread.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "design, example or observed.",
+            "enum": [
+              "design",
+              "example",
+              "observed"
+            ]
+          }
+        },
+        "capturedFrom": {
+          "description": "What the scenario was captured from, as the file says.",
+          "type": "string"
+        },
+        "send": {
+          "description": "The HTTP request to send, written out by the user so the board never invents traffic; absent means it is only walked.",
+          "type": "object",
+          "properties": {
+            "method": {
+              "description": "The HTTP method, in upper case.",
+              "type": "string"
+            },
+            "path": {
+              "description": "The path to send to.",
+              "type": "string",
+              "pattern": "^/"
+            },
+            "headers": {
+              "description": "The headers to send, by name. A header whose value is not a string is left out and reported as the problem request_field_unread.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "The header's value.",
+                "type": "string"
+              }
+            },
+            "body": {
+              "description": "The body to send, as the file holds it."
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "type",
+        "initial"
+      ],
+      "additionalProperties": false
+    },
+    "suite": {
+      "description": "One suite as the board takes it: requests run in order, with what carries between them and what must be true.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The suite's id, its file name.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "description": "Its name for people; its id when the file gives none.",
+          "type": "string"
+        },
+        "note": {
+          "description": "What the suite checks, in the user's words.",
+          "type": "string"
+        },
+        "steps": {
+          "description": "The steps, in order; a suite with none is refused.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "description": "One step: a request, what it lifts out, and what must hold.",
+            "type": "object",
+            "properties": {
+              "request": {
+                "description": "The id of the request it sends.",
+                "type": "string",
+                "minLength": 1
+              },
+              "capture": {
+                "description": "Values lifted out of the response for later steps, name to path.",
+                "type": "object",
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_]+$"
+                },
+                "additionalProperties": {
+                  "description": "A dot path into the response.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "expect": {
+                "description": "What must be true of the response. An expectation the board cannot read, a decimal status among them, is left out and reported as the problem expectation_unread; the step is kept.",
+                "type": "array",
+                "items": {
+                  "description": "One thing that must be true of a suite step, in the design's terms.",
+                  "oneOf": [
+                    {
+                      "description": "The response must come back with this HTTP status, the simplest check that a request did what it should.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "status: the check is on the response's HTTP status.",
+                          "const": "status"
+                        },
+                        "status": {
+                          "description": "The HTTP status the response must have, a whole number.",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "status"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "The response body must hold a value at a path, and equal it when equals is given, so a suite checks what came back, not only that something did.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "body: the check is on a value in the response body.",
+                          "const": "body"
+                        },
+                        "path": {
+                          "description": "A dot path into the body, such as items.0.id; body. in front is allowed and means the same.",
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "equals": {
+                          "description": "The value found there must equal; absent means the path must be present at all.",
+                          "$ref": "#/$defs/scalar"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "A block must appear among the spans the request produced (span), must have failed there (spanFailed), or must not appear (spanAbsent), so a suite checks the path a request took through the design, not only its answer.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "span: the block must appear; spanFailed: its span must have errored, since the interesting checks are about requests that did not work; spanAbsent: it must not appear, unanswerable when no spans came back.",
+                          "enum": [
+                            "span",
+                            "spanFailed",
+                            "spanAbsent"
+                          ]
+                        },
+                        "component": {
+                          "description": "The block's service name, as the spans name it.",
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "component"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "The whole request must finish within a ceiling, a latency check stated in the design's terms.",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "description": "duration: the check is on the whole request's time.",
+                          "const": "duration"
+                        },
+                        "maxMs": {
+                          "description": "The ceiling in milliseconds.",
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "maxMs"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "request"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "binding": {
+      "description": "Which flow a request enters, matched by method and path: bound to one flow, matched by none, matched by several, or not sendable, so a reader shows a request no flow covers.",
+      "oneOf": [
+        {
+          "description": "Exactly one flow matches the request's method and path, so the tracer knows which journey to walk.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "bound: the request enters one flow.",
+              "const": "bound"
+            },
+            "flow": {
+              "description": "The id of the flow it enters.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "flow"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "description": "The request names no method and path, in send or in initial, so no flow can match it and it can only be walked by hand.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "unsendable: there is nothing to match on.",
+              "const": "unsendable"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "description": "No flow's entry matches the request's method and path, so the design has no journey for it, which a reader shows as a gap.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "no-flow: the design does not cover this request.",
+              "const": "no-flow"
+            },
+            "method": {
+              "description": "The request's method, so a reader can say which entry is missing.",
+              "type": "string"
+            },
+            "path": {
+              "description": "The request's path, so a reader can say which entry is missing.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "method",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "description": "Several flows' entries match the request, so the design claims two journeys for one route, which a reader shows for the design to settle.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "description": "many: more than one flow claims the request.",
+              "const": "many"
+            },
+            "flows": {
+              "description": "The ids of every flow that matches.",
+              "type": "array",
+              "items": {
+                "description": "One flow id.",
+                "type": "string"
+              }
+            },
+            "method": {
+              "description": "The request's method, which every listed flow matches.",
+              "type": "string"
+            },
+            "path": {
+              "description": "The request's path, which every listed flow matches.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "flows",
+            "method",
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "scalar": {
+      "description": "One value a flow or request writes: a string, a number or a boolean, never a list or a mapping, so a reader can show and compare it.",
+      "type": [
+        "string",
+        "number",
+        "boolean"
+      ]
+    },
+    "when": {
+      "description": "Where a block runs relative to a step: before it, after it, or around it, which is a different question from the step's phase.",
+      "enum": [
+        "before",
+        "after",
+        "around"
+      ]
+    },
+    "example": {
+      "description": "Which values beside it are invented, not the design's own word: a list of request fields, or request fields and each block's fields, so a reader marks them as examples.",
+      "oneOf": [
+        {
+          "description": "The request fields whose values are invented.",
+          "type": "array",
+          "items": {
+            "description": "One request field.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Which request fields and which block fields are invented.",
+          "type": "object",
+          "properties": {
+            "request": {
+              "description": "The request fields whose values are invented.",
+              "type": "array",
+              "items": {
+                "description": "One request field.",
+                "type": "string"
+              }
+            },
+            "components": {
+              "description": "Per block id, the fields whose values are invented.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "The block's invented fields.",
+                "type": "array",
+                "items": {
+                  "description": "One field of the block.",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "boardProblem": {
+      "description": "One entry the board does not draw as written, with a stable code a program decides by and where it is, so nobody has to hunt for it.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until nw-designer project migrate moves it; group_size_left: a Group file still holds a size, which only layout.yml holds now, and nw-designer project migrate takes it out; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only nw-designer project migrate reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file. undeclared_style: a rule or an element names a style nothing declares, so it is drawn without it; style_field_unread: a style says a property or a value the board does not draw, so the style is used without it; rule_field_unread: a rule writes a part or a condition that cannot be read, so the rule is used without it; undeclared_<thing>: a rule names a kind, group, view, status, label, severity or release the design does not have (such as undeclared_status), so that condition matches nothing; old_style_field: a design/v3 file still writes a look the way design/v2 did (a look, border-style or line-style list, a status mark, color, recede or badge, spec.board.links, an element's ui-design look, background, border, borderStyle, color or style); it is not read, and the problem says its new home, as nw-designer project migrate would have moved it.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "at": {
+          "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.look.",
+          "type": "string",
+          "minLength": 1
+        },
+        "says": {
+          "description": "What is wrong, in words for people; a program never decides by it.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "at",
+        "says"
+      ],
+      "additionalProperties": false
+    },
+    "refusal": {
+      "description": "One file e-designer read but the board does not take, with a stable code a program decides by.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Why the file is not taken, as a stable word a program decides by, never message; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: not_a_slug: the flow, request or suite's id, its file name, is not a slug, so nothing can name it; flow_refused: the file does not form a flow, and message names the field; request_refused: the file does not form a request, and message names the field; suite_refused: the file does not form a suite, and message names the field.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "file": {
+          "description": "The file, relative to the design.",
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "description": "Why, in words for people; a program never decides by it.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "file",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "blockFindings": {
+      "description": "What one block has attached: every component a link whose label annotates ties to it, in either direction (from the block, as attach writes it, or to the block), findings mostly (a link between two blocks attaches the `to` block to the `from` block only), and which are still open by the statuses the definitions mark settled.",
+      "type": "object",
+      "properties": {
+        "attached": {
+          "description": "Every component attached to the block, settled ones too, by id in the order describe board lists Links, each once even when links run both ways or repeat, so a decided ADR still counts.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "description": "One component's id.",
+            "type": "string"
+          }
+        },
+        "open": {
+          "description": "The attached components whose status is not settled, by id in the same order; one with no status is open, since unstated is not settled.",
+          "type": "array",
+          "items": {
+            "description": "One component's id.",
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "attached",
+        "open"
+      ],
+      "additionalProperties": false
+    },
+    "written": {
+      "description": "One file a write touched: what happened to it and its sha256 before and after, so a reader knows what changed and can check the file is still what it wrote.",
+      "type": "object",
+      "required": [
+        "event",
+        "file",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "event": {
+          "description": "What happened to the file: created (it was not there, so before is null), updated (its content changed), deleted (it is gone, so after is null) or unchanged (written with the same content, so before equals after, or neither there before nor after).",
+          "enum": [
+            "created",
+            "updated",
+            "deleted",
+            "unchanged"
+          ]
+        },
+        "file": {
+          "description": "The file, as a path inside the project folder the write ran in: the folder holding .designer/, else the folder holding the designs, such as .designer/default/block/CMP-API.yml; so the same write reads the same on every machine and over HTTP as in the CLI (ADR-S02, ADR-S21). Never a machine path, so it has no leading slash or backslash, no drive letter or scheme such as file:, no leading ~ or space, and no .. step.",
+          "$ref": "../../problem/v1/problem.schema.json#/$defs/place/properties/file"
+        },
+        "kind": {
+          "description": "The kind of resource the file holds, such as Block, Link, Design, Definitions or Layout, by where it lies in the design; absent when its place says nothing.",
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "description": "The id of the resource the file holds, or the design's id for design.yml, definitions.yml and layout.yml; absent with kind.",
+          "type": "string",
+          "minLength": 1
+        },
+        "before": {
+          "description": "The sha256 of the file before, 64 lower-case hex characters; null when it was not there.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "after": {
+          "description": "The sha256 of the file after, 64 lower-case hex characters; null when it is gone.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "dependentRequired": {
+        "id": [
+          "kind"
+        ],
+        "kind": [
+          "id"
+        ]
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "event": {
+                "const": "created"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "before": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event": {
+                "const": "deleted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "after": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "layoutSpot": {
+      "description": "Where a box, line or badge stood or stands on the view, in the board's pixels; a box that grew also says its size.",
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "description": "Left edge, or the point's x, in the board's pixels.",
+          "type": "number"
+        },
+        "y": {
+          "description": "Top edge, or the point's y, in the board's pixels.",
+          "type": "number"
+        },
+        "width": {
+          "description": "The box's width; present only when its size changed (what is size).",
+          "type": "number"
+        },
+        "height": {
+          "description": "The box's height; present only when its size changed (what is size).",
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "layoutMove": {
+      "description": "One thing tidying changed in the view, from where to where, so a reader can say what moved without comparing two layouts.",
+      "type": "object",
+      "required": [
+        "id",
+        "what",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "id": {
+          "description": "The box, group or line that moved: a resource id, or a line's link id.",
+          "type": "string",
+          "minLength": 1
+        },
+        "what": {
+          "description": "What changed: place (a box or group moved), size (it grew), bends (a line was routed anew) or badge (a line's label slid).",
+          "enum": [
+            "place",
+            "size",
+            "bends",
+            "badge"
+          ]
+        },
+        "from": {
+          "$ref": "defs.schema.json#/$defs/layoutSpot",
+          "description": "Where it stood before."
+        },
+        "to": {
+          "$ref": "defs.schema.json#/$defs/layoutSpot",
+          "description": "Where it stands now."
+        }
+      },
+      "additionalProperties": false
+    },
+    "sideChange": {
+      "description": "One line given other sides of its boxes, kept in layout.yml, so a reader can say which lines meet their boxes elsewhere now.",
+      "type": "object",
+      "required": [
+        "id",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "id": {
+          "description": "The line, by its link id.",
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "description": "The side of the box it leaves: l, r, t or b.",
+          "enum": [
+            "l",
+            "r",
+            "t",
+            "b"
+          ]
+        },
+        "to": {
+          "description": "The side of the box it reaches: l, r, t or b.",
+          "enum": [
+            "l",
+            "r",
+            "t",
+            "b"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "tidiedView": {
+      "description": "What tidying one view's lines did, as tidy lines answers it: how many lines the view draws, the lines given other sides, and every move; no sides and no moves when there was nothing to tidy.",
+      "type": "object",
+      "required": [
+        "view",
+        "lines",
+        "sides",
+        "moves"
+      ],
+      "properties": {
+        "view": {
+          "description": "The view tidied, by its name in design.yml.",
+          "type": "string",
+          "minLength": 1
+        },
+        "lines": {
+          "description": "How many lines between two boxes the view draws; 0 when it draws none, or draws curves, which have no bends or badges to place.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "sides": {
+          "description": "The lines given other sides, in the order they were changed.",
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/sideChange"
+          }
+        },
+        "moves": {
+          "description": "Every bend or badge moved, in the order they were moved.",
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/layoutMove"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rect": {
+      "description": "A box as drawn, rounded to the pixel.",
+      "type": "object",
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "x": {
+          "description": "Left edge in the board's pixels.",
+          "type": "number"
+        },
+        "y": {
+          "description": "Top edge in the board's pixels.",
+          "type": "number"
+        },
+        "width": {
+          "description": "Width in the board's pixels.",
+          "type": "number"
+        },
+        "height": {
+          "description": "Height in the board's pixels.",
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "migratedView": {
+      "description": "How one view comes out of migrating a version 1 layout.yml, so a person sees that nothing was drawn elsewhere before the write is kept.",
+      "type": "object",
+      "required": [
+        "view",
+        "boxes",
+        "moved",
+        "framesMoved",
+        "shrunk",
+        "badgesKept",
+        "badgesMiddle",
+        "badgesUndrawn",
+        "rects"
+      ],
+      "properties": {
+        "view": {
+          "description": "The view, by its name in design.yml.",
+          "type": "string",
+          "minLength": 1
+        },
+        "boxes": {
+          "description": "How many boxes the view draws.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "moved": {
+          "description": "Components drawn elsewhere than before by more than a pixel, or not at all; a migration must leave this empty.",
+          "type": "array",
+          "items": {
+            "description": "A resource id.",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "framesMoved": {
+          "description": "Groups whose frame is drawn elsewhere, or smaller, as it now fits what it holds.",
+          "type": "array",
+          "items": {
+            "description": "A resource id.",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "shrunk": {
+          "description": "Groups whose frame is drawn smaller than before.",
+          "type": "array",
+          "items": {
+            "description": "A resource id.",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "badgesKept": {
+          "description": "Badges a person put, kept where they were drawn on their line.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "badgesMiddle": {
+          "description": "Badges nobody put, drawn at their line's middle, as before.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "badgesUndrawn": {
+          "description": "Badges a person put on a line this view does not draw, which have nowhere to be kept.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "rects": {
+          "description": "Each box's drawn rect before and after, by its id, so a reader can show what changed.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "One box's rect before and after migrating.",
+            "type": "object",
+            "required": [
+              "before",
+              "after"
+            ],
+            "properties": {
+              "before": {
+                "$ref": "defs.schema.json#/$defs/rect",
+                "description": "As drawn before."
+              },
+              "after": {
+                "$ref": "defs.schema.json#/$defs/rect",
+                "description": "As drawn after."
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "step": {
+      "description": "One command a write ran as a step, with its own answer's kind, data and errors, as a bundle reports its steps; so a reader sees each step and where one failed.",
+      "type": "object",
+      "required": [
+        "command",
+        "kind",
+        "data",
+        "errors"
+      ],
+      "properties": {
+        "command": {
+          "description": "The command the step ran, by its words after e-designer, such as apply or migrate check-layout.",
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "description": "The kind of the step's own answer; its data meets that kind's schema where designer/v2 has one.",
+          "type": "string",
+          "minLength": 1
+        },
+        "data": {
+          "description": "The step's own answer's data, as that command answers it."
+        },
+        "errors": {
+          "description": "Why the step refused, empty when it did what was asked, as the step's own envelope says it.",
+          "type": "array",
+          "items": {
+            "$ref": "../../error/v1/error.schema.json"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "partChanged": {
+      "description": "Which part of a design moved, and where it stands now: an event relays what the revision says, so a reader fetches only that part, as it would after polling the revision.",
+      "type": "object",
+      "properties": {
+        "part": {
+          "description": "The part of the design that moved: one of the revision's parts, so a reader knows which to fetch.",
+          "enum": [
+            "board",
+            "layout",
+            "features",
+            "meta",
+            "runs"
+          ]
+        },
+        "fingerprint": {
+          "description": "The part's fingerprint now, as the revision gives it, so a reader that already read this one need not fetch it again.",
+          "$ref": "#/$defs/fingerprint"
+        }
+      },
+      "required": [
+        "part",
+        "fingerprint"
+      ],
+      "additionalProperties": false
+    },
+    "fingerprint": {
+      "description": "Where one part of a design stands: 16 lowercase hex characters, the same until the part moves, so a reader compares two and fetches the part only when they differ.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "eventSource": {
+      "description": "/designer/<project>: an event comes from e-designer and names the project it serves, so a reader listening to many products and projects knows where the change is (ADR-E2, ADR-S08). The project part is a projectName.",
+      "type": "string",
+      "pattern": "^/designer/[A-Za-z0-9._-]+$"
+    },
+    "projectName": {
+      "description": "A project's name as e-designer serves it: what an event's source and every route name it by. At most 64 letters, digits, '.', '_' and '-', and not only dots: it fits inside an event thing (event/v1 source, ADR-E2), so every served project can be an event's source. project add refuses any other name and says to give one with --name; a project listed with another name before this rule is listed as unavailable, saying why.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]{1,64}$",
+      "not": {
+        "pattern": "^\\.+$"
+      }
+    },
+    "boardAddress": {
+      "description": "Which project, design and view a board's page shows, so a link opens the same place. The page writes each part as a query parameter of the same name (?project=shop&design=checkout&view=runtime), beside any others it reads, in any order. It holds no branch, since a project is one folder.",
+      "type": "object",
+      "required": [
+        "project"
+      ],
+      "properties": {
+        "project": {
+          "description": "The project, by the name the machine's project list gives it.",
+          "$ref": "#/$defs/projectName"
+        },
+        "design": {
+          "description": "A design of that project, by its id, its folder's name, as project-list's designs name it. Absent only for a project that holds no design yet, so a link can still open it to make one.",
+          "type": "string",
+          "minLength": 1
+        },
+        "view": {
+          "description": "A view of that design, by its name, as views answers it.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "visitedBy": {
+      "description": "The flows that visit an id, a step standing on it, in the order the flows are read, each once.",
+      "type": "array",
+      "items": {
+        "description": "A flow's id.",
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "touchedBy": {
+      "description": "The flows that touch an id without visiting it, in the order the flows are read, each once: a step writes into it, or sends something to it, every leg of the send counted, the first leg too.",
+      "type": "array",
+      "items": {
+        "description": "A flow's id.",
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "defaultViews": {
+      "description": "The views the board draws for a design whose design.yml says nothing about views, in the order it opens them: arc42's. Held once by e-designer, so the page, its views form and the layout verbs agree on them; a design that declares views draws its own instead, and a design.yml saying views: {} draws none.",
+      "type": "array",
+      "items": {
+        "description": "One default view.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Its name, the key layout.yml files the view's positions under.",
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "description": "Its title, as the board shows it.",
+            "type": "string",
+            "minLength": 1
+          },
+          "question": {
+            "description": "The question the view answers.",
+            "type": "string",
+            "minLength": 1
+          },
+          "draws": {
+            "description": "The kinds the view draws; absent when it draws every kind, including kinds a design adds later; empty draws nothing until a component names the view in place.views.",
+            "type": "array",
+            "items": {
+              "description": "One kind the view draws, by its name.",
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "name",
+          "title",
+          "question"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "leg": {
+      "description": "One leg of a flow: the move from the block the step before stands on to the block this step stands on, and the design link it rides.",
+      "type": "object",
+      "properties": {
+        "step": {
+          "description": "The step the leg arrives with: its place in the flow's steps, counted from 1, so the first leg is step 2 and the number is the one the board shows on the line.",
+          "type": "integer",
+          "minimum": 2
+        },
+        "from": {
+          "description": "The id the step before stands on (its at): where the request is when this step begins, so the board knows which end of the line the step leaves from.",
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "description": "The id this step stands on (its at): where the request is when this step ends, the end of the line the step arrives at. The same as from when the step stays on one block; such a leg has link null unless the design holds a traversing Link from that block to itself.",
+          "type": "string",
+          "minLength": 1
+        },
+        "link": {
+          "description": "The id of the Link the leg rides: one whose label the definitions name in features.edges.traverses and whose own from and to are this leg's from and to, either way. Only a Link drawn directly between the two ids counts; one ending on a group or frame that holds either of them does not. When several count, one drawn from from to to wins over one drawn the other way, then the id first in byte order. Null when none counts, and the board draws the leg without a link.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "required": [
+        "step",
+        "from",
+        "to",
+        "link"
+      ],
+      "additionalProperties": false
+    },
+    "colorName": {
+      "description": "A colour by name, never a CSS colour, so a style reads the same in light and dark: one of the theme's names (bg, panel, ink, muted, line, accent, sec, warn, bad, blue, violet, teal, each also with -soft) or a name the design adds in colors.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "styleName": {
+      "description": "The name of a style, in kebab case, as the built-in styles or the design's styles declare it.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "styleProperties": {
+      "description": "What a style says about how a thing is drawn, each property one the board knows how to draw; a property a style leaves out is left to the layer before it. The values are fixed here and nowhere else.",
+      "type": "object",
+      "properties": {
+        "fill": {
+          "description": "The colour inside a box.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-color": {
+          "description": "The colour of a box's border.",
+          "$ref": "#/$defs/colorName"
+        },
+        "text-color": {
+          "description": "The colour of the text.",
+          "$ref": "#/$defs/colorName"
+        },
+        "line-color": {
+          "description": "The colour of a line between two things.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-style": {
+          "description": "How a box's border is drawn; none draws no border.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ]
+        },
+        "border-width": {
+          "description": "How heavy a box's border is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "line-width": {
+          "description": "How heavy a line is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "line-style": {
+          "description": "How a line is drawn.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted"
+          ]
+        },
+        "mark": {
+          "description": "One character drawn beside the thing, such as a tick; empty draws none.",
+          "type": "string",
+          "maxLength": 1
+        },
+        "badge": {
+          "description": "One letter on the thing's badge, such as D for decided.",
+          "type": "string",
+          "pattern": "^\\S$"
+        },
+        "fade": {
+          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
+          "enum": [
+            "none",
+            "aside",
+            "gone"
+          ]
+        },
+        "text": {
+          "description": "A short text drawn on a line, its label as the picture shows it, such as SQL.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      },
+      "additionalProperties": false
+    },
+    "styleWritten": {
+      "description": "A style as a design writes it: one style by name, its own properties, or a list of style names and properties taken in order, where the last to say a property wins.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/styleName"
+        },
+        {
+          "$ref": "#/$defs/styleProperties"
+        },
+        {
+          "description": "Style names and properties, in order; the last to say a property wins.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "description": "A style by name, or properties of its own.",
+            "oneOf": [
+              {
+                "$ref": "#/$defs/styleName"
+              },
+              {
+                "$ref": "#/$defs/styleProperties"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "action": {
+      "description": "What a person is doing on the board, which a rule may draw: a thing selected, hovered, focused (the keyboard's), being dragged, the current step of a played flow, or in the design's focus. Drawn by the page and needs no license.",
+      "enum": [
+        "selected",
+        "hovered",
+        "focused",
+        "dragging",
+        "flow-step",
+        "in-focus"
+      ]
+    },
+    "eventType": {
+      "description": "An event by its CloudEvents type name, as events.asyncapi.yaml lists it, which a rule may draw while live events are on.",
+      "enum": [
+        "designer.board.changed",
+        "designer.layout.changed",
+        "designer.features.changed",
+        "designer.meta.changed",
+        "designer.runs.changed"
+      ]
+    },
+    "ruleGiven": {
+      "description": "What a rule is about: \"*\" is everything; otherwise every condition written must hold, and an empty map matches nothing. A value is \"*\", one value, or a list meaning any of.",
+      "oneOf": [
+        {
+          "description": "Everything.",
+          "const": "*"
+        },
+        {
+          "type": "object",
+          "description": "The conditions on what a thing is.",
+          "properties": {
+            "kind": {
+              "description": "The kind of the thing, such as Block or Group.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "group": {
+              "description": "The id of the group the thing sits in.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "view": {
+              "description": "The view the thing is drawn in.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ruleWhen": {
+      "description": "When a rule holds: \"*\" is always; otherwise every condition written must hold, and an empty map never holds. A value is \"*\", one value, or a list meaning any of.",
+      "oneOf": [
+        {
+          "description": "Always.",
+          "const": "*"
+        },
+        {
+          "type": "object",
+          "description": "The conditions on the state of the thing.",
+          "properties": {
+            "status": {
+              "description": "The thing's status, as the vocabulary lists it.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "label": {
+              "description": "A line's label, as the vocabulary lists it.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "severity": {
+              "description": "The thing's severity, as the vocabulary lists it.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "release": {
+              "description": "The release the thing comes in.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "description": "One value, as the design writes it.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "One value, as the design writes it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "action": {
+              "description": "What a person is doing to the thing.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "$ref": "#/$defs/action"
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/action"
+                  }
+                }
+              ]
+            },
+            "event": {
+              "description": "An event that names the thing; needs live events.",
+              "oneOf": [
+                {
+                  "description": "Every value.",
+                  "const": "*"
+                },
+                {
+                  "$ref": "#/$defs/eventType"
+                },
+                {
+                  "description": "Any of these values.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/eventType"
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ruleThen": {
+      "description": "What a rule draws: its styles, and for an event rule how long the overlay shows. An empty map switches the rule off.",
+      "type": "object",
+      "properties": {
+        "styles": {
+          "description": "The style the rule gives what it matches.",
+          "$ref": "#/$defs/styleWritten"
+        },
+        "for": {
+          "description": "How long an event rule's overlay shows after the event, such as 3s or 500ms; which things it reaches is the event's changed ids together with given. Written with an event only.",
+          "type": "string",
+          "pattern": "^[0-9]+(ms|s)$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rule": {
+      "description": "One rule, the only link between what a thing is and how it looks; rules are read top to bottom and the last to say a property wins. A new id writes all three parts; an id already used (built-in or earlier) replaces only the parts it writes, each part whole. Whether for goes with an event is checked on the rules in use, after every layer, since an override may write then alone.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The fixed name of the rule, in kebab case, so a later layer can replace or switch it off.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+        },
+        "description": {
+          "description": "What the rule is for, in words for people.",
+          "type": "string",
+          "minLength": 1
+        },
+        "given": {
+          "$ref": "#/$defs/ruleGiven"
+        },
+        "when": {
+          "$ref": "#/$defs/ruleWhen"
+        },
+        "then": {
+          "$ref": "#/$defs/ruleThen"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "ruleForEvent": {
+      "description": "A rule writes for exactly when it reacts to an event: an event rule that draws something says how long its overlay shows, and a rule with no event has no overlay to time.",
+      "allOf": [
+        {
+          "description": "for is written with an event only.",
+          "if": {
+            "properties": {
+              "then": {
+                "required": [
+                  "for"
+                ]
+              }
+            },
+            "required": [
+              "then"
+            ]
+          },
+          "then": {
+            "properties": {
+              "when": {
+                "type": "object",
+                "required": [
+                  "event"
+                ]
+              }
+            },
+            "required": [
+              "when"
+            ]
+          }
+        },
+        {
+          "description": "An event rule that draws something says for.",
+          "if": {
+            "properties": {
+              "when": {
+                "type": "object",
+                "required": [
+                  "event"
+                ]
+              },
+              "then": {
+                "required": [
+                  "styles"
+                ]
+              }
+            },
+            "required": [
+              "when",
+              "then"
+            ]
+          },
+          "then": {
+            "properties": {
+              "then": {
+                "required": [
+                  "for"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "colorPair": {
+      "description": "What a colour name draws as on a light and on a dark canvas, as CSS hex colours, so a style that names it reads in both.",
+      "type": "object",
+      "properties": {
+        "light": {
+          "description": "The colour on a light canvas.",
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+        },
+        "dark": {
+          "description": "The colour on a dark canvas.",
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+        }
+      },
+      "required": [
+        "light",
+        "dark"
+      ],
+      "additionalProperties": false
+    },
+    "elementStyles": {
+      "description": "How one block, group or line asks for its own look, in its spec.ui-design.styles: style names and properties in order, the last to say a property wins, taken after every rule. The spec stays open (CT-RULE-4); this is how e-designer reads it.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "description": "A style by name, or properties of its own.",
+        "oneOf": [
+          {
+            "$ref": "#/$defs/styleName"
+          },
+          {
+            "$ref": "#/$defs/styleProperties"
+          }
+        ]
+      }
+    }
+  }
+}

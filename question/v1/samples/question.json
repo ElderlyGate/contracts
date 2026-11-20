@@ -1,0 +1,18 @@
+{
+  "apiVersion": "elderlygate/contracts/question/v1",
+  "kind": "Question",
+  "source": {
+    "name": "bakery",
+    "app": "designer",
+    "version": "9.9.0",
+    "contract": "v2"
+  },
+  "data": {
+    "id": "q7Hk2mPz9LwX4cVb",
+    "action": "delete",
+    "system": false,
+    "style": "yes_no",
+    "detail": "Delete the block CMP-OVEN and the two links that name it."
+  },
+  "errors": []
+}

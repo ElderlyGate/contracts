@@ -1,0 +1,89 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "OutlawList",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": {
+    "taken": "2026-11-20T09:00:00Z",
+    "org": "Org",
+    "connected": true,
+    "prs": [
+      {
+        "repo": "Org/kit",
+        "number": 4,
+        "title": "fix: button height",
+        "url": "https://github.com/Org/kit/pull/4",
+        "author": "ada",
+        "draft": true,
+        "review": "no review",
+        "ci": "running",
+        "branch": "feat/button/shop-ui",
+        "base": "main",
+        "created": "2026-11-19T08:00:00Z",
+        "product": "kit",
+        "epic": "shop",
+        "reasons": [
+          "no feature:<id> label"
+        ],
+        "epics": [
+          "shop"
+        ]
+      }
+    ],
+    "branches": [
+      {
+        "product": "tool",
+        "repo": "Org/tool",
+        "name": "try/old-idea",
+        "url": "https://github.com/Org/tool/tree/try/old-idea",
+        "base": "main",
+        "ahead": 3,
+        "behind": 12,
+        "last_commit": "2026-11-02T10:00:00Z",
+        "reasons": [
+          "its name names no known feature"
+        ]
+      }
+    ],
+    "cards": [
+      {
+        "product": "tool",
+        "board": "/home/ada/src/tool/.kanban",
+        "id": "KBN-20261118-0002",
+        "title": "Tidy the help",
+        "column": "In Progress",
+        "tags": [
+          "feature"
+        ],
+        "in_progress": true,
+        "page": "/product/tool/card/KBN-20261118-0002",
+        "created": "2026-11-18T09:00:00Z",
+        "created_by": "Ada <ada@example.org>",
+        "agent": "claude-opus-5-5",
+        "reasons": [
+          "no #epic:<id> tag",
+          "no #feature:<id> tag"
+        ]
+      }
+    ],
+    "problems": [
+      {
+        "text": "feature:search has two Feature cards",
+        "page": "/epics#feature-search",
+        "url": "/product/tool/card/KBN-20261117-0003",
+        "product": "tool",
+        "epic": "shop",
+        "feature": "search"
+      }
+    ],
+    "products": [
+      "tool",
+      "kit"
+    ]
+  },
+  "errors": []
+}

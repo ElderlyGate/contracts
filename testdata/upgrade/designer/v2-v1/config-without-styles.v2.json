@@ -317,28 +317,7 @@
       "notACall": [
         "caller"
       ],
-      "statuses": [
-        {
-          "note": "outstanding; drawn unmarked, so the board reads as what is left",
-          "settled": false,
-          "value": "open"
-        },
-        {
-          "note": "settled, ticked",
-          "settled": true,
-          "value": "decided"
-        },
-        {
-          "note": "set aside, dashed border",
-          "settled": true,
-          "value": "parked"
-        },
-        {
-          "note": "gone, struck through and faded hardest",
-          "settled": true,
-          "value": "dropped"
-        }
-      ],
+      "statuses": [],
       "traverses": [
         "calls"
       ],

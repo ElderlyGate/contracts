@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"strings"
 	"unicode"
-	"unicode/utf8"
 )
 
 // An upgrade step is Upgrade<Kind>(from []byte) ([]byte, error), one per version step, tested by the pairs in testdata/upgrade/<dir>/<from>-<to>/ (CT-RULE-3).
@@ -166,8 +165,8 @@ func UpgradeDesigner(v1 []byte) ([]byte, error) {
 	return encodeChecked(doc, DesignerSchema("v2", head.Kind))
 }
 
-// DowngradeDesigner is the step back from designer/app/v2 to v1, for a v1 reader (ADR-S16): the envelope back to ran and error/v1, the app's own form and contract, the design files' form back to design/v2, and for Config the readings v1 asks for, worked out by v1's own rules.
-// What v1 cannot hold is said in a converted_down error naming each part lost, so a v1 reader knows its answer is not whole.
+// DowngradeDesigner is the step back from designer/app/v2 to v1, for a v1 reader (ADR-S16): the envelope back to ran and error/v1, the app's own form and contract, the design files' form back to design/v2, and for Config without what v1 cannot hold.
+// Saying what was lost is the conversion mechanism's (mankit), not this step's.
 func DowngradeDesigner(v2 []byte) ([]byte, error) {
 	var head struct {
 		APIVersion string `json:"apiVersion"`
@@ -190,78 +189,71 @@ func DowngradeDesigner(v2 []byte) ([]byte, error) {
 	source["contract"] = "v1"
 	out := map[string]any{"apiVersion": designerV1, "kind": head.Kind, "ran": source}
 	data := swapForm(doc["data"], designFormV3, designFormV2)
-	var lost []string
 	if head.Kind == "Config" {
-		lost = downConfig(data.(map[string]any))
+		downConfig(data.(map[string]any))
 	}
 	out["data"] = data
 	errs := []any{}
 	for _, raw := range doc["errors"].([]any) {
 		errs = append(errs, errorOf(raw.(map[string]any)))
 	}
-	if len(lost) > 0 {
-		errs = append(errs, map[string]any{
-			"apiVersion": errorAPIVersion, "kind": "Error", "code": "converted_down",
-			"message": "This answer was converted down from designer/app/v2, which v1 cannot hold whole; lost: " + strings.Join(lost, ", "),
-		})
-	}
 	out["errors"] = errs
 	return encodeChecked(out, DesignerSchema("v1", head.Kind))
 }
 
-// upConfig keeps the readings designer/app/v2 has, and gives the styles, colours and rules a v1 answer never said as empty, never guessed.
+// upConfig gives the readings designer/app/v2 has, its statuses read from the list the status property names in the definitions as v1 gave them, and the styles, colours and rules a v1 answer never said as empty, never guessed.
 func upConfig(data map[string]any) {
 	if readings, ok := data["readings"].(map[string]any); ok {
-		delete(readings, "borderStyles")
-		delete(readings, "lineStyles")
-		if statuses, ok := readings["statuses"].([]any); ok {
-			for _, s := range statuses {
-				st := s.(map[string]any)
-				for _, look := range []string{"mark", "badge", "color", "recede"} {
-					delete(st, look)
-				}
-			}
-		}
+		readings["statuses"] = statusesOf(data["definitions"])
 	}
 	data["styles"] = map[string]any{}
 	data["colors"] = map[string]any{}
 	data["rules"] = []any{}
 }
 
-// downConfig gives the readings designer/app/v1 asks for by its own rules (no style words; a status's badge its first letter in upper case) and takes out what v1 cannot hold, naming it.
-func downConfig(data map[string]any) []string {
-	var lost []string
-	for _, part := range []string{"styles", "colors", "rules"} {
-		if said(data[part]) {
-			lost = append(lost, part)
+// statusesOf is each status of the list the status property names, in lower case and once, with what it means; empty when the definitions name none.
+func statusesOf(definitions any) []any {
+	out := []any{}
+	defs, _ := definitions.(map[string]any)
+	props, _ := defs["properties"].(map[string]any)
+	status, _ := props["status"].(map[string]any)
+	name, _ := status["values"].(string)
+	vocabulary, _ := defs["vocabulary"].(map[string]any)
+	list, _ := vocabulary[name].([]any)
+	seen := map[string]bool{}
+	for _, entry := range list {
+		s := map[string]any{"settled": false}
+		switch e := entry.(type) {
+		case string:
+			s["value"] = e
+		case map[string]any:
+			s["value"], _ = e["value"].(string)
+			if e["settled"] == true {
+				s["settled"] = true
+			}
+			if note, ok := e["note"].(string); ok && note != "" {
+				s["note"] = note
+			}
 		}
+		value := strings.ToLower(s["value"].(string))
+		if value == "" || seen[value] {
+			continue
+		}
+		seen[value] = true
+		s["value"] = value
+		out = append(out, s)
+	}
+	return out
+}
+
+// downConfig takes out what designer/app/v1 cannot hold: the styles, colours and rules, and the readings' statuses.
+func downConfig(data map[string]any) {
+	for _, part := range []string{"styles", "colors", "rules"} {
 		delete(data, part)
 	}
 	if readings, ok := data["readings"].(map[string]any); ok {
-		readings["borderStyles"] = []any{}
-		readings["lineStyles"] = []any{}
-		if statuses, ok := readings["statuses"].([]any); ok {
-			for _, s := range statuses {
-				st := s.(map[string]any)
-				if value, _ := st["value"].(string); value != "" {
-					first, _ := utf8.DecodeRuneInString(value)
-					st["badge"] = strings.ToUpper(string(first))
-				}
-			}
-		}
+		delete(readings, "statuses")
 	}
-	return lost
-}
-
-// said is whether a part holds anything, as an empty one loses nothing when it goes.
-func said(v any) bool {
-	switch t := v.(type) {
-	case map[string]any:
-		return len(t) > 0
-	case []any:
-		return len(t) > 0
-	}
-	return v != nil
 }
 
 // errorOf turns a Problem back into an error/v1 item: the owner's mapping read backwards, the detail as the message, the first place as at.

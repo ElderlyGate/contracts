@@ -285,7 +285,6 @@
         "affects",
         "related"
       ],
-      "borderStyles": [],
       "components": [
         "Block",
         "Risk",
@@ -309,7 +308,6 @@
           "external"
         ]
       },
-      "lineStyles": [],
       "linkLabels": [
         "calls",
         "affects",
@@ -317,32 +315,6 @@
       ],
       "notACall": [
         "caller"
-      ],
-      "statuses": [
-        {
-          "badge": "O",
-          "note": "outstanding; drawn unmarked, so the board reads as what is left",
-          "settled": false,
-          "value": "open"
-        },
-        {
-          "badge": "D",
-          "note": "settled, ticked",
-          "settled": true,
-          "value": "decided"
-        },
-        {
-          "badge": "P",
-          "note": "set aside, dashed border",
-          "settled": true,
-          "value": "parked"
-        },
-        {
-          "badge": "D",
-          "note": "gone, struck through and faded hardest",
-          "settled": true,
-          "value": "dropped"
-        }
       ],
       "traverses": [
         "calls"
@@ -395,14 +367,7 @@
       }
     }
   },
-  "errors": [
-    {
-      "apiVersion": "elderlygate/contracts/error/v1",
-      "code": "converted_down",
-      "kind": "Error",
-      "message": "This answer was converted down from designer/app/v2, which v1 cannot hold whole; lost: styles, colors, rules"
-    }
-  ],
+  "errors": [],
   "kind": "Config",
   "ran": {
     "app": "designer",

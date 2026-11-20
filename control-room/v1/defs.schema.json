@@ -100,7 +100,7 @@
   "$defs": {
     "board-Column": {
       "additionalProperties": false,
-      "description": "Column is one column and how many cards it holds.",
+      "description": "One column and how many cards it holds.",
       "properties": {
         "count": {
           "description": "How many cards the column holds now, so the page can show where work piles up.",
@@ -124,7 +124,7 @@
     },
     "board-Feature": {
       "additionalProperties": false,
-      "description": "Feature is one feature an epic card lists: its id and what it does.",
+      "description": "One feature an epic card lists: its id and what it does.",
       "properties": {
         "id": {
           "description": "The feature's id, unique across the org (G-CARD-2): the id a card's feature:<id> tag and a pull request's label name.",
@@ -142,7 +142,7 @@
     },
     "checkout-Status": {
       "additionalProperties": false,
-      "description": "Status is a checkout's branch and how far it is from its upstream, as git knows it without fetching.",
+      "description": "A checkout's branch and how far it is from its upstream, as git knows it without fetching.",
       "properties": {
         "ahead": {
           "description": "Commits the checkout has that its upstream does not: work not pushed yet.",
@@ -157,7 +157,7 @@
           "type": "string"
         },
         "dirty": {
-          "description": "changed and untracked files",
+          "description": "Changed and untracked files.",
           "type": "integer"
         },
         "upstream": {
@@ -175,7 +175,7 @@
     },
     "config-Setting": {
       "additionalProperties": false,
-      "description": "Setting is one key of config.yaml as it is now: its value, where the value came from, and what it is. A list's value is written as a YAML flow list, the form `config set` takes it in.",
+      "description": "One key of config.yaml as it is now: its value, where the value came from, and what it is. A list's value is written as a YAML flow list, the form `config set` takes it in.",
       "properties": {
         "help": {
           "description": "What the setting is for, in a line, so the Settings page and `config show` explain it.",
@@ -186,15 +186,15 @@
           "type": "string"
         },
         "list": {
-          "description": "the value is a YAML list",
+          "description": "The value is a YAML list.",
           "type": "boolean"
         },
         "restart": {
-          "description": "a running serve takes it when it starts again",
+          "description": "A running serve takes it when it starts again.",
           "type": "boolean"
         },
         "source": {
-          "description": "file or default",
+          "description": "File or default.",
           "type": "string"
         },
         "value": {
@@ -212,14 +212,14 @@
     },
     "design-Design": {
       "additionalProperties": false,
-      "description": "Design is one design: its blocks, its releases (the product's MVPs, G-PLAN-9) and its open findings.",
+      "description": "One design: its blocks, its releases (the product's MVPs, G-PLAN-9) and its open findings.",
       "properties": {
         "blocks": {
           "description": "How many blocks the design holds, a measure of how far it is drawn.",
           "type": "integer"
         },
         "err": {
-          "description": "this design could not be read; the others still are",
+          "description": "This design could not be read; the others still are.",
           "type": "string"
         },
         "id": {
@@ -241,7 +241,7 @@
           ]
         },
         "source": {
-          "description": "the command that shows it by hand",
+          "description": "The command that shows it by hand.",
           "type": "string"
         },
         "title": {
@@ -259,7 +259,7 @@
     },
     "design-Root": {
       "additionalProperties": false,
-      "description": "Root is the designs in a project's .designer/ root, \"no design\" when it holds none, or why they could not be read.",
+      "description": "The designs in a project's .designer/ root, \"no design\" when it holds none, or why they could not be read.",
       "properties": {
         "err": {
           "description": "Why the read failed, naming what failed; a failure is never shown as no design (G-CODE-6).",
@@ -288,10 +288,10 @@
     },
     "github-Connection": {
       "additionalProperties": false,
-      "description": "Connection is whether the control room can read GitHub, as last checked.",
+      "description": "Whether control-room can read GitHub, as last checked.",
       "properties": {
         "account": {
-          "description": "empty until a check of this token",
+          "description": "Empty until a check of this token.",
           "type": "string"
         },
         "checked_at": {
@@ -304,20 +304,20 @@
           "type": "boolean"
         },
         "expires_at": {
-          "description": "when the token expires, as GitHub said at its check; zero when it does not say",
+          "description": "When the token expires, as GitHub said at its check; empty when it does not say, so the owner renews it in time.",
           "format": "date-time",
           "type": "string"
         },
         "from": {
-          "description": "where the token is kept, or would be: the Keychain item, the Secret Service item, the file",
+          "description": "Where the token is kept, or would be: the Keychain item, the Secret Service item, the file.",
           "type": "string"
         },
         "gap": {
-          "description": "why the connection could not be read",
+          "description": "Why the connection could not be read.",
           "type": "string"
         },
         "managed": {
-          "description": "the variable naming the file the token is read from, when it is kept outside the control room",
+          "description": "The variable naming the file the token is read from, when it is kept outside the control room.",
           "type": "string"
         },
         "read_only": {
@@ -333,15 +333,15 @@
     },
     "github-PR": {
       "additionalProperties": false,
-      "description": "PR is an open pull request waiting for the owner, or one closed lately (ClosedPRs).",
+      "description": "A pull request: an open one waiting for the owner, or one closed lately.",
       "properties": {
         "approved_at": {
-          "description": "When its latest approval was given, empty when it has none.",
+          "description": "When its latest approval was given, when its review is approved.",
           "format": "date-time",
           "type": "string"
         },
         "approved_by": {
-          "description": "ApprovedBy and ApprovedAt are the latest approval of a PR whose Review is approved.",
+          "description": "Who gave its latest approval, when its review is approved.",
           "type": "string"
         },
         "author": {
@@ -357,7 +357,7 @@
           "type": "string"
         },
         "checks": {
-          "description": "Checks are the jobs of each workflow's latest run, by name; nil when they could not be read.",
+          "description": "The jobs of each workflow's latest run, by name; nil when they could not be read.",
           "items": {
             "$ref": "#/$defs/github-PRCheck"
           },
@@ -367,16 +367,16 @@
           ]
         },
         "ci": {
-          "description": "passing, failing, running, no checks, not read",
+          "description": "Passing, failing, running, no checks, not read.",
           "type": "string"
         },
         "closed_at": {
-          "description": "ClosedAt is when a closed pull request was closed, and Merged whether it was merged; both empty for an open one.",
+          "description": "When a closed pull request was closed; empty for an open one.",
           "format": "date-time",
           "type": "string"
         },
         "conflict": {
-          "description": "Conflict is true when GitHub says the PR cannot merge cleanly into its base.",
+          "description": "Whether GitHub says it cannot merge cleanly into its base, so the owner sees it needs work first.",
           "type": "boolean"
         },
         "created": {
@@ -385,7 +385,7 @@
           "type": "string"
         },
         "dismissed": {
-          "description": "Dismissed is true when a reviewer's last verdict was an approval that new commits dismissed.",
+          "description": "True when a reviewer's last verdict was an approval that new commits dismissed.",
           "type": "boolean"
         },
         "draft": {
@@ -393,7 +393,7 @@
           "type": "boolean"
         },
         "epics": {
-          "description": "Epics are the ids of its epic:<id> labels, in GitHub's order: the work it belongs to.",
+          "description": "The ids of its epic:<id> labels, in GitHub's order: the work it belongs to.",
           "items": {
             "type": "string"
           },
@@ -403,11 +403,11 @@
           ]
         },
         "expedite": {
-          "description": "Expedite is true for urgent work outside every epic: it carries the expedite label, or its branch ends in /expedite.",
+          "description": "True for urgent work outside every epic: it carries the expedite label, or its branch ends in /expedite.",
           "type": "boolean"
         },
         "features": {
-          "description": "Features are the ids of its feature:<id> labels: the feature of the epic it builds.",
+          "description": "The ids of its feature:<id> labels: the feature of the epic it builds.",
           "items": {
             "type": "string"
           },
@@ -421,11 +421,11 @@
           "type": "string"
         },
         "head_repo": {
-          "description": "HeadRepo is the repository its branch lives in: another one for a pull request from a fork.",
+          "description": "The repository its branch lives in: another one for a pull request from a fork.",
           "type": "string"
         },
         "links": {
-          "description": "Links are the pull requests and issues its description names, as owner/repo#number; Needs those it says it needs first (\"depends on\", \"needs\", \"after\", \"blocked by\" ...).",
+          "description": "The pull requests and issues its description names, as owner/repo#number; Needs those it says it needs first (\"depends on\", \"needs\", \"after\", \"blocked by\" ...).",
           "items": {
             "type": "string"
           },
@@ -435,7 +435,7 @@
           ]
         },
         "merged": {
-          "description": "Whether a closed pull request was merged.",
+          "description": "Whether a closed pull request was merged; false for an open one.",
           "type": "boolean"
         },
         "needs": {
@@ -457,7 +457,7 @@
           "type": "string"
         },
         "review": {
-          "description": "approved, changes requested, no review",
+          "description": "Approved, changes requested, no review.",
           "type": "string"
         },
         "size": {
@@ -469,7 +469,7 @@
               "type": "null"
             }
           ],
-          "description": "Size is the files changed and lines added and removed; nil when it could not be read."
+          "description": "The files changed and lines added and removed; nil when it could not be read."
         },
         "title": {
           "description": "Its title, as GitHub shows it.",
@@ -493,18 +493,18 @@
     },
     "github-PRCheck": {
       "additionalProperties": false,
-      "description": "PRCheck is one job of a pull request's CI, named as GitHub shows it on the pull request.",
+      "description": "One job of a pull request's CI, named as GitHub shows it on the pull request.",
       "properties": {
         "name": {
           "description": "The job's name, as GitHub shows it on the pull request.",
           "type": "string"
         },
         "state": {
-          "description": "passing, failing, running, queued, skipped",
+          "description": "Passing, failing, running, queued, skipped.",
           "type": "string"
         },
         "url": {
-          "description": "the job's log",
+          "description": "The job's log.",
           "type": "string"
         }
       },
@@ -517,10 +517,10 @@
     },
     "github-Run": {
       "additionalProperties": false,
-      "description": "Run is the latest Actions run of a push to main; Gap says why there is none.",
+      "description": "The latest Actions run of a push to main; Gap says why there is none.",
       "properties": {
         "conclusion": {
-          "description": "success, failure, ... or the status while it runs",
+          "description": "Success, failure, ... or the status while it runs.",
           "type": "string"
         },
         "gap": {
@@ -540,7 +540,7 @@
     },
     "github-Size": {
       "additionalProperties": false,
-      "description": "Size is how big a pull request is.",
+      "description": "How big a pull request is.",
       "properties": {
         "additions": {
           "description": "Lines it adds.",
@@ -564,10 +564,10 @@
     },
     "outlaws-Branch": {
       "additionalProperties": false,
-      "description": "Branch is a branch ahead of its repository's default branch, with no open pull request, whose name names no known feature.",
+      "description": "A branch ahead of its repository's default branch, with no open pull request, whose name names no known feature.",
       "properties": {
         "ahead": {
-          "description": "commits the default branch lacks",
+          "description": "Commits the default branch lacks.",
           "type": "integer"
         },
         "base": {
@@ -575,11 +575,11 @@
           "type": "string"
         },
         "behind": {
-          "description": "commits of the default branch it lacks",
+          "description": "Commits of the default branch it lacks.",
           "type": "integer"
         },
         "err": {
-          "description": "GitHub could not compare it; it is listed, unknown",
+          "description": "Why GitHub could not compare it; it is listed as not known, never left out.",
           "type": "string"
         },
         "last_commit": {
@@ -610,7 +610,7 @@
           "type": "string"
         },
         "unrelated": {
-          "description": "Unrelated is a branch GitHub could not compare with the default branch: they share no history, or it was deleted after it was listed.",
+          "description": "Whether GitHub could not compare it with the default branch: they share no history, or it was deleted after it was listed.",
           "type": "boolean"
         },
         "url": {
@@ -631,7 +631,7 @@
     },
     "outlaws-Card": {
       "additionalProperties": false,
-      "description": "Card is a card in progress or in review, not an epic card, with no epic or no feature tag, and the epic it belongs to as far as known: its epic tag's, or its feature's.",
+      "description": "A card in progress or in review, not an epic card, with no epic or no feature tag, and the epic it belongs to as far as known: its epic tag's, or its feature's.",
       "properties": {
         "agent": {
           "description": "The agent that wrote it, empty when a person did (G-CARD-12).",
@@ -642,7 +642,7 @@
           "type": "string"
         },
         "branch": {
-          "description": "Branch is the git branch its work happens on, its pull request's head; DependsOn the ids of the cards it waits on; Order its place in its column.",
+          "description": "The git branch its work happens on, its pull request's head.",
           "type": "string"
         },
         "column": {
@@ -655,7 +655,7 @@
           "type": "string"
         },
         "created_by": {
-          "description": "CreatedBy is who made it, \"Name <email>\"; Agent the agent that wrote it, \"\" when a person did.",
+          "description": "Who made it, as \"Name <email>\".",
           "type": "string"
         },
         "depends_on": {
@@ -673,7 +673,7 @@
           "type": "boolean"
         },
         "done_at": {
-          "description": "DoneAt is when it reached the done column, zero when not known; DoneColumn is its board's done column.",
+          "description": "When it reached the done column; empty when not known.",
           "format": "date-time",
           "type": "string"
         },
@@ -716,7 +716,7 @@
           "type": "number"
         },
         "page": {
-          "description": "its page in the control room",
+          "description": "Its page in the control room.",
           "type": "string"
         },
         "product": {
@@ -752,7 +752,7 @@
           "type": "string"
         },
         "turn": {
-          "description": "Turn is whose turn the card says it is, as kanban writes it, and Yours whether it waits for the owner (board.WaitsFor); Created when it was made, zero when not known.",
+          "description": "Whose turn the card says it is, as kanban writes it.",
           "type": "string"
         },
         "yours": {
@@ -773,15 +773,15 @@
     },
     "outlaws-PR": {
       "additionalProperties": false,
-      "description": "PR is an open pull request with no epic or no feature label, and the epic it belongs to as far as known: its epic label's, or its feature's.",
+      "description": "An open pull request with no epic or no feature label, and the epic it belongs to as far as known: its epic label's, or its feature's.",
       "properties": {
         "approved_at": {
-          "description": "When its latest approval was given, empty when it has none.",
+          "description": "When its latest approval was given, when its review is approved.",
           "format": "date-time",
           "type": "string"
         },
         "approved_by": {
-          "description": "ApprovedBy and ApprovedAt are the latest approval of a PR whose Review is approved.",
+          "description": "Who gave its latest approval, when its review is approved.",
           "type": "string"
         },
         "author": {
@@ -797,7 +797,7 @@
           "type": "string"
         },
         "checks": {
-          "description": "Checks are the jobs of each workflow's latest run, by name; nil when they could not be read.",
+          "description": "The jobs of each workflow's latest run, by name; nil when they could not be read.",
           "items": {
             "$ref": "#/$defs/github-PRCheck"
           },
@@ -807,16 +807,16 @@
           ]
         },
         "ci": {
-          "description": "passing, failing, running, no checks, not read",
+          "description": "Passing, failing, running, no checks, not read.",
           "type": "string"
         },
         "closed_at": {
-          "description": "ClosedAt is when a closed pull request was closed, and Merged whether it was merged; both empty for an open one.",
+          "description": "When a closed pull request was closed; empty for an open one.",
           "format": "date-time",
           "type": "string"
         },
         "conflict": {
-          "description": "Conflict is true when GitHub says the PR cannot merge cleanly into its base.",
+          "description": "Whether GitHub says it cannot merge cleanly into its base, so the owner sees it needs work first.",
           "type": "boolean"
         },
         "created": {
@@ -825,7 +825,7 @@
           "type": "string"
         },
         "dismissed": {
-          "description": "Dismissed is true when a reviewer's last verdict was an approval that new commits dismissed.",
+          "description": "True when a reviewer's last verdict was an approval that new commits dismissed.",
           "type": "boolean"
         },
         "draft": {
@@ -837,7 +837,7 @@
           "type": "string"
         },
         "epics": {
-          "description": "Epics are the ids of its epic:<id> labels, in GitHub's order: the work it belongs to.",
+          "description": "The ids of its epic:<id> labels, in GitHub's order: the work it belongs to.",
           "items": {
             "type": "string"
           },
@@ -847,11 +847,11 @@
           ]
         },
         "expedite": {
-          "description": "Expedite is true for urgent work outside every epic: it carries the expedite label, or its branch ends in /expedite.",
+          "description": "True for urgent work outside every epic: it carries the expedite label, or its branch ends in /expedite.",
           "type": "boolean"
         },
         "features": {
-          "description": "Features are the ids of its feature:<id> labels: the feature of the epic it builds.",
+          "description": "The ids of its feature:<id> labels: the feature of the epic it builds.",
           "items": {
             "type": "string"
           },
@@ -865,11 +865,11 @@
           "type": "string"
         },
         "head_repo": {
-          "description": "HeadRepo is the repository its branch lives in: another one for a pull request from a fork.",
+          "description": "The repository its branch lives in: another one for a pull request from a fork.",
           "type": "string"
         },
         "links": {
-          "description": "Links are the pull requests and issues its description names, as owner/repo#number; Needs those it says it needs first (\"depends on\", \"needs\", \"after\", \"blocked by\" ...).",
+          "description": "The pull requests and issues its description names, as owner/repo#number; Needs those it says it needs first (\"depends on\", \"needs\", \"after\", \"blocked by\" ...).",
           "items": {
             "type": "string"
           },
@@ -879,7 +879,7 @@
           ]
         },
         "merged": {
-          "description": "Whether a closed pull request was merged.",
+          "description": "Whether a closed pull request was merged; false for an open one.",
           "type": "boolean"
         },
         "needs": {
@@ -915,7 +915,7 @@
           "type": "string"
         },
         "review": {
-          "description": "approved, changes requested, no review",
+          "description": "Approved, changes requested, no review.",
           "type": "string"
         },
         "size": {
@@ -927,7 +927,7 @@
               "type": "null"
             }
           ],
-          "description": "Size is the files changed and lines added and removed; nil when it could not be read."
+          "description": "The files changed and lines added and removed; nil when it could not be read."
         },
         "title": {
           "description": "Its title, as GitHub shows it.",
@@ -952,7 +952,7 @@
     },
     "outlaws-Problem": {
       "additionalProperties": false,
-      "description": "Problem is a problem the Epics page flags: its text and the pull request or card it is about (URL), the product that is of when known, and where the Epics page shows it (Page).",
+      "description": "A problem the Epics page flags: its text and the pull request or card it is about (URL), the product that is of when known, and where the Epics page shows it (Page).",
       "properties": {
         "epic": {
           "description": "The epic it is under.",
@@ -971,11 +971,11 @@
           "type": "string"
         },
         "repo": {
-          "description": "the pull request's repository, said when no product holds it",
+          "description": "The pull request's repository, said when no product holds it.",
           "type": "string"
         },
         "text": {
-          "description": "What is wrong, in words.",
+          "description": "Wrong, in words.",
           "type": "string"
         },
         "url": {
@@ -991,7 +991,7 @@
     },
     "outlaws-Query": {
       "additionalProperties": false,
-      "description": "Query is what the address or the flags ask for: one kind, one product and one epic, each \"\" for all. A branch belongs to no epic, so an epic leaves out every branch.",
+      "description": "What the address or the flags ask for: one kind, one product and one epic, each \"\" for all. A branch belongs to no epic, so an epic leaves out every branch.",
       "properties": {
         "epic": {
           "description": "The one epic kept; empty keeps all.",
@@ -1010,7 +1010,7 @@
     },
     "outlaws-Report": {
       "additionalProperties": false,
-      "description": "Report is every outlaw and problem, what could not be read, and the products they are of.",
+      "description": "Every outlaw and problem, what could not be read, and the products they are of.",
       "properties": {
         "branches": {
           "description": "The branches ahead of their default branch, with no open pull request, whose name names no known feature.",
@@ -1033,15 +1033,15 @@
           ]
         },
         "connected": {
-          "description": "Connected is false when GitHub is not connected: no pull request, branch or label is read then.",
+          "description": "Whether GitHub is connected; when it is not, no pull request, branch or label is read.",
           "type": "boolean"
         },
         "err": {
-          "description": "why no repository's labels could be read",
+          "description": "Why no repository's labels could be read.",
           "type": "string"
         },
         "gaps": {
-          "description": "sources that could not be read, or only in part",
+          "description": "Sources that could not be read, or only in part.",
           "items": {
             "type": "string"
           },
@@ -1065,7 +1065,7 @@
           ]
         },
         "products": {
-          "description": "every product read, the ones a filter may name",
+          "description": "Every product read, the ones a filter may name.",
           "items": {
             "type": "string"
           },
@@ -1085,15 +1085,15 @@
           ]
         },
         "prs_gap": {
-          "description": "PRsGap is why no open pull request could be read: then neither are the outlaw pull requests and branches.",
+          "description": "Why no open pull request could be read; then neither are the outlaw pull requests and branches.",
           "type": "string"
         },
         "query": {
           "$ref": "#/$defs/outlaws-Query",
-          "description": "the filter this report was cut to"
+          "description": "The filter this report was cut to."
         },
         "tags_cut": {
-          "description": "TagsCut are the products whose board shows kanban cut the cards' tags after their colon: then no card's epic: or feature: tag is read, and every card counts as having no epic and no feature.",
+          "description": "The products whose board shows kanban cut the cards' tags after their colon: then no card's epic: or feature: tag is read, and every card there counts as having no epic and no feature.",
           "items": {
             "type": "string"
           },
@@ -1122,7 +1122,7 @@
     },
     "snapshot-Board": {
       "additionalProperties": false,
-      "description": "Board is a product board's card counts per column.",
+      "description": "A product board's card counts per column.",
       "properties": {
         "columns": {
           "description": "Each column with its card count, in the board's order.",
@@ -1135,15 +1135,15 @@
           ]
         },
         "err": {
-          "description": "a read that failed",
+          "description": "A read that failed.",
           "type": "string"
         },
         "gap": {
-          "description": "nothing to read: no repo, no checkout, no board",
+          "description": "Nothing to read: no repo, no checkout, no board.",
           "type": "string"
         },
         "open": {
-          "description": "cards neither done nor in review",
+          "description": "Cards neither done nor in review.",
           "type": "integer"
         },
         "path": {
@@ -1155,7 +1155,7 @@
           "type": "string"
         },
         "waiting": {
-          "description": "cards in review, waiting for the owner's acceptance",
+          "description": "Cards in review, waiting for the owner's acceptance.",
           "type": "integer"
         }
       },
@@ -1167,7 +1167,7 @@
     },
     "snapshot-Card": {
       "additionalProperties": false,
-      "description": "Card is a card on a board, with the command that shows it.",
+      "description": "A card on a board, with the command that shows it.",
       "properties": {
         "board": {
           "description": "The board's folder.",
@@ -1220,18 +1220,18 @@
     },
     "snapshot-Checkout": {
       "additionalProperties": false,
-      "description": "Checkout is the product's local checkout.",
+      "description": "The product's local checkout.",
       "properties": {
         "err": {
-          "description": "a read that failed",
+          "description": "A read that failed.",
           "type": "string"
         },
         "gap": {
-          "description": "nothing to read: no repo, no checkout",
+          "description": "Nothing to read: no repo, no checkout.",
           "type": "string"
         },
         "others": {
-          "description": "more checkouts of the same repo",
+          "description": "More checkouts of the same repo.",
           "type": "integer"
         },
         "path": {
@@ -1258,7 +1258,7 @@
     },
     "snapshot-Focus": {
       "additionalProperties": false,
-      "description": "Focus is the focused epic as focusOf finds it: its key, its title, and where its card is.",
+      "description": "The focused epic, the one every page puts first: its key, its title, and where its card is.",
       "properties": {
         "board": {
           "description": "That board's folder.",
@@ -1292,7 +1292,7 @@
     },
     "snapshot-Product": {
       "additionalProperties": false,
-      "description": "Product is one row: a product by its ID and where each of its parts stands.",
+      "description": "One row: a product by its ID and where each of its parts stands.",
       "properties": {
         "board": {
           "$ref": "#/$defs/snapshot-Board",
@@ -1319,7 +1319,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "hubman's kind for it, \"planned\" for a product with no release yet, or not in the catalog.",
+          "description": "Hubman's kind for it, \"planned\" for a product with no release yet, or not in the catalog.",
           "type": "string"
         },
         "latest": {
@@ -1339,7 +1339,7 @@
           "type": "string"
         },
         "status": {
-          "description": "hubman's word for it here",
+          "description": "Hubman's word for it here.",
           "type": "string"
         }
       },
@@ -1356,10 +1356,10 @@
     },
     "snapshot-Release": {
       "additionalProperties": false,
-      "description": "Release is the latest release and where it was read.",
+      "description": "The latest release and where it was read.",
       "properties": {
         "from": {
-          "description": "GitHub, or git tags of the checkout",
+          "description": "Where the release was read: GitHub, or the git tags of the checkout.",
           "type": "string"
         },
         "gap": {
@@ -1379,10 +1379,10 @@
     },
     "snapshot-Snapshot": {
       "additionalProperties": false,
-      "description": "Snapshot is everything the page and `status` show.",
+      "description": "Everything the page and `status` show.",
       "properties": {
         "catalog_gap": {
-          "description": "why hubman's catalog could not be read",
+          "description": "Why hubman's catalog could not be read.",
           "type": "string"
         },
         "focus": {
@@ -1394,10 +1394,10 @@
               "type": "null"
             }
           ],
-          "description": "the epic the owner works on first, read with the boards; null when none"
+          "description": "The epic the owner works on first, read with the boards; null when none."
         },
         "gaps": {
-          "description": "sources that could not be read at all",
+          "description": "Sources that could not be read at all.",
           "items": {
             "type": "string"
           },
@@ -1451,10 +1451,10 @@
     },
     "snapshot-Waiting": {
       "additionalProperties": false,
-      "description": "Waiting is what waits for the owner, most pressing first.",
+      "description": "What waits for the owner, most pressing first.",
       "properties": {
         "closed": {
-          "description": "Closed is the org's pull requests closed lately, the last closed first, read only when Need.Closed asks; ClosedGap says why they could not be read.",
+          "description": "The org's pull requests closed lately, the last closed first; read only when a query asks for them.",
           "items": {
             "$ref": "#/$defs/github-PR"
           },
@@ -1468,7 +1468,7 @@
           "type": "string"
         },
         "in_review": {
-          "description": "cards in a Review column wait for the owner's acceptance",
+          "description": "Cards in a Review column wait for the owner's acceptance.",
           "items": {
             "$ref": "#/$defs/snapshot-Card"
           },
@@ -1495,14 +1495,14 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "RepoGaps is why one repo's pull requests could not be listed, by repo; a repo missing from it was read.",
+          "description": "Why one repository's pull requests could not be listed, by repository; a repository missing from it was read.",
           "type": [
             "object",
             "null"
           ]
         },
         "your_turn": {
-          "description": "open cards whose turn is the owner's, Review left out",
+          "description": "Open cards whose turn is the owner's, Review left out.",
           "items": {
             "$ref": "#/$defs/snapshot-Card"
           },
@@ -1521,7 +1521,7 @@
     },
     "work-Facet": {
       "additionalProperties": false,
-      "description": "Facet is one column's filter: its key and label, and once a List is built, its values.",
+      "description": "One column's filter: its key and label, and once a List is built, its values.",
       "properties": {
         "key": {
           "description": "The filter's key, as the address and the flags name it.",
@@ -1532,7 +1532,7 @@
           "type": "string"
         },
         "on": {
-          "description": "values kept",
+          "description": "Values kept.",
           "type": "integer"
         },
         "options": {
@@ -1554,7 +1554,7 @@
     },
     "work-List": {
       "additionalProperties": false,
-      "description": "List is the report cut to a query: the rows it keeps in its order, how many of how many, the filters with their counts, and what could not be read.",
+      "description": "The report cut to a query: the rows it keeps in its order, how many of how many, the filters with their counts, and what could not be read.",
       "properties": {
         "connected": {
           "description": "Whether GitHub is connected; when it is not, no pull request, branch or label is read.",
@@ -1609,7 +1609,7 @@
           ]
         },
         "shown": {
-          "description": "rows the query keeps",
+          "description": "Rows the query keeps.",
           "type": "integer"
         },
         "tags_cut": {
@@ -1628,11 +1628,11 @@
           "type": "string"
         },
         "total": {
-          "description": "every item",
+          "description": "Every item.",
           "type": "integer"
         },
         "untimed": {
-          "description": "items the time window left out because when they changed is not known",
+          "description": "Items the time window left out because when they changed is not known.",
           "type": "integer"
         }
       },
@@ -1651,7 +1651,7 @@
     },
     "work-Option": {
       "additionalProperties": false,
-      "description": "Option is one value of a filter, with how many items it would show with the other filters kept.",
+      "description": "One value of a filter, with how many items it would show with the other filters kept.",
       "properties": {
         "label": {
           "description": "Its label, for people.",
@@ -1679,7 +1679,7 @@
     },
     "work-Query": {
       "additionalProperties": false,
-      "description": "Query is what the address or the flags ask of the list: words to search for, the values each filter keeps (several at once; none keeps all), a time window, and a sort.",
+      "description": "What the address or the flags ask of the list: words to search for, the values each filter keeps (several at once; none keeps all), a time window, and a sort.",
       "properties": {
         "epics": {
           "description": "The epics kept; expedite for the expedite lane, none for no epic.",
@@ -1730,7 +1730,7 @@
           "type": "string"
         },
         "sort": {
-          "description": "a column's key, \"-key\" for descending",
+          "description": "A column's key, \"-key\" for descending.",
           "type": "string"
         },
         "states": {
@@ -1766,15 +1766,15 @@
     },
     "work-Row": {
       "additionalProperties": false,
-      "description": "Row is one item as the list shows it, as of when it was read.",
+      "description": "One item as the list shows it, as of when it was read.",
       "properties": {
         "at": {
-          "description": "when it last changed, as far as known",
+          "description": "When it last changed, as far as known.",
           "format": "date-time",
           "type": "string"
         },
         "at_what": {
-          "description": "what At is: opened, approved, last commit, created",
+          "description": "What At is: opened, approved, last commit, created.",
           "type": "string"
         },
         "branch": {
@@ -1782,7 +1782,7 @@
           "type": "string"
         },
         "checks": {
-          "description": "and each of its checks",
+          "description": "And each of its checks.",
           "items": {
             "$ref": "#/$defs/github-PRCheck"
           },
@@ -1792,11 +1792,11 @@
           ]
         },
         "ci": {
-          "description": "an open pull request's CI",
+          "description": "An open pull request's CI.",
           "type": "string"
         },
         "epics": {
-          "description": "Epics and Features are its epics' and features' ids: a pull request's labels, a branch's feature named by its name and that feature's epic, a card's tags. Empty is none.",
+          "description": "Its epics' and features' ids: a pull request's labels, a branch's feature named by its name and that feature's epic, a card's tags. Empty is none.",
           "items": {
             "type": "string"
           },
@@ -1806,7 +1806,7 @@
           ]
         },
         "expedite": {
-          "description": "Expedite is true for work in the expedite lane: a pull request labelled expedite, a card tagged #expedite, a branch whose name ends in /expedite.",
+          "description": "True for work in the expedite lane: a pull request labelled expedite, a card tagged #expedite, a branch whose name ends in /expedite.",
           "type": "boolean"
         },
         "features": {
@@ -1824,7 +1824,7 @@
           "type": "string"
         },
         "name": {
-          "description": "what the list shows, linked",
+          "description": "What the list shows, linked.",
           "type": "string"
         },
         "product": {
@@ -1832,7 +1832,7 @@
           "type": "string"
         },
         "ref": {
-          "description": "owner/repo#N, owner/repo:branch, product/card-id",
+          "description": "Owner/repo#N, owner/repo:branch, product/card-id.",
           "type": "string"
         },
         "repo": {
@@ -1848,11 +1848,11 @@
           "type": "string"
         },
         "turn": {
-          "description": "whose move, grouped (TurnOf)",
+          "description": "Whose move it is, grouped: the owner, an agent, someone else.",
           "type": "string"
         },
         "url": {
-          "description": "GitHub for a pull request or branch, the card's page for a card",
+          "description": "Its page: on GitHub for a pull request or a branch, the card's page for a card.",
           "type": "string"
         },
         "when": {
@@ -1864,11 +1864,11 @@
           "type": "string"
         },
         "whose": {
-          "description": "whose move, in the source's words",
+          "description": "Whose move, in the source's words.",
           "type": "string"
         },
         "whose_note": {
-          "description": "the source's words, when they say more than Turn",
+          "description": "The source's words, when they say more than Turn.",
           "type": "string"
         }
       },

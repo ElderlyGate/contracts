@@ -1,0 +1,6 @@
+{
+  "apiVersion": "elderlygate/contracts/problem/v1",
+  "kind": "Problem",
+  "type": "converted_down",
+  "detail": "This answer was converted down to designer/app/v2, which cannot hold all of it."
+}

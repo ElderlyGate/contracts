@@ -34,29 +34,6 @@
               },
               "minItems": 1,
               "uniqueItems": true
-            },
-            "reads": {
-              "description": "The contract versions the app answers reads in: its own and every older one its down steps reach, each such answer saying it was converted down (ADR-S16). Left out by an app from before ADR-S16, which reads in supportedContracts.",
-              "type": "array",
-              "items": {
-                "description": "One contract version, such as v1.",
-                "type": "string",
-                "pattern": "^v[0-9]+$"
-              },
-              "minItems": 1,
-              "uniqueItems": true
-            },
-            "writes": {
-              "description": "The contract versions the app takes writes in: its own and the one before, keeping what the older form cannot hold; an older write gets unsupported_contract (ADR-S16). Left out by an app from before ADR-S16.",
-              "type": "array",
-              "items": {
-                "description": "One contract version, such as v1.",
-                "type": "string",
-                "pattern": "^v[0-9]+$"
-              },
-              "minItems": 1,
-              "uniqueItems": true,
-              "maxItems": 2
             }
           },
           "additionalProperties": false

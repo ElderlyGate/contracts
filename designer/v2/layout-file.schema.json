@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ElderlyGate/contracts/designer/v1/layout-file.schema.json",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/layout-file.schema.json",
   "title": "layout file",
   "description": "A design's layout.yml in the form layout/v2, as e-designer writes it: a Resource (ADR-S15) holding, for each view the design draws, the place of every box it draws and, for a view drawn as a hexagon, of every block on it, so the board draws what is kept and works out no place. A place nobody gave is worked out once, by e-designer, when a write leaves a box without one. The form before it, layout/v1, is the bare file holding version 2 or 3 and views, which may leave boxes without a place; its upgrade is the layout step of the project migration (apiversion/v1/forms.yaml). Not a design change: no resource file holds a place.",
   "type": "object",

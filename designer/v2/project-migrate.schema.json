@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/project-migrate.schema.json",
+  "title": "project migrate",
+  "description": "The answer of nw-designer project migrate: one project's files brought up one level, from the form before to the current one, each file's step said (ADR-S16), or nothing to do. A file two or more levels older, newer, or unreadable is refused and nothing is written.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v2: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v2"
+        },
+        "kind": {
+          "description": "Always ProjectMigrate, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "ProjectMigrate"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v2, the contract version this schema belongs to.",
+              "const": "v2"
+            }
+          }
+        },
+        "data": {
+          "description": "The project, and what migrating did or would do to each file, or why there was nothing to do.",
+          "type": "object",
+          "required": [
+            "project",
+            "files"
+          ],
+          "properties": {
+            "project": {
+              "description": "The project migrated, as this machine lists it, so a reader knows which one when several are listed.",
+              "type": "object",
+              "required": [
+                "name",
+                "folder"
+              ],
+              "properties": {
+                "name": {
+                  "description": "The project's name on this machine's list.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "folder": {
+                  "description": "The project's folder on this machine.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "nothing": {
+              "description": "Why there was nothing to migrate, in words for people: every file is in its current form; present only then, and then files is empty and steps absent.",
+              "type": "string",
+              "minLength": 1
+            },
+            "files": {
+              "description": "Each file's step, design by design, in the order they run: empty when there was nothing to do.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/migratedFile"
+              }
+            },
+            "steps": {
+              "description": "Each command the migration ran, in order; present only on a real run, never on --dry-run, so a reader sees where a run stopped.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/step"
+              }
+            }
+          },
+          "if": {
+            "required": [
+              "nothing"
+            ]
+          },
+          "then": {
+            "properties": {
+              "files": {
+                "maxItems": 0
+              }
+            },
+            "not": {
+              "required": [
+                "steps"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

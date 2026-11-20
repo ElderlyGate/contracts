@@ -293,33 +293,29 @@
     "width": 180,
     "height": 72
   },
-  "migratedView": {
-    "view": "structure",
-    "boxes": 2,
-    "moved": [],
-    "framesMoved": [
-      "GRP-CORE"
-    ],
-    "shrunk": [],
-    "badgesKept": 1,
-    "badgesMiddle": 2,
-    "badgesUndrawn": 0,
-    "rects": {
-      "CMP-API": {
-        "before": {
-          "x": 300,
-          "y": 140,
-          "width": 180,
-          "height": 72
-        },
-        "after": {
-          "x": 300,
-          "y": 140,
-          "width": 180,
-          "height": 72
-        }
+  "migratedFile": {
+    "design": "lending",
+    "file": "layout.yml",
+    "from": {
+      "apiVersion": "elderlygate/designer/layout/v1",
+      "kind": "Layout"
+    },
+    "to": {
+      "apiVersion": "elderlygate/designer/layout/v2",
+      "kind": "Layout"
+    },
+    "did": "written as a Resource; 3 box(es) given a place",
+    "placed": [
+      {
+        "view": "runtime",
+        "boxes": [
+          "CMP-DESK",
+          "CMP-SHELF",
+          "GRP-LIBRARY"
+        ],
+        "hexagon": []
       }
-    }
+    ]
   },
   "step": {
     "command": "apply",

@@ -88,7 +88,7 @@
                           "additionalProperties": false
                         },
                         {
-                          "$ref": "layout-file.schema.json"
+                          "$ref": "../v2/layout-file.schema.json"
                         }
                       ]
                     }

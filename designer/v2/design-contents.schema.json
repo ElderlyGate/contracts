@@ -62,13 +62,16 @@
                       "minimum": 0
                     },
                     "document": {
-                      "description": "The document as its file holds it: a resource, or for the kind Layout, layout.yml.",
+                      "description": "The document as its file holds it: a resource, or for the kind Layout, layout.yml, as the layout/v2 Resource or the bare form layout/v1 before it.",
                       "oneOf": [
                         {
                           "$ref": "defs.schema.json#/$defs/document"
                         },
                         {
-                          "description": "layout.yml as read: where the boxes and lines of each view sit. Its version says its form; a version 1 file is refused by the board, which says to run nw-designer project migrate.",
+                          "$ref": "layout-file.schema.json"
+                        },
+                        {
+                          "description": "layout.yml as read in the form layout/v1, the bare file before layout/v2: where the boxes and lines of each view sit, which may leave boxes without a place. Its version, 2 or 3, says its form; a file with no version key is older still and refused by the board, which says to run hubman product migrate designer <folder>, and nw-designer project migrate brings layout/v1 to layout/v2.",
                           "type": "object",
                           "properties": {
                             "version": {

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/license/v1/license-create.schema.json",
+  "title": "license create",
+  "description": "What nw-license license create answers with -o json once it has signed a license and written it to a new file: the file and the license it signed, so the owner sees what was signed and where it went before passing the file on (ADR-L7, L8, L9). Printed only after the file is written; a refusal writes nothing and is an error instead.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v1/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/license/app/v1: the form of nw-license's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the license files they describe.",
+          "const": "elderlygate/license/app/v1"
+        },
+        "kind": {
+          "description": "Always LicenseCreate, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "LicenseCreate"
+        },
+        "ran": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always license, nw-license's product ID, since only nw-license gives this answer (ADR-L7).",
+              "const": "license"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "description": "The file written and the license signed into it: file, then the payload's own fields, each meaning what license-payload.schema.json says (their one home), with its rules for each kind, such as a trial key naming no products (ADR-L9). No other field.",
+          "type": "object",
+          "required": [
+            "file"
+          ],
+          "allOf": [
+            {
+              "$ref": "../../mankit/v1/license-payload.schema.json"
+            }
+          ],
+          "properties": {
+            "file": {
+              "description": "The license file written, as the command was given it, so relative to the folder it ran in when given so; the owner passes this file on and the person adds it with <app> license add (ADR-L8).",
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      }
+    }
+  ]
+}

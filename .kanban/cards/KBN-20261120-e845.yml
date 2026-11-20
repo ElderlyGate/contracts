@@ -10,12 +10,12 @@ spec:
   order: 0.99993896484375
   tags: [feature, 'epic:same-shape-designer', 'feature:style-definitions', 'product:contracts', 'product:designer']
   description: |
-    # designer/v1: styles, colours and rules in the definitions
+    # designer/app/v2: styles, colours and rules, on design/v3
 
     #feature #epic:same-shape-designer #feature:style-definitions #product:contracts #product:designer
 
     ## Why
-    The owner agreed one style model for nw-designer on 20 Nov: a design's definitions hold three parts, vocabulary for meaning, `styles` for looks, and `rules` as the only connection between them. This card gives the definitions their schema.
+    The owner agreed one style model for nw-designer on 20 Nov: a design's definitions hold three parts, vocabulary for meaning, `styles` for looks, and `rules` as the only connection between them. By the owner's option A it is a new design form, design/v3, answered by a new contract, designer/app/v2 (one break with e-designer card 54db: envelope/v2, Problems, the Question answer). designer/v1 stays as released and is answered by converting down (ADR-S16).
 
     ## Changes
     - vocabulary is meaning only: status value, settled, note; link-label value, note.
@@ -26,6 +26,10 @@ spec:
     - Element `ui-design.styles`: names and inline maps, last wins, after every rule.
     - config readings `statuses` again, as value, settled, note only.
     - Problem codes undeclared_style, style_field_unread, rule_field_unread, undeclared_<thing>, old_style_field; notices "matches nothing" and "waits for live events".
+    - designer/v2: a copy of v1 on envelope/v2 and design/v3, without v1's style readings; the style additions above go there.
+    - Conversion both ways between designer v1 and v2 (CT-RULE-3, ADR-S16), with test pairs.
+    - problem/v1 `converted_down` with `lost`; version/v1 `reads` and `writes`; question/v1, the Question answer.
+    - forms.yaml: rows design/v3 (old design/v2), app/v2 beside app/v1, question/v1; old forms may have four parts and `upgrade` reads `hubman product migrate` (both CT-RULE-1 exceptions for the owner).
     - Samples invented only (public repository).
 
     ## Depends on
@@ -40,3 +44,4 @@ spec:
     branch: feat/style-definitions/style-definitions
   links:
     depends_on: [KBN-20261120-e10d]
+  summary: designer/app/v2 on design/v3 with styles, colours, rules; conversion; problem lost; version reads/writes; question/v1

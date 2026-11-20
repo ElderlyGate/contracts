@@ -43,17 +43,10 @@
               "minLength": 1
             },
             "report": {
-              "description": "How each view comes out of migrating a version 1 layout.yml; empty when the layout was version 2 or 3. Absent in a nothing answer.",
+              "description": "How each view comes out of migrating a version 1 layout.yml; empty when the layout was version 2.",
               "type": "array",
               "items": {
                 "$ref": "defs.schema.json#/$defs/migratedView"
-              }
-            },
-            "placed": {
-              "description": "What migrating to version 4 gave a place, one entry per view that had a box without one; empty when every box already had its place. Absent in a nothing answer, and from an e-designer older than layout.yml version 4, which places nothing.",
-              "type": "array",
-              "items": {
-                "$ref": "defs.schema.json#/$defs/placedView"
               }
             },
             "groups": {
@@ -87,11 +80,6 @@
                 {
                   "required": [
                     "report"
-                  ]
-                },
-                {
-                  "required": [
-                    "placed"
                   ]
                 },
                 {

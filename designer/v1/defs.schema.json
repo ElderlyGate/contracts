@@ -1503,41 +1503,6 @@
         "link"
       ],
       "additionalProperties": false
-    },
-    "placedView": {
-      "description": "The boxes of one view that migrating to version 4 gave a place, worked out once by the same rule a write uses, so a person sees what was placed before the write is kept.",
-      "type": "object",
-      "required": [
-        "view",
-        "boxes",
-        "hexagon"
-      ],
-      "properties": {
-        "view": {
-          "description": "The view, by its name in design.yml, so a reader shows each view's new places apart.",
-          "type": "string",
-          "minLength": 1
-        },
-        "boxes": {
-          "description": "The boxes and groups placed in the view's rows, by id, in id order, so a person sees which boxes got a place before the write is kept.",
-          "type": "array",
-          "items": {
-            "description": "A resource id.",
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "hexagon": {
-          "description": "The blocks placed on the view's hexagon, by id, in id order, so a person sees which blocks got a place on it; always empty when the view draws no hexagon.",
-          "type": "array",
-          "items": {
-            "description": "A resource id.",
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "additionalProperties": false
     }
   }
 }

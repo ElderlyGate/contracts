@@ -9,12 +9,12 @@
   },
   "data": [
     {
-      "id": "Dev-2026",
+      "id": "Prod-2026",
       "publicKey": "MXwMNVD+eoKdIoXea6uVQ7iVQhg00STa1fXCmVmXgx8=",
       "signer": "keychain"
     },
     {
-      "id": "prod-2026",
+      "id": "prod-2027",
       "publicKey": "e5ExJAK5PGNs3U/LK6j4TxVGYe4TEtyLqHFAovz5K/8=",
       "signer": "keychain"
     }

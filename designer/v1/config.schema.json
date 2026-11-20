@@ -174,7 +174,7 @@
               "additionalProperties": false
             },
             "definitions": {
-              "description": "The definitions in use after every layer: classes, properties, sections, presentations, schemas, features and vocabulary. Their entries are the design's own words, written by its user, so they stay open (CT-RULE-4); config's sections say where each came from.",
+              "description": "The definitions in use after every layer: classes, properties, sections, presentations, schemas, features and vocabulary. Their entries are the design's own words, written by its user, so they stay open (CT-RULE-4); config's sections say where each came from. The vocabulary says what words mean (a status's value, settled and note; a link label's value and note); how things look is styles, colours and rules, given below, never the vocabulary.",
               "type": "object"
             },
             "readings": {
@@ -367,6 +367,121 @@
               ],
               "additionalProperties": false
             },
+            "styles": {
+              "description": "Every style in use after both layers, by name, with its properties taken in order (a style written as a list is given as what it comes to) and where it came from, so a reader shows a style without reading the layers.",
+              "type": "object",
+              "propertyNames": {
+                "$ref": "defs.schema.json#/$defs/styleName"
+              },
+              "additionalProperties": {
+                "description": "One style in use.",
+                "type": "object",
+                "properties": {
+                  "properties": {
+                    "description": "What the style comes to.",
+                    "$ref": "defs.schema.json#/$defs/styleProperties"
+                  },
+                  "source": {
+                    "description": "Where the one in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                    "enum": [
+                      "built-in",
+                      "design"
+                    ]
+                  }
+                },
+                "required": [
+                  "properties",
+                  "source"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "colors": {
+              "description": "Every colour name in use after both layers, with what it draws as on a light and a dark canvas and where it came from; a design's name equal to a built-in one replaces it.",
+              "type": "object",
+              "propertyNames": {
+                "$ref": "defs.schema.json#/$defs/colorName"
+              },
+              "additionalProperties": {
+                "description": "One colour in use.",
+                "type": "object",
+                "properties": {
+                  "light": {
+                    "description": "The colour on a light canvas.",
+                    "type": "string",
+                    "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+                  },
+                  "dark": {
+                    "description": "The colour on a dark canvas.",
+                    "type": "string",
+                    "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+                  },
+                  "source": {
+                    "description": "Where the one in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                    "enum": [
+                      "built-in",
+                      "design"
+                    ]
+                  }
+                },
+                "required": [
+                  "light",
+                  "dark",
+                  "source"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "rules": {
+              "description": "Every rule in use after both layers, in the order they are read, each whole after any later rule with its id replaced parts of it, and where its last part came from. A rule switched off (then: {}) is listed, so a reader can show why it draws nothing.",
+              "type": "array",
+              "items": {
+                "description": "One rule in use.",
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "defs.schema.json#/$defs/ruleForEvent"
+                  }
+                ],
+                "properties": {
+                  "id": {
+                    "description": "The fixed name of the rule.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+                  },
+                  "description": {
+                    "description": "What the rule is for, in words for people.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "given": {
+                    "$ref": "defs.schema.json#/$defs/ruleGiven"
+                  },
+                  "when": {
+                    "$ref": "defs.schema.json#/$defs/ruleWhen"
+                  },
+                  "then": {
+                    "$ref": "defs.schema.json#/$defs/ruleThen"
+                  },
+                  "source": {
+                    "description": "Where the one in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                    "enum": [
+                      "built-in",
+                      "design"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "description",
+                  "given",
+                  "when",
+                  "then",
+                  "source"
+                ],
+                "additionalProperties": false
+              }
+            },
             "problems": {
               "description": "Every definition e-designer could not take, so a reader shows why something is not drawn as written. The board section's problems are not here: DesignContents.board.problems holds them, one place for each fact.",
               "type": "array",
@@ -494,6 +609,9 @@
           "required": [
             "sections",
             "definitions",
+            "styles",
+            "colors",
+            "rules",
             "problems",
             "moved",
             "releaseLanes",

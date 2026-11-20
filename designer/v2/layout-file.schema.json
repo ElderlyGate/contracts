@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/layout-file.schema.json",
+  "title": "layout file",
+  "description": "A design's layout.yml in the form layout/v2, as e-designer writes it: a Resource (ADR-S15) holding, for each view the design draws, the place of every box it draws and, for a view drawn as a hexagon, of every block on it, so the board draws what is kept and works out no place. A place nobody gave is worked out once, by e-designer, when a write leaves a box without one. The form before it, layout/v1, is the bare file holding version 2 or 3 and views, which may leave boxes without a place; its upgrade is the layout step of the project migration (apiversion/v1/forms.yaml). Not a design change: no resource file holds a place.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "The form the file is in, so a reader knows which schema it meets (ADR-S15, apiversion/v1/forms.yaml).",
+      "const": "elderlygate/designer/layout/v2"
+    },
+    "kind": {
+      "description": "Always Layout, the kind of this file.",
+      "const": "Layout"
+    },
+    "metadata": {
+      "description": "What names the file.",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "The design's id, the folder the file sits in, so a layout is never filed under another design.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "description": "Where things sit on the board, view by view.",
+      "type": "object",
+      "required": [
+        "views"
+      ],
+      "properties": {
+        "views": {
+          "description": "One page per view, keyed by its name in design.yml; a design that declares no views keeps its one page under default.",
+          "type": "object",
+          "propertyNames": {
+            "description": "A view's name.",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "description": "One view's places: its boxes, its lines and its hexagon, each left out when it holds nothing.",
+            "type": "object",
+            "properties": {
+              "boxes": {
+                "description": "Every box the view draws, by id, at its place on the board, so the board draws it there and a drag moves only the box dragged.",
+                "type": "object",
+                "propertyNames": {
+                  "description": "A resource id.",
+                  "minLength": 1
+                },
+                "additionalProperties": {
+                  "description": "One box's place, and its size only where a person resized it.",
+                  "type": "object",
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "properties": {
+                    "x": {
+                      "description": "Across the board, in canvas units, so the board draws it there.",
+                      "type": "number"
+                    },
+                    "y": {
+                      "description": "Down the board, in canvas units, so the board draws it there.",
+                      "type": "number"
+                    },
+                    "w": {
+                      "description": "The width a person gave the box, so it is drawn at it; absent, the board sizes it by its content.",
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "h": {
+                      "description": "The height a person gave the box, so it is drawn at it; absent, the board sizes it by its content.",
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "lines": {
+                "description": "Lines a person shaped, by Link id, so the board draws them as shaped; a line nobody shaped is left out and follows its boxes.",
+                "type": "object",
+                "propertyNames": {
+                  "description": "A resource id.",
+                  "minLength": 1
+                },
+                "additionalProperties": {
+                  "description": "One line's shape in this view.",
+                  "type": "object",
+                  "minProperties": 1,
+                  "properties": {
+                    "bends": {
+                      "description": "The corners it runs through, in order, so it keeps the route a person gave it.",
+                      "type": "array",
+                      "items": {
+                        "description": "One corner, on the board.",
+                        "type": "object",
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "properties": {
+                          "x": {
+                            "description": "Across the board, in canvas units, so the board draws it there.",
+                            "type": "number"
+                          },
+                          "y": {
+                            "description": "Down the board, in canvas units, so the board draws it there.",
+                            "type": "number"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "badge": {
+                      "description": "Where a person put the line's badge, so it stays there as the line moves: how far along the line by length, and how far off it.",
+                      "type": "object",
+                      "required": [
+                        "along",
+                        "dx",
+                        "dy"
+                      ],
+                      "properties": {
+                        "along": {
+                          "description": "How far along the line, from 0 to 1, so the badge travels with the line.",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "dx": {
+                          "description": "How far off the line, across, in canvas units.",
+                          "type": "number"
+                        },
+                        "dy": {
+                          "description": "How far off the line, down, in canvas units.",
+                          "type": "number"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "sides": {
+                      "description": "The sides it leaves and meets its boxes by in this view, as <from>-<to>, so it keeps the sides a person chose; its Link's own sides win.",
+                      "type": "string",
+                      "pattern": "^[lrtb]-[lrtb]$"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "hexagon": {
+                "description": "Every block on the view's hexagon, by id, at its place, when the view is drawn as a hexagon, so the board draws the hexagon as kept; absent when it is not.",
+                "type": "object",
+                "propertyNames": {
+                  "description": "A resource id.",
+                  "minLength": 1
+                },
+                "additionalProperties": {
+                  "description": "One block's place on the hexagon, on the board.",
+                  "type": "object",
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "properties": {
+                    "x": {
+                      "description": "Across the board, in canvas units, so the board draws it there.",
+                      "type": "number"
+                    },
+                    "y": {
+                      "description": "Down the board, in canvas units, so the board draws it there.",
+                      "type": "number"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

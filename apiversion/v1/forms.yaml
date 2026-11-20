@@ -7,13 +7,17 @@ forms:
     kinds: [Design, Definitions, "*"]
     note: The files of a design. Kinds are open, the built-in ones (Block, Group, Flow, Link, Adr, Question, Risk, Suite, Request, Open, Contradiction, Suggestion) and the ones a project declares share this apiVersion; every product's design uses it. Since v3 a design's looks are styles, colours and rules in its definitions, and an element names its own in ui-design.styles; v2's look, border-style and line-style lists, status mark, color, recede and badge, spec.board.links and an element's ui-design look, background, border, borderStyle, color and style are gone
     upgrade: hubman product migrate designer <folder>
+  - new: elderlygate/designer/layout/v2
+    app: designer
+    kinds: [Layout]
+    note: "A design's layout.yml as a Resource holding every drawn box's place (designer/v2 layout-file.schema.json). The form before is layout.yml without apiVersion (version: 2|3); a reader treats that bare file as the one level before, and nw-designer project migrate brings it up (ADR-S16)"
   - new: elderlygate/designer/app/v1
     app: designer
     kinds: [Version, DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, MigrateLayout]
     note: Answers and events of designer, contract v1. Answer kinds not listed here are in the envelope only for now, with no schema of their own yet
   - new: elderlygate/designer/app/v2
     app: designer
-    kinds: [DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, MigrateLayout]
+    kinds: [DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, ProjectMigrate]
     note: Answers and events of designer, contract v2, on envelope/v2 with Problems, for design/v3; designer/app/v1 is still answered by converting down (ADR-S16), and the version answer is contracts version/v1
   - new: elderlygate/control-room/app/v1
     app: control-room

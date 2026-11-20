@@ -890,7 +890,7 @@
           "pattern": "^[a-z][a-z0-9_]*$"
         },
         "at": {
-          "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.look.",
+          "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.styles.",
           "type": "string",
           "minLength": 1
         },
@@ -1360,6 +1360,16 @@
         "fingerprint": {
           "description": "The part's fingerprint now, as the revision gives it, so a reader that already read this one need not fetch it again.",
           "$ref": "#/$defs/fingerprint"
+        },
+        "changed": {
+          "description": "The ids a write changed in this part (blocks, groups, lines, findings, or boxes moved on the layout), so a rule about an event reaches just those. Given for the board and layout parts; empty when the part moved for another reason, such as the definitions or the machine config.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "description": "One id, as the design writes it.",
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
       "required": [
@@ -2028,6 +2038,233 @@
           }
         ]
       }
+    },
+    "finalStyle": {
+      "description": "The style a thing is drawn in once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. Every property a box or a line can have is given; mark, badge and text are given only when something says them.",
+      "type": "object",
+      "properties": {
+        "fill": {
+          "description": "The colour inside a box.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-color": {
+          "description": "The colour of a box's border.",
+          "$ref": "#/$defs/colorName"
+        },
+        "text-color": {
+          "description": "The colour of the text.",
+          "$ref": "#/$defs/colorName"
+        },
+        "line-color": {
+          "description": "The colour of a line between two things.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-style": {
+          "description": "How a box's border is drawn; none draws no border.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ]
+        },
+        "border-width": {
+          "description": "How heavy a box's border is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "line-width": {
+          "description": "How heavy a line is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "line-style": {
+          "description": "How a line is drawn.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted"
+          ]
+        },
+        "mark": {
+          "description": "One character drawn beside the thing, such as a tick; empty draws none.",
+          "type": "string",
+          "maxLength": 1
+        },
+        "badge": {
+          "description": "One letter on the thing's badge, such as D for decided.",
+          "type": "string",
+          "pattern": "^\\S$"
+        },
+        "fade": {
+          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
+          "enum": [
+            "none",
+            "aside",
+            "gone"
+          ]
+        },
+        "text": {
+          "description": "A short text drawn on a line, its label as the picture shows it, such as SQL.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "fill",
+        "border-color",
+        "text-color",
+        "line-color",
+        "border-style",
+        "border-width",
+        "line-width",
+        "line-style",
+        "fade"
+      ]
+    },
+    "styleOverlay": {
+      "description": "A rule whose when holds only while something happens on the board (an action) or after an event, given as what it adds over the final style, so the page lays it on while that holds and takes it off after.",
+      "type": "object",
+      "properties": {
+        "rule": {
+          "description": "The id of the rule that adds it.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+        },
+        "action": {
+          "description": "The action that lays it on, for a rule about an action.",
+          "$ref": "#/$defs/action"
+        },
+        "event": {
+          "description": "The event that lays it on, for a rule about an event; it reaches this thing only when the event names it among its changed ids.",
+          "$ref": "#/$defs/eventType"
+        },
+        "style": {
+          "description": "What it adds over the final style.",
+          "$ref": "#/$defs/styleProperties"
+        },
+        "for": {
+          "description": "How long an event overlay shows, as the rule says, such as 3s.",
+          "type": "string",
+          "pattern": "^[0-9]+(ms|s)$"
+        },
+        "waits": {
+          "description": "True when live events are off, so this event overlay is never laid on; the board says so in a notice and never fakes it.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "rule",
+        "style"
+      ],
+      "oneOf": [
+        {
+          "description": "An action overlay.",
+          "required": [
+            "action"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "event"
+                ]
+              },
+              {
+                "required": [
+                  "for"
+                ]
+              },
+              {
+                "required": [
+                  "waits"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "description": "An event overlay, with how long it shows and whether it waits.",
+          "required": [
+            "event",
+            "for",
+            "waits"
+          ],
+          "not": {
+            "required": [
+              "action"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "elementStyle": {
+      "description": "How one block, group or line is drawn in one view: its final style, what made it, and the overlays that come and go.",
+      "type": "object",
+      "properties": {
+        "style": {
+          "$ref": "#/$defs/finalStyle"
+        },
+        "applied": {
+          "description": "What made the final style, in the order it was taken: each rule's id, and own for the thing's own ui-design.styles, so an inspector shows why it looks so.",
+          "type": "array",
+          "items": {
+            "description": "A rule id, or own.",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+          }
+        },
+        "rules": {
+          "description": "The overlays for actions and events, in rule order; empty when none.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/styleOverlay"
+          }
+        }
+      },
+      "required": [
+        "style",
+        "applied",
+        "rules"
+      ],
+      "additionalProperties": false
+    },
+    "styleNotice": {
+      "description": "Something about a rule worth saying that is not a problem: a rule that matches nothing (a rule switched off with then: {} is not one), or an event rule that waits because live events are off.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "What it is, as a stable word a program decides by; an open word. Known words: matches_nothing: the rule is about nothing in this design; waits_for_live_events: an event rule draws nothing while live events are off.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "rule": {
+          "description": "The id of the rule it is about.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+        },
+        "says": {
+          "description": "The same in words for people; a program never decides by it.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "rule",
+        "says"
+      ],
+      "additionalProperties": false
     }
   }
 }

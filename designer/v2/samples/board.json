@@ -734,6 +734,361 @@
       "runtime": "runtime",
       "deployment": "deployment"
     },
+    "styles": {
+      "structure": {
+        "GRP-CORE": {
+          "style": {
+            "fill": "bg",
+            "border-color": "line",
+            "text-color": "ink",
+            "line-color": "line",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none"
+          },
+          "applied": [
+            "groups-quiet"
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            }
+          ]
+        },
+        "GRP-EDGE": {
+          "style": {
+            "fill": "lagoon-soft",
+            "border-color": "lagoon",
+            "text-color": "ink",
+            "line-color": "line",
+            "border-style": "solid",
+            "border-width": "thick",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none"
+          },
+          "applied": [
+            "groups-quiet",
+            "edge-in-lagoon"
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            }
+          ]
+        },
+        "CMP-KIOSK": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "sec",
+            "line-color": "line",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none",
+            "mark": "✓",
+            "badge": "D"
+          },
+          "applied": [
+            "blocks-plain",
+            "decided-is-ticked"
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-LOCKS": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "line-color": "line",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none"
+          },
+          "applied": [
+            "blocks-plain"
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-LEDGER": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "line-color": "line",
+            "border-style": "dashed",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "aside"
+          },
+          "applied": [
+            "blocks-plain",
+            "own"
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-KIOSK--calls--CMP-LOCKS": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "line-color": "ink",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none"
+          },
+          "applied": [
+            "lines-plain"
+          ],
+          "rules": []
+        },
+        "CMP-LOCKS--calls--CMP-LEDGER": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "line-color": "ink",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none",
+            "text": "writes"
+          },
+          "applied": [
+            "lines-plain",
+            "own"
+          ],
+          "rules": []
+        },
+        "CMP-KIOSK--related--CMP-LEDGER": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "line-color": "muted",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "dashed",
+            "fade": "none"
+          },
+          "applied": [
+            "lines-plain",
+            "related-is-dashed"
+          ],
+          "rules": []
+        }
+      },
+      "context": {},
+      "runtime": {
+        "CMP-KIOSK": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "sec",
+            "line-color": "line",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none",
+            "mark": "✓",
+            "badge": "D"
+          },
+          "applied": [
+            "blocks-plain",
+            "decided-is-ticked"
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-LOCKS": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "line-color": "line",
+            "border-style": "solid",
+            "border-width": "normal",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none"
+          },
+          "applied": [
+            "blocks-plain"
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        }
+      },
+      "deployment": {}
+    },
+    "colors": {
+      "ink": {
+        "light": "#1b2430",
+        "dark": "#e8ecf2"
+      },
+      "lagoon": {
+        "light": "#11756f",
+        "dark": "#5fd3c8"
+      },
+      "lagoon-soft": {
+        "light": "#dff4f2",
+        "dark": "#123533"
+      }
+    },
+    "groupMembers": {
+      "structure": {
+        "": {
+          "GRP-CORE": [
+            "CMP-LOCKS",
+            "CMP-LEDGER",
+            "CMP-INTERIOR-COMMENT"
+          ],
+          "GRP-EDGE": [
+            "CMP-KIOSK"
+          ]
+        },
+        "drop-a-parcel": {
+          "GRP-CORE": [
+            "CMP-LOCKS",
+            "CMP-LEDGER"
+          ],
+          "GRP-EDGE": [
+            "CMP-KIOSK"
+          ]
+        }
+      },
+      "context": {
+        "": {}
+      },
+      "runtime": {
+        "": {}
+      },
+      "deployment": {
+        "": {}
+      }
+    },
+    "notices": [
+      {
+        "code": "matches_nothing",
+        "rule": "later-is-planned",
+        "says": "later-is-planned is about blocks of release beta or later, and this design has none"
+      }
+    ],
     "flows": [
       {
         "id": "drop-a-parcel",

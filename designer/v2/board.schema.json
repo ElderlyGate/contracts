@@ -60,6 +60,56 @@
                 "minLength": 1
               }
             },
+            "styles": {
+              "description": "How every block, group and line is drawn, per view the board draws, by the view's name and then the thing's id, worked out by e-designer from the styles, colours and rules of every layer and each thing's own ui-design.styles, so the page draws it and decides nothing.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "One view's things, by id.",
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "defs.schema.json#/$defs/elementStyle"
+                }
+              }
+            },
+            "colors": {
+              "description": "Every colour name the styles may use, with what it draws as on a light and a dark canvas, after both layers, so the page needs no table of its own.",
+              "type": "object",
+              "propertyNames": {
+                "$ref": "defs.schema.json#/$defs/colorName"
+              },
+              "additionalProperties": {
+                "$ref": "defs.schema.json#/$defs/colorPair"
+              }
+            },
+            "groupMembers": {
+              "description": "Which blocks each group holds, at any depth, per view and per flow walked ('' for none), by the view's name, the flow's id and the group's id, worked out by e-designer, so the page counts nothing.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "One view's groups, per flow walked.",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "Each group with its blocks, in the order the board draws them.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "description": "The ids of the blocks inside, at any depth.",
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "description": "A block id.",
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            },
+            "notices": {
+              "description": "What is worth saying about the rules that is not a problem, so a reader can show it beside the problems.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/styleNotice"
+              }
+            },
             "flows": {
               "description": "The flows the board takes, in id order; a flow it refuses is in refused instead.",
               "type": "array",
@@ -175,6 +225,10 @@
             "contents",
             "openView",
             "layoutPages",
+            "styles",
+            "colors",
+            "groupMembers",
+            "notices",
             "flows",
             "requests",
             "suites",

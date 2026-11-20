@@ -166,8 +166,7 @@ func UpgradeDesigner(v1 []byte) ([]byte, error) {
 }
 
 // DowngradeDesigner is the step back from designer/app/v2 to v1, for a v1 reader (ADR-S16): the envelope back to ran and error/v1, the app's own form and contract, the design files' form back to design/v2, and for Config without what v1 cannot hold.
-// It gives the data only: saying what was lost waits for the envelope decision in mankit's conversion plan.
-// A Problem's first place survives as at; error/v1 holds one place, so the rest are dropped.
+// It gives the data only, keeping a Problem's first place as at; the list of what was lost comes from mankit's conversion plan.
 func DowngradeDesigner(v2 []byte) ([]byte, error) {
 	var head struct {
 		APIVersion string `json:"apiVersion"`
@@ -266,7 +265,7 @@ func downConfig(data map[string]any) {
 func errorOf(p map[string]any) map[string]any {
 	kind, _ := p["type"].(string)
 	reason, _ := p["reason"].(string)
-	// As mankit serve writes a Problem for an envelope/v1 reader: the owner's mapping, else the reason, else the type.
+	// The rule's home is mankit serve's codeOf (serve/answer.go): the owner's mapping, else the reason, else the type.
 	code := kind
 	if reason != "" {
 		code = reason

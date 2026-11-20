@@ -72,12 +72,12 @@
                           "type": "object",
                           "properties": {
                             "version": {
-                              "description": "The form of layout.yml, so a reader knows how to read views. Version 4 holds a place for every box each view draws, in boxes, and for every block of a view drawn as a hexagon, in hexagon; e-designer keeps it so, placing whatever a write leaves without a place. Versions 2 and 3 may leave boxes without one; `migrate layout` places them and makes the file version 4.",
+                              "description": "The form of layout.yml, so a reader knows how to read views. Version 4 holds a place for every box each view draws, in boxes, and in hexagon a place for every block of a view drawn as a hexagon: every view of a design whose spec.board.display.layout is hexagon, and a view whose hexagon already holds places; another view keeps no hexagon places. e-designer keeps it so, placing whatever a write leaves without a place. Versions 2 and 3 may leave boxes without one; `migrate layout` places them and makes the file version 4.",
                               "type": "integer",
                               "minimum": 2
                             },
                             "views": {
-                              "description": "Each view's boxes, lines and hexagon, keyed by view name, as apply --help describes them; the board writes them, so their inner shape is the layout program's. At version 4 hexagon holds every hexagon block's place, not only the ones a person moved.",
+                              "description": "Each view's boxes, lines and hexagon, keyed by view name, as apply --help describes them; the board writes them, so their inner shape is the layout program's. At version 4 a view drawn as a hexagon holds every hexagon block's place in hexagon, not only the ones a person moved.",
                               "type": "object"
                             }
                           },

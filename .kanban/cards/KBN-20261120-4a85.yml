@@ -1,0 +1,37 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261120-4a85
+  title: 'control-room/v1: schemas for Activity, Usage, RecordReport, Product and Card'
+  created_at: 2026-11-20T06:19:03.160Z
+  created_by: Tugbay Atilla <tugbayatilla@gmail.com>
+spec:
+  column: backlog
+  order: 0.99993896484375
+  summary: the envelope-only kinds get schemas before control-room releases the contract
+  tags: [feature, 'epic:same-shape-contracts', 'feature:contracts-control-room-v1', 'product:contracts']
+  work:
+    agent: claude-opus-5-5
+  description: |
+    #feature #epic:same-shape-contracts #feature:contracts-control-room-v1 #product:contracts
+
+    # control-room/v1: schemas for Activity, Usage, RecordReport, Product and Card
+
+    Follows KBN-20261117-94ba (scope agreed by the lead, 20 Nov 2026).
+
+    ## Why
+    control-room/v1 lists these kinds, but they are in the envelope only for now, with no schema of their own. Each needs its schema and sample before control-room releases the contract (CT-RULE-1 freezes it then).
+
+    ## Changes
+    - A schema and a sample for each of Activity, Usage, RecordReport, Product and Card, with every field described (CT-RULE-5); shared shapes go in `control-room/v1/defs.schema.json`.
+    - forms.yaml's note on control-room/v1 names them as having schemas.
+
+    ## Waits on
+    - KBN-20261117-94ba (depends_on).
+
+    ## Done when
+    - [ ] Each kind has a schema and a sample, and `go test ./...` passes.
+
+    Size M.
+  links:
+    depends_on: [KBN-20261117-94ba]

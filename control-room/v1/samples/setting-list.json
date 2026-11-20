@@ -1,0 +1,33 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "SettingList",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "key": "org",
+      "value": "Org",
+      "source": "file",
+      "help": "the GitHub org the products are in"
+    },
+    {
+      "key": "roots",
+      "value": "[~/src]",
+      "source": "file",
+      "help": "the folders searched for checkouts",
+      "list": true,
+      "restart": true
+    },
+    {
+      "key": "included_minutes",
+      "value": "3000",
+      "source": "default",
+      "help": "the Actions minutes the plan includes each month"
+    }
+  ],
+  "errors": []
+}

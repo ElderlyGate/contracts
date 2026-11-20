@@ -1,0 +1,112 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "WorkList",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": {
+    "taken": "2026-11-20T09:00:00Z",
+    "org": "Org",
+    "connected": true,
+    "query": {
+      "epics": [
+        "shop",
+        "none"
+      ]
+    },
+    "shown": 2,
+    "total": 2,
+    "rows": [
+      {
+        "kind": "pr",
+        "ref": "Org/tool#12",
+        "name": "feat: search by tag",
+        "url": "https://github.com/Org/tool/pull/12",
+        "product": "tool",
+        "repo": "Org/tool",
+        "branch": "feat/search-tags/search",
+        "epics": [
+          "shop"
+        ],
+        "features": [
+          "search"
+        ],
+        "state": "approved, not merged",
+        "ci": "passing",
+        "checks": [
+          {
+            "name": "test",
+            "state": "passing",
+            "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+          }
+        ],
+        "whose": "merge",
+        "turn": "agent",
+        "at": "2026-11-19T15:00:00Z",
+        "at_what": "approved",
+        "when": "18h ago",
+        "when_title": "approved Thu 19 Nov 2026 15:00"
+      },
+      {
+        "kind": "card",
+        "ref": "tool/KBN-20261118-0002",
+        "name": "Tidy the help",
+        "url": "/product/tool/card/KBN-20261118-0002",
+        "product": "tool",
+        "epics": [],
+        "features": [],
+        "state": "In Progress",
+        "whose": "claude-opus-5-5",
+        "turn": "agent",
+        "at": "2026-11-18T09:00:00Z",
+        "at_what": "created",
+        "when": "2d ago",
+        "when_title": "created Wed 18 Nov 2026 09:00"
+      }
+    ],
+    "facets": [
+      {
+        "key": "kind",
+        "label": "Kind",
+        "options": [
+          {
+            "value": "pr",
+            "label": "Pull request",
+            "n": 1
+          },
+          {
+            "value": "card",
+            "label": "Card",
+            "n": 1
+          }
+        ]
+      },
+      {
+        "key": "epic",
+        "label": "Epic",
+        "on": 1,
+        "options": [
+          {
+            "value": "shop",
+            "label": "shop",
+            "n": 1,
+            "on": true
+          },
+          {
+            "value": "none",
+            "label": "none",
+            "n": 1
+          }
+        ]
+      }
+    ],
+    "products": [
+      "tool",
+      "kit"
+    ]
+  },
+  "errors": []
+}

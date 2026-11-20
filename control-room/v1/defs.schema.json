@@ -1,0 +1,1889 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/control-room/v1/defs.schema.json",
+  "title": "control-room shapes",
+  "description": "The shapes control-room's answers share: a product, a pull request, a card and the rest, each written once so every answer that holds one means the same by it (G-GIT-12). The document itself takes one of each, so its sample shows them.",
+  "type": "object",
+  "properties": {
+    "board-Column": {
+      "$ref": "#/$defs/board-Column"
+    },
+    "board-Feature": {
+      "$ref": "#/$defs/board-Feature"
+    },
+    "checkout-Status": {
+      "$ref": "#/$defs/checkout-Status"
+    },
+    "config-Setting": {
+      "$ref": "#/$defs/config-Setting"
+    },
+    "design-Design": {
+      "$ref": "#/$defs/design-Design"
+    },
+    "design-Root": {
+      "$ref": "#/$defs/design-Root"
+    },
+    "github-Connection": {
+      "$ref": "#/$defs/github-Connection"
+    },
+    "github-PR": {
+      "$ref": "#/$defs/github-PR"
+    },
+    "github-PRCheck": {
+      "$ref": "#/$defs/github-PRCheck"
+    },
+    "github-Run": {
+      "$ref": "#/$defs/github-Run"
+    },
+    "github-Size": {
+      "$ref": "#/$defs/github-Size"
+    },
+    "outlaws-Branch": {
+      "$ref": "#/$defs/outlaws-Branch"
+    },
+    "outlaws-Card": {
+      "$ref": "#/$defs/outlaws-Card"
+    },
+    "outlaws-PR": {
+      "$ref": "#/$defs/outlaws-PR"
+    },
+    "outlaws-Problem": {
+      "$ref": "#/$defs/outlaws-Problem"
+    },
+    "outlaws-Query": {
+      "$ref": "#/$defs/outlaws-Query"
+    },
+    "outlaws-Report": {
+      "$ref": "#/$defs/outlaws-Report"
+    },
+    "snapshot-Board": {
+      "$ref": "#/$defs/snapshot-Board"
+    },
+    "snapshot-Card": {
+      "$ref": "#/$defs/snapshot-Card"
+    },
+    "snapshot-Checkout": {
+      "$ref": "#/$defs/snapshot-Checkout"
+    },
+    "snapshot-Focus": {
+      "$ref": "#/$defs/snapshot-Focus"
+    },
+    "snapshot-Product": {
+      "$ref": "#/$defs/snapshot-Product"
+    },
+    "snapshot-Release": {
+      "$ref": "#/$defs/snapshot-Release"
+    },
+    "snapshot-Snapshot": {
+      "$ref": "#/$defs/snapshot-Snapshot"
+    },
+    "snapshot-Waiting": {
+      "$ref": "#/$defs/snapshot-Waiting"
+    },
+    "work-Facet": {
+      "$ref": "#/$defs/work-Facet"
+    },
+    "work-List": {
+      "$ref": "#/$defs/work-List"
+    },
+    "work-Option": {
+      "$ref": "#/$defs/work-Option"
+    },
+    "work-Query": {
+      "$ref": "#/$defs/work-Query"
+    },
+    "work-Row": {
+      "$ref": "#/$defs/work-Row"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "board-Column": {
+      "additionalProperties": false,
+      "description": "Column is one column and how many cards it holds.",
+      "properties": {
+        "count": {
+          "description": "How many cards the column holds now, so the page can show where work piles up.",
+          "type": "integer"
+        },
+        "id": {
+          "description": "The column's id on its board, as kanban names it, so a reader can match a card's column to it.",
+          "type": "string"
+        },
+        "label": {
+          "description": "The column's label as the board shows it, for people.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "count"
+      ],
+      "type": "object"
+    },
+    "board-Feature": {
+      "additionalProperties": false,
+      "description": "Feature is one feature an epic card lists: its id and what it does.",
+      "properties": {
+        "id": {
+          "description": "The feature's id, unique across the org (G-CARD-2): the id a card's feature:<id> tag and a pull request's label name.",
+          "type": "string"
+        },
+        "what": {
+          "description": "What the feature does, in the epic card's own words, for people.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "checkout-Status": {
+      "additionalProperties": false,
+      "description": "Status is a checkout's branch and how far it is from its upstream, as git knows it without fetching.",
+      "properties": {
+        "ahead": {
+          "description": "Commits the checkout has that its upstream does not: work not pushed yet.",
+          "type": "integer"
+        },
+        "behind": {
+          "description": "Commits its upstream has that the checkout does not: a checkout to bring up to date.",
+          "type": "integer"
+        },
+        "branch": {
+          "description": "The branch the checkout is on, so the owner sees a checkout left on a pull request's branch.",
+          "type": "string"
+        },
+        "dirty": {
+          "description": "changed and untracked files",
+          "type": "integer"
+        },
+        "upstream": {
+          "description": "The branch it tracks, empty when it tracks none, so a branch that tracks the wrong one shows.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "branch",
+        "ahead",
+        "behind",
+        "dirty"
+      ],
+      "type": "object"
+    },
+    "config-Setting": {
+      "additionalProperties": false,
+      "description": "Setting is one key of config.yaml as it is now: its value, where the value came from, and what it is. A list's value is written as a YAML flow list, the form `config set` takes it in.",
+      "properties": {
+        "help": {
+          "description": "What the setting is for, in a line, so the Settings page and `config show` explain it.",
+          "type": "string"
+        },
+        "key": {
+          "description": "The setting's key in config.yaml, the name `config get` and `config set` take.",
+          "type": "string"
+        },
+        "list": {
+          "description": "the value is a YAML list",
+          "type": "boolean"
+        },
+        "restart": {
+          "description": "a running serve takes it when it starts again",
+          "type": "boolean"
+        },
+        "source": {
+          "description": "file or default",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value in use, as config.yaml writes it, or the default when the file does not set it.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value",
+        "source",
+        "help"
+      ],
+      "type": "object"
+    },
+    "design-Design": {
+      "additionalProperties": false,
+      "description": "Design is one design: its blocks, its releases (the product's MVPs, G-PLAN-9) and its open findings.",
+      "properties": {
+        "blocks": {
+          "description": "How many blocks the design holds, a measure of how far it is drawn.",
+          "type": "integer"
+        },
+        "err": {
+          "description": "this design could not be read; the others still are",
+          "type": "string"
+        },
+        "id": {
+          "description": "The design's id, its folder's name under .designer/.",
+          "type": "string"
+        },
+        "open": {
+          "description": "How many questions, risks and contradictions are still open in it (G-PLAN-11), the design work left.",
+          "type": "integer"
+        },
+        "releases": {
+          "description": "The design's releases, the product's MVPs in order (G-PLAN-9): its roadmap.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "source": {
+          "description": "the command that shows it by hand",
+          "type": "string"
+        },
+        "title": {
+          "description": "The design's title, for people.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "blocks",
+        "open",
+        "source"
+      ],
+      "type": "object"
+    },
+    "design-Root": {
+      "additionalProperties": false,
+      "description": "Root is the designs in a project's .designer/ root, \"no design\" when it holds none, or why they could not be read.",
+      "properties": {
+        "err": {
+          "description": "Why the read failed, naming what failed; a failure is never shown as no design (G-CODE-6).",
+          "type": "string"
+        },
+        "gap": {
+          "description": "Why there is nothing to read, such as no design or no checkout; empty when the root was read.",
+          "type": "string"
+        },
+        "list": {
+          "description": "Each design in the root, in e-designer's order.",
+          "items": {
+            "$ref": "#/$defs/design-Design"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "source": {
+          "description": "The command that read it, so a person can read the same by hand (Principle 4).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "github-Connection": {
+      "additionalProperties": false,
+      "description": "Connection is whether the control room can read GitHub, as last checked.",
+      "properties": {
+        "account": {
+          "description": "empty until a check of this token",
+          "type": "string"
+        },
+        "checked_at": {
+          "description": "When the token was last checked with GitHub, so a stale check shows.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "connected": {
+          "description": "Whether the read token was checked and works, so every GitHub fact can say why it is missing when it is not.",
+          "type": "boolean"
+        },
+        "expires_at": {
+          "description": "when the token expires, as GitHub said at its check; zero when it does not say",
+          "format": "date-time",
+          "type": "string"
+        },
+        "from": {
+          "description": "where the token is kept, or would be: the Keychain item, the Secret Service item, the file",
+          "type": "string"
+        },
+        "gap": {
+          "description": "why the connection could not be read",
+          "type": "string"
+        },
+        "managed": {
+          "description": "the variable naming the file the token is read from, when it is kept outside the control room",
+          "type": "string"
+        },
+        "read_only": {
+          "description": "Whether the token can only read, as control-room asks: a token that can write is never used to read.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "connected",
+        "read_only"
+      ],
+      "type": "object"
+    },
+    "github-PR": {
+      "additionalProperties": false,
+      "description": "PR is an open pull request waiting for the owner, or one closed lately (ClosedPRs).",
+      "properties": {
+        "approved_at": {
+          "description": "When its latest approval was given, empty when it has none.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "approved_by": {
+          "description": "ApprovedBy and ApprovedAt are the latest approval of a PR whose Review is approved.",
+          "type": "string"
+        },
+        "author": {
+          "description": "Who opened it, by GitHub login, so the owner's own and the machine user's work tell apart.",
+          "type": "string"
+        },
+        "base": {
+          "description": "The branch it merges into, so a stack of pull requests shows.",
+          "type": "string"
+        },
+        "branch": {
+          "description": "The branch it merges, whose name ends in its feature (G-CARD-6).",
+          "type": "string"
+        },
+        "checks": {
+          "description": "Checks are the jobs of each workflow's latest run, by name; nil when they could not be read.",
+          "items": {
+            "$ref": "#/$defs/github-PRCheck"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "ci": {
+          "description": "passing, failing, running, no checks, not read",
+          "type": "string"
+        },
+        "closed_at": {
+          "description": "ClosedAt is when a closed pull request was closed, and Merged whether it was merged; both empty for an open one.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "conflict": {
+          "description": "Conflict is true when GitHub says the PR cannot merge cleanly into its base.",
+          "type": "boolean"
+        },
+        "created": {
+          "description": "When it was opened, for the approval order: oldest first.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "dismissed": {
+          "description": "Dismissed is true when a reviewer's last verdict was an approval that new commits dismissed.",
+          "type": "boolean"
+        },
+        "draft": {
+          "description": "Whether it is a draft: work in progress, never for approval (G-CARD-11).",
+          "type": "boolean"
+        },
+        "epics": {
+          "description": "Epics are the ids of its epic:<id> labels, in GitHub's order: the work it belongs to.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "expedite": {
+          "description": "Expedite is true for urgent work outside every epic: it carries the expedite label, or its branch ends in /expedite.",
+          "type": "boolean"
+        },
+        "features": {
+          "description": "Features are the ids of its feature:<id> labels: the feature of the epic it builds.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "gap": {
+          "description": "Gap says why Review or CI could not be read; the field then holds \"not read\".",
+          "type": "string"
+        },
+        "head_repo": {
+          "description": "HeadRepo is the repository its branch lives in: another one for a pull request from a fork.",
+          "type": "string"
+        },
+        "links": {
+          "description": "Links are the pull requests and issues its description names, as owner/repo#number; Needs those it says it needs first (\"depends on\", \"needs\", \"after\", \"blocked by\" ...).",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "merged": {
+          "description": "Whether a closed pull request was merged.",
+          "type": "boolean"
+        },
+        "needs": {
+          "description": "The pull requests it says it needs first (\"depends on\", \"after\" ...), as owner/repo#number, so the approval order puts them before it.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "number": {
+          "description": "The pull request's number in its repository.",
+          "type": "integer"
+        },
+        "repo": {
+          "description": "The repository as owner/name.",
+          "type": "string"
+        },
+        "review": {
+          "description": "approved, changes requested, no review",
+          "type": "string"
+        },
+        "size": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/github-Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Size is the files changed and lines added and removed; nil when it could not be read."
+        },
+        "title": {
+          "description": "Its title, as GitHub shows it.",
+          "type": "string"
+        },
+        "url": {
+          "description": "Its page on GitHub, so every row links to its source (Principle 4).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repo",
+        "number",
+        "title",
+        "url",
+        "author",
+        "review",
+        "ci"
+      ],
+      "type": "object"
+    },
+    "github-PRCheck": {
+      "additionalProperties": false,
+      "description": "PRCheck is one job of a pull request's CI, named as GitHub shows it on the pull request.",
+      "properties": {
+        "name": {
+          "description": "The job's name, as GitHub shows it on the pull request.",
+          "type": "string"
+        },
+        "state": {
+          "description": "passing, failing, running, queued, skipped",
+          "type": "string"
+        },
+        "url": {
+          "description": "the job's log",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "state",
+        "url"
+      ],
+      "type": "object"
+    },
+    "github-Run": {
+      "additionalProperties": false,
+      "description": "Run is the latest Actions run of a push to main; Gap says why there is none.",
+      "properties": {
+        "conclusion": {
+          "description": "success, failure, ... or the status while it runs",
+          "type": "string"
+        },
+        "gap": {
+          "description": "Why there is no run to show, such as no workflow; empty when one was read.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The run's page on GitHub.",
+          "type": "string"
+        },
+        "workflow": {
+          "description": "The workflow's name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "github-Size": {
+      "additionalProperties": false,
+      "description": "Size is how big a pull request is.",
+      "properties": {
+        "additions": {
+          "description": "Lines it adds.",
+          "type": "integer"
+        },
+        "deletions": {
+          "description": "Lines it removes.",
+          "type": "integer"
+        },
+        "files": {
+          "description": "How many files it changes.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "files",
+        "additions",
+        "deletions"
+      ],
+      "type": "object"
+    },
+    "outlaws-Branch": {
+      "additionalProperties": false,
+      "description": "Branch is a branch ahead of its repository's default branch, with no open pull request, whose name names no known feature.",
+      "properties": {
+        "ahead": {
+          "description": "commits the default branch lacks",
+          "type": "integer"
+        },
+        "base": {
+          "description": "The default branch it is ahead of.",
+          "type": "string"
+        },
+        "behind": {
+          "description": "commits of the default branch it lacks",
+          "type": "integer"
+        },
+        "err": {
+          "description": "GitHub could not compare it; it is listed, unknown",
+          "type": "string"
+        },
+        "last_commit": {
+          "description": "When its last commit was made, so an old branch shows as old.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "name": {
+          "description": "The branch's name.",
+          "type": "string"
+        },
+        "product": {
+          "description": "The product whose repository holds the branch.",
+          "type": "string"
+        },
+        "reasons": {
+          "description": "Why it is an outlaw, each in words, such as its name names no known feature.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "repo": {
+          "description": "The repository as owner/name.",
+          "type": "string"
+        },
+        "unrelated": {
+          "description": "Unrelated is a branch GitHub could not compare with the default branch: they share no history, or it was deleted after it was listed.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "Its page on GitHub.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repo",
+        "base",
+        "name",
+        "ahead",
+        "behind",
+        "url",
+        "reasons"
+      ],
+      "type": "object"
+    },
+    "outlaws-Card": {
+      "additionalProperties": false,
+      "description": "Card is a card in progress or in review, not an epic card, with no epic or no feature tag, and the epic it belongs to as far as known: its epic tag's, or its feature's.",
+      "properties": {
+        "agent": {
+          "description": "The agent that wrote it, empty when a person did (G-CARD-12).",
+          "type": "string"
+        },
+        "board": {
+          "description": "The board's folder, for `kanban --board`.",
+          "type": "string"
+        },
+        "branch": {
+          "description": "Branch is the git branch its work happens on, its pull request's head; DependsOn the ids of the cards it waits on; Order its place in its column.",
+          "type": "string"
+        },
+        "column": {
+          "description": "The column it is in, by its label.",
+          "type": "string"
+        },
+        "created": {
+          "description": "When it was made.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "created_by": {
+          "description": "CreatedBy is who made it, \"Name <email>\"; Agent the agent that wrote it, \"\" when a person did.",
+          "type": "string"
+        },
+        "depends_on": {
+          "description": "The ids of the cards it waits on, its step order.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "done": {
+          "description": "Whether it is in its board's done column.",
+          "type": "boolean"
+        },
+        "done_at": {
+          "description": "DoneAt is when it reached the done column, zero when not known; DoneColumn is its board's done column.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "done_column": {
+          "description": "Its board's done column.",
+          "type": "string"
+        },
+        "epic": {
+          "description": "The epic it belongs to as far as known: its epic tag's, or its feature's.",
+          "type": "string"
+        },
+        "features": {
+          "description": "An epic card's features in order.",
+          "items": {
+            "$ref": "#/$defs/board-Feature"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "id": {
+          "description": "The card's id on its board.",
+          "type": "string"
+        },
+        "in_progress": {
+          "description": "Whether it is being worked: in the board's In Progress or Review.",
+          "type": "boolean"
+        },
+        "key": {
+          "description": "An epic card's key, empty for another kind.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Its kind (Card, Epic, Feature ...).",
+          "type": "string"
+        },
+        "order": {
+          "description": "Its place in its column.",
+          "type": "number"
+        },
+        "page": {
+          "description": "its page in the control room",
+          "type": "string"
+        },
+        "product": {
+          "description": "The product whose board holds the card.",
+          "type": "string"
+        },
+        "reasons": {
+          "description": "Why it is an outlaw, each in words, such as no #feature:<id> tag.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "summary": {
+          "description": "Its one-line summary.",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Its tags as kanban wrote them.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "title": {
+          "description": "The card's title.",
+          "type": "string"
+        },
+        "turn": {
+          "description": "Turn is whose turn the card says it is, as kanban writes it, and Yours whether it waits for the owner (board.WaitsFor); Created when it was made, zero when not known.",
+          "type": "string"
+        },
+        "yours": {
+          "description": "Whether it waits for the owner: its turn is the owner's.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "product",
+        "board",
+        "id",
+        "title",
+        "column",
+        "page",
+        "reasons"
+      ],
+      "type": "object"
+    },
+    "outlaws-PR": {
+      "additionalProperties": false,
+      "description": "PR is an open pull request with no epic or no feature label, and the epic it belongs to as far as known: its epic label's, or its feature's.",
+      "properties": {
+        "approved_at": {
+          "description": "When its latest approval was given, empty when it has none.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "approved_by": {
+          "description": "ApprovedBy and ApprovedAt are the latest approval of a PR whose Review is approved.",
+          "type": "string"
+        },
+        "author": {
+          "description": "Who opened it, by GitHub login, so the owner's own and the machine user's work tell apart.",
+          "type": "string"
+        },
+        "base": {
+          "description": "The branch it merges into, so a stack of pull requests shows.",
+          "type": "string"
+        },
+        "branch": {
+          "description": "The branch it merges, whose name ends in its feature (G-CARD-6).",
+          "type": "string"
+        },
+        "checks": {
+          "description": "Checks are the jobs of each workflow's latest run, by name; nil when they could not be read.",
+          "items": {
+            "$ref": "#/$defs/github-PRCheck"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "ci": {
+          "description": "passing, failing, running, no checks, not read",
+          "type": "string"
+        },
+        "closed_at": {
+          "description": "ClosedAt is when a closed pull request was closed, and Merged whether it was merged; both empty for an open one.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "conflict": {
+          "description": "Conflict is true when GitHub says the PR cannot merge cleanly into its base.",
+          "type": "boolean"
+        },
+        "created": {
+          "description": "When it was opened, for the approval order: oldest first.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "dismissed": {
+          "description": "Dismissed is true when a reviewer's last verdict was an approval that new commits dismissed.",
+          "type": "boolean"
+        },
+        "draft": {
+          "description": "Whether it is a draft: work in progress, never for approval (G-CARD-11).",
+          "type": "boolean"
+        },
+        "epic": {
+          "description": "The epic it belongs to as far as known: its epic label's, or its feature's.",
+          "type": "string"
+        },
+        "epics": {
+          "description": "Epics are the ids of its epic:<id> labels, in GitHub's order: the work it belongs to.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "expedite": {
+          "description": "Expedite is true for urgent work outside every epic: it carries the expedite label, or its branch ends in /expedite.",
+          "type": "boolean"
+        },
+        "features": {
+          "description": "Features are the ids of its feature:<id> labels: the feature of the epic it builds.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "gap": {
+          "description": "Gap says why Review or CI could not be read; the field then holds \"not read\".",
+          "type": "string"
+        },
+        "head_repo": {
+          "description": "HeadRepo is the repository its branch lives in: another one for a pull request from a fork.",
+          "type": "string"
+        },
+        "links": {
+          "description": "Links are the pull requests and issues its description names, as owner/repo#number; Needs those it says it needs first (\"depends on\", \"needs\", \"after\", \"blocked by\" ...).",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "merged": {
+          "description": "Whether a closed pull request was merged.",
+          "type": "boolean"
+        },
+        "needs": {
+          "description": "The pull requests it says it needs first (\"depends on\", \"after\" ...), as owner/repo#number, so the approval order puts them before it.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "number": {
+          "description": "The pull request's number in its repository.",
+          "type": "integer"
+        },
+        "product": {
+          "description": "The product whose repository holds it.",
+          "type": "string"
+        },
+        "reasons": {
+          "description": "Why it is an outlaw, each in words, such as no feature:<id> label.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "repo": {
+          "description": "The repository as owner/name.",
+          "type": "string"
+        },
+        "review": {
+          "description": "approved, changes requested, no review",
+          "type": "string"
+        },
+        "size": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/github-Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Size is the files changed and lines added and removed; nil when it could not be read."
+        },
+        "title": {
+          "description": "Its title, as GitHub shows it.",
+          "type": "string"
+        },
+        "url": {
+          "description": "Its page on GitHub, so every row links to its source (Principle 4).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repo",
+        "number",
+        "title",
+        "url",
+        "author",
+        "review",
+        "ci",
+        "reasons"
+      ],
+      "type": "object"
+    },
+    "outlaws-Problem": {
+      "additionalProperties": false,
+      "description": "Problem is a problem the Epics page flags: its text and the pull request or card it is about (URL), the product that is of when known, and where the Epics page shows it (Page).",
+      "properties": {
+        "epic": {
+          "description": "The epic it is under.",
+          "type": "string"
+        },
+        "feature": {
+          "description": "The feature it is under.",
+          "type": "string"
+        },
+        "page": {
+          "description": "Where it shows on the Epics page, so the owner finds it there.",
+          "type": "string"
+        },
+        "product": {
+          "description": "The product it belongs to.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "the pull request's repository, said when no product holds it",
+          "type": "string"
+        },
+        "text": {
+          "description": "What is wrong, in words.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The pull request or card it is about, on its own page.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "page"
+      ],
+      "type": "object"
+    },
+    "outlaws-Query": {
+      "additionalProperties": false,
+      "description": "Query is what the address or the flags ask for: one kind, one product and one epic, each \"\" for all. A branch belongs to no epic, so an epic leaves out every branch.",
+      "properties": {
+        "epic": {
+          "description": "The one epic kept; empty keeps all.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "The one kind kept (pull requests, branches, cards, problems); empty keeps all.",
+          "type": "string"
+        },
+        "product": {
+          "description": "The one product kept; empty keeps all.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "outlaws-Report": {
+      "additionalProperties": false,
+      "description": "Report is every outlaw and problem, what could not be read, and the products they are of.",
+      "properties": {
+        "branches": {
+          "description": "The branches ahead of their default branch, with no open pull request, whose name names no known feature.",
+          "items": {
+            "$ref": "#/$defs/outlaws-Branch"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "cards": {
+          "description": "The cards in progress or in review with no epic or no feature tag.",
+          "items": {
+            "$ref": "#/$defs/outlaws-Card"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "connected": {
+          "description": "Connected is false when GitHub is not connected: no pull request, branch or label is read then.",
+          "type": "boolean"
+        },
+        "err": {
+          "description": "why no repository's labels could be read",
+          "type": "string"
+        },
+        "gaps": {
+          "description": "sources that could not be read, or only in part",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "org": {
+          "description": "The org the repositories are in.",
+          "type": "string"
+        },
+        "problems": {
+          "description": "What the Epics page flags, each with where it shows there.",
+          "items": {
+            "$ref": "#/$defs/outlaws-Problem"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "products": {
+          "description": "every product read, the ones a filter may name",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "prs": {
+          "description": "The open pull requests with no epic or no feature label.",
+          "items": {
+            "$ref": "#/$defs/outlaws-PR"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "prs_gap": {
+          "description": "PRsGap is why no open pull request could be read: then neither are the outlaw pull requests and branches.",
+          "type": "string"
+        },
+        "query": {
+          "$ref": "#/$defs/outlaws-Query",
+          "description": "the filter this report was cut to"
+        },
+        "tags_cut": {
+          "description": "TagsCut are the products whose board shows kanban cut the cards' tags after their colon: then no card's epic: or feature: tag is read, and every card counts as having no epic and no feature.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "taken": {
+          "description": "When the work was read.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "taken",
+        "org",
+        "connected",
+        "prs",
+        "branches",
+        "cards",
+        "problems",
+        "products"
+      ],
+      "type": "object"
+    },
+    "snapshot-Board": {
+      "additionalProperties": false,
+      "description": "Board is a product board's card counts per column.",
+      "properties": {
+        "columns": {
+          "description": "Each column with its card count, in the board's order.",
+          "items": {
+            "$ref": "#/$defs/board-Column"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "err": {
+          "description": "a read that failed",
+          "type": "string"
+        },
+        "gap": {
+          "description": "nothing to read: no repo, no checkout, no board",
+          "type": "string"
+        },
+        "open": {
+          "description": "cards neither done nor in review",
+          "type": "integer"
+        },
+        "path": {
+          "description": "The board's folder, for `kanban --board`.",
+          "type": "string"
+        },
+        "source": {
+          "description": "The command that read it, so a person can read the same by hand (Principle 4).",
+          "type": "string"
+        },
+        "waiting": {
+          "description": "cards in review, waiting for the owner's acceptance",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "open",
+        "waiting"
+      ],
+      "type": "object"
+    },
+    "snapshot-Card": {
+      "additionalProperties": false,
+      "description": "Card is a card on a board, with the command that shows it.",
+      "properties": {
+        "board": {
+          "description": "The board's folder.",
+          "type": "string"
+        },
+        "column": {
+          "description": "The column it is in, by its label.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The card's id on its board.",
+          "type": "string"
+        },
+        "product": {
+          "description": "The product whose board holds it.",
+          "type": "string"
+        },
+        "source": {
+          "description": "The command that shows it in full, for a person to run.",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Its tags as kanban wrote them.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "title": {
+          "description": "The card's title.",
+          "type": "string"
+        },
+        "turn": {
+          "description": "Whose turn the card says it is.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product",
+        "board",
+        "id",
+        "title",
+        "column",
+        "source"
+      ],
+      "type": "object"
+    },
+    "snapshot-Checkout": {
+      "additionalProperties": false,
+      "description": "Checkout is the product's local checkout.",
+      "properties": {
+        "err": {
+          "description": "a read that failed",
+          "type": "string"
+        },
+        "gap": {
+          "description": "nothing to read: no repo, no checkout",
+          "type": "string"
+        },
+        "others": {
+          "description": "more checkouts of the same repo",
+          "type": "integer"
+        },
+        "path": {
+          "description": "The checkout's folder, found under the configured roots.",
+          "type": "string"
+        },
+        "source": {
+          "description": "The command that read it, so a person can read the same by hand (Principle 4).",
+          "type": "string"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/checkout-Status"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Its branch and how far it is from its upstream; null when it was not read."
+        }
+      },
+      "type": "object"
+    },
+    "snapshot-Focus": {
+      "additionalProperties": false,
+      "description": "Focus is the focused epic as focusOf finds it: its key, its title, and where its card is.",
+      "properties": {
+        "board": {
+          "description": "That board's folder.",
+          "type": "string"
+        },
+        "card": {
+          "description": "Its card's id.",
+          "type": "string"
+        },
+        "key": {
+          "description": "The focused epic's key.",
+          "type": "string"
+        },
+        "product": {
+          "description": "The product whose board holds its card.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Its card's title.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "title",
+        "product",
+        "board",
+        "card"
+      ],
+      "type": "object"
+    },
+    "snapshot-Product": {
+      "additionalProperties": false,
+      "description": "Product is one row: a product by its ID and where each of its parts stands.",
+      "properties": {
+        "board": {
+          "$ref": "#/$defs/snapshot-Board",
+          "description": "Its board's card counts per column."
+        },
+        "checkout": {
+          "$ref": "#/$defs/snapshot-Checkout",
+          "description": "Its local checkout and its git status."
+        },
+        "ci": {
+          "$ref": "#/$defs/github-Run",
+          "description": "The latest Actions run of a push to its main branch."
+        },
+        "designs": {
+          "$ref": "#/$defs/design-Root",
+          "description": "Its designs, through e-designer."
+        },
+        "id": {
+          "description": "The product's ID, which never changes (G-PLAN-12).",
+          "type": "string"
+        },
+        "installed": {
+          "description": "The version installed on this machine, as hubman found it.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "hubman's kind for it, \"planned\" for a product with no release yet, or not in the catalog.",
+          "type": "string"
+        },
+        "latest": {
+          "description": "The latest release, when hubman could look it up.",
+          "type": "string"
+        },
+        "release": {
+          "$ref": "#/$defs/snapshot-Release",
+          "description": "Its latest release and where it was read."
+        },
+        "repo": {
+          "description": "Its repository as owner/name; empty when nobody says.",
+          "type": "string"
+        },
+        "repo_url": {
+          "description": "Its repository's page on GitHub.",
+          "type": "string"
+        },
+        "status": {
+          "description": "hubman's word for it here",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "release",
+        "ci",
+        "board",
+        "designs",
+        "checkout"
+      ],
+      "type": "object"
+    },
+    "snapshot-Release": {
+      "additionalProperties": false,
+      "description": "Release is the latest release and where it was read.",
+      "properties": {
+        "from": {
+          "description": "GitHub, or git tags of the checkout",
+          "type": "string"
+        },
+        "gap": {
+          "description": "Why there is no release to show, such as no tags; empty when one was read.",
+          "type": "string"
+        },
+        "source": {
+          "description": "Where it was read: its GitHub page, or the git command that listed the tags.",
+          "type": "string"
+        },
+        "tag": {
+          "description": "The release's tag, vX.Y.Z (V-1).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "snapshot-Snapshot": {
+      "additionalProperties": false,
+      "description": "Snapshot is everything the page and `status` show.",
+      "properties": {
+        "catalog_gap": {
+          "description": "why hubman's catalog could not be read",
+          "type": "string"
+        },
+        "focus": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/snapshot-Focus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "the epic the owner works on first, read with the boards; null when none"
+        },
+        "gaps": {
+          "description": "sources that could not be read at all",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "github": {
+          "$ref": "#/$defs/github-Connection",
+          "description": "Whether GitHub is connected, and with which token."
+        },
+        "org": {
+          "description": "The org the products are in, from the config.",
+          "type": "string"
+        },
+        "owner": {
+          "description": "The owner's name as a card's turn says it, from the config: the cards that wait for them.",
+          "type": "string"
+        },
+        "products": {
+          "description": "Every product of hubman's catalog and the config, in the catalog's order, and where each part of it stands.",
+          "items": {
+            "$ref": "#/$defs/snapshot-Product"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "taken": {
+          "description": "When the snapshot was made from the parts the connectors read.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "waiting": {
+          "$ref": "#/$defs/snapshot-Waiting",
+          "description": "What waits for the owner, most pressing first."
+        }
+      },
+      "required": [
+        "taken",
+        "org",
+        "owner",
+        "github",
+        "waiting",
+        "products",
+        "focus"
+      ],
+      "type": "object"
+    },
+    "snapshot-Waiting": {
+      "additionalProperties": false,
+      "description": "Waiting is what waits for the owner, most pressing first.",
+      "properties": {
+        "closed": {
+          "description": "Closed is the org's pull requests closed lately, the last closed first, read only when Need.Closed asks; ClosedGap says why they could not be read.",
+          "items": {
+            "$ref": "#/$defs/github-PR"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "closed_gap": {
+          "description": "Why the closed pull requests could not be read; empty when they were or were not asked for.",
+          "type": "string"
+        },
+        "in_review": {
+          "description": "cards in a Review column wait for the owner's acceptance",
+          "items": {
+            "$ref": "#/$defs/snapshot-Card"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "prs": {
+          "description": "The open pull requests, in approval order.",
+          "items": {
+            "$ref": "#/$defs/github-PR"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "prs_gap": {
+          "description": "Why no open pull request could be read; empty when they were.",
+          "type": "string"
+        },
+        "repo_gaps": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "RepoGaps is why one repo's pull requests could not be listed, by repo; a repo missing from it was read.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "your_turn": {
+          "description": "open cards whose turn is the owner's, Review left out",
+          "items": {
+            "$ref": "#/$defs/snapshot-Card"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "prs",
+        "in_review",
+        "your_turn"
+      ],
+      "type": "object"
+    },
+    "work-Facet": {
+      "additionalProperties": false,
+      "description": "Facet is one column's filter: its key and label, and once a List is built, its values.",
+      "properties": {
+        "key": {
+          "description": "The filter's key, as the address and the flags name it.",
+          "type": "string"
+        },
+        "label": {
+          "description": "Its label, for people.",
+          "type": "string"
+        },
+        "on": {
+          "description": "values kept",
+          "type": "integer"
+        },
+        "options": {
+          "description": "Each value it can keep, with how many items it would show.",
+          "items": {
+            "$ref": "#/$defs/work-Option"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "label"
+      ],
+      "type": "object"
+    },
+    "work-List": {
+      "additionalProperties": false,
+      "description": "List is the report cut to a query: the rows it keeps in its order, how many of how many, the filters with their counts, and what could not be read.",
+      "properties": {
+        "connected": {
+          "description": "Whether GitHub is connected; when it is not, no pull request, branch or label is read.",
+          "type": "boolean"
+        },
+        "facets": {
+          "description": "Each filter, with its values and their counts.",
+          "items": {
+            "$ref": "#/$defs/work-Facet"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "gaps": {
+          "description": "Sources that could not be read, or only in part: never counted as nothing.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "org": {
+          "description": "The org the repositories are in.",
+          "type": "string"
+        },
+        "products": {
+          "description": "Every product read, the ones a filter may name.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "query": {
+          "$ref": "#/$defs/work-Query",
+          "description": "The query this list was cut to."
+        },
+        "rows": {
+          "description": "The items the query keeps, in its order.",
+          "items": {
+            "$ref": "#/$defs/work-Row"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "shown": {
+          "description": "rows the query keeps",
+          "type": "integer"
+        },
+        "tags_cut": {
+          "description": "The products whose board shows kanban cut the cards' tags after their colon: their cards count as having no epic and no feature.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "taken": {
+          "description": "When the work was read.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "total": {
+          "description": "every item",
+          "type": "integer"
+        },
+        "untimed": {
+          "description": "items the time window left out because when they changed is not known",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "taken",
+        "org",
+        "connected",
+        "query",
+        "shown",
+        "total",
+        "rows",
+        "facets",
+        "products"
+      ],
+      "type": "object"
+    },
+    "work-Option": {
+      "additionalProperties": false,
+      "description": "Option is one value of a filter, with how many items it would show with the other filters kept.",
+      "properties": {
+        "label": {
+          "description": "Its label, for people.",
+          "type": "string"
+        },
+        "n": {
+          "description": "How many items it would show with the other filters as they are.",
+          "type": "integer"
+        },
+        "on": {
+          "description": "Whether the query keeps it now.",
+          "type": "boolean"
+        },
+        "value": {
+          "description": "The value, as the address and the flags take it.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "label",
+        "n"
+      ],
+      "type": "object"
+    },
+    "work-Query": {
+      "additionalProperties": false,
+      "description": "Query is what the address or the flags ask of the list: words to search for, the values each filter keeps (several at once; none keeps all), a time window, and a sort.",
+      "properties": {
+        "epics": {
+          "description": "The epics kept; expedite for the expedite lane, none for no epic.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "features": {
+          "description": "The features kept; none for no feature.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "from": {
+          "description": "YYYY-MM-DD, with When custom",
+          "type": "string"
+        },
+        "kinds": {
+          "description": "The kinds kept: pull requests, branches, cards.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "products": {
+          "description": "The products kept.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "q": {
+          "description": "Words every kept item holds in its name, product, epic, feature or branch.",
+          "type": "string"
+        },
+        "sort": {
+          "description": "a column's key, \"-key\" for descending",
+          "type": "string"
+        },
+        "states": {
+          "description": "The states kept.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "to": {
+          "description": "The last day kept, YYYY-MM-DD, with when custom.",
+          "type": "string"
+        },
+        "turns": {
+          "description": "Whose turns are kept.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "when": {
+          "description": "The time window kept: today, 24h, 7d, 30d or custom.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "work-Row": {
+      "additionalProperties": false,
+      "description": "Row is one item as the list shows it, as of when it was read.",
+      "properties": {
+        "at": {
+          "description": "when it last changed, as far as known",
+          "format": "date-time",
+          "type": "string"
+        },
+        "at_what": {
+          "description": "what At is: opened, approved, last commit, created",
+          "type": "string"
+        },
+        "branch": {
+          "description": "Its branch: a pull request's, a branch's own name, a card's branch field.",
+          "type": "string"
+        },
+        "checks": {
+          "description": "and each of its checks",
+          "items": {
+            "$ref": "#/$defs/github-PRCheck"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "ci": {
+          "description": "an open pull request's CI",
+          "type": "string"
+        },
+        "epics": {
+          "description": "Epics and Features are its epics' and features' ids: a pull request's labels, a branch's feature named by its name and that feature's epic, a card's tags. Empty is none.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "expedite": {
+          "description": "Expedite is true for work in the expedite lane: a pull request labelled expedite, a card tagged #expedite, a branch whose name ends in /expedite.",
+          "type": "boolean"
+        },
+        "features": {
+          "description": "Its features: a pull request's feature labels, a branch's feature, a card's feature tags.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "kind": {
+          "description": "The item's kind: a pull request, a branch or a card.",
+          "type": "string"
+        },
+        "name": {
+          "description": "what the list shows, linked",
+          "type": "string"
+        },
+        "product": {
+          "description": "The product it belongs to.",
+          "type": "string"
+        },
+        "ref": {
+          "description": "owner/repo#N, owner/repo:branch, product/card-id",
+          "type": "string"
+        },
+        "repo": {
+          "description": "The repository it is in, as owner/name.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Its state in words: a pull request's review and CI, \"no PR\" for a branch, a card's column.",
+          "type": "string"
+        },
+        "sub": {
+          "description": "A second line under its name, such as a pull request's draft mark.",
+          "type": "string"
+        },
+        "turn": {
+          "description": "whose move, grouped (TurnOf)",
+          "type": "string"
+        },
+        "url": {
+          "description": "GitHub for a pull request or branch, the card's page for a card",
+          "type": "string"
+        },
+        "when": {
+          "description": "\"2h ago\"",
+          "type": "string"
+        },
+        "when_title": {
+          "description": "\"opened Fri 30 Oct 2026 09:00\"",
+          "type": "string"
+        },
+        "whose": {
+          "description": "whose move, in the source's words",
+          "type": "string"
+        },
+        "whose_note": {
+          "description": "the source's words, when they say more than Turn",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "ref",
+        "name",
+        "url",
+        "epics",
+        "features",
+        "state",
+        "whose",
+        "turn"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -382,7 +382,7 @@
                     "$ref": "defs.schema.json#/$defs/styleProperties"
                   },
                   "source": {
-                    "description": "Where the one in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                    "description": "Where the one in use came from: built-in (e-designer's own) or design (the design's definitions.yml); a design's entry with a built-in name is design.",
                     "enum": [
                       "built-in",
                       "design"
@@ -417,7 +417,7 @@
                     "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
                   },
                   "source": {
-                    "description": "Where the one in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                    "description": "Where the one in use came from: built-in (e-designer's own) or design (the design's definitions.yml); a design's entry with a built-in name is design.",
                     "enum": [
                       "built-in",
                       "design"
@@ -464,7 +464,7 @@
                     "$ref": "defs.schema.json#/$defs/ruleThen"
                   },
                   "source": {
-                    "description": "Where the one in use came from: built-in, e-designer's own, or design, the design's definitions.yml.",
+                    "description": "Where the one in use came from: built-in (e-designer's own) or design (the design's definitions.yml); a design's entry with a built-in name is design.",
                     "enum": [
                       "built-in",
                       "design"

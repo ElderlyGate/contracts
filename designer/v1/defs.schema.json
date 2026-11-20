@@ -1571,7 +1571,7 @@
         "mark": {
           "description": "One character drawn beside the thing, such as a tick; empty draws none.",
           "type": "string",
-          "pattern": "^.?$"
+          "maxLength": 1
         },
         "badge": {
           "description": "One letter on the thing's badge, such as D for decided.",
@@ -1900,13 +1900,8 @@
       "additionalProperties": false
     },
     "rule": {
-      "description": "One rule, the only link between what a thing is and how it looks; rules are read top to bottom and the last to say a property wins. A new id writes all three parts; an id already used (built-in or earlier) replaces only the parts it writes, each part whole.",
+      "description": "One rule, the only link between what a thing is and how it looks; rules are read top to bottom and the last to say a property wins. A new id writes all three parts; an id already used (built-in or earlier) replaces only the parts it writes, each part whole. Whether for goes with an event is checked on the rules in use, after every layer, since an override may write then alone.",
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/$defs/ruleForEvent"
-        }
-      ],
       "properties": {
         "id": {
           "description": "The fixed name of the rule, in kebab case, so a later layer can replace or switch it off.",

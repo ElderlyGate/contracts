@@ -218,80 +218,12 @@
                   }
                 },
                 "linkLabels": {
-                  "description": "The link-label words the vocabulary declares, as written, in order; a line whose label is one of them is declared, whether or not spec.board.links gives it a style.",
+                  "description": "The link-label words the vocabulary declares, as written, in order.",
                   "type": "array",
                   "items": {
                     "description": "One word.",
                     "type": "string",
                     "minLength": 1
-                  }
-                },
-                "borderStyles": {
-                  "description": "The border-style words the vocabulary declares, as written, in order: the border styles a component or a look may ask for, so a reader draws a design's own word rather than keeping a list.",
-                  "type": "array",
-                  "items": {
-                    "description": "One border style, a CSS border-style word.",
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
-                "lineStyles": {
-                  "description": "The line-style words the vocabulary declares, as written, in order: the styles a line may ask for, so a reader offers and draws a design's own word rather than keeping a list.",
-                  "type": "array",
-                  "items": {
-                    "description": "One line style, a CSS border-style word.",
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
-                "statuses": {
-                  "description": "The status words the vocabulary declares (its status list, the only list a status is read from), in order, each in lower case as a component's status is compared and each once, with how each draws, so a reader neither finds the list nor judges a status itself.",
-                  "type": "array",
-                  "items": {
-                    "description": "One status.",
-                    "type": "object",
-                    "properties": {
-                      "value": {
-                        "description": "The status word, in lower case.",
-                        "type": "string",
-                        "minLength": 1,
-                        "pattern": "^[^A-Z]+$"
-                      },
-                      "settled": {
-                        "description": "True when the vocabulary marks it settled: a thing with this status needs no more work, so it closes a finding and cannot be in the focus.",
-                        "type": "boolean"
-                      },
-                      "mark": {
-                        "description": "The mark drawn beside a component with this status; an empty mark is drawn as none. Given only when the vocabulary gives one; a status without one has no treatment.",
-                        "type": "string"
-                      },
-                      "badge": {
-                        "description": "The letter a component's status badge shows: the vocabulary's, else the status's first letter in upper case. Always given.",
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "color": {
-                        "description": "The colour the mark draws in, a CSS colour or a theme name, as the vocabulary gives it. Given only when it gives one.",
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "recede": {
-                        "description": "How a component with this status steps back, such as aside or gone, as the vocabulary gives it. Given only when it gives one.",
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "note": {
-                        "description": "What the status means, in words for people, as the vocabulary gives it. Given only when it gives one.",
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    },
-                    "required": [
-                      "value",
-                      "settled",
-                      "badge"
-                    ],
-                    "additionalProperties": false
                   }
                 },
                 "hexagon": {
@@ -359,9 +291,6 @@
                 "traverses",
                 "annotates",
                 "linkLabels",
-                "borderStyles",
-                "lineStyles",
-                "statuses",
                 "hexagon",
                 "notACall"
               ],

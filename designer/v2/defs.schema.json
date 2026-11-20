@@ -2147,7 +2147,7 @@
                     "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
                   },
                   "styles": {
-                    "description": "The styles the rule brought, as its then wrote them.",
+                    "description": "The styles the rule brought, as a list: a lone name or map in its then is one item.",
                     "$ref": "#/$defs/elementStyles"
                   }
                 },

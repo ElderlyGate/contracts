@@ -23,7 +23,7 @@
           "minLength": 1
         },
         "data": {
-          "description": "The part that moved and its fingerprint now.",
+          "description": "The part that moved and its fingerprint now, and the ids the write changed.",
           "allOf": [
             {
               "$ref": "defs.schema.json#/$defs/partChanged"
@@ -34,7 +34,10 @@
               "description": "Always board, the part this event names.",
               "const": "board"
             }
-          }
+          },
+          "required": [
+            "changed"
+          ]
         }
       }
     }

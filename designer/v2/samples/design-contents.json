@@ -107,16 +107,6 @@
                     }
                   },
                   "broken": "just words"
-                },
-                "links": {
-                  "calls": {
-                    "color": "#7d8794",
-                    "dashed": false
-                  },
-                  "related": {
-                    "color": "#a1668a",
-                    "dashed": true
-                  }
                 }
               },
               "implementation": {
@@ -195,16 +185,6 @@
     "broken": [],
     "board": {
       "section": {
-        "links": {
-          "calls": {
-            "color": "#7d8794",
-            "dashed": false
-          },
-          "related": {
-            "color": "#a1668a",
-            "dashed": true
-          }
-        },
         "views": {
           "structure": {
             "title": "Parts",

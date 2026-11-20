@@ -159,8 +159,11 @@ func UpgradeDesigner(v1 []byte) ([]byte, error) {
 	doc["apiVersion"] = designerV2
 	doc["source"].(map[string]any)["contract"] = "v2"
 	doc["data"] = swapForm(doc["data"], designFormV2, designFormV3)
-	if head.Kind == "Config" {
+	switch head.Kind {
+	case "Config":
 		upConfig(doc["data"].(map[string]any))
+	case "Board":
+		upBoard(doc["data"].(map[string]any))
 	}
 	return encodeChecked(doc, DesignerSchema("v2", head.Kind))
 }
@@ -173,6 +176,13 @@ func upConfig(data map[string]any) {
 	data["styles"] = map[string]any{}
 	data["colors"] = map[string]any{}
 	data["rules"] = []any{}
+}
+
+// upBoard gives what a v1 Board never said (each thing's style, the colours, the groups' members) as empty, never guessed.
+func upBoard(data map[string]any) {
+	data["styles"] = map[string]any{}
+	data["colors"] = map[string]any{}
+	data["groupMembers"] = map[string]any{}
 }
 
 // statusesOf is each status of the list the property at state.status names, in lower case and once, with what it means; empty when the definitions name none.

@@ -246,18 +246,6 @@
               },
               "spec": {
                 "description": "**A worked example, small enough to read in one sitting.**\n\nThree blocks, one flow, one saved request and one suite — a person\ndrops a parcel into a locker and the ledger learns about it.\n\nNothing here is a real system. What is real is the *shape*: every file in\nthis design is byte-for-byte what the emitter renders, which is what makes\nthe directory usable as a fixture as well as an example.\n",
-                "board": {
-                  "links": {
-                    "calls": {
-                      "color": "#7d8794",
-                      "dashed": false
-                    },
-                    "related": {
-                      "color": "#a1668a",
-                      "dashed": true
-                    }
-                  }
-                },
                 "implementation": {
                   "root": "."
                 }
@@ -697,18 +685,7 @@
       },
       "broken": [],
       "board": {
-        "section": {
-          "links": {
-            "calls": {
-              "color": "#7d8794",
-              "dashed": false
-            },
-            "related": {
-              "color": "#a1668a",
-              "dashed": true
-            }
-          }
-        },
+        "section": {},
         "problems": []
       },
       "focus": {
@@ -756,6 +733,407 @@
       "context": "context",
       "runtime": "runtime",
       "deployment": "deployment"
+    },
+    "styles": {
+      "structure": {
+        "GRP-CORE": {
+          "style": {
+            "fill": "bg",
+            "border-color": "line",
+            "text-color": "ink",
+            "border-style": "solid",
+            "border-width": "normal",
+            "fade": "none"
+          },
+          "applied": [
+            {
+              "rule": "groups-quiet",
+              "styles": [
+                "quiet"
+              ]
+            }
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            }
+          ]
+        },
+        "GRP-EDGE": {
+          "style": {
+            "fill": "lagoon-soft",
+            "border-color": "lagoon",
+            "text-color": "ink",
+            "border-style": "solid",
+            "border-width": "thick",
+            "fade": "none"
+          },
+          "applied": [
+            {
+              "rule": "groups-quiet",
+              "styles": [
+                "quiet"
+              ]
+            },
+            {
+              "rule": "edge-in-lagoon",
+              "styles": [
+                "quiet",
+                "lagoon"
+              ]
+            }
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            }
+          ]
+        },
+        "CMP-KIOSK": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "sec",
+            "border-style": "solid",
+            "border-width": "normal",
+            "fade": "none",
+            "mark": "✓",
+            "badge": "D"
+          },
+          "applied": [
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            },
+            {
+              "rule": "decided-is-ticked",
+              "styles": [
+                "ticked"
+              ]
+            }
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-LOCKS": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "border-style": "solid",
+            "border-width": "normal",
+            "fade": "none"
+          },
+          "applied": [
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            }
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-LEDGER": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "border-style": "dashed",
+            "border-width": "normal",
+            "fade": "aside"
+          },
+          "applied": [
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            },
+            {
+              "own": true,
+              "styles": [
+                {
+                  "border-style": "dashed",
+                  "fade": "aside"
+                }
+              ]
+            }
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-KIOSK--calls--CMP-LOCKS": {
+          "style": {
+            "line-color": "ink",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none"
+          },
+          "applied": [
+            {
+              "rule": "lines-plain",
+              "styles": [
+                "plain-line"
+              ]
+            }
+          ],
+          "rules": []
+        },
+        "CMP-LOCKS--calls--CMP-LEDGER": {
+          "style": {
+            "line-color": "ink",
+            "line-width": "normal",
+            "line-style": "solid",
+            "fade": "none",
+            "text": "writes"
+          },
+          "applied": [
+            {
+              "rule": "lines-plain",
+              "styles": [
+                "plain-line"
+              ]
+            },
+            {
+              "own": true,
+              "styles": [
+                {
+                  "text": "writes"
+                }
+              ]
+            }
+          ],
+          "rules": []
+        },
+        "CMP-KIOSK--related--CMP-LEDGER": {
+          "style": {
+            "line-color": "muted",
+            "line-width": "normal",
+            "line-style": "dashed",
+            "fade": "none"
+          },
+          "applied": [
+            {
+              "rule": "lines-plain",
+              "styles": [
+                "plain-line"
+              ]
+            },
+            {
+              "rule": "related-is-dashed",
+              "styles": [
+                {
+                  "line-style": "dashed",
+                  "line-color": "muted"
+                }
+              ]
+            }
+          ],
+          "rules": []
+        }
+      },
+      "context": {},
+      "runtime": {
+        "CMP-KIOSK": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "sec",
+            "border-style": "solid",
+            "border-width": "normal",
+            "fade": "none",
+            "mark": "✓",
+            "badge": "D"
+          },
+          "applied": [
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            },
+            {
+              "rule": "decided-is-ticked",
+              "styles": [
+                "ticked"
+              ]
+            }
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        },
+        "CMP-LOCKS": {
+          "style": {
+            "fill": "panel",
+            "border-color": "ink",
+            "text-color": "ink",
+            "border-style": "solid",
+            "border-width": "normal",
+            "fade": "none"
+          },
+          "applied": [
+            {
+              "rule": "blocks-plain",
+              "styles": [
+                "plain"
+              ]
+            }
+          ],
+          "rules": [
+            {
+              "rule": "selected-stands-out",
+              "action": "selected",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              }
+            },
+            {
+              "rule": "just-changed",
+              "event": "designer.board.changed",
+              "style": {
+                "border-color": "accent",
+                "border-width": "thick"
+              },
+              "for": "3s",
+              "waits": false
+            }
+          ]
+        }
+      },
+      "deployment": {}
+    },
+    "colors": {
+      "ink": {
+        "light": "#1b2430",
+        "dark": "#e8ecf2"
+      },
+      "lagoon": {
+        "light": "#11756f",
+        "dark": "#5fd3c8"
+      },
+      "lagoon-soft": {
+        "light": "#dff4f2",
+        "dark": "#123533"
+      }
+    },
+    "groupMembers": {
+      "structure": {
+        "": {
+          "GRP-CORE": [
+            "CMP-LOCKS",
+            "CMP-LEDGER",
+            "CMP-INTERIOR-COMMENT"
+          ],
+          "GRP-EDGE": [
+            "CMP-KIOSK"
+          ]
+        },
+        "drop-a-parcel": {
+          "GRP-CORE": [
+            "CMP-LOCKS",
+            "CMP-LEDGER"
+          ],
+          "GRP-EDGE": [
+            "CMP-KIOSK"
+          ]
+        }
+      },
+      "context": {
+        "": {}
+      },
+      "runtime": {
+        "": {}
+      },
+      "deployment": {
+        "": {}
+      }
     },
     "flows": [
       {
@@ -948,7 +1326,13 @@
       }
     },
     "refused": [],
-    "problems": []
+    "problems": [
+      {
+        "code": "matches_nothing",
+        "at": "definitions.yml: spec.rules.later-is-planned",
+        "says": "later-is-planned is about blocks of release beta, and no block of this design is in it"
+      }
+    ]
   },
   "errors": []
 }

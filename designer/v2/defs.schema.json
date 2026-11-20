@@ -885,12 +885,12 @@
       "type": "object",
       "properties": {
         "code": {
-          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until nw-designer project migrate moves it; group_size_left: a Group file still holds a size, which only layout.yml holds now, and nw-designer project migrate takes it out; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only nw-designer project migrate reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file. undeclared_style: a rule or an element names a style nothing declares, so it is drawn without it; style_field_unread: a style says a property or a value the board does not draw, so the style is used without it; rule_field_unread: a rule writes a part or a condition that cannot be read, so the rule is used without it; undeclared_<thing>: a rule names a kind, group, view, status, label, severity or release the design does not have (such as undeclared_status), so that condition matches nothing; old_style_field: a design/v3 file still writes a look the way design/v2 did (a look, border-style or line-style list, a status mark, color, recede or badge, spec.board.links, an element's ui-design look, background, border, borderStyle, color or style); it is not read, and the problem says its new home, as nw-designer project migrate would have moved it.",
+          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until nw-designer project migrate moves it; group_size_left: a Group file still holds a size, which only layout.yml holds now, and nw-designer project migrate takes it out; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only nw-designer project migrate reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file. undeclared_style: a rule or an element names a style nothing declares, so it is drawn without it; style_field_unread: a style says a property or a value the board does not draw, so the style is used without it; rule_field_unread: a rule writes a part or a condition that cannot be read, so the rule is used without it; undeclared_<thing>: a rule names a kind, group, view, status, label, severity or release the design does not have (such as undeclared_status), so that condition matches nothing; old_style_field: a design/v3 file still writes a look the way design/v2 did (a look, border-style or line-style list, a status mark, color, recede or badge, spec.board.links, an element's ui-design look, background, border, borderStyle, color or style); it is not read, and the problem says its new home, as nw-designer project migrate would have moved it. matches_nothing: a rule names only values the design has, yet nothing in it has them all, so the rule draws nothing (a rule switched off with then: {} is not one); undeclared_<thing> is for a value the design does not have at all.",
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$"
         },
         "at": {
-          "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.look.",
+          "description": "Where: the file relative to the design, then the path in it, such as block/CMP-KIOSK.yml: spec.ui-design.styles.",
           "type": "string",
           "minLength": 1
         },
@@ -1360,6 +1360,16 @@
         "fingerprint": {
           "description": "The part's fingerprint now, as the revision gives it, so a reader that already read this one need not fetch it again.",
           "$ref": "#/$defs/fingerprint"
+        },
+        "changed": {
+          "description": "The ids a write changed in this part (blocks, groups, lines, findings, or boxes moved on the layout), so a rule about an event reaches just those. Given for the board and layout parts; empty when the part moved for another reason, such as the definitions or the machine config.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "description": "One id, as the design writes it.",
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
       "required": [
@@ -2028,6 +2038,272 @@
           }
         ]
       }
+    },
+    "styleOverlay": {
+      "description": "A rule whose when holds only while something happens on the board (an action) or after an event, given as what it adds over the final style, so the page lays it on while that holds and takes it off after.",
+      "type": "object",
+      "properties": {
+        "rule": {
+          "description": "The id of the rule that adds it.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+        },
+        "action": {
+          "description": "The action that lays it on, for a rule about an action.",
+          "$ref": "#/$defs/action"
+        },
+        "event": {
+          "description": "The event that lays it on, for a rule about an event; it reaches this thing only when the event names it among its changed ids.",
+          "$ref": "#/$defs/eventType"
+        },
+        "style": {
+          "description": "What it adds over the final style.",
+          "$ref": "#/$defs/styleProperties"
+        },
+        "for": {
+          "description": "How long an event overlay shows, as the rule says, such as 3s.",
+          "type": "string",
+          "pattern": "^[0-9]+(ms|s)$"
+        },
+        "waits": {
+          "description": "True when live events are off, so this event overlay is never laid on; the board says so in a notice and never fakes it.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "rule",
+        "style"
+      ],
+      "oneOf": [
+        {
+          "description": "An action overlay.",
+          "required": [
+            "action"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "event"
+                ]
+              },
+              {
+                "required": [
+                  "for"
+                ]
+              },
+              {
+                "required": [
+                  "waits"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "description": "An event overlay, with how long it shows and whether it waits.",
+          "required": [
+            "event",
+            "for",
+            "waits"
+          ],
+          "not": {
+            "required": [
+              "action"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "elementStyle": {
+      "description": "How one block, group or line is drawn in one view: its final style, each step that made it, and the overlays that come and go.",
+      "type": "object",
+      "properties": {
+        "style": {
+          "description": "The final style: a box style for a block, a finding or a group, a line style for a line.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/boxStyle"
+            },
+            {
+              "$ref": "#/$defs/lineStyle"
+            }
+          ]
+        },
+        "applied": {
+          "description": "Each step that made the final style, in the order it was taken, with the styles it brought, so an inspector shows why the thing looks so: a rule by its id, or the thing's own ui-design.styles.",
+          "type": "array",
+          "items": {
+            "description": "One step.",
+            "oneOf": [
+              {
+                "description": "A rule.",
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "description": "The rule's id.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+                  },
+                  "styles": {
+                    "description": "The styles the rule brought, as a list: a lone name or map in its then is one item.",
+                    "$ref": "#/$defs/elementStyles"
+                  }
+                },
+                "required": [
+                  "rule",
+                  "styles"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "description": "The thing's own styles.",
+                "type": "object",
+                "properties": {
+                  "own": {
+                    "description": "Always true: this step is the thing's own ui-design.styles.",
+                    "const": true
+                  },
+                  "styles": {
+                    "description": "The styles the thing names itself.",
+                    "$ref": "#/$defs/elementStyles"
+                  }
+                },
+                "required": [
+                  "own",
+                  "styles"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "rules": {
+          "description": "The overlays for actions and events, in rule order; empty when none. Each thing carries its own, the same overlay repeated on every thing it reaches, so the page decides nothing.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/styleOverlay"
+          }
+        }
+      },
+      "required": [
+        "style",
+        "applied",
+        "rules"
+      ],
+      "additionalProperties": false
+    },
+    "boxStyle": {
+      "description": "How a box (a block, a finding or a group) is drawn once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. mark and badge are given only when something says them: absent draws none.",
+      "type": "object",
+      "properties": {
+        "fill": {
+          "description": "The colour inside a box.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-color": {
+          "description": "The colour of a box's border.",
+          "$ref": "#/$defs/colorName"
+        },
+        "border-style": {
+          "description": "How a box's border is drawn; none draws no border.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ]
+        },
+        "border-width": {
+          "description": "How heavy a box's border is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "text-color": {
+          "description": "The colour of the text.",
+          "$ref": "#/$defs/colorName"
+        },
+        "mark": {
+          "description": "One character drawn beside the box, such as a tick; given only when something says one.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "badge": {
+          "description": "One letter on the thing's badge, such as D for decided.",
+          "type": "string",
+          "pattern": "^\\S$"
+        },
+        "fade": {
+          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
+          "enum": [
+            "none",
+            "aside",
+            "gone"
+          ]
+        }
+      },
+      "required": [
+        "fill",
+        "border-color",
+        "border-style",
+        "border-width",
+        "text-color",
+        "fade"
+      ],
+      "additionalProperties": false
+    },
+    "lineStyle": {
+      "description": "How a line is drawn once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. text is given only when something says it: absent draws none.",
+      "type": "object",
+      "properties": {
+        "line-color": {
+          "description": "The colour of a line between two things.",
+          "$ref": "#/$defs/colorName"
+        },
+        "line-style": {
+          "description": "How a line is drawn.",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted"
+          ]
+        },
+        "line-width": {
+          "description": "How heavy a line is.",
+          "enum": [
+            "thin",
+            "normal",
+            "thick"
+          ]
+        },
+        "text": {
+          "description": "A short text drawn on a line, its label as the picture shows it, such as SQL.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "fade": {
+          "description": "How far the thing steps back: none, aside (set aside, drawn quieter) or gone (faded hardest).",
+          "enum": [
+            "none",
+            "aside",
+            "gone"
+          ]
+        }
+      },
+      "required": [
+        "line-color",
+        "line-style",
+        "line-width",
+        "fade"
+      ],
+      "additionalProperties": false
     }
   }
 }

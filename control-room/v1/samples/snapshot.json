@@ -1,0 +1,194 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "Snapshot",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": {
+    "taken": "2026-11-20T09:00:00Z",
+    "org": "Org",
+    "owner": "ada",
+    "github": {
+      "connected": true,
+      "read_only": true,
+      "account": "ada",
+      "checked_at": "2026-11-20T08:00:00Z"
+    },
+    "waiting": {
+      "prs": [
+        {
+          "repo": "Org/tool",
+          "number": 12,
+          "title": "feat: search by tag",
+          "url": "https://github.com/Org/tool/pull/12",
+          "author": "org-bot",
+          "review": "approved",
+          "ci": "passing",
+          "checks": [
+            {
+              "name": "test",
+              "state": "passing",
+              "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+            }
+          ],
+          "branch": "feat/search-tags/search",
+          "base": "main",
+          "created": "2026-11-18T10:00:00Z",
+          "size": {
+            "files": 3,
+            "additions": 40,
+            "deletions": 12
+          },
+          "approved_by": "ada",
+          "approved_at": "2026-11-19T15:00:00Z",
+          "links": [
+            "Org/kit#4"
+          ],
+          "needs": [
+            "Org/kit#4"
+          ],
+          "epics": [
+            "shop"
+          ],
+          "features": [
+            "search"
+          ]
+        },
+        {
+          "repo": "Org/kit",
+          "number": 4,
+          "title": "fix: button height",
+          "url": "https://github.com/Org/kit/pull/4",
+          "author": "ada",
+          "draft": true,
+          "review": "no review",
+          "ci": "running",
+          "branch": "fix/button/expedite",
+          "base": "main",
+          "created": "2026-11-19T08:00:00Z",
+          "expedite": true
+        }
+      ],
+      "in_review": [
+        {
+          "product": "tool",
+          "board": "/home/ada/src/tool/.kanban",
+          "id": "KBN-20261117-0001",
+          "title": "Search by tag",
+          "column": "Review",
+          "tags": [
+            "feature",
+            "epic:shop",
+            "feature:search"
+          ],
+          "turn": "ada",
+          "source": "kanban show KBN-20261117-0001 --board /home/ada/src/tool/.kanban"
+        }
+      ],
+      "your_turn": []
+    },
+    "products": [
+      {
+        "id": "tool",
+        "kind": "github-release",
+        "status": "installed",
+        "installed": "v1.4.0",
+        "latest": "v1.5.0",
+        "repo": "Org/tool",
+        "repo_url": "https://github.com/Org/tool",
+        "release": {
+          "tag": "v1.5.0",
+          "from": "GitHub",
+          "source": "https://github.com/Org/tool/releases/tag/v1.5.0"
+        },
+        "ci": {
+          "workflow": "ci",
+          "conclusion": "success",
+          "url": "https://github.com/Org/tool/actions/runs/102"
+        },
+        "board": {
+          "path": "/home/ada/src/tool/.kanban",
+          "columns": [
+            {
+              "id": "backlog",
+              "label": "Backlog",
+              "count": 4
+            },
+            {
+              "id": "review",
+              "label": "Review",
+              "count": 1
+            },
+            {
+              "id": "done",
+              "label": "Done",
+              "count": 9
+            }
+          ],
+          "open": 4,
+          "waiting": 1,
+          "source": "kanban board --board /home/ada/src/tool/.kanban"
+        },
+        "designs": {
+          "list": [
+            {
+              "id": "tool",
+              "title": "Tool",
+              "blocks": 12,
+              "releases": [
+                "MVP 1",
+                "MVP 2"
+              ],
+              "open": 3,
+              "source": "e-designer get design (in /home/ada/src/tool)"
+            }
+          ],
+          "source": "e-designer get design (in /home/ada/src/tool)"
+        },
+        "checkout": {
+          "path": "/home/ada/src/tool",
+          "status": {
+            "branch": "main",
+            "upstream": "origin/main",
+            "ahead": 0,
+            "behind": 2,
+            "dirty": 1
+          },
+          "source": "git -C /home/ada/src/tool status"
+        }
+      },
+      {
+        "id": "kit",
+        "kind": "planned",
+        "release": {
+          "gap": "no repo"
+        },
+        "ci": {
+          "gap": "no repo"
+        },
+        "board": {
+          "open": 0,
+          "waiting": 0,
+          "gap": "no repo"
+        },
+        "designs": {
+          "gap": "no repo"
+        },
+        "checkout": {
+          "gap": "no repo"
+        }
+      }
+    ],
+    "focus": {
+      "key": "shop",
+      "title": "The shop",
+      "product": "tool",
+      "board": "/home/ada/src/tool/.kanban",
+      "card": "KBN-20261101-0009"
+    }
+  },
+  "errors": []
+}

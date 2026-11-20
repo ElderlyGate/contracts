@@ -160,8 +160,11 @@ func UpgradeDesigner(v1 []byte) ([]byte, error) {
 	doc["apiVersion"] = designerV2
 	doc["source"].(map[string]any)["contract"] = "v2"
 	doc["data"] = swapForm(doc["data"], designFormV2, designFormV3)
-	if head.Kind == "Config" {
+	switch head.Kind {
+	case "Config":
 		upConfig(doc["data"].(map[string]any))
+	case "Board":
+		upBoard(doc["data"].(map[string]any))
 	}
 	return encodeChecked(doc, DesignerSchema("v2", head.Kind))
 }
@@ -190,8 +193,11 @@ func DowngradeDesigner(v2 []byte) ([]byte, error) {
 	source["contract"] = "v1"
 	out := map[string]any{"apiVersion": designerV1, "kind": head.Kind, "ran": source}
 	data := swapForm(doc["data"], designFormV3, designFormV2)
-	if head.Kind == "Config" {
+	switch head.Kind {
+	case "Config":
 		downConfig(data.(map[string]any))
+	case "Board":
+		downBoard(data.(map[string]any))
 	}
 	out["data"] = data
 	errs := []any{}
@@ -210,6 +216,21 @@ func upConfig(data map[string]any) {
 	data["styles"] = map[string]any{}
 	data["colors"] = map[string]any{}
 	data["rules"] = []any{}
+}
+
+// upBoard gives what a v1 Board never said (each thing's style, the colours, the groups' members, the notices) as empty, never guessed.
+func upBoard(data map[string]any) {
+	data["styles"] = map[string]any{}
+	data["colors"] = map[string]any{}
+	data["groupMembers"] = map[string]any{}
+	data["notices"] = []any{}
+}
+
+// downBoard takes out what designer/app/v1's Board cannot hold.
+func downBoard(data map[string]any) {
+	for _, part := range []string{"styles", "colors", "groupMembers", "notices"} {
+		delete(data, part)
+	}
 }
 
 // statusesOf is each status of the list the property at state.status names, in lower case and once, with what it means; empty when the definitions name none.

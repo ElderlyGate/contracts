@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strings"
 	"unicode"
 )
@@ -216,9 +217,15 @@ func statusesOf(definitions any) []any {
 	out := []any{}
 	defs, _ := definitions.(map[string]any)
 	props, _ := defs["properties"].(map[string]any)
+	// By property name in order, so two properties at state.status always give the same one.
+	names := make([]string, 0, len(props))
+	for n := range props {
+		names = append(names, n)
+	}
+	sort.Strings(names)
 	var name string
-	for _, p := range props {
-		if prop, _ := p.(map[string]any); prop["key"] == "state.status" {
+	for _, n := range names {
+		if prop, _ := props[n].(map[string]any); prop["key"] == "state.status" {
 			name, _ = prop["values"].(string)
 			break
 		}

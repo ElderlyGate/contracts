@@ -363,13 +363,13 @@ func TestApiVersionFormsListEveryFormOnce(t *testing.T) {
 			t.Errorf("form %s is listed twice", row.New)
 		}
 		current[row.New] = true
-		if slices.Contains(row.Kinds, "*") && row.New != "elderlygate/designer/design/v2" {
-			t.Errorf("%s: only a design's kinds are open, \"*\" belongs to elderlygate/designer/design/v2", row.New)
+		if slices.Contains(row.Kinds, "*") && row.New != "elderlygate/designer/design/v3" {
+			t.Errorf("%s: only a design's kinds are open, \"*\" belongs to elderlygate/designer/design/v3", row.New)
 		}
 		if len(row.Old) == 0 {
 			continue
 		}
-		if want := "hubman migrate " + row.App + " <folder>"; row.Upgrade != want {
+		if want := "hubman product migrate " + row.App + " <folder>"; row.Upgrade != want {
 			t.Errorf("%s: upgrade is %q, want %q", row.New, row.Upgrade, want)
 		}
 		for _, old := range row.Old {

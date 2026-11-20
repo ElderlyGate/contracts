@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/contract-report.schema.json",
+  "title": "contract report",
+  "description": "What check contract finds, from check contract -o json: where a block that holds state and the flows disagree on the fields it writes. A finding never fails the check, since either side may be the wrong one.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v2: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v2"
+        },
+        "kind": {
+          "description": "Always ContractReport, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "ContractReport"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v2, the contract version this schema belongs to.",
+              "const": "v2"
+            }
+          }
+        },
+        "data": {
+          "description": "The findings, worst first, with the counts and the flows read.",
+          "type": "object",
+          "properties": {
+            "findings": {
+              "description": "One per disagreement: unknown first, then undeclared, unexercised and misplaced, each by block.",
+              "type": "array",
+              "items": {
+                "description": "One disagreement.",
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "description": "What disagrees, an open word a reader decides by. Known words: unknown: a flow writes into an id no block carries; undeclared: a flow writes a field the block does not list in writes; unexercised: the block lists a field no step writes; misplaced: a flow writes into a block whose kind holds no state.",
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "block": {
+                    "description": "The block it is about, or the id no block carries.",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "description": "The block's title; (no block) for unknown.",
+                    "type": "string"
+                  },
+                  "fields": {
+                    "description": "The fields involved, sorted.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "flows": {
+                    "description": "The flows whose steps write those fields, sorted; empty for unexercised.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "message": {
+                    "description": "The same for people; programs never decide by it.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "rule",
+                  "block",
+                  "title",
+                  "fields",
+                  "flows",
+                  "message"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "counts": {
+              "description": "How many blocks could be checked, declared and unstated, and how many findings of each rule word; an open map, as rule is an open word. declared: blocks that hold state and list the fields they write, the only ones that can be checked; unstated: blocks that hold state and list nothing yet, not a finding.",
+              "type": "object",
+              "propertyNames": {
+                "description": "declared, unstated, or a rule word.",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "additionalProperties": {
+                "description": "How many.",
+                "type": "integer",
+                "minimum": 0
+              },
+              "required": [
+                "declared",
+                "unstated"
+              ]
+            },
+            "flows": {
+              "description": "The ids of the flows read.",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "findings",
+            "counts",
+            "flows"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

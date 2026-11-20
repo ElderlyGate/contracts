@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/board.schema.json",
+  "title": "board",
+  "description": "The design as the board draws it, from describe board: the design's contents, and what e-designer decided from them (which flows, requests and suites it takes, which flow each request enters, which findings are open, what it refuses and why), so the page only shapes the answer for drawing and decides nothing (G-STACK-7).",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v2: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v2"
+        },
+        "kind": {
+          "description": "Always Board, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Board"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v2, the contract version this schema belongs to.",
+              "const": "v2"
+            }
+          }
+        },
+        "data": {
+          "description": "The design's contents and what the board takes from them.",
+          "type": "object",
+          "properties": {
+            "contents": {
+              "description": "The design as read, the same data describe design answers, so the board answer holds the documents once.",
+              "$ref": "design-contents.schema.json#/allOf/1/properties/data"
+            },
+            "layoutSha256": {
+              "description": "The sha256 of layout.yml's bytes on disk, in lower-case hex, or of no bytes when the design has no layout.yml, the sum --replaces takes, so a layout write names the file it changes and one changed since is refused. Absent only when layout.yml is in contents.broken, version 1 or unreadable, and then no layout write is allowed.",
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "defaultViews": {
+              "description": "The views the board draws when design.yml says nothing about views, as defs defaultViews describes; always given, so a reader never keeps its own list.",
+              "$ref": "defs.schema.json#/$defs/defaultViews"
+            },
+            "openView": {
+              "description": "The view the board opens on, and the one a layout request naming no view is filed under: the first view design.yml declares; when design.yml says nothing about views, the first of defaultViews; empty when it declares an empty views list, a design with no views. Always given, so a reader with no view chosen, or one whose choice the design no longer declares, opens this one and decides no default of its own.",
+              "type": "string"
+            },
+            "layoutPages": {
+              "description": "Each view the board draws, by name, with the page of layout.yml its positions are read from now, so a reader looks a view up and keeps no rule of its own: the view's own page; for the view the board opens on, the file's default page when the file holds no page of that name, since a write files that page under the view. When design.yml says nothing about views, the views are defaultViews; when it declares an empty views list, there is one entry, under the empty name: the file's first page, else default. Always given.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "The page of layout.yml, a key under its views, as written in the file.",
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "styles": {
+              "description": "How every block, group and line is drawn, per view the board draws, by the view's name and then the thing's id, worked out by e-designer from the styles, colours and rules of every layer and each thing's own ui-design.styles, so the page draws it and decides nothing.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "One view's things, by id.",
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "defs.schema.json#/$defs/elementStyle"
+                }
+              }
+            },
+            "colors": {
+              "description": "Every colour name the styles may use, with what it draws as on a light and a dark canvas, after both layers, so the page needs no table of its own.",
+              "type": "object",
+              "propertyNames": {
+                "$ref": "defs.schema.json#/$defs/colorName"
+              },
+              "additionalProperties": {
+                "$ref": "defs.schema.json#/$defs/colorPair"
+              }
+            },
+            "groupMembers": {
+              "description": "Which blocks each group holds, at any depth, per view and per flow walked ('' for none), by the view's name, the flow's id and the group's id, worked out by e-designer, so the page counts nothing.",
+              "type": "object",
+              "additionalProperties": {
+                "description": "One view's groups, per flow walked.",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "Each group with its blocks, in the order the board draws them.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "description": "The ids of the blocks inside, at any depth.",
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "description": "A block id.",
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            },
+            "flows": {
+              "description": "The flows the board takes, in id order; a flow it refuses is in refused instead.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/flow"
+              }
+            },
+            "blockRoles": {
+              "description": "What each id the flows name does across every flow the board takes, worked out by e-designer from the flows and never declared, so the board draws roles and coverage counts them from one rule. The keys are the ids the flows name, which may name no block; an id no flow names is left out.",
+              "type": "object",
+              "propertyNames": {
+                "description": "An id a flow names.",
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "description": "One id's part.",
+                "type": "object",
+                "properties": {
+                  "visitedBy": {
+                    "$ref": "defs.schema.json#/$defs/visitedBy"
+                  },
+                  "touchedBy": {
+                    "$ref": "defs.schema.json#/$defs/touchedBy"
+                  }
+                },
+                "required": [
+                  "visitedBy",
+                  "touchedBy"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "journeys": {
+              "description": "Where each id first comes in each flow, so a view can be laid along the request.",
+              "type": "object",
+              "propertyNames": {
+                "description": "A flow's id.",
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "description": "One flow's journey, by the ids it names.",
+                "type": "object",
+                "propertyNames": {
+                  "description": "An id the flow names.",
+                  "minLength": 1
+                },
+                "additionalProperties": {
+                  "description": "Where the id first comes: the place of the first step standing on it, from 0; an id a step only sends to comes half a step after the step whose emitted object first lands on it, the first leg of the send. A step with no at places nothing.",
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            },
+            "legs": {
+              "description": "Each flow's legs, worked out by e-designer from the flows and the design's links and never declared, so the board draws a whole flow over its links without deciding which link a step rides. The keys are the ids of the flows the board takes; a flow with fewer than two steps has an empty list.",
+              "type": "object",
+              "propertyNames": {
+                "description": "A flow's id.",
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "description": "One flow's legs, in step order: one for each step whose step before it and itself both stand on a block (at); a step either of the two leaves without at has no leg.",
+                "type": "array",
+                "items": {
+                  "$ref": "defs.schema.json#/$defs/leg"
+                }
+              }
+            },
+            "requests": {
+              "description": "The saved requests the board takes, in id order; a request it refuses is in refused instead.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/request"
+              }
+            },
+            "suites": {
+              "description": "The suites the board takes, in id order; a suite it refuses is in refused instead.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/suite"
+              }
+            },
+            "bindings": {
+              "description": "Which flow each request enters, by request id, one entry per request in requests, so a reader shows a request no flow or several flows cover.",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "defs.schema.json#/$defs/binding"
+              }
+            },
+            "findings": {
+              "description": "What is attached to each block, by block id, judged in Go by the same settled statuses focus uses; a block with nothing attached is left out.",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "defs.schema.json#/$defs/blockFindings"
+              }
+            },
+            "refused": {
+              "description": "Every file e-designer read but the board does not take, and why: a flow, request or suite it refuses. Files that could not be read at all, and a version 1 layout.yml, are in contents.broken, so no file is said twice (G-CODE-6).",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/refusal"
+              }
+            },
+            "problems": {
+              "description": "Every entry the board does not draw as written, and why: an old line word, a size left on a Group file, a style the design does not declare, a part of a flow, request or suite it cannot read. Each says where by its at and what by its code.",
+              "type": "array",
+              "items": {
+                "$ref": "defs.schema.json#/$defs/boardProblem"
+              }
+            }
+          },
+          "required": [
+            "contents",
+            "openView",
+            "layoutPages",
+            "styles",
+            "colors",
+            "groupMembers",
+            "flows",
+            "requests",
+            "suites",
+            "bindings",
+            "findings",
+            "refused",
+            "problems"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

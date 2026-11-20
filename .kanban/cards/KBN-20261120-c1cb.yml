@@ -1,0 +1,41 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261120-c1cb
+  title: 'designer/v1: the board answer carries each element''s style'
+  created_at: 2026-11-20T09:08:48.075Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: done
+  order: 0.999999999998181
+  tags: [feature, 'epic:same-shape-designer', 'feature:style-answer', 'product:contracts', 'product:designer']
+  description: |
+    # designer/v1: the board answer carries each element's style
+
+    #feature #epic:same-shape-designer #feature:style-answer #product:contracts #product:designer
+
+    ## Why
+    Under the style model Go works out each element's final style and the page only draws it. The board answer and the events must carry what Go worked out.
+
+    ## Changes
+    - Every block, group and link, per view, gains `style` (the final style, every property filled), `applied` (the rule ids and the element's own styles, in order, for the inspector) and `rules` (the overlays that hold while their `when` is true: actions, and events with `for` and `waits` when live events are off).
+    - The board answer carries the merged `colors` table (light and dark), so the page never reads the definitions.
+    - Each view's group members, so the page counts nothing (from card KBN-20261120-d49b on e-designer's board).
+    - Events gain `data.changed`: the ids a write changed, so a rule can reach just the edited element.
+    - Samples invented only.
+
+    ## Depends on
+    The style-definitions card (C1), released.
+
+    ## Done when
+    - The schemas and invented samples pass the contract tests; every field says what and why.
+
+    Size M.
+  work:
+    agent: claude-opus-5-5
+    branch: feat/style-answer/style-answer
+  links:
+    depends_on: [KBN-20261120-e845]
+  lifecycle:
+    done_at: 2026-11-20T17:08:44.528Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

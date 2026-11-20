@@ -1,0 +1,16 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "ArrangeLayout",
+  "source": {
+    "name": "releases",
+    "app": "designer",
+    "version": "6.10.0",
+    "contract": "v2"
+  },
+  "data": {
+    "view": "structure",
+    "direction": "left-right",
+    "placed": 4
+  },
+  "errors": []
+}

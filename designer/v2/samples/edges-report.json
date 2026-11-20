@@ -1,0 +1,27 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "EdgesReport",
+  "source": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.18.0",
+    "contract": "v2"
+  },
+  "data": {
+    "findings": [
+      {
+        "rule": "dangling",
+        "link": "CMP-API--calls--CMP-GONE",
+        "end": "to",
+        "id": "CMP-GONE",
+        "message": "CMP-API--calls--CMP-GONE points to at CMP-GONE, which is not on the board"
+      },
+      {
+        "rule": "unread",
+        "id": "mentions",
+        "message": "2 edge(s) are drawn as `mentions`, and no check reads them"
+      }
+    ]
+  },
+  "errors": []
+}

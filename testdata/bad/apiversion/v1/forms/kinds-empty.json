@@ -10,7 +10,7 @@
       "app": "kanban",
       "kinds": [],
       "note": "The cards of a board",
-      "upgrade": "hubman migrate kanban <folder>"
+      "upgrade": "hubman product migrate kanban <folder>"
     }
   ]
 }

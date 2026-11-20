@@ -1,12 +1,12 @@
 apiVersion: elderlygate/contracts/app/v1
 kind: ApiVersionForms
 forms:
-  - new: elderlygate/designer/design/v2
-    old: [core/design/v2, core/system/v1]
+  - new: elderlygate/designer/design/v3
+    old: [elderlygate/designer/design/v2, core/design/v2, core/system/v1]
     app: designer
     kinds: [Design, Definitions, "*"]
-    note: The files of a design. Kinds are open, the built-in ones (Block, Group, Flow, Link, Adr, Question, Risk, Suite, Request, Open, Contradiction, Suggestion) and the ones a project declares share this apiVersion; every product's design uses it
-    upgrade: hubman migrate designer <folder>
+    note: The files of a design. Kinds are open, the built-in ones (Block, Group, Flow, Link, Adr, Question, Risk, Suite, Request, Open, Contradiction, Suggestion) and the ones a project declares share this apiVersion; every product's design uses it. Since v3 a design's looks are styles, colours and rules in its definitions, and an element names its own in ui-design.styles; v2's look, border-style and line-style lists, status mark, color, recede and badge, spec.board.links and an element's ui-design look, background, border, borderStyle, color and style are gone
+    upgrade: hubman product migrate designer <folder>
   - new: elderlygate/designer/layout/v2
     app: designer
     kinds: [Layout]
@@ -15,6 +15,10 @@ forms:
     app: designer
     kinds: [Version, DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, MigrateLayout, ProjectMigrate]
     note: Answers and events of designer, contract v1. Answer kinds not listed here are in the envelope only for now, with no schema of their own yet
+  - new: elderlygate/designer/app/v2
+    app: designer
+    kinds: [DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, MigrateLayout]
+    note: Answers and events of designer, contract v2, on envelope/v2 with Problems, for design/v3; designer/app/v1 is still answered by converting down (ADR-S16), and the version answer is contracts version/v1
   - new: elderlygate/control-room/app/v1
     app: control-room
     kinds: [Snapshot, EpicList, Epic, EpicDesign, OutlawList, WorkList, Activity, Usage, RecordReport, SettingList, Product, Card]
@@ -24,13 +28,13 @@ forms:
     app: kanban
     kinds: [Card, Epic, Feature, Story, Task, Bug]
     note: The cards of a board, read by control-room
-    upgrade: hubman migrate kanban <folder>
+    upgrade: hubman product migrate kanban <folder>
   - new: elderlygate/work-records/log/v1
     old: [org/work-record/v1]
     app: work-records
     kinds: [WorkRecord]
     note: Work records the org skill writes and control-room reads
-    upgrade: hubman migrate work-records <folder>
+    upgrade: hubman product migrate work-records <folder>
   - new: elderlygate/mankit/server/v1
     app: mankit
     kinds: [Server]
@@ -51,6 +55,10 @@ forms:
     app: contracts
     kinds: [Problem]
     note: The one Problem shape for every app's errors and problems (ADR-S21); error/v1 stays until each app moves
+  - new: elderlygate/contracts/question/v1
+    app: contracts
+    kinds: [Question]
+    note: The one answer for a change waiting for a yes, in every app (ADR-S04); its wrapper follows the reader's contract version
   - new: elderlygate/contracts/version/v1
     app: contracts
     kinds: [Version]

@@ -11,23 +11,30 @@ import (
 	"github.com/ElderlyGate/contracts"
 )
 
-// steps is every upgrade step by its folder in testdata/upgrade, with the schemas of the version it reads and the version it makes.
+// steps is every upgrade step by its folder in testdata/upgrade, with the schema of the version it reads and the version it makes, each by the answer's kind.
 var steps = map[string]struct {
-	upgrade  func([]byte) ([]byte, error)
-	from, to string
+	step     func([]byte) ([]byte, error)
+	from, to func(kind string) string
 }{
-	"envelope/v1-v2": {contracts.UpgradeEnvelope, "envelope/v1/envelope.schema.json", "envelope/v2/envelope.schema.json"},
+	"envelope/v1-v2": {contracts.UpgradeEnvelope, fixed("envelope/v1/envelope.schema.json"), fixed("envelope/v2/envelope.schema.json")},
+	"designer/v1-v2": {contracts.UpgradeDesigner, designerSchema("v1"), designerSchema("v2")},
+}
+
+func fixed(schema string) func(string) string { return func(string) string { return schema } }
+
+func designerSchema(version string) func(string) string {
+	return func(kind string) string { return contracts.DesignerSchema(version, kind) }
 }
 
 // stepOf is the step of a file in testdata/upgrade/<dir>/<from>-<to>/, or a failure naming the folder with no step.
-func stepOf(t *testing.T, path string) (func([]byte) ([]byte, error), string, string) {
+func stepOf(t *testing.T, path string) (func([]byte) ([]byte, error), func(string) string, func(string) string) {
 	t.Helper()
 	folder := filepath.ToSlash(strings.TrimPrefix(filepath.Dir(path), filepath.Join("testdata", "upgrade")+string(filepath.Separator)))
 	s, ok := steps[folder]
 	if !ok {
 		t.Fatalf("no upgrade step for %s", folder)
 	}
-	return s.upgrade, s.from, s.to
+	return s.step, s.from, s.to
 }
 
 func readFile(t *testing.T, path string) []byte {
@@ -50,34 +57,45 @@ func decode(t *testing.T, b []byte) any {
 
 // Each pair in testdata/upgrade/<dir>/<from>-<to>/ is an answer of the older version and the answer its step makes of it, each meeting its own version (CT-RULE-3).
 func TestUpgradeStepsMatchTheirSamples(t *testing.T) {
-	froms, err := filepath.Glob("testdata/upgrade/*/*/*.v1.json")
-	if err != nil || len(froms) == 0 {
+	pairs, err := filepath.Glob("testdata/upgrade/*/*/*.v1.json")
+	if err != nil || len(pairs) == 0 {
 		t.Fatalf("no upgrade pairs found: %v", err)
 	}
-	for _, from := range froms {
-		t.Run(from, func(t *testing.T) {
-			upgrade, fromSchema, toSchema := stepOf(t, from)
-			older := readFile(t, from)
-			want := readFile(t, strings.TrimSuffix(from, ".v1.json")+".v2.json")
-			if err := contracts.Validate(fromSchema, older); err != nil {
-				t.Fatalf("the older sample does not meet %s: %v", fromSchema, err)
+	for _, v1 := range pairs {
+		t.Run(v1, func(t *testing.T) {
+			step, fromSchema, toSchema := stepOf(t, v1)
+			older, want := readFile(t, v1), readFile(t, strings.TrimSuffix(v1, ".v1.json")+".v2.json")
+			kind := kindOf(t, older)
+			if err := contracts.Validate(fromSchema(kind), older); err != nil {
+				t.Fatalf("the sample read does not meet %s: %v", fromSchema(kind), err)
 			}
-			if err := contracts.Validate(toSchema, want); err != nil {
-				t.Fatalf("the newer sample does not meet %s: %v", toSchema, err)
+			if err := contracts.Validate(toSchema(kind), want); err != nil {
+				t.Fatalf("the sample made does not meet %s: %v", toSchema(kind), err)
 			}
-			got, err := upgrade(older)
+			got, err := step(older)
 			if err != nil {
 				t.Fatal(err)
 			}
 			// A detail is read by people, so <, > and & stay as they are.
 			if strings.Contains(string(got), `\u003c`) || strings.Contains(string(got), `\u0026`) {
-				t.Fatalf("the upgrade escaped text meant for people:\n%s", got)
+				t.Fatalf("the step escaped text meant for people:\n%s", got)
 			}
 			if !reflect.DeepEqual(decode(t, got), decode(t, want)) {
-				t.Fatalf("the upgrade gave\n%s\nwant\n%s", got, want)
+				t.Fatalf("the step gave\n%s\nwant\n%s", got, want)
 			}
 		})
 	}
+}
+
+func kindOf(t *testing.T, b []byte) string {
+	t.Helper()
+	var head struct {
+		Kind string `json:"kind"`
+	}
+	if err := json.Unmarshal(b, &head); err != nil {
+		t.Fatal(err)
+	}
+	return head.Kind
 }
 
 // A newer sample with no older partner is a pair cut in half, so every file in testdata/upgrade is part of one.
@@ -101,8 +119,8 @@ func TestUpgradeStepsRefuseWhatIsNotTheirs(t *testing.T) {
 	}
 	for _, path := range refused {
 		t.Run(path, func(t *testing.T) {
-			upgrade, _, _ := stepOf(t, path)
-			if out, err := upgrade(readFile(t, path)); err == nil {
+			step, _, _ := stepOf(t, path)
+			if out, err := step(readFile(t, path)); err == nil {
 				t.Fatalf("the step took it and gave\n%s", out)
 			}
 		})

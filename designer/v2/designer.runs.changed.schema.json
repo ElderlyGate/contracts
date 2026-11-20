@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/designer.runs.changed.schema.json",
+  "title": "runs changed",
+  "description": "A run arrived or went, so a board reads its runs again. Sent while live events are on, from the revision's own fingerprint of the part (card 5f31 in e-designer).",
+  "allOf": [
+    {
+      "$ref": "../../event/v1/event.schema.json"
+    },
+    {
+      "properties": {
+        "source": {
+          "description": "Where the event comes from: the project e-designer serves.",
+          "$ref": "defs.schema.json#/$defs/eventSource"
+        },
+        "type": {
+          "description": "Always designer.runs.changed (ADR-E2).",
+          "const": "designer.runs.changed"
+        },
+        "subject": {
+          "description": "The id of the design whose part moved, so a board acts only when it shows that design.",
+          "type": "string",
+          "minLength": 1
+        },
+        "data": {
+          "description": "The part that moved and its fingerprint now.",
+          "allOf": [
+            {
+              "$ref": "defs.schema.json#/$defs/partChanged"
+            }
+          ],
+          "properties": {
+            "part": {
+              "description": "Always runs, the part this event names.",
+              "const": "runs"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

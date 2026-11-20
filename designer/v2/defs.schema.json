@@ -885,7 +885,7 @@
       "type": "object",
       "properties": {
         "code": {
-          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until nw-designer project migrate moves it; group_size_left: a Group file still holds a size, which only layout.yml holds now, and nw-designer project migrate takes it out; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only nw-designer project migrate reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file. undeclared_style: a rule or an element names a style nothing declares, so it is drawn without it; style_field_unread: a style says a property or a value the board does not draw, so the style is used without it; rule_field_unread: a rule writes a part or a condition that cannot be read, so the rule is used without it; undeclared_<thing>: a rule names a kind, group, view, status, label, severity or release the design does not have (such as undeclared_status), so that condition matches nothing; old_style_field: a design/v3 file still writes a look the way design/v2 did (a look, border-style or line-style list, a status mark, color, recede or badge, spec.board.links, an element's ui-design look, background, border, borderStyle, color or style); it is not read, and the problem says its new home, as nw-designer project migrate would have moved it.",
+          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until nw-designer project migrate moves it; group_size_left: a Group file still holds a size, which only layout.yml holds now, and nw-designer project migrate takes it out; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only nw-designer project migrate reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file. undeclared_style: a rule or an element names a style nothing declares, so it is drawn without it; style_field_unread: a style says a property or a value the board does not draw, so the style is used without it; rule_field_unread: a rule writes a part or a condition that cannot be read, so the rule is used without it; undeclared_<thing>: a rule names a kind, group, view, status, label, severity or release the design does not have (such as undeclared_status), so that condition matches nothing; old_style_field: a design/v3 file still writes a look the way design/v2 did (a look, border-style or line-style list, a status mark, color, recede or badge, spec.board.links, an element's ui-design look, background, border, borderStyle, color or style); it is not read, and the problem says its new home, as nw-designer project migrate would have moved it. matches_nothing: a rule names only values the design has, yet nothing in it has them all, so the rule draws nothing (a rule switched off with then: {} is not one); undeclared_<thing> is for a value the design does not have at all.",
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$"
         },
@@ -1914,9 +1914,12 @@
       "type": "object",
       "properties": {
         "id": {
-          "description": "The fixed name of the rule, in kebab case, so a later layer can replace or switch it off.",
+          "description": "The fixed name of the rule, in kebab case, so a later layer can replace or switch it off. own is not a rule id: applied uses it for a thing's own styles.",
           "type": "string",
-          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+          "not": {
+            "const": "own"
+          }
         },
         "description": {
           "description": "What the rule is for, in words for people.",
@@ -2040,7 +2043,7 @@
       }
     },
     "finalStyle": {
-      "description": "The style a thing is drawn in once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. Every property a box or a line can have is given; mark, badge and text are given only when something says them.",
+      "description": "The style a thing is drawn in once every rule and its own styles are taken, worked out by e-designer, so the page draws it and decides nothing. Every box and line property is given for every thing, at the value the board would use, so a reader never fills a gap; the line properties of a box and the box properties of a line are never drawn. mark, badge and text are given only when something says them: absent draws none.",
       "type": "object",
       "properties": {
         "fill": {
@@ -2094,8 +2097,9 @@
           ]
         },
         "mark": {
-          "description": "One character drawn beside the thing, such as a tick; empty draws none.",
+          "description": "One character drawn beside the thing, such as a tick; given only when something says one.",
           "type": "string",
+          "minLength": 1,
           "maxLength": 1
         },
         "badge": {
@@ -2138,7 +2142,10 @@
         "rule": {
           "description": "The id of the rule that adds it.",
           "type": "string",
-          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+          "not": {
+            "const": "own"
+          }
         },
         "action": {
           "description": "The action that lays it on, for a rule about an action.",
@@ -2219,13 +2226,25 @@
           "description": "What made the final style, in the order it was taken: each rule's id, and own for the thing's own ui-design.styles, so an inspector shows why it looks so.",
           "type": "array",
           "items": {
-            "description": "A rule id, or own.",
-            "type": "string",
-            "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+            "description": "A rule id, or own for the thing's own ui-design.styles.",
+            "oneOf": [
+              {
+                "description": "A rule id.",
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                "not": {
+                  "const": "own"
+                }
+              },
+              {
+                "description": "The thing's own styles.",
+                "const": "own"
+              }
+            ]
           }
         },
         "rules": {
-          "description": "The overlays for actions and events, in rule order; empty when none.",
+          "description": "The overlays for actions and events, in rule order; empty when none. Each thing carries its own, the same overlay repeated on every thing it reaches, so the page needs no lookup.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/styleOverlay"
@@ -2236,33 +2255,6 @@
         "style",
         "applied",
         "rules"
-      ],
-      "additionalProperties": false
-    },
-    "styleNotice": {
-      "description": "Something about a rule worth saying that is not a problem: a rule that matches nothing (a rule switched off with then: {} is not one), or an event rule that waits because live events are off.",
-      "type": "object",
-      "properties": {
-        "code": {
-          "description": "What it is, as a stable word a program decides by; an open word. Known words: matches_nothing: the rule is about nothing in this design; waits_for_live_events: an event rule draws nothing while live events are off.",
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9_]*$"
-        },
-        "rule": {
-          "description": "The id of the rule it is about.",
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
-        },
-        "says": {
-          "description": "The same in words for people; a program never decides by it.",
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "code",
-        "rule",
-        "says"
       ],
       "additionalProperties": false
     }

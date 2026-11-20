@@ -838,7 +838,8 @@
             "border-width": "normal",
             "line-width": "normal",
             "line-style": "solid",
-            "fade": "none"
+            "fade": "none",
+            "mark": ""
           },
           "applied": [
             "blocks-plain"
@@ -1273,7 +1274,13 @@
       }
     },
     "refused": [],
-    "problems": []
+    "problems": [
+      {
+        "code": "matches_nothing",
+        "at": "definitions.yml: spec.rules.later-is-planned",
+        "says": "later-is-planned is about blocks of release beta, and no block of this design is in it"
+      }
+    ]
   },
   "errors": []
 }

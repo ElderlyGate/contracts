@@ -218,17 +218,16 @@ func upConfig(data map[string]any) {
 	data["rules"] = []any{}
 }
 
-// upBoard gives what a v1 Board never said (each thing's style, the colours, the groups' members, the notices) as empty, never guessed.
+// upBoard gives what a v1 Board never said (each thing's style, the colours, the groups' members) as empty, never guessed.
 func upBoard(data map[string]any) {
 	data["styles"] = map[string]any{}
 	data["colors"] = map[string]any{}
 	data["groupMembers"] = map[string]any{}
-	data["notices"] = []any{}
 }
 
 // downBoard takes out what designer/app/v1's Board cannot hold.
 func downBoard(data map[string]any) {
-	for _, part := range []string{"styles", "colors", "groupMembers", "notices"} {
+	for _, part := range []string{"styles", "colors", "groupMembers"} {
 		delete(data, part)
 	}
 }

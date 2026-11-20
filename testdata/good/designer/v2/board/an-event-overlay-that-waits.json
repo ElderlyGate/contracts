@@ -1082,13 +1082,6 @@
         "": {}
       }
     },
-    "notices": [
-      {
-        "code": "matches_nothing",
-        "rule": "later-is-planned",
-        "says": "later-is-planned is about blocks of release beta or later, and this design has none"
-      }
-    ],
     "flows": [
       {
         "id": "drop-a-parcel",
@@ -1280,7 +1273,13 @@
       }
     },
     "refused": [],
-    "problems": []
+    "problems": [
+      {
+        "code": "matches_nothing",
+        "at": "definitions.yml: spec.rules.later-is-planned",
+        "says": "later-is-planned is about blocks of release beta, and no block of this design is in it"
+      }
+    ]
   },
   "errors": []
 }

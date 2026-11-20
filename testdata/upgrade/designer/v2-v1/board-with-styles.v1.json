@@ -850,7 +850,13 @@
       ]
     },
     "openView": "structure",
-    "problems": [],
+    "problems": [
+      {
+        "at": "definitions.yml: spec.rules.later-is-planned",
+        "code": "matches_nothing",
+        "says": "later-is-planned is about blocks of release beta, and no block of this design is in it"
+      }
+    ],
     "refused": [],
     "requests": [
       {

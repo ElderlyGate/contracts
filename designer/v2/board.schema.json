@@ -103,13 +103,6 @@
                 }
               }
             },
-            "notices": {
-              "description": "What is worth saying about the rules that is not a problem, so a reader can show it beside the problems.",
-              "type": "array",
-              "items": {
-                "$ref": "defs.schema.json#/$defs/styleNotice"
-              }
-            },
             "flows": {
               "description": "The flows the board takes, in id order; a flow it refuses is in refused instead.",
               "type": "array",
@@ -214,7 +207,7 @@
               }
             },
             "problems": {
-              "description": "Every entry the board does not draw as written, and why: an old line word, a size left on a Group file, a look the design does not declare, a part of a flow, request or suite it cannot read. Each says where by its at and what by its code.",
+              "description": "Every entry the board does not draw as written, and why: an old line word, a size left on a Group file, a style the design does not declare, a part of a flow, request or suite it cannot read. Each says where by its at and what by its code.",
               "type": "array",
               "items": {
                 "$ref": "defs.schema.json#/$defs/boardProblem"
@@ -228,7 +221,6 @@
             "styles",
             "colors",
             "groupMembers",
-            "notices",
             "flows",
             "requests",
             "suites",

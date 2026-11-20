@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/control-room/v1/work-list.schema.json",
+  "title": "work list",
+  "description": "Every open pull request, branch ahead of its default branch with no pull request, and card not done, with its epic and feature, cut to a query: the Work page and `work -o json`.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/control-room/app/v1: the form of control-room's answers (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/control-room/app/v1"
+        },
+        "kind": {
+          "description": "Always WorkList, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "WorkList"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always control-room, its product ID, since only control-room gives this answer.",
+              "const": "control-room"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "$ref": "defs.schema.json#/$defs/work-List",
+          "description": "The items the query keeps, its filters and what could not be read."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,993 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "WorkList",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": {
+    "taken": "2026-11-20T07:16:38.550293+01:00",
+    "org": "Org",
+    "connected": true,
+    "query": {},
+    "shown": 261,
+    "total": 261,
+    "rows": [
+      {
+        "kind": "pr",
+        "ref": "Org/constitution#32",
+        "name": "constitution#32 docs(design): how products talk in fleet",
+        "sub": "docs/fleet-talk → main · by org-bot",
+        "url": "https://github.com/Org/constitution/pull/32",
+        "product": "constitution",
+        "repo": "Org/constitution",
+        "branch": "docs/fleet-talk",
+        "epics": [
+          "fleet-v2"
+        ],
+        "features": [
+          "fleet-talk"
+        ],
+        "state": "draft",
+        "ci": "passing",
+        "checks": [
+          {
+            "name": "local · rule-dates",
+            "state": "passing",
+            "url": "https://github.com/Org/constitution/actions/runs/42825543768/job/129861770478"
+          }
+        ],
+        "whose": "Claude",
+        "turn": "Claude",
+        "at": "2026-11-10T10:12:03Z",
+        "at_what": "opened",
+        "when": "9d ago",
+        "when_title": "opened Tue 10 Nov 2026 11:12"
+      },
+      {
+        "kind": "pr",
+        "ref": "Org/constitution#99",
+        "name": "constitution#99 docs(design): control-room polls; events under E9",
+        "sub": "docs/control-room-e9/control-room-plan → main · by org-bot",
+        "url": "https://github.com/Org/constitution/pull/99",
+        "product": "constitution",
+        "repo": "Org/constitution",
+        "branch": "docs/control-room-e9/control-room-plan",
+        "epics": [
+          "same-shape-control-room"
+        ],
+        "features": [
+          "control-room-plan"
+        ],
+        "state": "draft",
+        "ci": "passing",
+        "checks": [
+          {
+            "name": "local · rule-dates",
+            "state": "passing",
+            "url": "https://github.com/Org/constitution/actions/runs/44567344971/job/135712601144"
+          }
+        ],
+        "whose": "Claude",
+        "turn": "Claude",
+        "at": "2026-11-19T16:32:57Z",
+        "at_what": "opened",
+        "when": "13h ago",
+        "when_title": "opened Thu 19 Nov 2026 17:32"
+      },
+      {
+        "kind": "pr",
+        "ref": "Org/contracts#49",
+        "name": "contracts#49 chore(board): record/v1 card",
+        "sub": "chore/record-v1-card/contracts-record-v1 → main · by org-bot",
+        "url": "https://github.com/Org/contracts/pull/49",
+        "product": "contracts",
+        "repo": "Org/contracts",
+        "branch": "chore/record-v1-card/contracts-record-v1",
+        "epics": [
+          "same-shape-contracts"
+        ],
+        "features": [
+          "contracts-record-v1"
+        ],
+        "state": "draft",
+        "ci": "passing",
+        "checks": [
+          {
+            "name": "github · rule-dates",
+            "state": "passing",
+            "url": "https://github.com/Org/contracts/actions/runs/44571207009/job/135726429382"
+          },
+          {
+            "name": "local · linux",
+            "state": "passing",
+            "url": "https://github.com/Org/contracts/actions/runs/44571206388/job/135726431619"
+          }
+        ],
+        "whose": "Claude",
+        "turn": "Claude",
+        "at": "2026-11-19T16:53:41Z",
+        "at_what": "opened",
+        "when": "13h ago",
+        "when_title": "opened Thu 19 Nov 2026 17:53"
+      }
+    ],
+    "facets": [
+      {
+        "key": "kind",
+        "label": "Kind",
+        "options": [
+          {
+            "value": "pr",
+            "label": "PR",
+            "n": 17
+          },
+          {
+            "value": "card",
+            "label": "card",
+            "n": 244
+          }
+        ]
+      },
+      {
+        "key": "product",
+        "label": "Product",
+        "options": [
+          {
+            "value": "checkman",
+            "label": "checkman",
+            "n": 12
+          },
+          {
+            "value": "constitution",
+            "label": "constitution",
+            "n": 17
+          },
+          {
+            "value": "contracts",
+            "label": "contracts",
+            "n": 15
+          },
+          {
+            "value": "control-room",
+            "label": "control-room",
+            "n": 73
+          },
+          {
+            "value": "dcman",
+            "label": "dcman",
+            "n": 8
+          },
+          {
+            "value": "designer",
+            "label": "designer",
+            "n": 63
+          },
+          {
+            "value": "fleet",
+            "label": "fleet",
+            "n": 5
+          },
+          {
+            "value": "gitman",
+            "label": "gitman",
+            "n": 10
+          },
+          {
+            "value": "hubman",
+            "label": "hubman",
+            "n": 14
+          },
+          {
+            "value": "kanban",
+            "label": "kanban",
+            "n": 12
+          },
+          {
+            "value": "mankit",
+            "label": "mankit",
+            "n": 24
+          },
+          {
+            "value": "ui-kit",
+            "label": "ui-kit",
+            "n": 8
+          }
+        ]
+      },
+      {
+        "key": "epic",
+        "label": "Epic",
+        "options": [
+          {
+            "value": "control-room-next",
+            "label": "control-room-next",
+            "n": 3
+          },
+          {
+            "value": "expedite",
+            "label": "expedite",
+            "n": 14
+          },
+          {
+            "value": "fleet-v2",
+            "label": "fleet-v2",
+            "n": 5
+          },
+          {
+            "value": "flows-and-tracing",
+            "label": "flows-and-tracing",
+            "n": 1
+          },
+          {
+            "value": "kanban-app",
+            "label": "kanban-app",
+            "n": 1
+          },
+          {
+            "value": "license",
+            "label": "license",
+            "n": 3
+          },
+          {
+            "value": "mankit-serve",
+            "label": "mankit-serve",
+            "n": 5
+          },
+          {
+            "value": "naming",
+            "label": "naming",
+            "n": 5
+          },
+          {
+            "value": "one-step-workflow",
+            "label": "one-step-workflow",
+            "n": 1
+          },
+          {
+            "value": "same-shape",
+            "label": "same-shape",
+            "n": 24
+          },
+          {
+            "value": "same-shape-checkman",
+            "label": "same-shape-checkman",
+            "n": 8
+          },
+          {
+            "value": "same-shape-contracts",
+            "label": "same-shape-contracts",
+            "n": 12
+          },
+          {
+            "value": "same-shape-control-room",
+            "label": "same-shape-control-room",
+            "n": 25
+          },
+          {
+            "value": "same-shape-dcman",
+            "label": "same-shape-dcman",
+            "n": 7
+          },
+          {
+            "value": "same-shape-designer",
+            "label": "same-shape-designer",
+            "n": 33
+          },
+          {
+            "value": "same-shape-gitman",
+            "label": "same-shape-gitman",
+            "n": 8
+          },
+          {
+            "value": "same-shape-hubman",
+            "label": "same-shape-hubman",
+            "n": 15
+          },
+          {
+            "value": "same-shape-kanban",
+            "label": "same-shape-kanban",
+            "n": 5
+          },
+          {
+            "value": "same-shape-mankit",
+            "label": "same-shape-mankit",
+            "n": 11
+          },
+          {
+            "value": "same-shape-ui-kit",
+            "label": "same-shape-ui-kit",
+            "n": 5
+          },
+          {
+            "value": "spec-v1",
+            "label": "spec-v1",
+            "n": 2
+          },
+          {
+            "value": "storage-port",
+            "label": "storage-port",
+            "n": 4
+          },
+          {
+            "value": "thing-first",
+            "label": "thing-first",
+            "n": 3
+          },
+          {
+            "value": "toggleable-features",
+            "label": "toggleable-features",
+            "n": 2
+          },
+          {
+            "value": "upkeep",
+            "label": "upkeep",
+            "n": 3
+          },
+          {
+            "value": "work-tracking",
+            "label": "work-tracking",
+            "n": 1
+          },
+          {
+            "value": "none",
+            "label": "none",
+            "n": 56
+          }
+        ]
+      },
+      {
+        "key": "feature",
+        "label": "Feature",
+        "options": [
+          {
+            "value": "api-gaps",
+            "label": "api-gaps",
+            "n": 1
+          },
+          {
+            "value": "app-features",
+            "label": "app-features",
+            "n": 2
+          },
+          {
+            "value": "arrow-end-drop",
+            "label": "arrow-end-drop",
+            "n": 1
+          },
+          {
+            "value": "board-design-links",
+            "label": "board-design-links",
+            "n": 1
+          },
+          {
+            "value": "board-resolved",
+            "label": "board-resolved",
+            "n": 1
+          },
+          {
+            "value": "call-graph",
+            "label": "call-graph",
+            "n": 1
+          },
+          {
+            "value": "card-link",
+            "label": "card-link",
+            "n": 1
+          },
+          {
+            "value": "card-size",
+            "label": "card-size",
+            "n": 1
+          },
+          {
+            "value": "checkman-features-design",
+            "label": "checkman-features-design",
+            "n": 2
+          },
+          {
+            "value": "checkman-org-rules-split",
+            "label": "checkman-org-rules-split",
+            "n": 1
+          },
+          {
+            "value": "checkman-project-switch",
+            "label": "checkman-project-switch",
+            "n": 1
+          },
+          {
+            "value": "checkman-readme-map",
+            "label": "checkman-readme-map",
+            "n": 1
+          },
+          {
+            "value": "checkman-thing-first",
+            "label": "checkman-thing-first",
+            "n": 3
+          },
+          {
+            "value": "cli-first",
+            "label": "cli-first",
+            "n": 10
+          },
+          {
+            "value": "components",
+            "label": "components",
+            "n": 1
+          },
+          {
+            "value": "contracts",
+            "label": "contracts",
+            "n": 3
+          },
+          {
+            "value": "contracts-control-room-v1",
+            "label": "contracts-control-room-v1",
+            "n": 2
+          },
+          {
+            "value": "contracts-org-rules-split",
+            "label": "contracts-org-rules-split",
+            "n": 3
+          },
+          {
+            "value": "contracts-readme-map",
+            "label": "contracts-readme-map",
+            "n": 1
+          },
+          {
+            "value": "contracts-record-v1",
+            "label": "contracts-record-v1",
+            "n": 1
+          },
+          {
+            "value": "contracts-tool-contracts",
+            "label": "contracts-tool-contracts",
+            "n": 5
+          },
+          {
+            "value": "control-room-doors",
+            "label": "control-room-doors",
+            "n": 6
+          },
+          {
+            "value": "control-room-features-design",
+            "label": "control-room-features-design",
+            "n": 2
+          },
+          {
+            "value": "control-room-github-connector",
+            "label": "control-room-github-connector",
+            "n": 2
+          },
+          {
+            "value": "control-room-plan",
+            "label": "control-room-plan",
+            "n": 1
+          },
+          {
+            "value": "control-room-product-connector",
+            "label": "control-room-product-connector",
+            "n": 6
+          },
+          {
+            "value": "control-room-readme-map",
+            "label": "control-room-readme-map",
+            "n": 1
+          },
+          {
+            "value": "control-room-snapshot",
+            "label": "control-room-snapshot",
+            "n": 3
+          },
+          {
+            "value": "control-room-storage-port",
+            "label": "control-room-storage-port",
+            "n": 1
+          },
+          {
+            "value": "control-room-thing-first",
+            "label": "control-room-thing-first",
+            "n": 2
+          },
+          {
+            "value": "control-room-writes",
+            "label": "control-room-writes",
+            "n": 1
+          },
+          {
+            "value": "cr-next-plan",
+            "label": "cr-next-plan",
+            "n": 1
+          },
+          {
+            "value": "dcman-features-design",
+            "label": "dcman-features-design",
+            "n": 2
+          },
+          {
+            "value": "dcman-project-switch",
+            "label": "dcman-project-switch",
+            "n": 1
+          },
+          {
+            "value": "dcman-readme-map",
+            "label": "dcman-readme-map",
+            "n": 1
+          },
+          {
+            "value": "dcman-thing-first",
+            "label": "dcman-thing-first",
+            "n": 3
+          },
+          {
+            "value": "definition-search",
+            "label": "definition-search",
+            "n": 1
+          },
+          {
+            "value": "design-tidy",
+            "label": "design-tidy",
+            "n": 1
+          },
+          {
+            "value": "engine-home",
+            "label": "engine-home",
+            "n": 1
+          },
+          {
+            "value": "events-products",
+            "label": "events-products",
+            "n": 1
+          },
+          {
+            "value": "execute-word",
+            "label": "execute-word",
+            "n": 1
+          },
+          {
+            "value": "expedite-rule",
+            "label": "expedite-rule",
+            "n": 1
+          },
+          {
+            "value": "features-on-off",
+            "label": "features-on-off",
+            "n": 1
+          },
+          {
+            "value": "fleet-rule-copies",
+            "label": "fleet-rule-copies",
+            "n": 1
+          },
+          {
+            "value": "fleet-talk",
+            "label": "fleet-talk",
+            "n": 2
+          },
+          {
+            "value": "flow-overview",
+            "label": "flow-overview",
+            "n": 1
+          },
+          {
+            "value": "github-place",
+            "label": "github-place",
+            "n": 1
+          },
+          {
+            "value": "gitman-features-design",
+            "label": "gitman-features-design",
+            "n": 2
+          },
+          {
+            "value": "gitman-git-facts",
+            "label": "gitman-git-facts",
+            "n": 1
+          },
+          {
+            "value": "gitman-project-switch",
+            "label": "gitman-project-switch",
+            "n": 1
+          },
+          {
+            "value": "gitman-readme-map",
+            "label": "gitman-readme-map",
+            "n": 1
+          },
+          {
+            "value": "gitman-thing-first",
+            "label": "gitman-thing-first",
+            "n": 3
+          },
+          {
+            "value": "go-words",
+            "label": "go-words",
+            "n": 2
+          },
+          {
+            "value": "group-tab",
+            "label": "group-tab",
+            "n": 1
+          },
+          {
+            "value": "h2-fixes",
+            "label": "h2-fixes",
+            "n": 4
+          },
+          {
+            "value": "h4-envelope-files",
+            "label": "h4-envelope-files",
+            "n": 2
+          },
+          {
+            "value": "h4b-storage-port",
+            "label": "h4b-storage-port",
+            "n": 1
+          },
+          {
+            "value": "h5-migrate",
+            "label": "h5-migrate",
+            "n": 1
+          },
+          {
+            "value": "h7-features",
+            "label": "h7-features",
+            "n": 2
+          },
+          {
+            "value": "h8-thing-first",
+            "label": "h8-thing-first",
+            "n": 3
+          },
+          {
+            "value": "h9-design",
+            "label": "h9-design",
+            "n": 1
+          },
+          {
+            "value": "help-h1",
+            "label": "help-h1",
+            "n": 4
+          },
+          {
+            "value": "hexagon-bands",
+            "label": "hexagon-bands",
+            "n": 1
+          },
+          {
+            "value": "hosts-acts",
+            "label": "hosts-acts",
+            "n": 2
+          },
+          {
+            "value": "idle-unviewed",
+            "label": "idle-unviewed",
+            "n": 1
+          },
+          {
+            "value": "import-safety",
+            "label": "import-safety",
+            "n": 1
+          },
+          {
+            "value": "in-fleet",
+            "label": "in-fleet",
+            "n": 1
+          },
+          {
+            "value": "kanban",
+            "label": "kanban",
+            "n": 1
+          },
+          {
+            "value": "kanban-features",
+            "label": "kanban-features",
+            "n": 1
+          },
+          {
+            "value": "kanban-readme-map",
+            "label": "kanban-readme-map",
+            "n": 1
+          },
+          {
+            "value": "kanban-shape",
+            "label": "kanban-shape",
+            "n": 1
+          },
+          {
+            "value": "kanban-thing-first",
+            "label": "kanban-thing-first",
+            "n": 3
+          },
+          {
+            "value": "kinds-resolved",
+            "label": "kinds-resolved",
+            "n": 1
+          },
+          {
+            "value": "label-sync",
+            "label": "label-sync",
+            "n": 1
+          },
+          {
+            "value": "lane-follow-up",
+            "label": "lane-follow-up",
+            "n": 1
+          },
+          {
+            "value": "layout-place",
+            "label": "layout-place",
+            "n": 2
+          },
+          {
+            "value": "mankit-contracts-client",
+            "label": "mankit-contracts-client",
+            "n": 1
+          },
+          {
+            "value": "mankit-follow-ups",
+            "label": "mankit-follow-ups",
+            "n": 2
+          },
+          {
+            "value": "mankit-org-rules-split",
+            "label": "mankit-org-rules-split",
+            "n": 4
+          },
+          {
+            "value": "mankit-project-switch",
+            "label": "mankit-project-switch",
+            "n": 2
+          },
+          {
+            "value": "mankit-readme-map",
+            "label": "mankit-readme-map",
+            "n": 1
+          },
+          {
+            "value": "mankit-thing-first",
+            "label": "mankit-thing-first",
+            "n": 1
+          },
+          {
+            "value": "module-paths",
+            "label": "module-paths",
+            "n": 1
+          },
+          {
+            "value": "naming-strategy",
+            "label": "naming-strategy",
+            "n": 1
+          },
+          {
+            "value": "one-verb-gesture",
+            "label": "one-verb-gesture",
+            "n": 1
+          },
+          {
+            "value": "open-view",
+            "label": "open-view",
+            "n": 2
+          },
+          {
+            "value": "outlaws",
+            "label": "outlaws",
+            "n": 1
+          },
+          {
+            "value": "product-profile",
+            "label": "product-profile",
+            "n": 1
+          },
+          {
+            "value": "queue-command",
+            "label": "queue-command",
+            "n": 1
+          },
+          {
+            "value": "read-all-epics",
+            "label": "read-all-epics",
+            "n": 1
+          },
+          {
+            "value": "readme-maps",
+            "label": "readme-maps",
+            "n": 1
+          },
+          {
+            "value": "release-candidates",
+            "label": "release-candidates",
+            "n": 1
+          },
+          {
+            "value": "rule",
+            "label": "rule",
+            "n": 2
+          },
+          {
+            "value": "same-shape-cards",
+            "label": "same-shape-cards",
+            "n": 1
+          },
+          {
+            "value": "secret-logs",
+            "label": "secret-logs",
+            "n": 1
+          },
+          {
+            "value": "serve-v2",
+            "label": "serve-v2",
+            "n": 1
+          },
+          {
+            "value": "servers-list",
+            "label": "servers-list",
+            "n": 2
+          },
+          {
+            "value": "small-answers",
+            "label": "small-answers",
+            "n": 1
+          },
+          {
+            "value": "spec-plan",
+            "label": "spec-plan",
+            "n": 1
+          },
+          {
+            "value": "storage-port",
+            "label": "storage-port",
+            "n": 5
+          },
+          {
+            "value": "strict-cookie-check",
+            "label": "strict-cookie-check",
+            "n": 1
+          },
+          {
+            "value": "telemetry",
+            "label": "telemetry",
+            "n": 1
+          },
+          {
+            "value": "tidy-lines-speed",
+            "label": "tidy-lines-speed",
+            "n": 1
+          },
+          {
+            "value": "tool-contracts",
+            "label": "tool-contracts",
+            "n": 3
+          },
+          {
+            "value": "tool-designs",
+            "label": "tool-designs",
+            "n": 1
+          },
+          {
+            "value": "trial-key",
+            "label": "trial-key",
+            "n": 1
+          },
+          {
+            "value": "ui-host",
+            "label": "ui-host",
+            "n": 1
+          },
+          {
+            "value": "ui-kit-cr-parts",
+            "label": "ui-kit-cr-parts",
+            "n": 1
+          },
+          {
+            "value": "ui-kit-design",
+            "label": "ui-kit-design",
+            "n": 2
+          },
+          {
+            "value": "ui-kit-host",
+            "label": "ui-kit-host",
+            "n": 1
+          },
+          {
+            "value": "ui-kit-readme-map",
+            "label": "ui-kit-readme-map",
+            "n": 1
+          },
+          {
+            "value": "who-decides",
+            "label": "who-decides",
+            "n": 1
+          },
+          {
+            "value": "yaml-title",
+            "label": "yaml-title",
+            "n": 1
+          },
+          {
+            "value": "none",
+            "label": "none",
+            "n": 74
+          }
+        ]
+      },
+      {
+        "key": "state",
+        "label": "State",
+        "options": [
+          {
+            "value": "Backlog",
+            "label": "Backlog",
+            "n": 237
+          },
+          {
+            "value": "draft",
+            "label": "draft",
+            "n": 13
+          },
+          {
+            "value": "In Progress",
+            "label": "In Progress",
+            "n": 4
+          },
+          {
+            "value": "Refined",
+            "label": "Refined",
+            "n": 2
+          },
+          {
+            "value": "Review",
+            "label": "Review",
+            "n": 1
+          },
+          {
+            "value": "waiting for review",
+            "label": "waiting for review",
+            "n": 4
+          }
+        ]
+      },
+      {
+        "key": "turn",
+        "label": "Whose turn",
+        "options": [
+          {
+            "value": "you",
+            "label": "you",
+            "n": 4
+          },
+          {
+            "value": "Claude",
+            "label": "Claude",
+            "n": 13
+          },
+          {
+            "value": "not known",
+            "label": "not known",
+            "n": 244
+          }
+        ]
+      }
+    ],
+    "products": [
+      "hubman",
+      "gitman",
+      "dcman",
+      "checkman",
+      "designer",
+      "kanban",
+      "mankit",
+      "contracts",
+      "fleet",
+      "control-room",
+      "aigate",
+      "constitution",
+      "work-records",
+      "ui-kit"
+    ]
+  },
+  "errors": []
+}

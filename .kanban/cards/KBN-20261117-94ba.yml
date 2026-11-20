@@ -6,12 +6,16 @@ metadata:
   created_at: 2026-11-17T20:35:00.125Z
   created_by: Tugbay Atilla <tugbayatilla@gmail.com>
 spec:
-  column: backlog
-  order: 0.96875
+  column: in-progress
+  order: 0.5
   summary: 'clean architecture: doors with a control-room/v1 contract'
   tags: [feature, 'epic:same-shape-contracts', 'feature:contracts-control-room-v1', 'product:contracts']
   work:
     agent: claude-opus-5-5
+    branch: feat/control-room-v1/contracts-control-room-v1
   description: "#feature #epic:same-shape-contracts #feature:contracts-control-room-v1 #product:contracts\n\n# control-room/v1 for the /api door\n\nclean architecture: doors with a control-room/v1 contract.\n\nSource: e8c0 (control-room) (KBN-20261116-e8c0).\nPlan: https://claude.ai/artifact/K1aK1QXU6PYzhyfcjiE2oS"
   links:
     related: [KBN-20261116-e8c0]
+  lifecycle:
+    active_at: 2026-11-20T06:00:25.000Z
+    active_by: Tugbay Atilla <tugbayatilla@gmail.com>

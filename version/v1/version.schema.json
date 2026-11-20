@@ -36,7 +36,7 @@
               "uniqueItems": true
             },
             "reads": {
-              "description": "The contract versions the app answers reads in: its own and every older one its down steps reach, each such answer saying converted_down (ADR-S16). Left out by an app from before ADR-S16, which reads in supportedContracts.",
+              "description": "The contract versions the app answers reads in: its own and every older one its down steps reach, each such answer saying it was converted down (ADR-S16). Left out by an app from before ADR-S16, which reads in supportedContracts.",
               "type": "array",
               "items": {
                 "description": "One contract version, such as v1.",

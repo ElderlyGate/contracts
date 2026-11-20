@@ -246,18 +246,6 @@
               },
               "spec": {
                 "description": "**A worked example, small enough to read in one sitting.**\n\nThree blocks, one flow, one saved request and one suite — a person\ndrops a parcel into a locker and the ledger learns about it.\n\nNothing here is a real system. What is real is the *shape*: every file in\nthis design is byte-for-byte what the emitter renders, which is what makes\nthe directory usable as a fixture as well as an example.\n",
-                "board": {
-                  "links": {
-                    "calls": {
-                      "color": "#7d8794",
-                      "dashed": false
-                    },
-                    "related": {
-                      "color": "#a1668a",
-                      "dashed": true
-                    }
-                  }
-                },
                 "implementation": {
                   "root": "."
                 }
@@ -697,18 +685,7 @@
       },
       "broken": [],
       "board": {
-        "section": {
-          "links": {
-            "calls": {
-              "color": "#7d8794",
-              "dashed": false
-            },
-            "related": {
-              "color": "#a1668a",
-              "dashed": true
-            }
-          }
-        },
+        "section": {},
         "problems": []
       },
       "focus": {

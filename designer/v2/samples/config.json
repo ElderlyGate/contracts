@@ -271,13 +271,6 @@
         }
       },
       "vocabulary": {
-        "border-style": [
-          "solid",
-          "dashed",
-          "dotted",
-          "double",
-          "none"
-        ],
         "door-state": [
           "free",
           "held",

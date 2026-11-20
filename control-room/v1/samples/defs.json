@@ -1,0 +1,834 @@
+{
+  "checkoutStatus": {
+    "branch": "main",
+    "upstream": "origin/main",
+    "ahead": 0,
+    "behind": 2,
+    "dirty": 1
+  },
+  "column": {
+    "id": "backlog",
+    "label": "Backlog",
+    "count": 4
+  },
+  "connection": {
+    "connected": true,
+    "read_only": true,
+    "account": "ada",
+    "checked_at": "2026-11-20T08:00:00Z"
+  },
+  "design": {
+    "id": "tool",
+    "title": "Tool",
+    "blocks": 12,
+    "releases": [
+      "MVP 1",
+      "MVP 2"
+    ],
+    "open": 3,
+    "source": "e-designer get design (in /home/ada/src/tool)"
+  },
+  "designRoot": {
+    "list": [
+      {
+        "id": "tool",
+        "title": "Tool",
+        "blocks": 12,
+        "releases": [
+          "MVP 1",
+          "MVP 2"
+        ],
+        "open": 3,
+        "source": "e-designer get design (in /home/ada/src/tool)"
+      }
+    ],
+    "source": "e-designer get design (in /home/ada/src/tool)"
+  },
+  "epicProblem": {
+    "text": "feature:search has two Feature cards",
+    "page": "/epics#feature-search",
+    "url": "/product/tool/card/KBN-20261117-0003",
+    "product": "tool",
+    "epic": "shop",
+    "feature": "search"
+  },
+  "facet": {
+    "key": "kind",
+    "label": "Kind",
+    "options": [
+      {
+        "value": "pr",
+        "label": "Pull request",
+        "n": 1
+      },
+      {
+        "value": "card",
+        "label": "Card",
+        "n": 1
+      }
+    ]
+  },
+  "facetOption": {
+    "value": "pr",
+    "label": "Pull request",
+    "n": 1
+  },
+  "feature": {
+    "id": "search",
+    "what": "Search the shop by tag"
+  },
+  "focus": {
+    "key": "shop",
+    "title": "The shop",
+    "product": "tool",
+    "board": "/home/ada/src/tool/.kanban",
+    "card": "KBN-20261101-0009"
+  },
+  "outlawBranch": {
+    "product": "tool",
+    "repo": "Org/tool",
+    "name": "try/old-idea",
+    "url": "https://github.com/Org/tool/tree/try/old-idea",
+    "base": "main",
+    "ahead": 3,
+    "behind": 12,
+    "last_commit": "2026-11-02T10:00:00Z",
+    "reasons": [
+      "its name names no known feature"
+    ]
+  },
+  "outlawCard": {
+    "product": "tool",
+    "board": "/home/ada/src/tool/.kanban",
+    "id": "KBN-20261118-0002",
+    "title": "Tidy the help",
+    "column": "In Progress",
+    "tags": [
+      "feature"
+    ],
+    "in_progress": true,
+    "page": "/product/tool/card/KBN-20261118-0002",
+    "created": "2026-11-18T09:00:00Z",
+    "created_by": "Ada <ada@example.org>",
+    "agent": "claude-opus-5-5",
+    "reasons": [
+      "no #epic:<id> tag",
+      "no #feature:<id> tag"
+    ]
+  },
+  "outlawPullRequest": {
+    "repo": "Org/kit",
+    "number": 4,
+    "title": "fix: button height",
+    "url": "https://github.com/Org/kit/pull/4",
+    "author": "ada",
+    "draft": true,
+    "review": "no review",
+    "ci": "running",
+    "branch": "feat/button/shop-ui",
+    "base": "main",
+    "created": "2026-11-19T08:00:00Z",
+    "product": "kit",
+    "epic": "shop",
+    "reasons": [
+      "no feature:<id> label"
+    ],
+    "epics": [
+      "shop"
+    ]
+  },
+  "outlawQuery": {
+    "kind": "cards",
+    "product": "tool"
+  },
+  "outlawReport": {
+    "taken": "2026-11-20T09:00:00Z",
+    "org": "Org",
+    "connected": true,
+    "prs": [
+      {
+        "repo": "Org/kit",
+        "number": 4,
+        "title": "fix: button height",
+        "url": "https://github.com/Org/kit/pull/4",
+        "author": "ada",
+        "draft": true,
+        "review": "no review",
+        "ci": "running",
+        "branch": "feat/button/shop-ui",
+        "base": "main",
+        "created": "2026-11-19T08:00:00Z",
+        "product": "kit",
+        "epic": "shop",
+        "reasons": [
+          "no feature:<id> label"
+        ],
+        "epics": [
+          "shop"
+        ]
+      }
+    ],
+    "branches": [
+      {
+        "product": "tool",
+        "repo": "Org/tool",
+        "name": "try/old-idea",
+        "url": "https://github.com/Org/tool/tree/try/old-idea",
+        "base": "main",
+        "ahead": 3,
+        "behind": 12,
+        "last_commit": "2026-11-02T10:00:00Z",
+        "reasons": [
+          "its name names no known feature"
+        ]
+      }
+    ],
+    "cards": [
+      {
+        "product": "tool",
+        "board": "/home/ada/src/tool/.kanban",
+        "id": "KBN-20261118-0002",
+        "title": "Tidy the help",
+        "column": "In Progress",
+        "tags": [
+          "feature"
+        ],
+        "in_progress": true,
+        "page": "/product/tool/card/KBN-20261118-0002",
+        "created": "2026-11-18T09:00:00Z",
+        "created_by": "Ada <ada@example.org>",
+        "agent": "claude-opus-5-5",
+        "reasons": [
+          "no #epic:<id> tag",
+          "no #feature:<id> tag"
+        ]
+      }
+    ],
+    "problems": [
+      {
+        "text": "feature:search has two Feature cards",
+        "page": "/epics#feature-search",
+        "url": "/product/tool/card/KBN-20261117-0003",
+        "product": "tool",
+        "epic": "shop",
+        "feature": "search"
+      }
+    ],
+    "products": [
+      "tool",
+      "kit"
+    ]
+  },
+  "prCheck": {
+    "name": "test",
+    "state": "passing",
+    "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+  },
+  "prSize": {
+    "files": 3,
+    "additions": 40,
+    "deletions": 12
+  },
+  "product": {
+    "id": "tool",
+    "kind": "github-release",
+    "status": "installed",
+    "installed": "v1.4.0",
+    "latest": "v1.5.0",
+    "repo": "Org/tool",
+    "repo_url": "https://github.com/Org/tool",
+    "release": {
+      "tag": "v1.5.0",
+      "from": "GitHub",
+      "source": "https://github.com/Org/tool/releases/tag/v1.5.0"
+    },
+    "ci": {
+      "workflow": "ci",
+      "conclusion": "success",
+      "url": "https://github.com/Org/tool/actions/runs/102"
+    },
+    "board": {
+      "path": "/home/ada/src/tool/.kanban",
+      "columns": [
+        {
+          "id": "backlog",
+          "label": "Backlog",
+          "count": 4
+        },
+        {
+          "id": "review",
+          "label": "Review",
+          "count": 1
+        },
+        {
+          "id": "done",
+          "label": "Done",
+          "count": 9
+        }
+      ],
+      "open": 4,
+      "waiting": 1,
+      "source": "kanban board --board /home/ada/src/tool/.kanban"
+    },
+    "designs": {
+      "list": [
+        {
+          "id": "tool",
+          "title": "Tool",
+          "blocks": 12,
+          "releases": [
+            "MVP 1",
+            "MVP 2"
+          ],
+          "open": 3,
+          "source": "e-designer get design (in /home/ada/src/tool)"
+        }
+      ],
+      "source": "e-designer get design (in /home/ada/src/tool)"
+    },
+    "checkout": {
+      "path": "/home/ada/src/tool",
+      "status": {
+        "branch": "main",
+        "upstream": "origin/main",
+        "ahead": 0,
+        "behind": 2,
+        "dirty": 1
+      },
+      "source": "git -C /home/ada/src/tool status"
+    }
+  },
+  "productBoard": {
+    "path": "/home/ada/src/tool/.kanban",
+    "columns": [
+      {
+        "id": "backlog",
+        "label": "Backlog",
+        "count": 4
+      },
+      {
+        "id": "review",
+        "label": "Review",
+        "count": 1
+      },
+      {
+        "id": "done",
+        "label": "Done",
+        "count": 9
+      }
+    ],
+    "open": 4,
+    "waiting": 1,
+    "source": "kanban board --board /home/ada/src/tool/.kanban"
+  },
+  "productCheckout": {
+    "path": "/home/ada/src/tool",
+    "status": {
+      "branch": "main",
+      "upstream": "origin/main",
+      "ahead": 0,
+      "behind": 2,
+      "dirty": 1
+    },
+    "source": "git -C /home/ada/src/tool status"
+  },
+  "productRelease": {
+    "tag": "v1.5.0",
+    "from": "GitHub",
+    "source": "https://github.com/Org/tool/releases/tag/v1.5.0"
+  },
+  "pullRequest": {
+    "repo": "Org/tool",
+    "number": 12,
+    "title": "feat: search by tag",
+    "url": "https://github.com/Org/tool/pull/12",
+    "author": "org-bot",
+    "review": "approved",
+    "ci": "passing",
+    "checks": [
+      {
+        "name": "test",
+        "state": "passing",
+        "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+      }
+    ],
+    "branch": "feat/search-tags/search",
+    "base": "main",
+    "created": "2026-11-18T10:00:00Z",
+    "size": {
+      "files": 3,
+      "additions": 40,
+      "deletions": 12
+    },
+    "approved_by": "ada",
+    "approved_at": "2026-11-19T15:00:00Z",
+    "links": [
+      "Org/kit#4"
+    ],
+    "needs": [
+      "Org/kit#4"
+    ],
+    "epics": [
+      "shop"
+    ],
+    "features": [
+      "search"
+    ]
+  },
+  "pullRequestFields": {
+    "repo": "Org/tool",
+    "number": 12,
+    "title": "feat: search by tag",
+    "url": "https://github.com/Org/tool/pull/12",
+    "author": "org-bot",
+    "review": "approved",
+    "ci": "passing",
+    "checks": [
+      {
+        "name": "test",
+        "state": "passing",
+        "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+      }
+    ],
+    "branch": "feat/search-tags/search",
+    "base": "main",
+    "created": "2026-11-18T10:00:00Z",
+    "size": {
+      "files": 3,
+      "additions": 40,
+      "deletions": 12
+    },
+    "approved_by": "ada",
+    "approved_at": "2026-11-19T15:00:00Z",
+    "links": [
+      "Org/kit#4"
+    ],
+    "needs": [
+      "Org/kit#4"
+    ],
+    "epics": [
+      "shop"
+    ],
+    "features": [
+      "search"
+    ]
+  },
+  "run": {
+    "workflow": "ci",
+    "conclusion": "success",
+    "url": "https://github.com/Org/tool/actions/runs/102"
+  },
+  "setting": {
+    "key": "org",
+    "value": "Org",
+    "source": "file",
+    "help": "the GitHub org the products are in"
+  },
+  "snapshot": {
+    "taken": "2026-11-20T09:00:00Z",
+    "org": "Org",
+    "owner": "ada",
+    "github": {
+      "connected": true,
+      "read_only": true,
+      "account": "ada",
+      "checked_at": "2026-11-20T08:00:00Z"
+    },
+    "waiting": {
+      "prs": [
+        {
+          "repo": "Org/tool",
+          "number": 12,
+          "title": "feat: search by tag",
+          "url": "https://github.com/Org/tool/pull/12",
+          "author": "org-bot",
+          "review": "approved",
+          "ci": "passing",
+          "checks": [
+            {
+              "name": "test",
+              "state": "passing",
+              "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+            }
+          ],
+          "branch": "feat/search-tags/search",
+          "base": "main",
+          "created": "2026-11-18T10:00:00Z",
+          "size": {
+            "files": 3,
+            "additions": 40,
+            "deletions": 12
+          },
+          "approved_by": "ada",
+          "approved_at": "2026-11-19T15:00:00Z",
+          "links": [
+            "Org/kit#4"
+          ],
+          "needs": [
+            "Org/kit#4"
+          ],
+          "epics": [
+            "shop"
+          ],
+          "features": [
+            "search"
+          ]
+        },
+        {
+          "repo": "Org/kit",
+          "number": 4,
+          "title": "fix: button height",
+          "url": "https://github.com/Org/kit/pull/4",
+          "author": "ada",
+          "draft": true,
+          "review": "no review",
+          "ci": "running",
+          "branch": "fix/button/expedite",
+          "base": "main",
+          "created": "2026-11-19T08:00:00Z",
+          "expedite": true
+        }
+      ],
+      "in_review": [
+        {
+          "product": "tool",
+          "board": "/home/ada/src/tool/.kanban",
+          "id": "KBN-20261117-0001",
+          "title": "Search by tag",
+          "column": "Review",
+          "tags": [
+            "feature",
+            "epic:shop",
+            "feature:search"
+          ],
+          "turn": "ada",
+          "source": "kanban show KBN-20261117-0001 --board /home/ada/src/tool/.kanban"
+        }
+      ],
+      "your_turn": []
+    },
+    "products": [
+      {
+        "id": "tool",
+        "kind": "github-release",
+        "status": "installed",
+        "installed": "v1.4.0",
+        "latest": "v1.5.0",
+        "repo": "Org/tool",
+        "repo_url": "https://github.com/Org/tool",
+        "release": {
+          "tag": "v1.5.0",
+          "from": "GitHub",
+          "source": "https://github.com/Org/tool/releases/tag/v1.5.0"
+        },
+        "ci": {
+          "workflow": "ci",
+          "conclusion": "success",
+          "url": "https://github.com/Org/tool/actions/runs/102"
+        },
+        "board": {
+          "path": "/home/ada/src/tool/.kanban",
+          "columns": [
+            {
+              "id": "backlog",
+              "label": "Backlog",
+              "count": 4
+            },
+            {
+              "id": "review",
+              "label": "Review",
+              "count": 1
+            },
+            {
+              "id": "done",
+              "label": "Done",
+              "count": 9
+            }
+          ],
+          "open": 4,
+          "waiting": 1,
+          "source": "kanban board --board /home/ada/src/tool/.kanban"
+        },
+        "designs": {
+          "list": [
+            {
+              "id": "tool",
+              "title": "Tool",
+              "blocks": 12,
+              "releases": [
+                "MVP 1",
+                "MVP 2"
+              ],
+              "open": 3,
+              "source": "e-designer get design (in /home/ada/src/tool)"
+            }
+          ],
+          "source": "e-designer get design (in /home/ada/src/tool)"
+        },
+        "checkout": {
+          "path": "/home/ada/src/tool",
+          "status": {
+            "branch": "main",
+            "upstream": "origin/main",
+            "ahead": 0,
+            "behind": 2,
+            "dirty": 1
+          },
+          "source": "git -C /home/ada/src/tool status"
+        }
+      },
+      {
+        "id": "kit",
+        "kind": "planned",
+        "release": {
+          "gap": "no repo"
+        },
+        "ci": {
+          "gap": "no repo"
+        },
+        "board": {
+          "open": 0,
+          "waiting": 0,
+          "gap": "no repo"
+        },
+        "designs": {
+          "gap": "no repo"
+        },
+        "checkout": {
+          "gap": "no repo"
+        }
+      }
+    ],
+    "focus": {
+      "key": "shop",
+      "title": "The shop",
+      "product": "tool",
+      "board": "/home/ada/src/tool/.kanban",
+      "card": "KBN-20261101-0009"
+    }
+  },
+  "waiting": {
+    "prs": [
+      {
+        "repo": "Org/tool",
+        "number": 12,
+        "title": "feat: search by tag",
+        "url": "https://github.com/Org/tool/pull/12",
+        "author": "org-bot",
+        "review": "approved",
+        "ci": "passing",
+        "checks": [
+          {
+            "name": "test",
+            "state": "passing",
+            "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+          }
+        ],
+        "branch": "feat/search-tags/search",
+        "base": "main",
+        "created": "2026-11-18T10:00:00Z",
+        "size": {
+          "files": 3,
+          "additions": 40,
+          "deletions": 12
+        },
+        "approved_by": "ada",
+        "approved_at": "2026-11-19T15:00:00Z",
+        "links": [
+          "Org/kit#4"
+        ],
+        "needs": [
+          "Org/kit#4"
+        ],
+        "epics": [
+          "shop"
+        ],
+        "features": [
+          "search"
+        ]
+      },
+      {
+        "repo": "Org/kit",
+        "number": 4,
+        "title": "fix: button height",
+        "url": "https://github.com/Org/kit/pull/4",
+        "author": "ada",
+        "draft": true,
+        "review": "no review",
+        "ci": "running",
+        "branch": "fix/button/expedite",
+        "base": "main",
+        "created": "2026-11-19T08:00:00Z",
+        "expedite": true
+      }
+    ],
+    "in_review": [
+      {
+        "product": "tool",
+        "board": "/home/ada/src/tool/.kanban",
+        "id": "KBN-20261117-0001",
+        "title": "Search by tag",
+        "column": "Review",
+        "tags": [
+          "feature",
+          "epic:shop",
+          "feature:search"
+        ],
+        "turn": "ada",
+        "source": "kanban show KBN-20261117-0001 --board /home/ada/src/tool/.kanban"
+      }
+    ],
+    "your_turn": []
+  },
+  "waitingCard": {
+    "product": "tool",
+    "board": "/home/ada/src/tool/.kanban",
+    "id": "KBN-20261117-0001",
+    "title": "Search by tag",
+    "column": "Review",
+    "tags": [
+      "feature",
+      "epic:shop",
+      "feature:search"
+    ],
+    "turn": "ada",
+    "source": "kanban show KBN-20261117-0001 --board /home/ada/src/tool/.kanban"
+  },
+  "workList": {
+    "taken": "2026-11-20T09:00:00Z",
+    "org": "Org",
+    "connected": true,
+    "query": {
+      "epics": [
+        "shop",
+        "none"
+      ]
+    },
+    "shown": 2,
+    "total": 2,
+    "rows": [
+      {
+        "kind": "pr",
+        "ref": "Org/tool#12",
+        "name": "feat: search by tag",
+        "url": "https://github.com/Org/tool/pull/12",
+        "product": "tool",
+        "repo": "Org/tool",
+        "branch": "feat/search-tags/search",
+        "epics": [
+          "shop"
+        ],
+        "features": [
+          "search"
+        ],
+        "state": "approved, not merged",
+        "ci": "passing",
+        "checks": [
+          {
+            "name": "test",
+            "state": "passing",
+            "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+          }
+        ],
+        "whose": "merge",
+        "turn": "agent",
+        "at": "2026-11-19T15:00:00Z",
+        "at_what": "approved",
+        "when": "18h ago",
+        "when_title": "approved Thu 19 Nov 2026 15:00"
+      },
+      {
+        "kind": "card",
+        "ref": "tool/KBN-20261118-0002",
+        "name": "Tidy the help",
+        "url": "/product/tool/card/KBN-20261118-0002",
+        "product": "tool",
+        "epics": [],
+        "features": [],
+        "state": "In Progress",
+        "whose": "claude-opus-5-5",
+        "turn": "agent",
+        "at": "2026-11-18T09:00:00Z",
+        "at_what": "created",
+        "when": "2d ago",
+        "when_title": "created Wed 18 Nov 2026 09:00"
+      }
+    ],
+    "facets": [
+      {
+        "key": "kind",
+        "label": "Kind",
+        "options": [
+          {
+            "value": "pr",
+            "label": "Pull request",
+            "n": 1
+          },
+          {
+            "value": "card",
+            "label": "Card",
+            "n": 1
+          }
+        ]
+      },
+      {
+        "key": "epic",
+        "label": "Epic",
+        "on": 1,
+        "options": [
+          {
+            "value": "shop",
+            "label": "shop",
+            "n": 1,
+            "on": true
+          },
+          {
+            "value": "none",
+            "label": "none",
+            "n": 1
+          }
+        ]
+      }
+    ],
+    "products": [
+      "tool",
+      "kit"
+    ]
+  },
+  "workQuery": {
+    "epics": [
+      "shop",
+      "none"
+    ]
+  },
+  "workRow": {
+    "kind": "pr",
+    "ref": "Org/tool#12",
+    "name": "feat: search by tag",
+    "url": "https://github.com/Org/tool/pull/12",
+    "product": "tool",
+    "repo": "Org/tool",
+    "branch": "feat/search-tags/search",
+    "epics": [
+      "shop"
+    ],
+    "features": [
+      "search"
+    ],
+    "state": "approved, not merged",
+    "ci": "passing",
+    "checks": [
+      {
+        "name": "test",
+        "state": "passing",
+        "url": "https://github.com/Org/tool/actions/runs/101/job/201"
+      }
+    ],
+    "whose": "merge",
+    "turn": "agent",
+    "at": "2026-11-19T15:00:00Z",
+    "at_what": "approved",
+    "when": "18h ago",
+    "when_title": "approved Thu 19 Nov 2026 15:00"
+  }
+}

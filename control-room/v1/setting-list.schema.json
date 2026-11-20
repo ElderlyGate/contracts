@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/control-room/v1/setting-list.schema.json",
+  "title": "setting list",
+  "description": "Every setting of control-room's config.yaml as it is now, as the Settings page and `config show -o json` show it, so a person or a script sees what is in use and where it came from.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/control-room/app/v1: the form of control-room's answers (apiversion/v1/forms.yaml).",
+          "const": "elderlygate/control-room/app/v1"
+        },
+        "kind": {
+          "description": "Always SettingList, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "SettingList"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always control-room, its product ID, since only control-room gives this answer.",
+              "const": "control-room"
+            },
+            "contract": {
+              "description": "Always v1, the contract version this schema belongs to.",
+              "const": "v1"
+            }
+          }
+        },
+        "data": {
+          "items": {
+            "$ref": "defs.schema.json#/$defs/setting"
+          },
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "One row per setting, in the order `config show` lists them."
+        }
+      }
+    }
+  ]
+}

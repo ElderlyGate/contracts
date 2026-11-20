@@ -180,7 +180,7 @@
           "type": "boolean"
         },
         "expires_at": {
-          "description": "When the token expires, as GitHub said at its check; empty when it does not say, so the owner renews it in time.",
+          "description": "When the token expires, as GitHub said at its check; absent when it does not say, so the owner renews it in time.",
           "format": "date-time",
           "type": "string"
         },
@@ -222,7 +222,7 @@
           "type": "string"
         },
         "id": {
-          "description": "The design's id, its folder's name under.designer/.",
+          "description": "The design's id, its folder's name under .designer/.",
           "type": "string"
         },
         "open": {
@@ -461,7 +461,7 @@
           "type": "string"
         },
         "last_commit": {
-          "description": "When its last commit was made, so an old branch shows as old.",
+          "description": "When its last commit was made, so an old branch shows as old; the zero time 0001-01-01T00:00:00Z when not known.",
           "format": "date-time",
           "type": "string"
         },
@@ -818,7 +818,7 @@
           "type": "string"
         },
         "state": {
-          "description": "The job's state in words: passing, failing or running, so each failing check can be found.",
+          "description": "The job's state in words: passing, failing, running, queued or skipped, so each failing check can be found.",
           "type": "string"
         },
         "url": {
@@ -1080,7 +1080,7 @@
           "type": "string"
         },
         "closed_at": {
-          "description": "When a closed pull request was closed; empty for an open one.",
+          "description": "When a closed pull request was closed; absent for an open one.",
           "format": "date-time",
           "type": "string"
         },
@@ -1195,7 +1195,7 @@
       "type": "object",
       "properties": {
         "conclusion": {
-          "description": "How the run ended (success, failure, cancelled...), empty while it runs, so a broken main branch shows.",
+          "description": "How the run ended (success, failure, cancelled ...), or its status while it runs (such as in progress), so a broken main branch shows.",
           "type": "string"
         },
         "gap": {

@@ -1,0 +1,42 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261120-e845
+  title: 'designer/v1: styles, colours and rules in the definitions'
+  created_at: 2026-11-20T09:08:47.962Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: backlog
+  order: 0.99993896484375
+  tags: [feature, 'epic:same-shape-designer', 'feature:style-definitions', 'product:contracts', 'product:designer']
+  description: |
+    # designer/v1: styles, colours and rules in the definitions
+
+    #feature #epic:same-shape-designer #feature:style-definitions #product:contracts #product:designer
+
+    ## Why
+    The owner agreed one style model for nw-designer on 20 Nov: a design's definitions hold three parts, vocabulary for meaning, `styles` for looks, and `rules` as the only connection between them. This card gives the definitions their schema.
+
+    ## Changes
+    - vocabulary is meaning only: status value, settled, note; link-label value, note.
+    - `styles:` named; a style is a map, or a list of names and maps where the last wins; twelve fixed properties (fill, border-color, text-color, line-color, border-style, border-width, line-width, line-style, mark, badge, fade, text) with their allowed values, written only here.
+    - `colors:` name to {light, dark}; the theme names (bg, panel, ink, muted, line, accent, sec, warn, bad, blue, violet, teal, each with -soft); a project's name equal to a built-in one replaces it.
+    - `rules:` a list, top to bottom, last wins; each with `id` (fixed, kebab case), `description`, `given` (kind, group, view), `when` (status, label, severity, release, action, event), `then` (styles; `for:` only with an event); `"*"` is everything, `{}` is nothing, a list is any of; a rule with an earlier id replaces only the parts it writes; `then: {}` switches it off.
+    - The action list: selected, hovered, focused, dragging, flow-step, in-focus. Events by their CloudEvents type names.
+    - Element `ui-design.styles`: names and inline maps, last wins, after every rule.
+    - config readings `statuses` again, as value, settled, note only.
+    - Problem codes undeclared_style, style_field_unread, rule_field_unread, undeclared_<thing>, old_style_field; notices "matches nothing" and "waits for live events".
+    - Samples invented only (public repository).
+
+    ## Depends on
+    contracts#53 (card KBN-20261120-e10d), released.
+
+    ## Done when
+    - The schemas and invented samples pass the contract tests; every field says what and why (CT-RULE-5).
+
+    Size L.
+  work:
+    agent: claude-opus-5-5
+    branch: feat/style-definitions/style-definitions
+  links:
+    depends_on: [KBN-20261120-e10d]

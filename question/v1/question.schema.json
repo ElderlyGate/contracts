@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/question/v1/question.schema.json",
+  "title": "question",
+  "description": "A change waiting for a yes, the same answer for every app (ADR-S04, G-STACK-13): with no terminal a command answers it instead of changing anything, HTTP gives it with 428 and the CLI exits 3. A reader decides by its kind, shows detail, and sends the same request again with the id and a yes. Its data is defined once here; its wrapper follows the contract version the reader asked for, ran on envelope/v1 and source on envelope/v2.",
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "$ref": "../../envelope/v1/envelope.schema.json"
+        },
+        {
+          "$ref": "../../envelope/v2/envelope.schema.json"
+        }
+      ]
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/contracts/question/v1: the one form of the question, the same for every app, so a reader knows its shape whatever it asked for.",
+          "const": "elderlygate/contracts/question/v1"
+        },
+        "kind": {
+          "description": "Always Question, so a reader tells a change waiting for a yes from every other answer by kind alone.",
+          "const": "Question"
+        },
+        "data": {
+          "description": "What the change is and how it asks.",
+          "type": "object",
+          "required": [
+            "id",
+            "action",
+            "system",
+            "style",
+            "detail"
+          ],
+          "properties": {
+            "id": {
+              "description": "A one-time id for exactly this request, so a yes binds to the change it was asked for: the app remembers the method, path, flags, body sum and type, keeps it a few minutes, and takes it once. A yes sends it back (confirm=<id>, or --confirm <id>). It is no trace id.",
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{16,}$"
+            },
+            "action": {
+              "description": "The change's type, the words every product shares (G-STACK-13), so a reader can remember the answer per type.",
+              "enum": [
+                "create",
+                "edit",
+                "move",
+                "focus",
+                "archive",
+                "close",
+                "delete",
+                "settings",
+                "connect",
+                "run"
+              ]
+            },
+            "system": {
+              "description": "True for a change to the system itself (uninstalling, removing a token, dropping data, deleting a board), which asks for the name whatever the user picked (G-STACK-6).",
+              "type": "boolean"
+            },
+            "style": {
+              "description": "How this change asks, as the command worked it out from the user's choice: type_name (type the name) or yes_no (y/N).",
+              "enum": [
+                "type_name",
+                "yes_no"
+              ]
+            },
+            "detail": {
+              "description": "What will change, in plain words for a person, with no CLI wording such as pass --yes, so the page and the terminal show the same question.",
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "errors": {
+          "description": "Always empty: a change waiting for a yes is not a problem (ADR-S21).",
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    }
+  ]
+}

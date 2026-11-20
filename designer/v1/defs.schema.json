@@ -885,7 +885,7 @@
       "type": "object",
       "properties": {
         "code": {
-          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer project migrate runs; group_size_left: a Group file still holds a size, which only layout.yml holds now, and e-designer project migrate takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is older than layout/v1 (no version key), which this e-designer does not read, so the board places nothing from it and names hubman product migrate designer <folder>, which brings it up; contents.broken says the same file; layout_form_old: layout.yml is in the form layout/v1, which may leave boxes without a place, or the design has components and no layout.yml, so boxes without a place are drawn at their group's place, and e-designer project migrate brings it to layout/v2.",
+          "description": "What is wrong, as a stable word a program decides by, never says; an open word, so the CLI can report a new one without a new contract, and a reader matches the codes it knows and shows the words for any other (G-STACK-15). Known codes: old_link_word: a line still goes by a word from before Link, so it is not drawn until e-designer migrate links runs; group_size_left: a Group file still holds a size, which only layout.yml holds now, and e-designer migrate layout takes it out; undeclared_look: a component or group names a look the design does not declare, so it is drawn without it; suite_step_unread: a suite step names no request, so the suite runs without it; expectation_unread: a suite step's expectation is not one the runner reads, so the step is checked without it; emission_unread: part of a step's emission cannot be read, so the step is kept without that part; request_field_unread: a request field cannot be read, so the request is kept without it; flow_field_unread: a flow's name or source, or a step's source, is not text, so the flow is kept without it; suite_field_unread: a suite's label or note is not text, or a step's capture or one of its entries cannot be read, so the suite is kept without it; old_layout_version: layout.yml is version 1, which only e-designer migrate layout reads, so the board places nothing from it and offers to migrate it; contents.broken says the same file.",
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$"
         },
@@ -1502,121 +1502,6 @@
         "to",
         "link"
       ],
-      "additionalProperties": false
-    },
-    "migratedFile": {
-      "description": "What a project migration did, or would do, to one file of one design: its form before and after, where it moved, and what the step did, so a person sees each file's change before the write is kept.",
-      "type": "object",
-      "required": [
-        "design",
-        "file",
-        "from",
-        "to",
-        "did"
-      ],
-      "properties": {
-        "design": {
-          "description": "The design the file belongs to, by its id, so a project with several designs says whose file it is.",
-          "type": "string",
-          "minLength": 1
-        },
-        "file": {
-          "description": "The file, by its path inside the design's folder, as it is before the step.",
-          "type": "string",
-          "minLength": 1
-        },
-        "from": {
-          "description": "The file's form before the step, so a reader knows which row of forms.yaml it came from.",
-          "type": "object",
-          "required": [
-            "apiVersion",
-            "kind"
-          ],
-          "properties": {
-            "apiVersion": {
-              "description": "The file's apiVersion form, as forms.yaml lists it; a bare layout.yml, which carries none, the form before that forms.yaml's layout/v2 row notes, is named elderlygate/designer/layout/v1 here.",
-              "type": "string",
-              "minLength": 1
-            },
-            "kind": {
-              "description": "The file's kind.",
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "additionalProperties": false
-        },
-        "to": {
-          "description": "The file's form after the step, the current one.",
-          "type": "object",
-          "required": [
-            "apiVersion",
-            "kind"
-          ],
-          "properties": {
-            "apiVersion": {
-              "description": "The file's apiVersion form, as forms.yaml lists it; a bare layout.yml, which carries none, the form before that forms.yaml's layout/v2 row notes, is named elderlygate/designer/layout/v1 here.",
-              "type": "string",
-              "minLength": 1
-            },
-            "kind": {
-              "description": "The file's kind.",
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "additionalProperties": false
-        },
-        "movedTo": {
-          "description": "Where the file goes, by its path inside the design's folder, when the step gives it another name; absent when it keeps its name.",
-          "type": "string",
-          "minLength": 1
-        },
-        "did": {
-          "description": "What the step did to the file, in words for people.",
-          "type": "string",
-          "minLength": 1
-        },
-        "placed": {
-          "description": "For layout.yml, what the step gave a place, one entry per view that had a box without one; absent for any other file.",
-          "type": "array",
-          "items": {
-            "description": "The boxes of one view given a place, worked out once by the same rule a write uses.",
-            "type": "object",
-            "required": [
-              "view",
-              "boxes",
-              "hexagon"
-            ],
-            "properties": {
-              "view": {
-                "description": "The view, by its name in design.yml, so a reader shows each view's new places apart.",
-                "type": "string",
-                "minLength": 1
-              },
-              "boxes": {
-                "description": "The boxes and groups placed in the view's rows, by id, in id order, so a person sees which got a place.",
-                "type": "array",
-                "items": {
-                  "description": "A resource id.",
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "hexagon": {
-                "description": "The blocks placed on the view's hexagon, by id, in id order; always empty when the view draws no hexagon.",
-                "type": "array",
-                "items": {
-                  "description": "A resource id.",
-                  "type": "string",
-                  "minLength": 1
-                }
-              }
-            },
-            "additionalProperties": false
-          }
-        }
-      },
       "additionalProperties": false
     }
   }

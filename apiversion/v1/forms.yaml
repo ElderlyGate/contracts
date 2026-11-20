@@ -10,10 +10,10 @@ forms:
   - new: elderlygate/designer/layout/v2
     app: designer
     kinds: [Layout]
-    note: "A design's layout.yml as a Resource holding every drawn box's place (designer/v2 layout-file.schema.json, which designer/v1 refers to). The form before is layout.yml without apiVersion (version: 2|3); a reader treats that bare file as the one level before, and e-designer project migrate brings it up (ADR-S16)"
+    note: "A design's layout.yml as a Resource holding every drawn box's place (designer/v2 layout-file.schema.json). The form before is layout.yml without apiVersion (version: 2|3); a reader treats that bare file as the one level before, and nw-designer project migrate brings it up (ADR-S16)"
   - new: elderlygate/designer/app/v1
     app: designer
-    kinds: [Version, DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, MigrateLayout, ProjectMigrate]
+    kinds: [Version, DesignList, BlockList, Block, ProjectList, Config, ConfigConfirm, ConfigPaths, RawFile, DesignContents, Views, Resource, Board, Revision, FeatureList, Changes, Apply, FocusSet, FocusClear, TidyLayout, TidyLines, ArrangeLayout, MigrateLayout]
     note: Answers and events of designer, contract v1. Answer kinds not listed here are in the envelope only for now, with no schema of their own yet
   - new: elderlygate/designer/app/v2
     app: designer

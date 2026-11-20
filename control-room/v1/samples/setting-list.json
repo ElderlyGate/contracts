@@ -1,0 +1,44 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "SettingList",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": [
+    {
+      "key": "org",
+      "value": "Org",
+      "source": "default",
+      "help": "the GitHub org whose products are shown"
+    },
+    {
+      "key": "owner",
+      "value": "ada",
+      "source": "default",
+      "help": "the name a card's turn holds when it waits for the owner"
+    },
+    {
+      "key": "roots",
+      "value": "[/home/ada/Projects/github]",
+      "source": "default",
+      "help": "folders searched for checkouts",
+      "list": true
+    },
+    {
+      "key": "topics",
+      "value": "control-room",
+      "source": "default",
+      "help": "the repository whose board holds the org's topics"
+    },
+    {
+      "key": "work_records",
+      "value": "",
+      "source": "default",
+      "help": "the work-records clone the Records page reads; empty asks hubman (hubman path work-records)"
+    }
+  ],
+  "errors": []
+}

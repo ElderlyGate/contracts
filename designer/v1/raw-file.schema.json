@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/designer/v1/raw-file.schema.json",
   "title": "raw file",
-  "description": "A file of the design exactly as it is on disk, from describe --raw, with the sum a write over it names, so a reader can show or edit the bytes on disk and write them back over that version only. A layout.yml still at version 1 is refused with old_form, saying to run e-designer migrate layout.",
+  "description": "A file of the design exactly as it is on disk, from describe --raw, with the sum a write over it names, so a reader can show or edit the bytes on disk and write them back over that version only. A layout.yml older than layout/v1 is refused with old_form, saying to run hubman product migrate designer <folder>.",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"

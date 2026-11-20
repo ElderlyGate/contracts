@@ -1,0 +1,23 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "Check",
+  "source": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.18.0",
+    "contract": "v2"
+  },
+  "data": [
+    {
+      "check": "contract",
+      "exit": 0,
+      "ok": true
+    },
+    {
+      "check": "edges",
+      "exit": 1,
+      "ok": false
+    }
+  ],
+  "errors": []
+}

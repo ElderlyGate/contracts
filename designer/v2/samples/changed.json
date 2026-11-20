@@ -1,0 +1,19 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "Changed",
+  "source": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.17.0",
+    "contract": "v2"
+  },
+  "data": {
+    "known": true,
+    "ref": "main",
+    "ids": [
+      "CMP-API",
+      "CMP-PAGE"
+    ]
+  },
+  "errors": []
+}

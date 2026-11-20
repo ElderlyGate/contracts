@@ -1,0 +1,28 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "HexagonReport",
+  "source": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.18.0",
+    "contract": "v2"
+  },
+  "data": {
+    "findings": [
+      {
+        "rule": "undrawn_hop",
+        "flow": "drop-a-parcel",
+        "step": "store",
+        "blocks": [
+          "CMP-API",
+          "CMP-STORE"
+        ],
+        "message": "the request goes from CMP-API to CMP-STORE and no link is drawn between them"
+      }
+    ],
+    "flows": [
+      "drop-a-parcel"
+    ]
+  },
+  "errors": []
+}

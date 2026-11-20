@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ElderlyGate/contracts/designer/v2/export.schema.json",
+  "title": "export",
+  "description": "A whole design as one text, from export -o json and the board's GET …/designs/{design}/export, so a reader can save it as a file and apply it elsewhere to rebuild the design. Written to a file with --file, export answers Changes instead. A design with a file that cannot be read is refused, since the export would be incomplete.",
+  "allOf": [
+    {
+      "$ref": "../../envelope/v2/envelope.schema.json"
+    },
+    {
+      "properties": {
+        "apiVersion": {
+          "description": "Always elderlygate/designer/app/v2: the form of e-designer's answers. An app's answers keep the family app (apiversion/v1/forms.yaml), apart from the files they describe.",
+          "const": "elderlygate/designer/app/v2"
+        },
+        "kind": {
+          "description": "Always Export, the kind of this answer, so a reader knows which schema its data meets.",
+          "const": "Export"
+        },
+        "source": {
+          "description": "Where the answer came from; this contract fixes the app and the contract version, so an answer from anything else fails here.",
+          "properties": {
+            "app": {
+              "description": "Always designer, e-designer's product ID, since only e-designer gives this answer.",
+              "const": "designer"
+            },
+            "contract": {
+              "description": "Always v2, the contract version this schema belongs to.",
+              "const": "v2"
+            }
+          }
+        },
+        "data": {
+          "description": "The design as one text.",
+          "type": "object",
+          "properties": {
+            "text": {
+              "description": "A stream of YAML documents, separated by ---. It opens with a header of comment lines in front of the first document, not a document of its own, naming the tool's version, the design and when it was exported; then come the design file, definitions.yml, every resource by kind and then by id, and layout.yml last. Each document meets its own kind's schema in the design form (design/v2). Documents keep the text they have on disk, comments and all, so applying the text to the design it came from changes nothing, and applying it to an empty design of the same name writes the same files. Only the header's exported line differs between two exports of one design by the same tool version.",
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

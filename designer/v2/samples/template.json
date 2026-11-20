@@ -1,0 +1,14 @@
+{
+  "apiVersion": "elderlygate/designer/app/v2",
+  "kind": "Template",
+  "source": {
+    "name": "default",
+    "app": "designer",
+    "version": "6.23.0",
+    "contract": "v2"
+  },
+  "data": {
+    "text": "apiVersion: elderlygate/designer/design/v2\nkind: Block\nmetadata:\n  id: X-TEMPLATE\n  title: What it is called\nspec:\n  caption:     # one per line\n  description: # prose\n  place:\n    group:\n    role:        # actor | interface | adapter | handler\n    release:     # enum\n    start:       # true, or leave it out\n    views:       # one per line\n  ui-design:\n    look:        # plain | soft | emphasis | accent | later | settled | pending | problem\n    background:\n    border:\n    borderStyle: # solid | dashed | dotted | double | none\n  state:\n    status:      # open | decided | parked | dropped\n    severity:    # blocker | critical | high | medium | low\n  contract:\n    operations:  # one per line\n    reads:       # one per line\n    writes:      # one per line\n  code:\n    service:\n    implements:  # code\n    probe:       # code\n  source:\n    where:       # one per line\n"
+  },
+  "errors": []
+}

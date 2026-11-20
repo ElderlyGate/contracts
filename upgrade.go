@@ -123,11 +123,10 @@ func takenFile(file string) bool {
 }
 
 const (
-	designerV1      = "elderlygate/designer/app/v1"
-	designerV2      = "elderlygate/designer/app/v2"
-	designFormV2    = "elderlygate/designer/design/v2"
-	designFormV3    = "elderlygate/designer/design/v3"
-	errorAPIVersion = "elderlygate/contracts/error/v1"
+	designerV1   = "elderlygate/designer/app/v1"
+	designerV2   = "elderlygate/designer/app/v2"
+	designFormV2 = "elderlygate/designer/design/v2"
+	designFormV3 = "elderlygate/designer/design/v3"
 )
 
 // UpgradeDesigner is the step from designer/app/v1 to v2: the envelope step, then the app's own form and contract, the design files' form inside the data (design/v2 to design/v3), and for Config the readings v2 keeps and the styles, colours and rules v1 never had, given empty.
@@ -164,42 +163,6 @@ func UpgradeDesigner(v1 []byte) ([]byte, error) {
 		upConfig(doc["data"].(map[string]any))
 	}
 	return encodeChecked(doc, DesignerSchema("v2", head.Kind))
-}
-
-// DowngradeDesigner is the step back from designer/app/v2 to v1, for a v1 reader (ADR-S16): the envelope back to ran and error/v1, the app's own form and contract, the design files' form back to design/v2, and for Config without what v1 cannot hold.
-// It gives the data only, keeping a Problem's first place as at; the list of what was lost comes from mankit's conversion plan.
-func DowngradeDesigner(v2 []byte) ([]byte, error) {
-	var head struct {
-		APIVersion string `json:"apiVersion"`
-		Kind       string `json:"kind"`
-	}
-	if err := json.Unmarshal(v2, &head); err != nil {
-		return nil, err
-	}
-	if head.APIVersion != designerV2 {
-		return nil, fmt.Errorf("not a designer/app/v2 answer: apiVersion is %q", head.APIVersion)
-	}
-	if err := Validate(DesignerSchema("v2", head.Kind), v2); err != nil {
-		return nil, fmt.Errorf("not a designer/app/v2 %s: %w", head.Kind, err)
-	}
-	var doc map[string]any
-	if err := json.Unmarshal(v2, &doc); err != nil {
-		return nil, err
-	}
-	source := doc["source"].(map[string]any)
-	source["contract"] = "v1"
-	out := map[string]any{"apiVersion": designerV1, "kind": head.Kind, "ran": source}
-	data := swapForm(doc["data"], designFormV3, designFormV2)
-	if head.Kind == "Config" {
-		downConfig(data.(map[string]any))
-	}
-	out["data"] = data
-	errs := []any{}
-	for _, raw := range doc["errors"].([]any) {
-		errs = append(errs, errorOf(raw.(map[string]any)))
-	}
-	out["errors"] = errs
-	return encodeChecked(out, DesignerSchema("v1", head.Kind))
 }
 
 // upConfig gives the readings designer/app/v2 has, its statuses read from the list the status property names in the definitions as v1 gave them, and the styles, colours and rules a v1 answer never said as empty, never guessed.
@@ -256,46 +219,6 @@ func statusesOf(definitions any) []any {
 		out = append(out, s)
 	}
 	return out
-}
-
-// downConfig takes out what designer/app/v1 cannot hold: the styles, colours and rules, and the readings' statuses.
-func downConfig(data map[string]any) {
-	for _, part := range []string{"styles", "colors", "rules"} {
-		delete(data, part)
-	}
-	if readings, ok := data["readings"].(map[string]any); ok {
-		delete(readings, "statuses")
-	}
-}
-
-// errorOf turns a Problem back into an error/v1 item: the owner's mapping read backwards, the detail as the message, the first place as at.
-func errorOf(p map[string]any) map[string]any {
-	kind, _ := p["type"].(string)
-	reason, _ := p["reason"].(string)
-	// The rule's home is mankit serve's codeOf (serve/answer.go): the owner's mapping, else the reason, else the type.
-	code := kind
-	if reason != "" {
-		code = reason
-	}
-	for c, m := range reasonOf {
-		if m[0] == kind && m[1] == reason {
-			code = c
-			break
-		}
-	}
-	e := map[string]any{"apiVersion": errorAPIVersion, "kind": "Error", "code": code, "message": p["detail"]}
-	if places, ok := p["at"].([]any); ok && len(places) > 0 {
-		pl := places[0].(map[string]any)
-		at := map[string]any{}
-		if f, ok := pl["file"]; ok {
-			at["file"] = f
-		}
-		if f, ok := pl["path"]; ok {
-			at["field"] = f
-		}
-		e["at"] = at
-	}
-	return e
 }
 
 // swapForm changes every apiVersion in the data that names the design form from to the form to, as a design file inside an answer is written in its contract's form.

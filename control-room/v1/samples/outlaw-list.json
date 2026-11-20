@@ -1,0 +1,105 @@
+{
+  "apiVersion": "elderlygate/control-room/app/v1",
+  "kind": "OutlawList",
+  "source": {
+    "name": "control-room",
+    "app": "control-room",
+    "version": "v3.9.0",
+    "contract": "v1"
+  },
+  "data": {
+    "taken": "2026-11-20T07:16:25.412081+01:00",
+    "org": "Org",
+    "connected": true,
+    "prs": [
+      {
+        "repo": "Org/fleet",
+        "number": 6,
+        "title": "docs(constitution): how products talk in fleet (F1-F10, S21)",
+        "url": "https://github.com/Org/fleet/pull/6",
+        "author": "org-bot",
+        "draft": true,
+        "review": "no review",
+        "ci": "no checks",
+        "branch": "docs/talk-rules/expedite",
+        "head_repo": "Org/fleet",
+        "base": "main",
+        "created": "2026-11-10T12:49:38Z",
+        "size": {
+          "files": 3,
+          "additions": 55,
+          "deletions": 32
+        },
+        "approved_at": "0001-01-01T00:00:00Z",
+        "expedite": true,
+        "product": "hubman",
+        "epic": "same-shape",
+        "reasons": [
+          "no feature:<id> label"
+        ]
+      }
+    ],
+    "branches": [
+      {
+        "product": "hubman",
+        "repo": "Org/hubman",
+        "name": "fix/old-try",
+        "url": "https://github.com/Org/hubman/tree/fix/old-try",
+        "base": "main",
+        "last_commit": "2026-11-02T10:00:00Z",
+        "reasons": [
+          "its name names no known feature"
+        ],
+        "ahead": 3,
+        "behind": 12
+      }
+    ],
+    "cards": [
+      {
+        "product": "hubman",
+        "board": "/home/ada/src/hubman/.kanban",
+        "id": "KBN-20261118-0001",
+        "title": "Tidy the help",
+        "column": "In Progress",
+        "tags": [
+          "feature"
+        ],
+        "in_progress": true,
+        "page": "/product/hubman/card/KBN-20261118-0001",
+        "created": "2026-11-18T09:00:00Z",
+        "agent": "claude-opus-5-5",
+        "reasons": [
+          "no #epic:<id> tag",
+          "no #feature:<id> tag"
+        ]
+      }
+    ],
+    "problems": [
+      {
+        "text": "feature:access is listed by no epic card; carried with epic:access (1)",
+        "page": "/epics"
+      },
+      {
+        "text": "feature:compare-environments is listed by no epic card; carried with epic:spec-v1 (1)",
+        "page": "/epics"
+      }
+    ],
+    "products": [
+      "hubman",
+      "gitman",
+      "dcman",
+      "checkman",
+      "designer",
+      "kanban",
+      "mankit",
+      "contracts",
+      "fleet",
+      "control-room",
+      "aigate",
+      "constitution",
+      "work-records",
+      "ui-kit"
+    ]
+  },
+  "errors": []
+}

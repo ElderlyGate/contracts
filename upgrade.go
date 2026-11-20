@@ -166,7 +166,7 @@ func UpgradeDesigner(v1 []byte) ([]byte, error) {
 }
 
 // DowngradeDesigner is the step back from designer/app/v2 to v1, for a v1 reader (ADR-S16): the envelope back to ran and error/v1, the app's own form and contract, the design files' form back to design/v2, and for Config without what v1 cannot hold.
-// Saying what was lost is the conversion mechanism's (mankit), not this step's.
+// It gives the data only: saying what was lost waits for the envelope decision in mankit's conversion plan.
 func DowngradeDesigner(v2 []byte) ([]byte, error) {
 	var head struct {
 		APIVersion string `json:"apiVersion"`

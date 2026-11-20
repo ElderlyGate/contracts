@@ -6,12 +6,16 @@ metadata:
   created_at: 2026-11-17T20:35:00.125Z
   created_by: Tugbay Atilla <tugbayatilla@gmail.com>
 spec:
-  column: backlog
-  order: 0.96875
-  summary: 'clean architecture: doors with a control-room/v1 contract'
+  column: done
+  order: 0.999999999992724
+  summary: 'control-room/v1 on envelope/v2: 12 kinds, schemas for Snapshot, SettingList, OutlawList, WorkList'
   tags: [feature, 'epic:same-shape-contracts', 'feature:contracts-control-room-v1', 'product:contracts']
   work:
     agent: claude-opus-5-5
-  description: "#feature #epic:same-shape-contracts #feature:contracts-control-room-v1 #product:contracts\n\n# control-room/v1 for the /api door\n\nclean architecture: doors with a control-room/v1 contract.\n\nSource: e8c0 (control-room) (KBN-20261116-e8c0).\nPlan: https://claude.ai/artifact/K1aK1QXU6PYzhyfcjiE2oS"
+    branch: feat/control-room-shapes/contracts-control-room-v1
+  description: "#feature #epic:same-shape-contracts #feature:contracts-control-room-v1 #product:contracts\n\n# control-room/v1 for the /api door\n\nContracts first (ADR-S11): control-room's serve on mankit serve (control-room board KBN-20261119-8212) and its `/api` door (KBN-20261119-c816) land together on this contract, so `/api` changes once (the lead, 20 Nov 2026). Plan: control-room board KBN-20261116-e8c0.\n\n## Scope (agreed by the lead, 20 Nov 2026)\n- `elderlygate/control-room/app/v1` on envelope/v2, its kinds in forms.yaml: Snapshot, EpicList, Epic, EpicDesign, OutlawList, WorkList, Activity, Usage, RecordReport, SettingList, Product, Card.\n- Schemas and samples now for Snapshot, SettingList, OutlawList and WorkList, the shapes they share in `defs.schema.json`.\n- Epic, EpicList and EpicDesign stay in the envelope only until the epics dashboard reshapes them (control-room board KBN-20261119-a9ca).\n- Activity, Usage, RecordReport, Product and Card get their schemas on KBN-20261120-3c4a, before control-room releases the contract.\n- No Server or ServerStop: listing and stopping servers is mankit serve's (mankit/v1).\n\n## Done when\n- [x] forms.yaml lists control-room/v1 and its kinds.\n- [x] Snapshot, SettingList, OutlawList and WorkList have schemas and samples, every field described (CT-RULE-5); `go test ./...` passes.\n"
   links:
     related: [KBN-20261116-e8c0]
+  lifecycle:
+    done_at: 2026-11-20T06:27:45.939Z
+    done_by: Tugbay Atilla <tugbayatilla@gmail.com>

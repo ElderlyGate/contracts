@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ElderlyGate/contracts/license/v1/key-list.schema.json",
   "title": "key list",
-  "description": "What nw-license key list answers with -o json: every key of the signer, its id and its public key, the list apps' builds trust, so the owner copies it into a build without reading a private key (ADR-L6, L7). It reads no private key, so it never asks.",
+  "description": "What nw-license key list answers with -o json: every key of the signer, its id and its public key, the list apps' builds trust, so the owner copies it into a build without reading a private key (ADR-L6, L7).",
   "allOf": [
     {
       "$ref": "../../envelope/v1/envelope.schema.json"

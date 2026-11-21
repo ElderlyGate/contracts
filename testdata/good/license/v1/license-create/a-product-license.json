@@ -1,0 +1,25 @@
+{
+  "apiVersion": "elderlygate/license/app/v1",
+  "kind": "LicenseCreate",
+  "ran": {
+    "name": "license",
+    "app": "license",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "file": "ada.license",
+    "id": "lic-20261106-acme",
+    "kind": "product",
+    "for": "ada@acme.example",
+    "products": {
+      "designer": [
+        "multi-design"
+      ]
+    },
+    "issued": "2026-11-06",
+    "until": "2027-03-01",
+    "keyId": "prod-2026"
+  },
+  "errors": []
+}

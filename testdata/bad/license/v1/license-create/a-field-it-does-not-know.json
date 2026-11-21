@@ -1,0 +1,30 @@
+{
+  "apiVersion": "elderlygate/license/app/v1",
+  "kind": "LicenseCreate",
+  "ran": {
+    "name": "license",
+    "app": "license",
+    "version": "1.0.0",
+    "contract": "v1"
+  },
+  "data": {
+    "file": "acme.license",
+    "id": "lic-20261106-acme",
+    "kind": "org",
+    "for": "Acme Ltd",
+    "products": {
+      "designer": [
+        "events",
+        "share"
+      ],
+      "kanban": [
+        "sync"
+      ]
+    },
+    "issued": "2026-11-06",
+    "until": "2027-11-06",
+    "keyId": "prod-2026",
+    "signature": "s0/R1neiMAkk+5byophXuMRDmxODdQO1rUn74vc7V0umozI06IzazeNrjH2Sj+mOgQNvh85SktlUtLajGlsWCA=="
+  },
+  "errors": []
+}

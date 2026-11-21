@@ -1,0 +1,39 @@
+apiVersion: app/kanban/v1
+kind: Card
+metadata:
+  id: KBN-20261121-f5ee
+  title: 'nw-license answers: key list and license create'
+  created_at: 2026-11-20T23:47:55.933Z
+  created_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+spec:
+  column: done
+  order: 0.9999999999995453
+  summary: 'license/v1: the schemas of nw-license key list and license create'
+  tags: [feature, 'epic:license', 'feature:nw-license', 'product:contracts']
+  description: |
+    #feature #epic:license #feature:nw-license #product:contracts
+
+    # nw-license answers: key list and license create
+
+    ## Why
+    `nw-license key list -o json` and `nw-license license create -o json` print rows whose fields mean only what nw-license's code says. Their meaning belongs in a schema here (CT-RULE-5), so nw-license and its readers test against the same files.
+
+    ## Changes
+    - `license/v1/`: the contract of nw-license, product ID `license`, apiVersion `elderlygate/license/app/v1`, on envelope/v1 as designer/v1 is.
+    - `KeyList`: the answer of `nw-license key list`: per key its id, its public key and the signer that keeps it (ADR-L6, L7).
+    - `LicenseCreate`: the answer of `nw-license license create`: the file written and the signed license's fields, each `$ref`ed to mankit/v1's license payload, their one home (ADR-L7, L9).
+    - Samples, good and bad cases, and the `elderlygate/license/app/v1` row in `apiversion/v1/forms.yaml`.
+    - nw-license will answer them: its own step wraps its rows in the envelope and tests them against these schemas.
+
+    ## Done when
+    - [x] Both kinds have a schema, a sample, good and bad cases, and `go test ./...` passes.
+
+    Size S.
+  work:
+    agent: claude-opus-5-5
+    branch: feat/license-answers/nw-license
+  lifecycle:
+    active_at: 2026-11-20T23:48:04.604Z
+    active_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>
+    done_at: 2026-11-20T23:51:15.654Z
+    done_by: elderlygate-ai <311350033+elderlygate-ai@users.noreply.github.com>

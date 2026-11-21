@@ -26,7 +26,7 @@ spec:
     - nw-license will answer them: its own step wraps its rows in the envelope and tests them against these schemas.
 
     ## Done when
-    - [ ] Both kinds have a schema, a sample, good and bad cases, and `go test ./...` passes.
+    - [x] Both kinds have a schema, a sample, good and bad cases, and `go test ./...` passes.
 
     Size S.
   work:

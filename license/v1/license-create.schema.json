@@ -31,7 +31,7 @@
           }
         },
         "data": {
-          "description": "The file written and the license signed into it: file, then the payload's own fields, each meaning what license-payload.schema.json says (their one home), with its rules for each kind, such as a trial key naming no products (ADR-L9). No other field.",
+          "description": "The file written and the license signed into it: file, then the payload's own fields, each meaning what license-payload.schema.json says (their one home), with its rules for each kind, such as a trial key naming no products (ADR-L9). No other field. A payload field nw-license adds reaches LicenseCreate only in a new contract version (CT-RULE-1), so license/v1 stays fixed.",
           "type": "object",
           "required": [
             "file"
